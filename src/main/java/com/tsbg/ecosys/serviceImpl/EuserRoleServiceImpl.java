@@ -16,4 +16,9 @@ public class EuserRoleServiceImpl implements EuserRoleService {
     public EuserRole selectEuserInfo(String userCode) {
         return euserRoleMapper.selectEuserInfo(userCode);
     }
+
+    @Override
+    public int selectRidByUid(int uid) {
+        return euserRoleMapper.selectRidByUid(uid);
+    }
 }

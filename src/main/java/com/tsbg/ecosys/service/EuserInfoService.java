@@ -27,4 +27,7 @@ public interface EuserInfoService {
 
     //更新euser_role表的数据
     int insertDatatoEuserRole(@Param("uid") int uid,@Param("rid") int rid,@Param("remark") String remark);
+
+    //根据用户工号查询对应的uid和用户名
+    EuserInfo selectUidAndName(String userCode);
 }

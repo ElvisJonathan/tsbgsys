@@ -214,4 +214,7 @@
   <insert id="insertDatatoEuserRole"  >
     INSERT INTO euser_role (uid,rid,remark) VALUES (#{uid,jdbcType=INTEGER},#{rid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
   </insert>
+  <select id="selectUidAndName"  parameterType="String" resultType="com.tsbg.ecosys.model.EuserInfo">
+    SELECT e.`uid`,e.`user_name` FROM euser_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
 </mapper>

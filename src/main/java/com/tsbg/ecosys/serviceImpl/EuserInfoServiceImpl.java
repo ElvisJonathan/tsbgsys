@@ -47,4 +47,9 @@ public class EuserInfoServiceImpl implements EuserInfoService {
     public int insertDatatoEuserRole(int uid, int rid, String remark) {
         return euserInfoMapper.insertDatatoEuserRole(uid,rid,remark);
     }
+
+    @Override
+    public EuserInfo selectUidAndName(String userCode) {
+        return euserInfoMapper.selectUidAndName(userCode);
+    }
 }
