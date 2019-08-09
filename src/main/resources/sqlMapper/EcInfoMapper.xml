@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.mapper.EcInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.EcInfo" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="partner_cname" property="partnerCname" jdbcType="VARCHAR" />
+    <result column="partner_cdate" property="partnerCdate" jdbcType="DATE" />
+    <result column="partner_cregistcapital" property="partnerCregistcapital" jdbcType="VARCHAR" />
+    <result column="partner_clist" property="partnerClist" jdbcType="INTEGER" />
+    <result column="partner_cscale" property="partnerCscale" jdbcType="VARCHAR" />
+    <result column="partner_caddr" property="partnerCaddr" jdbcType="VARCHAR" />
+    <result column="partner_cwebddr" property="partnerCwebddr" jdbcType="VARCHAR" />
+    <result column="partner_ctech" property="partnerCtech" jdbcType="VARCHAR" />
+    <result column="partner_cproduct" property="partnerCproduct" jdbcType="VARCHAR" />
+    <result column="partner_cchannel" property="partnerCchannel" jdbcType="VARCHAR" />
+    <result column="partner_cturnover" property="partnerCturnover" jdbcType="VARCHAR" />
+    <result column="partner_cregion" property="partnerCregion" jdbcType="VARCHAR" />
+    <result column="Partner_cindustry" property="partnerCindustry" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, partner_cname, partner_cdate, partner_cregistcapital, partner_clist, partner_cscale, 
+    partner_caddr, partner_cwebddr, partner_ctech, partner_cproduct, partner_cchannel, 
+    partner_cturnover, partner_cregion, Partner_cindustry, status, create_time, update_time, 
+    creater, updater, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ec_info
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ec_info
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.ecosys.model.EcInfo" >
+    insert into ec_info (cid, partner_cname, partner_cdate, 
+      partner_cregistcapital, partner_clist, partner_cscale, 
+      partner_caddr, partner_cwebddr, partner_ctech, 
+      partner_cproduct, partner_cchannel, partner_cturnover, 
+      partner_cregion, Partner_cindustry, status, 
+      create_time, update_time, creater, 
+      updater, remark)
+    values (#{cid,jdbcType=INTEGER}, #{partnerCname,jdbcType=VARCHAR}, #{partnerCdate,jdbcType=DATE}, 
+      #{partnerCregistcapital,jdbcType=VARCHAR}, #{partnerClist,jdbcType=INTEGER}, #{partnerCscale,jdbcType=VARCHAR}, 
+      #{partnerCaddr,jdbcType=VARCHAR}, #{partnerCwebddr,jdbcType=VARCHAR}, #{partnerCtech,jdbcType=VARCHAR}, 
+      #{partnerCproduct,jdbcType=VARCHAR}, #{partnerCchannel,jdbcType=VARCHAR}, #{partnerCturnover,jdbcType=VARCHAR}, 
+      #{partnerCregion,jdbcType=VARCHAR}, #{partnerCindustry,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
+      #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.EcInfo" >
+    insert into ec_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="partnerCname != null" >
+        partner_cname,
+      </if>
+      <if test="partnerCdate != null" >
+        partner_cdate,
+      </if>
+      <if test="partnerCregistcapital != null" >
+        partner_cregistcapital,
+      </if>
+      <if test="partnerClist != null" >
+        partner_clist,
+      </if>
+      <if test="partnerCscale != null" >
+        partner_cscale,
+      </if>
+      <if test="partnerCaddr != null" >
+        partner_caddr,
+      </if>
+      <if test="partnerCwebddr != null" >
+        partner_cwebddr,
+      </if>
+      <if test="partnerCtech != null" >
+        partner_ctech,
+      </if>
+      <if test="partnerCproduct != null" >
+        partner_cproduct,
+      </if>
+      <if test="partnerCchannel != null" >
+        partner_cchannel,
+      </if>
+      <if test="partnerCturnover != null" >
+        partner_cturnover,
+      </if>
+      <if test="partnerCregion != null" >
+        partner_cregion,
+      </if>
+      <if test="partnerCindustry != null" >
+        Partner_cindustry,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCname != null" >
+        #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCdate != null" >
+        #{partnerCdate,jdbcType=DATE},
+      </if>
+      <if test="partnerCregistcapital != null" >
+        #{partnerCregistcapital,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerClist != null" >
+        #{partnerClist,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCscale != null" >
+        #{partnerCscale,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCaddr != null" >
+        #{partnerCaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCwebddr != null" >
+        #{partnerCwebddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCtech != null" >
+        #{partnerCtech,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCproduct != null" >
+        #{partnerCproduct,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCchannel != null" >
+        #{partnerCchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCturnover != null" >
+        #{partnerCturnover,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCregion != null" >
+        #{partnerCregion,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCindustry != null" >
+        #{partnerCindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.model.EcInfo" >
+    update ec_info
+    <set >
+      <if test="partnerCname != null" >
+        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCdate != null" >
+        partner_cdate = #{partnerCdate,jdbcType=DATE},
+      </if>
+      <if test="partnerCregistcapital != null" >
+        partner_cregistcapital = #{partnerCregistcapital,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerClist != null" >
+        partner_clist = #{partnerClist,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCscale != null" >
+        partner_cscale = #{partnerCscale,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCaddr != null" >
+        partner_caddr = #{partnerCaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCwebddr != null" >
+        partner_cwebddr = #{partnerCwebddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCtech != null" >
+        partner_ctech = #{partnerCtech,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCproduct != null" >
+        partner_cproduct = #{partnerCproduct,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCchannel != null" >
+        partner_cchannel = #{partnerCchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCturnover != null" >
+        partner_cturnover = #{partnerCturnover,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCregion != null" >
+        partner_cregion = #{partnerCregion,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCindustry != null" >
+        Partner_cindustry = #{partnerCindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.EcInfo" >
+    update ec_info
+    set partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      partner_cdate = #{partnerCdate,jdbcType=DATE},
+      partner_cregistcapital = #{partnerCregistcapital,jdbcType=VARCHAR},
+      partner_clist = #{partnerClist,jdbcType=INTEGER},
+      partner_cscale = #{partnerCscale,jdbcType=VARCHAR},
+      partner_caddr = #{partnerCaddr,jdbcType=VARCHAR},
+      partner_cwebddr = #{partnerCwebddr,jdbcType=VARCHAR},
+      partner_ctech = #{partnerCtech,jdbcType=VARCHAR},
+      partner_cproduct = #{partnerCproduct,jdbcType=VARCHAR},
+      partner_cchannel = #{partnerCchannel,jdbcType=VARCHAR},
+      partner_cturnover = #{partnerCturnover,jdbcType=VARCHAR},
+      partner_cregion = #{partnerCregion,jdbcType=VARCHAR},
+      Partner_cindustry = #{partnerCindustry,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByCid" parameterType="int" >
+    UPDATE ec_info AS e SET e.`status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
+  </update>
+</mapper>
