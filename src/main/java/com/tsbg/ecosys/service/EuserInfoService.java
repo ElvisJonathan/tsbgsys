@@ -4,6 +4,8 @@ package com.tsbg.ecosys.service;
 import com.tsbg.ecosys.model.EuserInfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 public interface EuserInfoService {
 
@@ -30,4 +32,7 @@ public interface EuserInfoService {
 
     //根据用户工号查询对应的uid和用户名
     EuserInfo selectUidAndName(String userCode);
+
+    //查询用户列表
+    List<EuserInfo> selectEuserList();
 }

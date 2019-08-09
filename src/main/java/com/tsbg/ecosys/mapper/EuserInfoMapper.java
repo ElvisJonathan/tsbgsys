@@ -4,6 +4,8 @@ import com.tsbg.ecosys.model.EuserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface EuserInfoMapper {
     int deleteByPrimaryKey(Integer uid);
@@ -38,4 +40,7 @@ public interface EuserInfoMapper {
 
     //根据用户工号查询对应的uid和用户名
     EuserInfo selectUidAndName(String userCode);
+
+    //查询用户列表
+    List<EuserInfo> selectEuserList();
 }
