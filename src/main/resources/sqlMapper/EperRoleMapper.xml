@@ -82,4 +82,10 @@
   <select id="selectPidByRid" resultType="java.lang.Integer" parameterType="int" >
    SELECT e.`pid` FROM eper_role AS e WHERE e.`rid`=#{rid,jdbcType=INTEGER};
   </select>
+  <select id="selectPridByRid" resultType="java.lang.Integer" parameterType="int" >
+   SELECT e.`prid` FROM eper_role AS e WHERE e.`rid`=#{rid,jdbcType=INTEGER};
+  </select>
+  <update id="updatePowerByPrid" parameterType="java.lang.Object" >
+    UPDATE eper_role AS r SET r.`pid`= #{pid} WHERE r.`prid`=#{prid}
+  </update>
 </mapper>

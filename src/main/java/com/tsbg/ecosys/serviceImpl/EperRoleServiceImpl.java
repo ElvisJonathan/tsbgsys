@@ -18,4 +18,14 @@ public class EperRoleServiceImpl implements EperRoleService {
     public List<Integer> selectPidByRid(int rid) {
         return eperRoleMapper.selectPidByRid(rid);
     }
+
+    @Override
+    public List<Integer> selectPridByRid(int rid) {
+        return eperRoleMapper.selectPridByRid(rid);
+    }
+
+    @Override
+    public int updatePowerByPrid(Object pid, Object prid) {
+        return eperRoleMapper.updatePowerByPrid(pid, prid);
+    }
 }
