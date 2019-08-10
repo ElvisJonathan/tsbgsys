@@ -82,7 +82,7 @@
   <select id="selectEuserInfo"  parameterType="String" resultType="com.tsbg.ecosys.model.EuserRole">
     SELECT rid,remark FROM euser_role AS r LEFT JOIN euser_info i ON r.`uid`=i.`uid` WHERE i.`user_code`= #{userCode,jdbcType=VARCHAR}
   </select>
-  <select id="selectRidByUid"  parameterType="int" resultType="int">
+  <select id="selectRidByUid"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT r.`rid` FROM euser_role AS r WHERE r.`uid`=#{uid,jdbcType=INTEGER};
   </select>
 </mapper>

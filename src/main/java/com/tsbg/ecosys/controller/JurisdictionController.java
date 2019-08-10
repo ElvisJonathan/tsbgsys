@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.model.EperRole;
 import com.tsbg.ecosys.model.EuserInfo;
 import com.tsbg.ecosys.service.EperRoleService;
 import com.tsbg.ecosys.service.EuserInfoService;
@@ -29,27 +30,49 @@ public class JurisdictionController {
      */
     @RequestMapping(value = "/ecodetail", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse getPower(@RequestParam String userCode) {
+    public ResultResponse getPower(@RequestBody EuserInfo euserInfo) {
         //初始化构造器
         ResultResponse resultResponse = null;
-        //通过用户工号查询当前用户的uid和userName
-        EuserInfo euserInfo = euserInfoService.selectUidAndName(userCode);
-        int uid = euserInfo.getUid();
-        //通过userCode查询当前用户用户名
-        String uName = euserInfoService.selectUserNameByUserCode(userCode);
-        //通过uid查询用户对应的角色rid
-        int rid = euserRoleService.selectRidByUid(uid);
-        //通过角色rid查询对应的权限id
-        List pid = eperRoleService.selectPidByRid(rid);
-        //如果pid不为null,则把查询出的list返回给前端
-        if (pid != null){
-            //将用户名放进list中一起返回
-            pid.add(uName);
-            resultResponse = new ResultResponse(0,"提示信息：成功查询到权限信息",pid);
+        //获取前端传来的工号
+        String userCode = euserInfo.getUserCode();
+        System.out.println("收到的userCode为："+userCode);
+        if (userCode!=null){
+            //通过userCode查询当前用户的uid
+            Integer uid = euserInfoService.selectuidbyuserCode(userCode);
+            //通过userCode查询当前用户的userName
+            String uName = euserInfoService.selectUserNameByUserCode(userCode);
+            if (uid!=null){
+                //通过uid查询用户对应的角色rid
+                Integer rid = euserRoleService.selectRidByUid(uid);
+                if (rid!=null){
+                    //通过角色rid查询对应的权限id
+                    List<Integer> pid = eperRoleService.selectPidByRid(rid);
+                    //如果pid不为null,则把查询出的list返回给前端
+                    if (pid != null){
+                        //将list数据存到数组返回
+                        /*int[] Array = new int[5];
+                        for (int i=0;i<=pid.size()-1;i++){
+                            //循环遍历赋值
+                            Array[i]=pid.get(i);
+                        }*/
+                        //将用户名和pid返给前端
+                        resultResponse = new ResultResponse(0,"提示信息：成功查询到权限信息",pid,uName);
+                        return resultResponse;
+                    }
+                    //pid为null则是未查询到权限只返回用户名给前端
+                    resultResponse = new ResultResponse(501,"提示信息：未查询到权限信息",uName);
+                    return resultResponse;
+                }
+                //未查询到rid只返回用户名给前端
+                resultResponse = new ResultResponse(502,"提示信息：未查询到用户角色信息",uName);
+                return resultResponse;
+            }
+            //未查询到uid只返回用户名给前端
+            resultResponse = new ResultResponse(503,"提示信息：未查询到用户编号信息",uName);
             return resultResponse;
         }
-        //pid为null则是未查询到权限只返回用户名给前端
-        resultResponse = new ResultResponse(501,"提示信息：未查询到权限信息",uName);
+        //userCode为空则返回错误提示
+        resultResponse = new ResultResponse(504,"提示信息：未接收到工号");
         return resultResponse;
     }
 

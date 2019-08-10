@@ -30,7 +30,7 @@ public interface EuserInfoMapper {
     int selectisExistUserCodeByStaffCode(String userCode);
 
     //根据用户工号查询对应的uid
-    int selectuidbyuserCode(String userCode);
+    Integer selectuidbyuserCode(String userCode);
 
     //更新euser_area表的数据
     int insertDatatoEuserArea(@Param("uid") int uid,@Param("aid") int aid,@Param("remark") String remark);

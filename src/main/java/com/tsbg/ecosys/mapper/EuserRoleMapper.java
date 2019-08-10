@@ -22,5 +22,5 @@ public interface EuserRoleMapper {
     EuserRole selectEuserInfo(String userCode);
 
     //通过uid查询用户对应的角色rid
-    int selectRidByUid(int uid);
+    Integer selectRidByUid(Integer uid);
 }

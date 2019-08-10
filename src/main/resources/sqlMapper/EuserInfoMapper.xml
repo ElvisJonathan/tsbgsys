@@ -205,7 +205,7 @@
   <select id="selectisExistUserCodeByStaffCode"  parameterType="String" resultType="int">
     SELECT COUNT(0) FROM euser_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
-  <select id="selectuidbyuserCode"  parameterType="String" resultType="int">
+  <select id="selectuidbyuserCode"  parameterType="String" resultType="java.lang.Integer">
     SELECT e.uid FROM euser_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
   <insert id="insertDatatoEuserArea"  >

@@ -79,10 +79,10 @@
       remark = #{remark,jdbcType=VARCHAR}
     where prid = #{prid,jdbcType=INTEGER}
   </update>
-  <select id="selectPidByRid" resultType="java.lang.Integer" parameterType="int" >
+  <select id="selectPidByRid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
    SELECT e.`pid` FROM eper_role AS e WHERE e.`rid`=#{rid,jdbcType=INTEGER};
   </select>
-  <select id="selectPridByRid" resultType="java.lang.Integer" parameterType="int" >
+  <select id="selectPridByRid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
    SELECT e.`prid` FROM eper_role AS e WHERE e.`rid`=#{rid,jdbcType=INTEGER};
   </select>
   <update id="updatePowerByPrid" parameterType="java.lang.Object" >

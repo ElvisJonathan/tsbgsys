@@ -36,7 +36,7 @@ public class EuserInfoServiceImpl implements EuserInfoService {
     }
 
     @Override
-    public int selectuidbyuserCode(String userCode) {
+    public Integer selectuidbyuserCode(String userCode) {
         return euserInfoMapper.selectuidbyuserCode(userCode);
     }
 
