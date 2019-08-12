@@ -81,14 +81,21 @@ public class JurisdictionController {
         //成功获取了工号
         String userCode = powerPackage.getEuserInfo().getUserCode();
         //成功获取了data数组
-        String[] data = powerPackage.getData();
+        Object[] data = powerPackage.getData();//data的长度为前端传来的字符个数
+        //由于只能从前端获取OBJ类型的数组所以要转为String类型的做字符串截取
+        String[] data2 = new String[data.length];
+        for (int i=0;i<=data2.length-1;i++){
+            if (data[i]!=null){
+                data2[i]=data[i].toString();
+            }
+        }
         //创建alist用于存data值
         List<String> alist = new ArrayList<String>();
         //循环遍历加元素
-        for (int i=0;i<=data.length-1;i++){
+        for (int i=0;i<=data2.length-1;i++){
             //不为空的情况下加
-            if (data[i]!=null){
-                alist.add(data[i].substring(6,7));
+            if (data2[i]!=null){
+                alist.add(data2[i].substring(6,7));//根据现有数据做截取，特定条件改数字
             }
         }
         //验证输出的alist

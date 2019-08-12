@@ -11,7 +11,7 @@ public class PowerPackage {
 
     private EuserInfo euserInfo;
 
-    private String[] data;
+    private Object[] data;
 
     public EuserInfo getEuserInfo() {
         return euserInfo;
@@ -21,11 +21,11 @@ public class PowerPackage {
         this.euserInfo = euserInfo;
     }
 
-    public String[] getData() {
+    public Object[] getData() {
         return data;
     }
 
-    public void setData(String[] data) {
+    public void setData(Object[] data) {
         this.data = data;
     }
 }
