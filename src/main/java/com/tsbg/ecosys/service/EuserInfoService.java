@@ -35,4 +35,7 @@ public interface EuserInfoService {
 
     //查询用户列表
     List<EuserInfo> selectEuserList();
+
+    //管理员停用和启用用户
+    int setEcoUserByUserCode(@Param("status") int status,@Param("userCode") String userCode);
 }

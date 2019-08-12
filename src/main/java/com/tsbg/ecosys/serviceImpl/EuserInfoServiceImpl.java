@@ -59,4 +59,9 @@ public class EuserInfoServiceImpl implements EuserInfoService {
     public List<EuserInfo> selectEuserList() {
         return euserInfoMapper.selectEuserList();
     }
+
+    @Override
+    public int setEcoUserByUserCode(int status, String userCode) {
+        return euserInfoMapper.setEcoUserByUserCode(status,userCode);
+    }
 }

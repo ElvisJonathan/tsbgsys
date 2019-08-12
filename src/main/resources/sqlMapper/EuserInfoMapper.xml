@@ -220,4 +220,7 @@
   <select id="selectEuserList" resultMap="BaseResultMap">
     SELECT e.uid,e.user_code,e.user_name,e.gender,e.phone_number,e.mail_address,e.status,e.create_time FROM euser_info AS e;
   </select>
+  <update id="setEcoUserByUserCode"  >
+    UPDATE euser_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR};
+  </update>
 </mapper>
