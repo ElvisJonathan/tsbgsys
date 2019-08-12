@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.mapper.EcooperationMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.Ecooperation" >
+    <id column="coid" property="coid" jdbcType="INTEGER" />
+    <result column="partner_no" property="partnerNo" jdbcType="INTEGER" />
+    <result column="partner_cname" property="partnerCname" jdbcType="VARCHAR" />
+    <result column="partner_callintime" property="partnerCallintime" jdbcType="DATE" />
+    <result column="partner_BD_owner" property="partnerBdOwner" jdbcType="VARCHAR" />
+    <result column="partner_costage" property="partnerCostage" jdbcType="VARCHAR" />
+    <result column="sign_contract" property="signContract" jdbcType="INTEGER" />
+    <result column="contract_date" property="contractDate" jdbcType="VARCHAR" />
+    <result column="entrust" property="entrust" jdbcType="INTEGER" />
+    <result column="entrust_name" property="entrustName" jdbcType="VARCHAR" />
+    <result column="partner_awarding" property="partnerAwarding" jdbcType="INTEGER" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="co_type" property="coType" jdbcType="VARCHAR" />
+    <result column="co_progress" property="coProgress" jdbcType="VARCHAR" />
+    <result column="fii_codepartment" property="fiiCodepartment" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    coid, partner_no, partner_cname, partner_callintime, partner_BD_owner, partner_costage,
+    sign_contract, contract_date, entrust, entrust_name, partner_awarding, project_name, 
+    co_type, co_progress, fii_codepartment, create_time, update_time, creater, updater, 
+    remark, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ecooperation
+    where coid = #{coid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ecooperation
+    where coid = #{coid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.ecosys.model.Ecooperation" >
+    insert into ecooperation (coid, partner_no, partner_cname, 
+      partner_callintime, partner_BD_owner, partner_costage,
+      sign_contract, contract_date, entrust, 
+      entrust_name, partner_awarding, project_name, 
+      co_type, co_progress, fii_codepartment, 
+      create_time, update_time, creater, 
+      updater, remark, status
+      )
+    values (#{coid,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerCname,jdbcType=VARCHAR}, 
+      #{partnerCallintime,jdbcType=DATE}, #{partnerBdOwner,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR}, 
+      #{signContract,jdbcType=INTEGER}, #{contractDate,jdbcType=VARCHAR}, #{entrust,jdbcType=INTEGER}, 
+      #{entrustName,jdbcType=VARCHAR}, #{partnerAwarding,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, 
+      #{coType,jdbcType=VARCHAR}, #{coProgress,jdbcType=VARCHAR}, #{fiiCodepartment,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
+      #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.Ecooperation" >
+    insert into ecooperation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coid != null" >
+        coid,
+      </if>
+      <if test="partnerNo != null" >
+        partner_no,
+      </if>
+      <if test="partnerCname != null" >
+        partner_cname,
+      </if>
+      <if test="partnerCallintime != null" >
+        partner_callintime,
+      </if>
+      <if test="partnerBdOwner != null" >
+        partner_BD_owner,
+      </if>
+      <if test="partnerCostage != null" >
+        partner_costage,
+      </if>
+      <if test="signContract != null" >
+        sign_contract,
+      </if>
+      <if test="contractDate != null" >
+        contract_date,
+      </if>
+      <if test="entrust != null" >
+        entrust,
+      </if>
+      <if test="entrustName != null" >
+        entrust_name,
+      </if>
+      <if test="partnerAwarding != null" >
+        partner_awarding,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="coType != null" >
+        co_type,
+      </if>
+      <if test="coProgress != null" >
+        co_progress,
+      </if>
+      <if test="fiiCodepartment != null" >
+        fii_codepartment,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coid != null" >
+        #{coid,jdbcType=INTEGER},
+      </if>
+      <if test="partnerNo != null" >
+        #{partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCname != null" >
+        #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCallintime != null" >
+        #{partnerCallintime,jdbcType=DATE},
+      </if>
+      <if test="partnerBdOwner != null" >
+        #{partnerBdOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCostage != null" >
+        #{partnerCostage,jdbcType=VARCHAR},
+      </if>
+      <if test="signContract != null" >
+        #{signContract,jdbcType=INTEGER},
+      </if>
+      <if test="contractDate != null" >
+        #{contractDate,jdbcType=VARCHAR},
+      </if>
+      <if test="entrust != null" >
+        #{entrust,jdbcType=INTEGER},
+      </if>
+      <if test="entrustName != null" >
+        #{entrustName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerAwarding != null" >
+        #{partnerAwarding,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="coType != null" >
+        #{coType,jdbcType=VARCHAR},
+      </if>
+      <if test="coProgress != null" >
+        #{coProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="fiiCodepartment != null" >
+        #{fiiCodepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.model.Ecooperation" >
+    update ecooperation
+    <set >
+      <if test="partnerNo != null" >
+        partner_no = #{partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCname != null" >
+        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCallintime != null" >
+        partner_callintime = #{partnerCallintime,jdbcType=DATE},
+      </if>
+      <if test="partnerBdOwner != null" >
+        partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCostage != null" >
+        partner_costage = #{partnerCostage,jdbcType=VARCHAR},
+      </if>
+      <if test="signContract != null" >
+        sign_contract = #{signContract,jdbcType=INTEGER},
+      </if>
+      <if test="contractDate != null" >
+        contract_date = #{contractDate,jdbcType=VARCHAR},
+      </if>
+      <if test="entrust != null" >
+        entrust = #{entrust,jdbcType=INTEGER},
+      </if>
+      <if test="entrustName != null" >
+        entrust_name = #{entrustName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerAwarding != null" >
+        partner_awarding = #{partnerAwarding,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="coType != null" >
+        co_type = #{coType,jdbcType=VARCHAR},
+      </if>
+      <if test="coProgress != null" >
+        co_progress = #{coProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="fiiCodepartment != null" >
+        fii_codepartment = #{fiiCodepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where coid = #{coid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Ecooperation" >
+    update ecooperation
+    set partner_no = #{partnerNo,jdbcType=INTEGER},
+      partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      partner_callintime = #{partnerCallintime,jdbcType=DATE},
+      partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
+      partner_costage = #{partnerCostage,jdbcType=VARCHAR},
+      sign_contract = #{signContract,jdbcType=INTEGER},
+      contract_date = #{contractDate,jdbcType=VARCHAR},
+      entrust = #{entrust,jdbcType=INTEGER},
+      entrust_name = #{entrustName,jdbcType=VARCHAR},
+      partner_awarding = #{partnerAwarding,jdbcType=INTEGER},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      co_type = #{coType,jdbcType=VARCHAR},
+      co_progress = #{coProgress,jdbcType=VARCHAR},
+      fii_codepartment = #{fiiCodepartment,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where coid = #{coid,jdbcType=INTEGER}
+  </update>
+</mapper>
