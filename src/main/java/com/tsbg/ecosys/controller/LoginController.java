@@ -35,9 +35,10 @@ public class LoginController {
                 //成功登录返回用户名给前端
                 String userName = euserInfoService.selectUserNameByUserCode(userCode);
                 //成功登录返回成功码0并且提示成功
-                resultResponse = new ResultResponse(0,"用户名和密码存在成功登录！",userName);
+                resultResponse = new ResultResponse(0,"用户名和密码存在成功登录！",userName,userCode);
                 //设置当前用户的登录session
-                session.setAttribute("User",userName);
+                session.setAttribute("userName",userName);
+                session.setAttribute("userCode",userCode);
                 return resultResponse;
             }
         }
