@@ -4,6 +4,7 @@ import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.PowerPackage;
 import com.tsbg.ecosys.model.EuserInfo;
 import com.tsbg.ecosys.service.EperRoleService;
+import com.tsbg.ecosys.service.EpermissionService;
 import com.tsbg.ecosys.service.EuserInfoService;
 import com.tsbg.ecosys.service.EuserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class JurisdictionController {
     private EuserRoleService euserRoleService;
     @Autowired
     private EperRoleService eperRoleService;
+    @Autowired
+    private EpermissionService epermissionService;
+
     /**
      * 权限详情
      */
@@ -34,7 +38,6 @@ public class JurisdictionController {
         ResultResponse resultResponse = null;
         //获取前端传来的工号
         String userCode = euserInfo.getUserCode();
-        System.out.println("收到的userCode为："+userCode);
         if (userCode!=null){
             //通过userCode查询当前用户的uid
             Integer uid = euserInfoService.selectuidbyuserCode(userCode);
@@ -46,10 +49,17 @@ public class JurisdictionController {
                 if (rid!=null){
                     //通过角色rid查询对应的权限id
                     List<Integer> pid = eperRoleService.selectPidByRid(rid);
-                    //如果pid不为null,则把查询出的list返回给前端
-                    if (pid != null){
-                        //将用户名和pid返给前端
-                        resultResponse = new ResultResponse(0,"提示信息：成功查询到权限信息",pid,uName);
+                    if (pid!=null){
+                        //根据权限id查询对应的权限详情
+                        List<String> plist = epermissionService.selectPowerDetailByPid(pid);
+                        //如果plist不为null,则把查询出的list返回给前端
+                        if (plist != null){
+                            //将用户名和权限详情返给前端
+                            resultResponse = new ResultResponse(0,"提示信息：成功查询到权限信息",plist,uName);
+                            return resultResponse;
+                        }
+                        //plist为null则是未查询到完整的权限信息只返回用户名给前端
+                        resultResponse = new ResultResponse(500,"提示信息：权限信息不完整",uName);
                         return resultResponse;
                     }
                     //pid为null则是未查询到权限只返回用户名给前端
