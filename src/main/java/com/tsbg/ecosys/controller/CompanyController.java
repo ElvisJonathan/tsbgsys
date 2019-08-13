@@ -5,6 +5,8 @@ import com.tsbg.ecosys.model.EcInfo;
 import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.service.EcInfoService;
 import com.tsbg.ecosys.service.EcooperationService;
+import com.tsbg.ecosys.util.PageRequest;
+import com.tsbg.ecosys.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,6 +75,33 @@ public class CompanyController {
             return resultResponse;
         }
         resultResponse = new ResultResponse(502,"提示信息：请输入信息");
+        return resultResponse;
+    }
+
+    /**
+     * 分页查询公司信息
+     * @param pageQuery
+     * @return
+     */
+    @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse findPage(@RequestBody PageRequest pageQuery) {
+        ResultResponse resultResponse = null;
+        //需要前台传参pageQuery:包含pageNum和pageSize 即起始页码和页面容量
+        /*PageRequest pageQuery = new PageRequest();
+        pageQuery.setPageNum(1);
+        pageQuery.setPageSize(5);*/
+        if (pageQuery.getPageNum()!=0 && pageQuery.getPageSize()!=0){
+            //根据给到的分页条件查询公司信息
+            PageResult page = ecInfoService.findPage(pageQuery);
+            if (page!=null){
+                resultResponse = new ResultResponse(0,"提示信息：成功查询到公司信息",page);
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(501,"提示信息：未查询到公司信息");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(502,"提示信息：分页条件不明确异常");
         return resultResponse;
     }
 }

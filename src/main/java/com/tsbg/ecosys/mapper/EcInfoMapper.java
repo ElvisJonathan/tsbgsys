@@ -3,6 +3,8 @@ package com.tsbg.ecosys.mapper;
 import com.tsbg.ecosys.model.EcInfo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface EcInfoMapper {
     int deleteByPrimaryKey(Integer cid);
@@ -19,4 +21,10 @@ public interface EcInfoMapper {
 
     //管理员隐藏个别公司
     int updateByCid(int cid);
+
+    //查询公司列表
+    List<EcInfo> selectAll();
+
+    //分页查询公司列表
+    List<EcInfo> selectPage();
 }

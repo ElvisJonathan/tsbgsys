@@ -13,3 +13,10 @@ mybatis:
   thymeleaf:
     cache: false
     mode: HTML
+
+# pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

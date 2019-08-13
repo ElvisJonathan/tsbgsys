@@ -271,4 +271,9 @@
   <update id="updateByCid" parameterType="int" >
     UPDATE ec_info AS e SET e.`status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
   </update>
+  <select id="selectPage"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ec_info
+  </select>
 </mapper>
