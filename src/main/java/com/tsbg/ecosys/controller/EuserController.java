@@ -70,4 +70,48 @@ public class EuserController {
         resultResponse = new ResultResponse(502,"提示信息：未获取到工号！");
         return resultResponse;
     }
+
+
+    /**
+     * 查询个人信息
+     */
+    @RequestMapping(value = "/searchUserMsg", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse  searchUser(@RequestBody EuserInfo euserInfo) {
+        ResultResponse resultResponse = null;
+        //通过前端传来的用户工号查询用户信息
+        String userCode = euserInfo.getUserCode();
+        if (userCode!=null){
+           EuserInfo info = euserInfoService.selectUserMsgbyUserCode(userCode);
+           if (info!=null){
+               resultResponse = new ResultResponse(0,"提示信息：成功查询到用户个人信息",info);
+               return resultResponse;
+           }
+            resultResponse = new ResultResponse(501,"提示信息：未查询到用户个人信息");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(502,"提示信息：未收到工号信息");
+        return resultResponse;
+    }
+
+    /**
+     * 修改个人信息
+     */
+    @RequestMapping(value = "/modifyUserMsg", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse modifyUser(@RequestBody EuserInfo euserInfo){
+        ResultResponse resultResponse = null;
+        //根据前端传来的工号修改用户信息
+        if (euserInfo.getUserCode()!=null){
+           int num = euserInfoService.updateByUserCodeSelective(euserInfo);
+           if (num>0){
+               resultResponse = new ResultResponse(0,"提示信息：修改用户信息成功！");
+               return resultResponse;
+           }
+            resultResponse = new ResultResponse(501,"提示信息：修改用户信息失败！");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(502,"提示信息：请输入修改条件！");
+        return resultResponse;
+    }
 }

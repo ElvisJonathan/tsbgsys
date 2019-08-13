@@ -223,4 +223,53 @@
   <update id="setEcoUserByUserCode"  >
     UPDATE euser_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR};
   </update>
+  <select id="selectUserMsgbyUserCode" resultMap="BaseResultMap" parameterType="String">
+    SELECT e.`user_code`,e.`mail_address`,e.`user_name`,e.`phone_number`,e.`gender`,e.`aid` FROM euser_info AS e
+     WHERE e.`user_code` = #{userCode,jdbcType=VARCHAR};
+  </select>
+  <update id="updateByUserCodeSelective" parameterType="com.tsbg.ecosys.model.EuserInfo" >
+    update euser_info
+    <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="isManager != null" >
+        is_manager = #{isManager,jdbcType=INTEGER},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddress != null" >
+        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="aid != null" >
+        aid = #{aid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_code = #{userCode,jdbcType=VARCHAR};
+  </update>
 </mapper>

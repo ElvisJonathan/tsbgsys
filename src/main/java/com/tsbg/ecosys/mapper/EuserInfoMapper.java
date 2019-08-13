@@ -46,4 +46,10 @@ public interface EuserInfoMapper {
 
     //管理员停用和启用用户
     int setEcoUserByUserCode(@Param("status") int status,@Param("userCode") String userCode);
+
+    //根据工号查询用户个人信息
+    EuserInfo selectUserMsgbyUserCode(String userCode);
+
+    //根据工号修改个人信息
+    int updateByUserCodeSelective(EuserInfo euserInfo);
 }
