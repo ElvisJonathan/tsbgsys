@@ -29,6 +29,23 @@
     partner_cturnover, partner_cregion, Partner_cindustry, status, create_time, update_time, 
     creater, updater, remark
   </sql>
+  <select id="selectCinfo" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.model.EcInfo">
+    select * from ec_info
+    <where>
+      <if test = "partnerCname != null and partnerCname != ''">
+      partner_cname like #{partnerCname}
+      </if>
+      <if test="partnerCproduct != null and partnerCproduct != ''">
+        and partner_cproduct like #{partnerCproduct}
+      </if>
+      <if test="partnerCregion != null and  partnerCregion != ''">
+        and  partner_cregion like #{partnerCregion}
+      </if>
+      <if test="partnerCindustry != null  and partnerCindustry  != ''">
+        and Partner_cindustry like #{partnerCindustry}
+      </if>
+    </where>
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

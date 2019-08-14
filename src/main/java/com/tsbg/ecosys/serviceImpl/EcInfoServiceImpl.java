@@ -35,6 +35,12 @@ public class EcInfoServiceImpl implements EcInfoService {
         return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest));
     }
 
+    @Override
+    public List<EcInfo> selectCinfo(EcInfo ecInfo) {
+
+        return ecInfoMapper.selectCinfo(ecInfo);
+    }
+
     /**
      * 调用分页插件完成分页
      * @param pageRequest

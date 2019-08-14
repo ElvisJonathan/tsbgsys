@@ -30,6 +30,9 @@
     co_type, co_progress, fii_codepartment, create_time, update_time, creater, updater, 
     remark, status
   </sql>
+  <select id="selectCooinfo" resultMap="BaseResultMap" parameterType="Integer">
+    select * from ecooperation where partner_no = #{partnerNo}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

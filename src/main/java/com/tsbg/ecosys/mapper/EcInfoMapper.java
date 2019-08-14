@@ -27,4 +27,7 @@ public interface EcInfoMapper {
 
     //分页查询公司列表
     List<EcInfo> selectPage();
+
+    //查询公司信息
+    List<EcInfo>selectCinfo(EcInfo ecInfo);
 }

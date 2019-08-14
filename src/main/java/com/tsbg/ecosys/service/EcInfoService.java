@@ -23,4 +23,6 @@ public interface EcInfoService {
      * @return PageResult 自定义，统一分页查询结果
      */
     PageResult findPage(PageRequest pageRequest);
+
+    List<EcInfo>selectCinfo(EcInfo ecInfo);
 }

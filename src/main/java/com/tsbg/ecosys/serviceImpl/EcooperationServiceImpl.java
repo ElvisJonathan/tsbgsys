@@ -6,6 +6,8 @@ import com.tsbg.ecosys.service.EcooperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EcooperationServiceImpl implements EcooperationService {
 
@@ -15,5 +17,11 @@ public class EcooperationServiceImpl implements EcooperationService {
     @Override
     public int insertSelective(Ecooperation record) {
         return ecooperationMapper.insertSelective(record);
+    }
+
+    @Override
+    public List<Ecooperation> selectCooinfo(Integer partnerNo) {
+
+        return ecooperationMapper.selectCooinfo(partnerNo);
     }
 }

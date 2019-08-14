@@ -4,6 +4,8 @@ package com.tsbg.ecosys.mapper;
 import com.tsbg.ecosys.model.Ecooperation;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface EcooperationMapper {
     int deleteByPrimaryKey(Integer coid);
@@ -17,4 +19,6 @@ public interface EcooperationMapper {
     int updateByPrimaryKeySelective(Ecooperation record);
 
     int updateByPrimaryKey(Ecooperation record);
+
+    List<Ecooperation> selectCooinfo(Integer partnerNo);
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 公司相关
@@ -103,5 +104,47 @@ public class CompanyController {
         }
         resultResponse = new ResultResponse(502,"提示信息：分页条件不明确异常");
         return resultResponse;
+    }
+
+    //查询公司信息
+    @RequestMapping("/selectCinfo")
+    @ResponseBody
+    public List<EcInfo> getEcInf( EcInfo ecInfo)
+    {
+        EcInfo info = new EcInfo();
+        info.setPartnerCname('%'+"est"+'%');
+        if (info != null) {
+            List<EcInfo> info1 = (List<EcInfo>) ecInfoService.selectCinfo(ecInfo);
+            return info1;
+        }
+        else
+        {
+            String note = "提示信息：查询条件为空，无法查出联系人信息，请重新输入查询条件";
+            System.out.println(note);
+        }
+        return null;
+    }
+
+    //查询公司联系人
+    //@RequestMapping("/selectCooinfo/{partnerNo}")
+    @RequestMapping("/selectCooinfo")
+    @ResponseBody
+    //public List<Ecooperation> selectCooinfo(@PathVariable Integer partnerNo)
+    public List<Ecooperation> selectCooinfo( Integer partnerNo)
+    {
+        Integer no = 6 ;
+        //Integer no = null ;
+        if(no != null) {
+            List<Ecooperation> info2 = ecooperationService.selectCooinfo(no);
+            return info2;
+        }
+        else
+        {
+            String note = "提示信息：查询条件为空，无法查出联系人信息，请重新输入查询条件";
+            System.out.println(note);
+        }
+        return null;
+        //List<Ecooperation> info2 = ecooperationService.selectCooinfo(partnerNo);
+        //return info2;
     }
 }
