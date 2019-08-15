@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.mapper.EccontactsMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.Eccontacts" >
+    <id column="ccid" property="ccid" jdbcType="INTEGER" />
+    <result column="partner_no" property="partnerNo" jdbcType="INTEGER" />
+    <result column="partner_cname" property="partnerCname" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="mail_address" property="mailAddress" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ccid, partner_no, partner_cname, name, title, gender, phone_number, mail_address, 
+    create_time, update_time, creater, updater, status, remark
+  </sql>
+
+<!--  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >-->
+<!--    select -->
+<!--    <include refid="Base_Column_List" />-->
+<!--    from eccontacts-->
+<!--    where ccid = #{ccid,jdbcType=INTEGER}-->
+<!--  </select>-->
+
+<!--  通过"公司名称"带出联系人 -->
+  <select id="selectContacts" resultMap="BaseResultMap" parameterType="Integer">
+    select * from eccontacts where partner_no = #{partnerNo}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from eccontacts
+    where ccid = #{ccid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.ecosys.model.Eccontacts" >
+    insert into eccontacts (ccid, partner_no, partner_cname, 
+      name, title, gender, 
+      phone_number, mail_address, create_time, 
+      update_time, creater, updater, 
+      status, remark)
+    values (#{ccid,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerCname,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{mailAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.Eccontacts" >
+    insert into eccontacts
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ccid != null" >
+        ccid,
+      </if>
+      <if test="partnerNo != null" >
+        partner_no,
+      </if>
+      <if test="partnerCname != null" >
+        partner_cname,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="mailAddress != null" >
+        mail_address,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ccid != null" >
+        #{ccid,jdbcType=INTEGER},
+      </if>
+      <if test="partnerNo != null" >
+        #{partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCname != null" >
+        #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddress != null" >
+        #{mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.model.Eccontacts" >
+    update eccontacts
+    <set >
+      <if test="partnerNo != null" >
+        partner_no = #{partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCname != null" >
+        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddress != null" >
+        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ccid = #{ccid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Eccontacts" >
+    update eccontacts
+    set partner_no = #{partnerNo,jdbcType=INTEGER},
+      partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      mail_address = #{mailAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where ccid = #{ccid,jdbcType=INTEGER}
+  </update>
+</mapper>

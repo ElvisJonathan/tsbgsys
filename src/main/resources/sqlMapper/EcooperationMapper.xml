@@ -30,6 +30,7 @@
     co_type, co_progress, fii_codepartment, create_time, update_time, creater, updater, 
     remark, status
   </sql>
+<!--  查询合作关系  -->
   <select id="selectCooinfo" resultMap="BaseResultMap" parameterType="Integer">
     select * from ecooperation where partner_no = #{partnerNo}
   </select>
