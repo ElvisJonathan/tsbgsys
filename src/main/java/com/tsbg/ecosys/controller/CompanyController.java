@@ -113,63 +113,78 @@ public class CompanyController {
     //查询公司信息
     @RequestMapping("/selectCinfo")
     @ResponseBody
-    public List<EcInfo> getEcInf(@RequestBody EcInfo ecInfo)
-    {
-        EcInfo info = new EcInfo();
-        info.setPartnerCname('%'+"est"+'%');
-        if (info != null) {
-            List<EcInfo> info1 = (List<EcInfo>) ecInfoService.selectCinfo(ecInfo);
-            return info1;
+    public ResultResponse searchCinfo(@RequestBody EcInfo ecInfo) {
+        ResultResponse resultResponse = null;
+        //通过前端传来的信息查询对应的公司信息
+        String partnerCname = ecInfo.getPartnerCname();
+        String partnerCregion = ecInfo.getPartnerCregion();
+        String partnerCproduct = ecInfo.getPartnerCproduct();
+        String partnerCindustry = ecInfo.getPartnerCindustry();
+        if (partnerCname != null || partnerCregion != null || partnerCproduct != null || partnerCindustry != null) {
+            List<EcInfo> infod1 = ecInfoService.selectCinfo(ecInfo);
+            List<EcInfo> infod2 = ecInfoService.selectCinfo(ecInfo);
+            List<EcInfo> infod3 = ecInfoService.selectCinfo(ecInfo);
+            List<EcInfo> infod4 = ecInfoService.selectCinfo(ecInfo);
+            if (infod1 != null) {
+                resultResponse = new ResultResponse(0, "提示信息：成功查询到公司信息",infod1);
+                return resultResponse;
+            }
+            else if(infod2 != null){
+                resultResponse = new ResultResponse(0, "提示信息：成功查询到公司信息",infod2);
+                return resultResponse;
+            }
+            else if (infod3 != null){
+                resultResponse = new ResultResponse(0, "提示信息：成功查询到公司信息",infod3);
+                return resultResponse;
+            }
+            else if (infod4 != null){
+                resultResponse = new ResultResponse(0, "提示信息：成功查询到公司信息",infod4);
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(501, "提示信息：未查询到公司信息");
+            return resultResponse;
         }
-        else
-        {
-            String note = "提示信息：查询条件为空，无法查出联系人信息，请重新输入查询条件";
-            System.out.println(note);
-        }
-        return null;
+        resultResponse = new ResultResponse(502, "提示信息：未收到id信息");
+        return resultResponse;
     }
 
     //查询合作关系
-    //@RequestMapping("/selectCooinfo/{partnerNo}")
     @RequestMapping("/selectCooinfo")
     @ResponseBody
-    //public List<Ecooperation> selectCooinfo(@PathVariable Integer partnerNo)
-    public List<Ecooperation> selectCooinfo(@RequestBody Integer partnerNo)
+    public ResultResponse searchCooinfo(@RequestBody Ecooperation ecooperation)
     {
-        Integer no1 = 6 ;
-        //Integer no1 = null ;
-        if(no1 != null) {
-            List<Ecooperation> info2 = ecooperationService.selectCooinfo(no1);
-            return info2;
+        ResultResponse resultResponse = null;
+        //通过前端传来的公司id查询对应的合作关系
+        Integer partnerNo = ecooperation.getPartnerNo();
+        if(partnerNo != null) {
+            List<Ecooperation> info = ecooperationService.selectCooinfo(partnerNo);
+            if (info != null) {
+                resultResponse = new ResultResponse(0, "提示信息：成功查询到合作关系信息", info);
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(501, "提示信息：未查询到合作关系信息");
+            return resultResponse;
         }
-        else
-        {
-            String note2 = "提示信息：查询条件为空，无法查出合作信息，请重新输入查询条件";
-            System.out.println(note2);
-        }
-        return null;
-        //List<Ecooperation> info2 = ecooperationService.selectCooinfo(partnerNo);
-        //return info2;
+        resultResponse = new ResultResponse(502,"提示信息：未收到id信息");
+        return resultResponse;
     }
-
-    //查询公司联系人
-    //@RequestMapping("/selectContacts/{partnerNo}")
+    //查询联系人信息
     @RequestMapping("/selectContacts")
-    //public List<Eccontacts> selectContacts(@PathVariable Integer partnerNo)
-    public List<Eccontacts> selectContacts( Integer partnerNo)
-    {
-        Integer no3 = 6;
-        if (no3 != null)
-        {
-            List<Eccontacts> contacts = eccontactsService.selectContacts(no3);
-            return contacts;
+    @ResponseBody
+    public ResultResponse searchContacts(@RequestBody Eccontacts eccontacts){
+        ResultResponse resultResponse = null;
+        //通过前端传来的公司id查询对应的联系人信息
+        Integer partnerNo = eccontacts.getPartnerNo();
+        if (partnerNo != null) {
+            List<Eccontacts> info3 = eccontactsService.selectContacts(partnerNo);
+            if (info3 != null) {
+                resultResponse = new ResultResponse(0, "提示信息：成功查询到联系人信息", info3);
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(501, "提示信息：未查询到联系人信息");
+            return resultResponse;
         }
-        else
-        {
-            String note3 = "提示信息：查询条件为空，无法查出联系人信息，请重新输入查询条件";
-            System.out.println(note3);
-        }
-        return null;
+        resultResponse = new ResultResponse(502,"提示信息：未收到id信息");
+        return resultResponse;
     }
-
 }

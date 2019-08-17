@@ -33,18 +33,23 @@
     select * from ec_info
     <where>
       <if test = "partnerCname != null and partnerCname != ''">
-      partner_cname like #{partnerCname}
+        partner_cname like "%"#{partnerCname}"%"
       </if>
       <if test="partnerCproduct != null and partnerCproduct != ''">
-        and partner_cproduct like #{partnerCproduct}
+        or partner_cproduct like "%"#{partnerCproduct}"%"
       </if>
       <if test="partnerCregion != null and  partnerCregion != ''">
-        and  partner_cregion like #{partnerCregion}
+        or  partner_cregion like "%"#{partnerCregion}"%"
       </if>
       <if test="partnerCindustry != null  and partnerCindustry  != ''">
-        and Partner_cindustry like #{partnerCindustry}
+        or Partner_cindustry like "%"#{partnerCindustry}"%"
       </if>
     </where>
+  </select>
+  <select id="selectPage"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ec_info
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -288,9 +293,4 @@
   <update id="updateByCid" parameterType="int" >
     UPDATE ec_info AS e SET e.`status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
   </update>
-  <select id="selectPage"  resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from ec_info
-  </select>
 </mapper>

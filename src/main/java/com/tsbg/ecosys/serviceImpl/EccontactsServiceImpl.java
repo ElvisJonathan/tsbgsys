@@ -13,11 +13,12 @@ import java.util.List;
 public class EccontactsServiceImpl implements EccontactsService {
 
     @Autowired
-    private EccontactsMapper ecContacts;
+    private EccontactsMapper eccontactsMapper;
+
 
     @Override
     public List<Eccontacts> selectContacts(Integer partnerNo) {
-        return ecContacts.selectContacts(partnerNo);
-    }
+        return eccontactsMapper.selectContacts(partnerNo);
 
+    }
 }

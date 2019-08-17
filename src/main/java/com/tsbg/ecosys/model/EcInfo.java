@@ -115,9 +115,7 @@ public class EcInfo {
         this.partnerCtech = partnerCtech == null ? null : partnerCtech.trim();
     }
 
-    public String getPartnerCproduct() {
-        return partnerCproduct;
-    }
+    public String getPartnerCproduct() { return partnerCproduct; }
 
     public void setPartnerCproduct(String partnerCproduct) {
         this.partnerCproduct = partnerCproduct == null ? null : partnerCproduct.trim();

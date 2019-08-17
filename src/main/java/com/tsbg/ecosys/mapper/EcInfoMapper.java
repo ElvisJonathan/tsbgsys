@@ -29,5 +29,9 @@ public interface EcInfoMapper {
     List<EcInfo> selectPage();
 
     //查询公司信息
-    List<EcInfo>selectCinfo(EcInfo ecInfo);
+    List<EcInfo> selectCinfoBypartnerCname(String partnerCname);
+    List<EcInfo> selectCinfoBypartnerCproduct(String partnerCproduct);
+    List<EcInfo> selectCinfoBypartnerCregion(String partnerCregion);
+    List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry);
+    List<EcInfo> selectCinfo(EcInfo ecinfo);
 }

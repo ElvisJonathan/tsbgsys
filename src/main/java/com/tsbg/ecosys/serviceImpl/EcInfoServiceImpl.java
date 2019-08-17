@@ -35,10 +35,31 @@ public class EcInfoServiceImpl implements EcInfoService {
         return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest));
     }
 
-    @Override
-    public List<EcInfo> selectCinfo(EcInfo ecInfo) {
 
-        return ecInfoMapper.selectCinfo(ecInfo);
+
+
+    @Override
+    public List<EcInfo> selectCinfo(EcInfo ecinfo)
+    {
+        return ecInfoMapper.selectCinfo(ecinfo);
+    }
+    @Override
+    public List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry) {
+
+        return ecInfoMapper.selectCinfoBypartnerCindustry(partnerCindustry);
+    }
+    @Override
+    public List<EcInfo> selectCinfoBypartnerCregion(String partnerCregion) {
+
+        return ecInfoMapper.selectCinfoBypartnerCregion(partnerCregion);
+    }
+    @Override
+    public List<EcInfo> selectCinfoBypartnerCproduct(String partnerCproduct) {
+        return ecInfoMapper.selectCinfoBypartnerCproduct(partnerCproduct);
+    }
+    @Override
+    public List<EcInfo> selectCinfoBypartnerCname(String partnerCname) {
+        return ecInfoMapper.selectCinfoBypartnerCname(partnerCname);
     }
 
     /**

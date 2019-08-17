@@ -24,5 +24,10 @@ public interface EcInfoService {
      */
     PageResult findPage(PageRequest pageRequest);
 
-    List<EcInfo>selectCinfo(EcInfo ecInfo);
+
+    List<EcInfo> selectCinfoBypartnerCname(String partnerCname);
+    List<EcInfo> selectCinfoBypartnerCproduct(String partnerCproduct);
+    List<EcInfo> selectCinfoBypartnerCregion(String partnerCregion);
+    List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry);
+    List<EcInfo> selectCinfo(EcInfo ecinfo);
 }
