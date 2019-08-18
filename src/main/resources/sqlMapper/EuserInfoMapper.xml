@@ -272,4 +272,24 @@
     </set>
     where user_code = #{userCode,jdbcType=VARCHAR};
   </update>
+
+  <update id="modifyPasswordByUsername" parameterType="com.tsbg.ecosys.model.EuserInfo">
+    update euser_info
+    <set>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_code=#{userCode,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from euser_info
+    where user_code = #{userCode,jdbcType=VARCHAR}
+  </select>
 </mapper>

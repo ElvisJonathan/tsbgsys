@@ -44,4 +44,9 @@ public interface EuserInfoService {
 
     //根据工号修改个人信息
     int updateByUserCodeSelective(EuserInfo euserInfo);
+
+    //修改密码
+    int modifyPasswordByUsername(String userPwd,String userCode);
+
+    EuserInfo selectByUserCode(String userCode);
 }

@@ -3,6 +3,8 @@ package com.tsbg.ecosys.controller;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.EuserInfo;
 import com.tsbg.ecosys.service.EuserInfoService;
+import com.tsbg.ecosys.vo.LoginResultVo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,27 @@ public class LoginController {
         //如果用户名或密码为空或是不存在此用户提示登录失败
         //返回错误状态码500和登录失败消息
         resultResponse = new ResultResponse(500,"用户名或密码错误登录失败！");
+        return resultResponse;
+    }
+
+    //修改密码
+    @ApiOperation(value = "修改密码", notes = "修改密码")
+    @RequestMapping(value = "/modifyPassword", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public ResultResponse modifyPassword(@RequestBody EuserInfo euserInfo) {
+        //初始化构造器
+        ResultResponse resultResponse = null;
+        //获取输入的密码和工号
+        String userCode = euserInfo.getUserCode();
+        String userPwd = euserInfo.getUserPwd();
+        if (userCode != null && userPwd != null) {
+            //修改成功将uid传给页面
+            euserInfoService.modifyPasswordByUsername(userPwd, userCode);
+            EuserInfo ei = euserInfoService.selectByUserCode(userCode);
+            resultResponse = new ResultResponse(0, "", new LoginResultVo(ei.getUserName(),ei.getUserCode(),ei.getUserPwd(), ei.getUid()));
+            return  resultResponse;
+        }
+        resultResponse = new ResultResponse(1,userPwd, userCode);
         return resultResponse;
     }
 }

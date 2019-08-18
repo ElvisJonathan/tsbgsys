@@ -17,18 +17,68 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
-
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     ccid, partner_no, partner_cname, name, title, gender, phone_number, mail_address, 
     create_time, update_time, creater, updater, status, remark
   </sql>
-
-<!--  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >-->
-<!--    select -->
-<!--    <include refid="Base_Column_List" />-->
-<!--    from eccontacts-->
-<!--    where ccid = #{ccid,jdbcType=INTEGER}-->
-<!--  </select>-->
 
 <!--  通过"公司名称"带出联系人 -->
   <select id="selectContacts" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.model.Eccontacts">
@@ -203,4 +253,100 @@
       remark = #{remark,jdbcType=VARCHAR}
     where ccid = #{ccid,jdbcType=INTEGER}
   </update>
+  <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EccontactsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from eccontacts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="countByExample" parameterType="com.tsbg.ecosys.model.example.EccontactsExample" resultType="java.lang.Long">
+    select count(*) from eccontacts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update eccontacts
+    <set>
+      <if test="record.ccid != null">
+        ccid = #{record.ccid,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerNo != null">
+        partner_no = #{record.partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerCname != null">
+        partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.phoneNumber != null">
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailAddress != null">
+        mail_address = #{record.mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null">
+        creater = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updater != null">
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update eccontacts
+    set ccid = #{record.ccid,jdbcType=INTEGER},
+    partner_no = #{record.partnerNo,jdbcType=INTEGER},
+    partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    title = #{record.title,jdbcType=VARCHAR},
+    gender = #{record.gender,jdbcType=INTEGER},
+    phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+    mail_address = #{record.mailAddress,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=DATE},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    creater = #{record.creater,jdbcType=VARCHAR},
+    updater = #{record.updater,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=INTEGER},
+    remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <delete id="deleteByExample" parameterType="com.tsbg.ecosys.model.example.EccontactsExample">
+    delete from eccontacts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
 </mapper>

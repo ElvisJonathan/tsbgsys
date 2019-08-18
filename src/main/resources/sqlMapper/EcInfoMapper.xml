@@ -23,6 +23,64 @@
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
   <sql id="Base_Column_List" >
     cid, partner_cname, partner_cdate, partner_cregistcapital, partner_clist, partner_cscale, 
     partner_caddr, partner_cwebddr, partner_ctech, partner_cproduct, partner_cchannel, 
@@ -292,5 +350,125 @@
   </update>
   <update id="updateByCid" parameterType="int" >
     UPDATE ec_info AS e SET e.`status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
+  </update>
+  <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ec_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="countByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample" resultType="java.lang.Long">
+    select count(*) from ec_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample">
+    delete from ec_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ec_info
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerCname != null">
+        partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCdate != null">
+        partner_cdate = #{record.partnerCdate,jdbcType=DATE},
+      </if>
+      <if test="record.partnerCregistcapital != null">
+        partner_cregistcapital = #{record.partnerCregistcapital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerClist != null">
+        partner_clist = #{record.partnerClist,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerCscale != null">
+        partner_cscale = #{record.partnerCscale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCaddr != null">
+        partner_caddr = #{record.partnerCaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCwebddr != null">
+        partner_cwebddr = #{record.partnerCwebddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCtech != null">
+        partner_ctech = #{record.partnerCtech,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCproduct != null">
+        partner_cproduct = #{record.partnerCproduct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCchannel != null">
+        partner_cchannel = #{record.partnerCchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCturnover != null">
+        partner_cturnover = #{record.partnerCturnover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCregion != null">
+        partner_cregion = #{record.partnerCregion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerCindustry != null">
+        Partner_cindustry = #{record.partnerCindustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null">
+        creater = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updater != null">
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ec_info
+    set cid = #{record.cid,jdbcType=INTEGER},
+    partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+    partner_cdate = #{record.partnerCdate,jdbcType=DATE},
+    partner_cregistcapital = #{record.partnerCregistcapital,jdbcType=VARCHAR},
+    partner_clist = #{record.partnerClist,jdbcType=INTEGER},
+    partner_cscale = #{record.partnerCscale,jdbcType=VARCHAR},
+    partner_caddr = #{record.partnerCaddr,jdbcType=VARCHAR},
+    partner_cwebddr = #{record.partnerCwebddr,jdbcType=VARCHAR},
+    partner_ctech = #{record.partnerCtech,jdbcType=VARCHAR},
+    partner_cproduct = #{record.partnerCproduct,jdbcType=VARCHAR},
+    partner_cchannel = #{record.partnerCchannel,jdbcType=VARCHAR},
+    partner_cturnover = #{record.partnerCturnover,jdbcType=VARCHAR},
+    partner_cregion = #{record.partnerCregion,jdbcType=VARCHAR},
+    Partner_cindustry = #{record.partnerCindustry,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=DATE},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    creater = #{record.creater,jdbcType=VARCHAR},
+    updater = #{record.updater,jdbcType=VARCHAR},
+    remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
   </update>
 </mapper>

@@ -1,7 +1,9 @@
 package com.tsbg.ecosys.mapper;
 
 import com.tsbg.ecosys.model.EcInfo;
+import com.tsbg.ecosys.model.example.EcInfoExample;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -34,4 +36,14 @@ public interface EcInfoMapper {
     List<EcInfo> selectCinfoBypartnerCregion(String partnerCregion);
     List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry);
     List<EcInfo> selectCinfo(EcInfo ecinfo);
+
+    List<EcInfo> selectByExample(EcInfoExample example);
+
+    long countByExample(EcInfoExample example);
+
+    int deleteByExample(EcInfoExample example);
+
+    int updateByExampleSelective(@Param("record") EcInfo record, @Param("example") EcInfoExample example);
+
+    int updateByExample(@Param("record") EcInfo record, @Param("example") EcInfoExample example);
 }

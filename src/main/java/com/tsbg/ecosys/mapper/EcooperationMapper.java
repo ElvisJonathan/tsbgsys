@@ -2,7 +2,9 @@ package com.tsbg.ecosys.mapper;
 
 
 import com.tsbg.ecosys.model.Ecooperation;
+import com.tsbg.ecosys.model.example.EcooperationExample;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +23,14 @@ public interface EcooperationMapper {
     int updateByPrimaryKey(Ecooperation record);
 
     List<Ecooperation> selectCooinfo(Integer partnerNo);
+
+    List<Ecooperation> selectByExample(EcooperationExample example);
+
+    long countByExample(EcooperationExample example);
+
+    int deleteByExample(EcooperationExample example);
+
+    int updateByExampleSelective(@Param("record") Ecooperation record, @Param("example") EcooperationExample example);
+
+    int updateByExample(@Param("record") Ecooperation record, @Param("example") EcooperationExample example);
 }

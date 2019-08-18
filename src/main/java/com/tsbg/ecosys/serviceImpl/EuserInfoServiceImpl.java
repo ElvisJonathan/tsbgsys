@@ -74,4 +74,14 @@ public class EuserInfoServiceImpl implements EuserInfoService {
     public int updateByUserCodeSelective(EuserInfo euserInfo) {
         return euserInfoMapper.updateByUserCodeSelective(euserInfo);
     }
+
+    @Override
+    public int modifyPasswordByUsername(String userPwd, String userCode) {
+        return euserInfoMapper.modifyPasswordByUsername(userPwd,userCode);
+    }
+
+    @Override
+    public EuserInfo selectByUserCode(String userCode) {
+        return euserInfoMapper.selectByUserCode(userCode);
+    }
 }

@@ -6,6 +6,11 @@ spring:
     #schema: database/import.sql
     #sql-script-encoding: utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password:
 
 mybatis:
   mapper-locations: classpath:sqlMapper/*.xml
@@ -20,3 +25,7 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+#Session(5min)
+session:
+  session-expires: 300

@@ -52,4 +52,9 @@ public interface EuserInfoMapper {
 
     //根据工号修改个人信息
     int updateByUserCodeSelective(EuserInfo euserInfo);
+
+    //修改密码
+    int modifyPasswordByUsername(@Param("userPwd") String userPwd, @Param("userCode") String userCode);
+
+    EuserInfo selectByUserCode(@Param("userCode") String userCode);
 }
