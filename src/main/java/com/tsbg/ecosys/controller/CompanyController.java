@@ -85,20 +85,17 @@ public class CompanyController {
 
     /**
      * 分页查询公司信息
-     * @param pageQuery
-     * @return
      */
     @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse findPage(@RequestBody PageRequest pageQuery) {
+    public ResultResponse findPage(@RequestBody PageRequest pageRequest) {
         ResultResponse resultResponse = null;
         //需要前台传参pageQuery:包含pageNum和pageSize 即起始页码和页面容量
-        /*PageRequest pageQuery = new PageRequest();
-        pageQuery.setPageNum(1);
-        pageQuery.setPageSize(5);*/
-        if (pageQuery.getPageNum()!=0 && pageQuery.getPageSize()!=0){
+        System.out.println(pageRequest.getPageNum());//起始页码
+        System.out.println(pageRequest.getPageSize());//页面容量 记得容量小于总条数才会有分页效果
+        if (pageRequest.getPageNum()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
-            PageResult page = ecInfoService.findPage(pageQuery);
+            PageResult page = ecInfoService.findPage(pageRequest);
             if (page!=null){
                 resultResponse = new ResultResponse(0,"提示信息：成功查询到公司信息",page);
                 return resultResponse;

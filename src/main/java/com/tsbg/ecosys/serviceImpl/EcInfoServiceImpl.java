@@ -35,9 +35,6 @@ public class EcInfoServiceImpl implements EcInfoService {
         return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest));
     }
 
-
-
-
     @Override
     public List<EcInfo> selectCinfo(EcInfo ecinfo)
     {
@@ -64,8 +61,6 @@ public class EcInfoServiceImpl implements EcInfoService {
 
     /**
      * 调用分页插件完成分页
-     * @param pageRequest
-     * @return
      */
     private PageInfo<EcInfo> getPageInfo(PageRequest pageRequest) {
         int pageNum = pageRequest.getPageNum();

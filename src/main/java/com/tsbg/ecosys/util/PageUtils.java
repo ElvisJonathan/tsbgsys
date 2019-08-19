@@ -6,9 +6,6 @@ public class PageUtils {
 
     /**
      * 将分页信息封装到统一的接口
-     * @param pageRequest
-     * @param pageInfo
-     * @return
      */
     public static PageResult getPageResult(PageRequest pageRequest, PageInfo<?> pageInfo) {
         PageResult pageResult = new PageResult();
