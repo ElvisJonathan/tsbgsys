@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.model.EcInfo;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
@@ -56,30 +57,70 @@ public class CompanyController {
     }
 
     /**
-     * 合作情况信息新增
+     * 合作伙伴信息、合作情况信息、公司联系人信息新增
      */
-    @RequestMapping(value = "/addCooperation", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse addCoo(@RequestBody Ecooperation ecooperation){
-        /*Ecooperation ecooperation = new Ecooperation("阿里巴巴",new Date(),"test"
+    public ResultResponse addCom(@RequestBody CompanyPackage companyPackage){
+        //这是一堆模拟的数据
+        /*Ecooperation ecooperation = new Ecooperation("腾讯",new Date(),"test"
         ,"合作开始阶段",0,"昨天",1,"腾讯",0,"生态系统",
-                "强强合作","进展顺利","mis",new Date(),"张三");*/
+                "强强合作","进展顺利","mis",new Date(),"张三");
+        EcInfo ecInfo = new EcInfo("富士康",new Date(),"一个亿",0,"全球","龙华区","WWW.huawei.com","5G","手机","直营店和网售","一百个亿","全国",
+                "互联网",new Date());
+        Eccontacts eccontacts = new Eccontacts("富士康","郭台铭","总裁",1,"991","XXX");*/
         //初始化传参构造器
         ResultResponse resultResponse = null;
-        //需要从前台获取合作伙伴编号和其他合作情况信息
-        if (ecooperation!=null){
-            //设置当前时间为创建时间，暂时忽略创建人
+        //新建arr数组用于存储成功值
+        int []arr = new int[3];
+        //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
+        if (companyPackage.getEcInfo().getPartnerCname()!=null && companyPackage.getEcInfo().getPartnerCindustry()!=null
+        && companyPackage.getEcInfo().getPartnerCregion()!=null && companyPackage.getEcInfo().getPartnerCproduct()!=null
+               /* ecInfo.getPartnerCname()!=null && ecInfo.getPartnerCindustry()!=null && ecInfo.getPartnerCregion()!=null
+        && ecInfo.getPartnerCproduct()!=null*/){
+            //合作伙伴信息中:合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空才可以进行添加
+            EcInfo ecInfo = companyPackage.getEcInfo();
+            //设置创建时间
+            ecInfo.setCreateTime(new Date());
+            //调用存储公司合作伙伴的业务逻辑存储
+            int count = ecInfoService.insertSelective(ecInfo);
+            if (count>0){
+                arr[0]=1;
+            }
+        }
+
+        if(companyPackage.getEcooperation().getPartnerCname()!=null/*ecooperation.getPartnerCname()!=null*/){
+            //合作情况信息中：合作伙伴公司名称不能为空
+            Ecooperation ecooperation = companyPackage.getEcooperation();
+            //设置创建时间
             ecooperation.setCreateTime(new Date());
-            //调用业务逻辑增加前端传来的信息至数据库
+            //调用业务方法存储合作关系信息
             int num = ecooperationService.insertSelective(ecooperation);
             if (num>0){
-                resultResponse = new ResultResponse(0,"提示信息：增加成功");
-                return resultResponse;
+                arr[1]=1;
             }
-            resultResponse = new ResultResponse(501,"提示信息：新增失败");
+        }
+
+        if (companyPackage.getEccontacts().getName()!=null && companyPackage.getEccontacts().getPhoneNumber()!=null
+            && companyPackage.getEccontacts().getPartnerCname()!=null
+                /*eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null && eccontacts.getPartnerCname()!=null*/){
+            //公司联系人信息中：联系人姓名、性别、电话和所属公司名称不能为空
+            Eccontacts eccontacts = companyPackage.getEccontacts();
+            //设置创建时间
+            eccontacts.setCreateTime(new Date());
+            //调用业务方法存储联系人信息
+            int number = eccontactsService.insertSelective(eccontacts);
+            if (number>0){
+                arr[2]=1;
+            }
+        }
+
+        if (arr[0]==1 && arr[1]==1 && arr[2]==1){
+            resultResponse = new ResultResponse(0,"提示信息：新增信息成功！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(502,"提示信息：请输入信息");
+
+        resultResponse = new ResultResponse(501,"提示信息：未能成功添加");
         return resultResponse;
     }
 

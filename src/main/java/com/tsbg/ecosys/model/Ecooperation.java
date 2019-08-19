@@ -46,23 +46,24 @@ public class Ecooperation {
     private Integer status;
 
     public Ecooperation(){}
-//    public Ecooperation(String partnerCname, Date partnerCallintime, String partnerBdOwner, String partnerCostage, Integer signContract, String contractDate, Integer entrust, String entrustName, Integer partnerAwarding, String projectName, String coType, String coProgress, String fiiCodepartment, Date createTime, String creater) {
-//        this.partnerCname = partnerCname;
-//        this.partnerCallintime = partnerCallintime;
-//        this.partnerBdOwner = partnerBdOwner;
-//        this.partnerCostage = partnerCostage;
-//        this.signContract = signContract;
-//        this.contractDate = contractDate;
-//        this.entrust = entrust;
-//        this.entrustName = entrustName;
-//        this.partnerAwarding = partnerAwarding;
-//        this.projectName = projectName;
-//        this.coType = coType;
-//        this.coProgress = coProgress;
-//        this.fiiCodepartment = fiiCodepartment;
-//        this.createTime = createTime;
-//        this.creater = creater;
-//    }
+
+    public Ecooperation(String partnerCname, Date partnerCallintime, String partnerBdOwner, String partnerCostage, Integer signContract, String contractDate, Integer entrust, String entrustName, Integer partnerAwarding, String projectName, String coType, String coProgress, String fiiCodepartment, Date createTime, String creater) {
+        this.partnerCname = partnerCname;
+        this.partnerCallintime = partnerCallintime;
+        this.partnerBdOwner = partnerBdOwner;
+        this.partnerCostage = partnerCostage;
+        this.signContract = signContract;
+        this.contractDate = contractDate;
+        this.entrust = entrust;
+        this.entrustName = entrustName;
+        this.partnerAwarding = partnerAwarding;
+        this.projectName = projectName;
+        this.coType = coType;
+        this.coProgress = coProgress;
+        this.fiiCodepartment = fiiCodepartment;
+        this.createTime = createTime;
+        this.creater = creater;
+    }
 
     public Integer getCoid() {
         return coid;

@@ -1,7 +1,7 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
-import com.tsbg.ecosys.model.PowerPackage;
+import com.tsbg.ecosys.model.bag.PowerPackage;
 import com.tsbg.ecosys.model.EuserInfo;
 import com.tsbg.ecosys.service.EperRoleService;
 import com.tsbg.ecosys.service.EpermissionService;

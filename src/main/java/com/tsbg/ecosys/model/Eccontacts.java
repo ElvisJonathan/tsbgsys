@@ -31,6 +31,18 @@ public class Eccontacts {
 
     private String remark;
 
+    public Eccontacts() {
+    }
+
+    public Eccontacts(String partnerCname, String name, String title, Integer gender, String phoneNumber, String mailAddress) {
+        this.partnerCname = partnerCname;
+        this.name = name;
+        this.title = title;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.mailAddress = mailAddress;
+    }
+
     public Integer getCcid() {
         return ccid;
     }

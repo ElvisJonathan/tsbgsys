@@ -21,4 +21,9 @@ public class EccontactsServiceImpl implements EccontactsService {
         return eccontactsMapper.selectContacts(partnerNo);
 
     }
+
+    @Override
+    public int insertSelective(Eccontacts record) {
+        return eccontactsMapper.insertSelective(record);
+    }
 }

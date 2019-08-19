@@ -40,6 +40,12 @@ public class EcInfoServiceImpl implements EcInfoService {
     {
         return ecInfoMapper.selectCinfo(ecinfo);
     }
+
+    @Override
+    public int insertSelective(EcInfo record) {
+        return ecInfoMapper.insertSelective(record);
+    }
+
     @Override
     public List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry) {
 

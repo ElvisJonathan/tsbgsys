@@ -28,4 +28,6 @@ public interface EcInfoService {
     List<EcInfo> selectCinfoBypartnerCregion(String partnerCregion);
     List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry);
     List<EcInfo> selectCinfo(EcInfo ecinfo);
+
+    int insertSelective(EcInfo record);
 }

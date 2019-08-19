@@ -7,8 +7,10 @@ import com.tsbg.ecosys.model.Eccontacts;
 import java.util.List;
 
 
-public interface EccontactsService
-{
+public interface EccontactsService {
+
     List<Eccontacts> selectContacts(Integer partnerNo);
+
+    int insertSelective(Eccontacts record);
 
 }

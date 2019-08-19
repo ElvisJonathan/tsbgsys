@@ -43,6 +43,26 @@ public class EcInfo {
 
     private String remark;
 
+    public EcInfo() {
+    }
+
+    public EcInfo(String partnerCname, Date partnerCdate, String partnerCregistcapital, Integer partnerClist, String partnerCscale, String partnerCaddr, String partnerCwebddr, String partnerCtech, String partnerCproduct, String partnerCchannel, String partnerCturnover, String partnerCregion, String partnerCindustry, Date createTime) {
+        this.partnerCname = partnerCname;
+        this.partnerCdate = partnerCdate;
+        this.partnerCregistcapital = partnerCregistcapital;
+        this.partnerClist = partnerClist;
+        this.partnerCscale = partnerCscale;
+        this.partnerCaddr = partnerCaddr;
+        this.partnerCwebddr = partnerCwebddr;
+        this.partnerCtech = partnerCtech;
+        this.partnerCproduct = partnerCproduct;
+        this.partnerCchannel = partnerCchannel;
+        this.partnerCturnover = partnerCturnover;
+        this.partnerCregion = partnerCregion;
+        this.partnerCindustry = partnerCindustry;
+        this.createTime = createTime;
+    }
+
     public Integer getCid() {
         return cid;
     }

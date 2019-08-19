@@ -1,4 +1,6 @@
-package com.tsbg.ecosys.model;
+package com.tsbg.ecosys.model.bag;
+
+import com.tsbg.ecosys.model.EuserInfo;
 
 /**
  * 封装了用户和权限ID的封装类
