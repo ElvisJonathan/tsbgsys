@@ -90,10 +90,8 @@ public class CompanyController {
     @ResponseBody
     public ResultResponse findPage(@RequestBody PageRequest pageRequest) {
         ResultResponse resultResponse = null;
-        //需要前台传参pageQuery:包含pageNum和pageSize 即起始页码和页面容量
-        System.out.println(pageRequest.getPageNum());//起始页码
-        System.out.println(pageRequest.getPageSize());//页面容量 记得容量小于总条数才会有分页效果
-        if (pageRequest.getPageNum()!=0 && pageRequest.getPageSize()!=0){
+        //需要前台传参pageQuery:包含pageIndex和pageSize 即起始页码和页面容量 记得容量小于总条数才会有分页效果
+        if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
             PageResult page = ecInfoService.findPage(pageRequest);
             if (page!=null){

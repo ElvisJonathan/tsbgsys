@@ -8,7 +8,7 @@ public class PageResult {
     /**
      * 当前页码
      */
-    private int pageNum;
+    private int pageIndex;
     /**
      * 每页数量
      */
@@ -25,11 +25,12 @@ public class PageResult {
      * 数据模型
      */
     private List<?> content;
-    public int getPageNum() {
-        return pageNum;
+    public int getPageIndex() {
+        return pageIndex;
     }
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
     }
     public int getPageSize() {
         return pageSize;
@@ -55,4 +56,6 @@ public class PageResult {
     public void setContent(List<?> content) {
         this.content = content;
     }
+
+
 }

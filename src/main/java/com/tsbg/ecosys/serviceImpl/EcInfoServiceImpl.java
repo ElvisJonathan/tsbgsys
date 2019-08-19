@@ -63,9 +63,9 @@ public class EcInfoServiceImpl implements EcInfoService {
      * 调用分页插件完成分页
      */
     private PageInfo<EcInfo> getPageInfo(PageRequest pageRequest) {
-        int pageNum = pageRequest.getPageNum();
+        int pageIndex = pageRequest.getPageIndex();
         int pageSize = pageRequest.getPageSize();
-        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.startPage(pageIndex, pageSize);
         List<EcInfo> sysMenus = ecInfoMapper.selectPage();
         return new PageInfo<EcInfo>(sysMenus);
     }
