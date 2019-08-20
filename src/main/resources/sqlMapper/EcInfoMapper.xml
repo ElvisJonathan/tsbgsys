@@ -108,7 +108,7 @@
   <select id="selectPage"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from ec_info
+    from ec_info WHERE STATUS = 0
     <where>
       <if test = "partnerCname != null and partnerCname != ''">
         and partner_cname like "%"#{partnerCname}"%"
@@ -364,7 +364,7 @@
     where cid = #{cid,jdbcType=INTEGER}
   </update>
   <update id="updateByCid" parameterType="int" >
-    UPDATE ec_info AS e SET e.`status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
+    UPDATE ec_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`cid`=#{cid,jdbcType=INTEGER};
   </update>
   <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample" resultMap="BaseResultMap">
     select

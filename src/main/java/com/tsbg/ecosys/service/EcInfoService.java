@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface EcInfoService {
 
-    //管理员隐藏个别公司
-    int updateByCid(int cid);
+    //管理员隐藏/取消隐藏个别公司
+    int updateByCid(@Param("status") int status,@Param("cid") int cid);
 
     //查询公司列表
     List<EcInfo> findAll();

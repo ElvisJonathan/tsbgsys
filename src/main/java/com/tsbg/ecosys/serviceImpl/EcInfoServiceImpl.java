@@ -21,8 +21,8 @@ public class EcInfoServiceImpl implements EcInfoService {
 
 
     @Override
-    public int updateByCid(int cid) {
-        return ecInfoMapper.updateByCid(cid);
+    public int updateByCid(int status, int cid) {
+        return ecInfoMapper.updateByCid(status,cid);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class CompanyController {
     private EccontactsService eccontactsService;
 
     /**
-     * 管理员隐藏公司
+     * 管理员隐藏/取消隐藏公司
      */
     @RequestMapping(value = "/hideCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -41,16 +41,27 @@ public class CompanyController {
         ResultResponse resultResponse = null;
         //获取cid
         Integer cid = ecInfo.getCid();
+        //获取STATUS
+        Integer status = ecInfo.getStatus();
+        //接受到的status为1则是隐藏公司,0则是取消隐藏公司
+        if (status!=0 && status!=1){
+            resultResponse = new ResultResponse(503,"提示信息：请输入正确的status！");
+            return resultResponse;
+        }
         if (cid!=null){
             //根据前端传过来的cid作为参数修改公司的状态
-            int num = ecInfoService.updateByCid(cid);
-            if (num>0){
+            int num = ecInfoService.updateByCid(status,cid);
+            if (num>0 && status==1){
                 resultResponse = new ResultResponse(0,"提示信息：隐藏公司成功！");
                 return resultResponse;
+            }else if (num>0 && status==0){
+                resultResponse = new ResultResponse(0,"提示信息：取消隐藏公司成功！");
+                return resultResponse;
+            }else{
+                //如果没有修改成功则返回失败
+                resultResponse = new ResultResponse(501,"提示信息：公司编号不存在或操作失败！");
+                return resultResponse;
             }
-            //如果没有修改成功则返回失败
-            resultResponse = new ResultResponse(501,"提示信息：隐藏公司失败！");
-            return resultResponse;
         }
         //公司编号为空则返回异常信息
         resultResponse = new ResultResponse(502,"提示信息：公司编号为空异常！");
