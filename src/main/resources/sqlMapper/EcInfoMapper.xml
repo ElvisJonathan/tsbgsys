@@ -104,10 +104,25 @@
       </if>
     </where>
   </select>
+  <!-- 分页查询公司信息+搜索：如果不用搜索则不需要加动态sql -->
   <select id="selectPage"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from ec_info
+    <where>
+      <if test = "partnerCname != null and partnerCname != ''">
+        and partner_cname like "%"#{partnerCname}"%"
+      </if>
+      <if test="partnerCproduct != null and partnerCproduct != ''">
+        and partner_cproduct like "%"#{partnerCproduct}"%"
+      </if>
+      <if test="partnerCregion != null and  partnerCregion != ''">
+        and  partner_cregion like "%"#{partnerCregion}"%"
+      </if>
+      <if test="partnerCindustry != null  and partnerCindustry  != ''">
+        and Partner_cindustry like "%"#{partnerCindustry}"%"
+      </if>
+    </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

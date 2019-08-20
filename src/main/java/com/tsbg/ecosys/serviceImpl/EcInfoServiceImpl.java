@@ -31,11 +31,6 @@ public class EcInfoServiceImpl implements EcInfoService {
     }
 
     @Override
-    public PageResult findPage(PageRequest pageRequest) {
-        return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest));
-    }
-
-    @Override
     public List<EcInfo> selectCinfo(EcInfo ecinfo)
     {
         return ecInfoMapper.selectCinfo(ecinfo);
@@ -68,11 +63,22 @@ public class EcInfoServiceImpl implements EcInfoService {
     /**
      * 调用分页插件完成分页
      */
-    private PageInfo<EcInfo> getPageInfo(PageRequest pageRequest) {
+    private PageInfo<EcInfo> getPageInfo(PageRequest pageRequest,EcInfo ecInfo) {
         int pageIndex = pageRequest.getPageIndex();
         int pageSize = pageRequest.getPageSize();
         PageHelper.startPage(pageIndex, pageSize);
-        List<EcInfo> sysMenus = ecInfoMapper.selectPage();
+        //此处实现了加搜索条件情况下的分页,如果不需要搜索则不需要加实体类传参
+        List<EcInfo> sysMenus = ecInfoMapper.selectPage(ecInfo);
         return new PageInfo<EcInfo>(sysMenus);
+    }
+
+    /**
+     *该方法才是真正需要调用的分页方法
+     * 同时将搜索条件也加入进行分页
+     * 如果无需搜索则去除实体类传参
+     */
+    @Override
+    public PageResult findPage(PageRequest pageRequest, EcInfo ecInfo) {
+        return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest,ecInfo));
     }
 }

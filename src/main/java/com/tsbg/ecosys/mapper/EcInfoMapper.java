@@ -27,8 +27,8 @@ public interface EcInfoMapper {
     //查询公司列表
     List<EcInfo> selectAll();
 
-    //分页查询公司列表
-    List<EcInfo> selectPage();
+    //分页查询公司列表 + 搜索(如果不用搜索则不需要加参数)
+    List<EcInfo> selectPage(EcInfo ecInfo);
 
     //查询公司信息
     List<EcInfo> selectCinfoBypartnerCname(String partnerCname);

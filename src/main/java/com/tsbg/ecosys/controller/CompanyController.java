@@ -5,6 +5,7 @@ import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.model.EcInfo;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
+import com.tsbg.ecosys.model.bag.SearchPackage;
 import com.tsbg.ecosys.service.EcInfoService;
 import com.tsbg.ecosys.service.EccontactsService;
 import com.tsbg.ecosys.service.EcooperationService;
@@ -125,16 +126,20 @@ public class CompanyController {
     }
 
     /**
-     * 分页查询公司信息
+     * 分页查询公司信息+搜索
      */
     @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse findPage(@RequestBody PageRequest pageRequest) {
+    public ResultResponse findPage(@RequestBody SearchPackage searchPackage) {
         ResultResponse resultResponse = null;
         //需要前台传参pageQuery:包含pageIndex和pageSize 即起始页码和页面容量 记得容量小于总条数才会有分页效果
+        //接受分页参数pageRequest
+        PageRequest pageRequest = searchPackage.getPageRequest();
+        //接受搜索条件传参实体类ecInfo
+        EcInfo ecInfo = searchPackage.getEcInfo();
         if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
-            PageResult page = ecInfoService.findPage(pageRequest);
+            PageResult page = ecInfoService.findPage(pageRequest,ecInfo);
             if (page!=null){
                 resultResponse = new ResultResponse(0,"提示信息：成功查询到公司信息",page);
                 return resultResponse;
