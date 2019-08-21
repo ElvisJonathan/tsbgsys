@@ -43,6 +43,8 @@ public class EcInfo {
 
     private String remark;
 
+    private Integer delStatus;
+
     public EcInfo() {
     }
 
@@ -219,5 +221,13 @@ public class EcInfo {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getDelStatus() {
+        return delStatus;
+    }
+
+    public void setDelStatus(Integer delStatus) {
+        this.delStatus = delStatus;
     }
 }

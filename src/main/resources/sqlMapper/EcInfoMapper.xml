@@ -22,6 +22,7 @@
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="del_status" property="delStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -85,7 +86,7 @@
     cid, partner_cname, partner_cdate, partner_cregistcapital, partner_clist, partner_cscale, 
     partner_caddr, partner_cwebddr, partner_ctech, partner_cproduct, partner_cchannel, 
     partner_cturnover, partner_cregion, Partner_cindustry, status, create_time, update_time, 
-    creater, updater, remark
+    creater, updater, remark,del_status
   </sql>
   <select id="selectCinfo" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.model.EcInfo">
     select * from ec_info
@@ -108,7 +109,7 @@
   <select id="selectPage"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from ec_info /*WHERE STATUS = 0*/
+    from ec_info WHERE del_status=0
     <where>
       <if test = "partnerCname != null and partnerCname != ''">
         and partner_cname like "%"#{partnerCname}"%"
@@ -141,14 +142,14 @@
       partner_cproduct, partner_cchannel, partner_cturnover, 
       partner_cregion, Partner_cindustry, status, 
       create_time, update_time, creater, 
-      updater, remark)
+      updater, remark,del_status)
     values (#{cid,jdbcType=INTEGER}, #{partnerCname,jdbcType=VARCHAR}, #{partnerCdate,jdbcType=DATE}, 
       #{partnerCregistcapital,jdbcType=VARCHAR}, #{partnerClist,jdbcType=INTEGER}, #{partnerCscale,jdbcType=VARCHAR}, 
       #{partnerCaddr,jdbcType=VARCHAR}, #{partnerCwebddr,jdbcType=VARCHAR}, #{partnerCtech,jdbcType=VARCHAR}, 
       #{partnerCproduct,jdbcType=VARCHAR}, #{partnerCchannel,jdbcType=VARCHAR}, #{partnerCturnover,jdbcType=VARCHAR}, 
       #{partnerCregion,jdbcType=VARCHAR}, #{partnerCindustry,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
-      #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+      #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{delStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.EcInfo" >
     insert into ec_info
@@ -213,6 +214,9 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="delStatus != null" >
+        del_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cid != null" >
@@ -258,7 +262,7 @@
         #{partnerCindustry,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=DATE},
@@ -274,6 +278,9 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="delStatus != null" >
+        #{delStatus,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -337,6 +344,9 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="delStatus != null" >
+        del_status = #{delStatus,jdbcType=INTEGER},
+      </if>
     </set>
     where cid = #{cid,jdbcType=INTEGER}
   </update>
@@ -360,14 +370,15 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       updater = #{updater,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      del_status = #{delStatus,jdbcType=INTEGER}
     where cid = #{cid,jdbcType=INTEGER}
   </update>
   <update id="updateByCid" parameterType="int" >
     UPDATE ec_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`cid`=#{cid,jdbcType=INTEGER};
   </update>
     <update id="updateStatusByCid" parameterType="int" >
-    UPDATE ec_info AS e SET e.`status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
+    UPDATE ec_info AS e SET e.`del_status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
   </update>
   <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample" resultMap="BaseResultMap">
     select
@@ -458,6 +469,9 @@
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -484,7 +498,8 @@
     update_time = #{record.updateTime,jdbcType=TIMESTAMP},
     creater = #{record.creater,jdbcType=VARCHAR},
     updater = #{record.updater,jdbcType=VARCHAR},
-    remark = #{record.remark,jdbcType=VARCHAR}
+    remark = #{record.remark,jdbcType=VARCHAR},
+    del_status = #{record.delStatus,jdbcType=INTEGER},
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
