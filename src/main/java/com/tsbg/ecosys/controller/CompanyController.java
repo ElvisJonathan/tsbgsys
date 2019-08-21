@@ -320,4 +320,35 @@ public class CompanyController {
         resultResponse = new ResultResponse(505,"提示信息：未查到对应公司编号！");
         return resultResponse;
     }
+
+    /**
+     * 管理员删除公司（软删除）
+     */
+    @RequestMapping(value = "/delCompany", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse delCom(@RequestBody EcInfo ecInfo){
+        //通过接受cid进行删除（隐藏） 需要对其合作伙伴以及联系人同时删除（隐藏）
+        //需要同时修改三张表的状态
+        ResultResponse resultResponse = null;
+        Integer cid = ecInfo.getCid();
+        if (cid!=null){
+            int num = ecInfoService.updateStatusByCid(cid);
+            if (num>0){
+                //如果成功修改了公司状态则同步修改联系人和合作关系
+                Integer partnerNo = cid;
+                int count = eccontactsService.updateStatusByCid(partnerNo);
+                int count2 = ecooperationService.updateStatusByCid(partnerNo);
+                if (count>0 && count2>0){
+                    resultResponse = new ResultResponse(0,"提示信息：删除成功！");
+                    return resultResponse;
+                }
+                resultResponse = new ResultResponse(500,"提示信息：删除不彻底！");
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(501,"提示信息：删除失败！");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(502,"提示信息：公司编号为空异常！");
+        return resultResponse;
+    }
 }

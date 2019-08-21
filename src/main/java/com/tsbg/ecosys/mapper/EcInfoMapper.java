@@ -46,4 +46,7 @@ public interface EcInfoMapper {
     int updateByExampleSelective(@Param("record") EcInfo record, @Param("example") EcInfoExample example);
 
     int updateByExample(@Param("record") EcInfo record, @Param("example") EcInfoExample example);
+
+    //管理员删除公司（软删除）
+    int updateStatusByCid(int cid);
 }

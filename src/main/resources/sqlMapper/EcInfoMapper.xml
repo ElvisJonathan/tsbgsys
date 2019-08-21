@@ -366,6 +366,9 @@
   <update id="updateByCid" parameterType="int" >
     UPDATE ec_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`cid`=#{cid,jdbcType=INTEGER};
   </update>
+    <update id="updateStatusByCid" parameterType="int" >
+    UPDATE ec_info AS e SET e.`status`=1 WHERE e.`cid`=#{cid,jdbcType=INTEGER};
+  </update>
   <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

@@ -29,4 +29,9 @@ public class EcooperationServiceImpl implements EcooperationService {
     public int updateByPartnerNoSelective(Ecooperation record) {
         return ecooperationMapper.updateByPartnerNoSelective(record);
     }
+
+    @Override
+    public int updateStatusByCid(int partnerNo) {
+        return ecooperationMapper.updateStatusByCid(partnerNo);
+    }
 }

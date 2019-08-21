@@ -31,4 +31,9 @@ public class EccontactsServiceImpl implements EccontactsService {
     public int updateByPartnerNoSelective(Eccontacts record) {
         return eccontactsMapper.updateByPartnerNoSelective(record);
     }
+
+    @Override
+    public int updateStatusByCid(int partnerNo) {
+        return eccontactsMapper.updateStatusByCid(partnerNo);
+    }
 }

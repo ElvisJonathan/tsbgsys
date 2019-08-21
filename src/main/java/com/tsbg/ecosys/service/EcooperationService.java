@@ -12,4 +12,7 @@ public interface EcooperationService {
 
     //用合作伙伴编号进行修改
     int updateByPartnerNoSelective(Ecooperation record);
+
+    //管理员删除公司（软删除）
+    int updateStatusByCid(int partnerNo);
 }

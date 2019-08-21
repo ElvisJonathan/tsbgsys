@@ -47,6 +47,11 @@ public class EcInfoServiceImpl implements EcInfoService {
     }
 
     @Override
+    public int updateStatusByCid(int cid) {
+        return ecInfoMapper.updateStatusByCid(cid);
+    }
+
+    @Override
     public List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return ecInfoMapper.selectCinfoBypartnerCindustry(partnerCindustry);

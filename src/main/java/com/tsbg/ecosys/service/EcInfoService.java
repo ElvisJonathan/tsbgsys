@@ -34,4 +34,7 @@ public interface EcInfoService {
     int insertSelective(EcInfo record);
 
     int updateByPrimaryKeySelective(EcInfo record);
+
+    //管理员删除公司（软删除）
+    int updateStatusByCid(int cid);
 }

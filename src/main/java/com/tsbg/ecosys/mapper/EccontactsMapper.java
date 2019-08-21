@@ -37,4 +37,6 @@ public interface EccontactsMapper {
     List<Eccontacts> selectEccontactsByCid(Integer cid);
     //用合作伙伴编号进行修改
     int updateByPartnerNoSelective(Eccontacts record);
+    //管理员删除公司（软删除）
+    int updateStatusByCid(int partnerNo);
 }

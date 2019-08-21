@@ -400,4 +400,7 @@
     <include refid="Base_Column_List" />
     from eccontacts where partner_no = #{cid} AND status = 0
   </select>
+  <update id="updateStatusByCid" parameterType="int" >
+    UPDATE eccontacts AS e SET e.`status`=1 WHERE e.partner_no=#{partnerNo,jdbcType=INTEGER};
+  </update>
 </mapper>
