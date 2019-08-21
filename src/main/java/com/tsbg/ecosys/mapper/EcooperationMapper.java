@@ -33,4 +33,6 @@ public interface EcooperationMapper {
     int updateByExampleSelective(@Param("record") Ecooperation record, @Param("example") EcooperationExample example);
 
     int updateByExample(@Param("record") Ecooperation record, @Param("example") EcooperationExample example);
+
+    List<Ecooperation> selectEcooperationByCid(Integer cid);
 }

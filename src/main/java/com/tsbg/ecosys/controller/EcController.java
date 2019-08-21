@@ -25,15 +25,14 @@ public class EcController {
 
     @ApiOperation(value = "查询合作伙伴信息", notes = "查询合作伙伴信息")
     @GetMapping("/total")
-    public ResultResponse getEcooperationList(){
-        System.out.println("我在这");
-        List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList();
-
-        return new ResultResponse(0,"", ecTotalDtoList);
+    public ResultResponse getEcooperationList(Integer cid){
+        //根据cid查询
+        List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList(cid);
+        return new ResultResponse(0,"根据id查询", ecTotalDtoList);
     }
 
 
-    @ApiOperation(value = "批量更新合作伙伴信息", notes = "批量更新合作伙伴信息")
+   /* @ApiOperation(value = "批量更新合作伙伴信息", notes = "批量更新合作伙伴信息")
     @PutMapping("/total")
     public ResultResponse modifyClaimApply(
             @ApiParam(name = "ecTotalListDto", value = "ecTotalListDto", required = true)
@@ -42,5 +41,5 @@ public class EcController {
         ecooperationService.updateEcooperationList(ecTotalListDto);
 
         return new ResultResponse(0,"");
-    }
+    }*/
 }

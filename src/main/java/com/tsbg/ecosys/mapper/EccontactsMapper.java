@@ -33,4 +33,9 @@ public interface EccontactsMapper {
     int updateByExampleSelective(@Param("record") Eccontacts record, @Param("example") EccontactsExample example);
 
     int updateByExample(@Param("record") Eccontacts record, @Param("example") EccontactsExample example);
+
+    /*//分页查询公司联系人信息
+    List<Eccontacts> selectecPage();*/
+
+    public List<Eccontacts> selectEccontactsByCid(Integer cid);
 }

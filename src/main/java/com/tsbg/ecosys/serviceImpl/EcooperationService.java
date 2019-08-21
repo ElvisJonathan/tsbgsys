@@ -9,8 +9,6 @@ import com.tsbg.ecosys.mapper.EcooperationMapper;
 import com.tsbg.ecosys.model.EcInfo;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
-import com.tsbg.ecosys.model.example.EcInfoExample;
-import com.tsbg.ecosys.model.example.EccontactsExample;
 import com.tsbg.ecosys.model.example.EcooperationExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,38 +36,27 @@ public class EcooperationService {
     private EcooperationMapper ecooperationMapper;
 
     private static final Logger LOG = LoggerFactory.getLogger(com.tsbg.ecosys.service.EcooperationService.class);
-
     //查询合作伙伴信息
-    public List<EcTotalDto> getEcooperationList() {
-        EcInfoExample example = new EcInfoExample();
-        example.createCriteria();
-        List<EcInfo> ecInfoList = ecInfoMapper.selectByExample(example);
-        List<EcTotalDto> ecTotalDtoList = new ArrayList<>();
-        EcTotalDto ecTotalDto = null;
-        for (EcInfo ecInfo : ecInfoList) {
-            ecTotalDto = new EcTotalDto();
-            ecTotalDto.setEcInfo(ecInfo);
-            EccontactsExample example1 = new EccontactsExample();
-            example1.createCriteria().andPartnerNoEqualTo(ecInfo.getCid());
-            List<Eccontacts> eccontactsList = eccontactsMapper.selectByExample(example1);
-            if (eccontactsList != null && eccontactsList.size() != 0) {
-                ecTotalDto.setEccontacts(eccontactsList.get(0));
-            }
-
-            EcooperationExample example2 = new EcooperationExample();
-            example2.createCriteria().andPartnerNoEqualTo(ecInfo.getCid());
-            List<Ecooperation> ecooperationList = ecooperationMapper.selectByExample(example2);
-            if (ecooperationList != null && ecooperationList.size() != 0) {
-                ecTotalDto.setEcooperation(ecooperationList.get(0));
-            }
-            ecTotalDtoList.add(ecTotalDto);
-
+    public List<EcTotalDto> getEcooperationList(Integer cid) {
+        //根据cid查询出来
+        EcInfo ecInfo1 = ecInfoMapper.selectByPrimaryKey(cid);
+        //根据cid查找eccontact
+        List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCid(cid);
+        //根据cid查在查询所有的Ecooperation
+        List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCid(cid);
+        EcTotalDto ecTotalDto = new EcTotalDto();
+        ecTotalDto.setEcInfo(ecInfo1);
+        if(eccontacts != null && eccontacts.size()>0){
+            ecTotalDto.setEccontacts(eccontacts.get(0));
         }
+        if(ecooperations != null && ecooperations.size()>0){
+            ecTotalDto.setEcooperation(ecooperations.get(0));
+        }
+        List<EcTotalDto> ecTotalDtoList = new ArrayList<>();
+        ecTotalDtoList.add(ecTotalDto);
+
         return ecTotalDtoList;
-
-
     }
-
 
     //批量更新合作伙伴信息
     public void updateEcooperationList(EcTotalListDto ecTotalListDto) throws Exception {
