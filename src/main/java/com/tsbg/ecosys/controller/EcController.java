@@ -3,6 +3,7 @@ package com.tsbg.ecosys.controller;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.dto.EcTotalDto;
 import com.tsbg.ecosys.dto.EcTotalListDto;
+import com.tsbg.ecosys.model.EcInfo;
 import com.tsbg.ecosys.serviceImpl.EcooperationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,10 +26,14 @@ public class EcController {
 
     @ApiOperation(value = "查询合作伙伴信息", notes = "查询合作伙伴信息")
     @GetMapping("/total")
-    public ResultResponse getEcooperationList(Integer cid){
+    public ResultResponse getEcooperationList(@RequestBody EcInfo ecInfo){
+        Integer cid = ecInfo.getCid();
         //根据cid查询
-        List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList(cid);
-        return new ResultResponse(0,"根据id查询", ecTotalDtoList);
+        if (cid!=null){
+            List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList(cid);
+            return new ResultResponse(0,"根据id查询", ecTotalDtoList);
+        }
+        return new ResultResponse(500,"未接受到公司编号");
     }
 
 
