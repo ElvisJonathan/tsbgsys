@@ -32,4 +32,6 @@ public interface EcInfoService {
     List<EcInfo> selectCinfo(EcInfo ecinfo);
 
     int insertSelective(EcInfo record);
+
+    int updateByPrimaryKeySelective(EcInfo record);
 }

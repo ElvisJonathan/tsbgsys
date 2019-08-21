@@ -319,6 +319,72 @@
     </set>
     where coid = #{coid,jdbcType=INTEGER}
   </update>
+  <update id="updateByPartnerNoSelective" parameterType="com.tsbg.ecosys.model.Ecooperation" >
+    update ecooperation
+    <set >
+      <if test="partnerNo != null" >
+        partner_no = #{partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCname != null" >
+        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCallintime != null" >
+        partner_callintime = #{partnerCallintime,jdbcType=DATE},
+      </if>
+      <if test="partnerBdOwner != null" >
+        partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCostage != null" >
+        partner_costage = #{partnerCostage,jdbcType=VARCHAR},
+      </if>
+      <if test="signContract != null" >
+        sign_contract = #{signContract,jdbcType=INTEGER},
+      </if>
+      <if test="contractDate != null" >
+        contract_date = #{contractDate,jdbcType=VARCHAR},
+      </if>
+      <if test="entrust != null" >
+        entrust = #{entrust,jdbcType=INTEGER},
+      </if>
+      <if test="entrustName != null" >
+        entrust_name = #{entrustName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerAwarding != null" >
+        partner_awarding = #{partnerAwarding,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="coType != null" >
+        co_type = #{coType,jdbcType=VARCHAR},
+      </if>
+      <if test="coProgress != null" >
+        co_progress = #{coProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="fiiCodepartment != null" >
+        fii_codepartment = #{fiiCodepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where partner_no = #{partnerNo,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Ecooperation" >
     update ecooperation
     set partner_no = #{partnerNo,jdbcType=INTEGER},

@@ -34,5 +34,10 @@ public interface EcooperationMapper {
 
     int updateByExample(@Param("record") Ecooperation record, @Param("example") EcooperationExample example);
 
+<<<<<<< HEAD
     List<Ecooperation> selectEcooperationByCid(Integer cid);
+=======
+    //用合作伙伴编号进行修改
+    int updateByPartnerNoSelective(Ecooperation record);
+>>>>>>> origin/master
 }

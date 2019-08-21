@@ -13,4 +13,6 @@ public interface EccontactsService {
 
     int insertSelective(Eccontacts record);
 
+    //用合作伙伴编号进行修改
+    int updateByPartnerNoSelective(Eccontacts record);
 }

@@ -42,6 +42,11 @@ public class EcInfoServiceImpl implements EcInfoService {
     }
 
     @Override
+    public int updateByPrimaryKeySelective(EcInfo record) {
+        return ecInfoMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
     public List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return ecInfoMapper.selectCinfoBypartnerCindustry(partnerCindustry);
