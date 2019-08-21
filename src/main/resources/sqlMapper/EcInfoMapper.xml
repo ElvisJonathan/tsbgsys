@@ -108,7 +108,7 @@
   <select id="selectPage"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from ec_info WHERE STATUS = 0
+    from ec_info /*WHERE STATUS = 0*/
     <where>
       <if test = "partnerCname != null and partnerCname != ''">
         and partner_cname like "%"#{partnerCname}"%"

@@ -50,24 +50,51 @@ public class LoginController {
         return resultResponse;
     }
 
-    //修改密码
+    /**
+     *判断原密码是否正确
+     */
+    @RequestMapping(value = "/premodifyPwd", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public ResultResponse preModifyPwd(@RequestBody EuserInfo euserInfo){
+        //通过从前端接收的工号和密码来判断是否存在此用户
+        String userCode = euserInfo.getUserCode();
+        String userPwd = euserInfo.getUserPwd();
+        if(userCode!=null && userPwd!=null){
+            //调用查询逻辑查找用户是否存在
+            int num = euserInfoService.judgeIfExistUserByUserPwd(userCode,userPwd);
+            if (num==1){
+                return new ResultResponse(0,"此用户存在且可以修改密码");
+            }
+            return new ResultResponse(501,"用户不存在或密码错误请重试");
+        }
+        return new ResultResponse(502,"工号或密码为空异常");
+    }
+
+
+    /**
+     * 修改密码
+     */
     @ApiOperation(value = "修改密码", notes = "修改密码")
     @RequestMapping(value = "/modifyPassword", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public ResultResponse modifyPassword(@RequestBody EuserInfo euserInfo) {
         //初始化构造器
         ResultResponse resultResponse = null;
-        //获取输入的密码和工号
+        //获取输入的新密码和工号
         String userCode = euserInfo.getUserCode();
         String userPwd = euserInfo.getUserPwd();
         if (userCode != null && userPwd != null) {
             //修改成功将uid传给页面
-            euserInfoService.modifyPasswordByUsername(userPwd, userCode);
-            EuserInfo ei = euserInfoService.selectByUserCode(userCode);
-            resultResponse = new ResultResponse(0, "", new LoginResultVo(ei.getUserName(),ei.getUserCode(),ei.getUserPwd(), ei.getUid()));
-            return  resultResponse;
+            int num = euserInfoService.modifyPasswordByUsername(userPwd, userCode);
+            if (num>0){
+                EuserInfo ei = euserInfoService.selectByUserCode(userCode);
+                resultResponse = new ResultResponse(0, "修改成功！", new LoginResultVo(ei.getUserName(),ei.getUserCode(),ei.getUserPwd(), ei.getUid()));
+                return  resultResponse;
+            }
+            resultResponse = new ResultResponse(501,"修改失败！");
+            return resultResponse;
         }
-        resultResponse = new ResultResponse(1,userPwd, userCode);
+        resultResponse = new ResultResponse(500,"工号或密码为空");
         return resultResponse;
     }
 }

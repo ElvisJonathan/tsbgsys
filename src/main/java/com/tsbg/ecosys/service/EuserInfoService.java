@@ -49,4 +49,7 @@ public interface EuserInfoService {
     int modifyPasswordByUsername(String userPwd,String userCode);
 
     EuserInfo selectByUserCode(String userCode);
+
+    //通过工号和密码来判断是否存在此用户
+    int judgeIfExistUserByUserPwd(@Param("userCode") String userCode,@Param("userPwd") String userPwd);
 }

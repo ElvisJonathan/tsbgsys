@@ -292,4 +292,9 @@
     from euser_info
     where user_code = #{userCode,jdbcType=VARCHAR}
   </select>
+
+  <select id="judgeIfExistUserByUserPwd"  parameterType="String" resultType="int">
+    SELECT COUNT(0) FROM euser_info AS e WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR}
+    AND e.`user_pwd`= #{userPwd,jdbcType=VARCHAR};
+  </select>
 </mapper>

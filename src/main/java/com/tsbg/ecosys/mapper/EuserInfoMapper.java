@@ -57,4 +57,7 @@ public interface EuserInfoMapper {
     int modifyPasswordByUsername(@Param("userPwd") String userPwd, @Param("userCode") String userCode);
 
     EuserInfo selectByUserCode(@Param("userCode") String userCode);
+
+    //通过工号和密码来判断是否存在此用户
+    int judgeIfExistUserByUserPwd(@Param("userCode") String userCode,@Param("userPwd") String userPwd);
 }

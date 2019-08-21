@@ -84,4 +84,9 @@ public class EuserInfoServiceImpl implements EuserInfoService {
     public EuserInfo selectByUserCode(String userCode) {
         return euserInfoMapper.selectByUserCode(userCode);
     }
+
+    @Override
+    public int judgeIfExistUserByUserPwd(String userCode, String userPwd) {
+        return euserInfoMapper.judgeIfExistUserByUserPwd(userCode,userPwd);
+    }
 }

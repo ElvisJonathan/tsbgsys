@@ -52,9 +52,9 @@ public class CompanyController {
             //根据前端传过来的cid作为参数修改公司的状态
             int num = ecInfoService.updateByCid(status,cid);
             if (num>0 && status==1){
-                resultResponse = new ResultResponse(0,"提示信息：隐藏公司成功！");
+                resultResponse = new ResultResponse(1,"提示信息：隐藏公司成功！");
                 return resultResponse;
-            }else if (num>0 && status==0){
+            }else if (num>0){
                 resultResponse = new ResultResponse(0,"提示信息：取消隐藏公司成功！");
                 return resultResponse;
             }else{
@@ -324,7 +324,7 @@ public class CompanyController {
     /**
      * 管理员删除公司（软删除）
      */
-    @RequestMapping(value = "/delCompany", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/del", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultResponse delCom(@RequestBody EcInfo ecInfo){
         //通过接受cid进行删除（隐藏） 需要对其合作伙伴以及联系人同时删除（隐藏）
