@@ -25,7 +25,8 @@ public class EcController {
     private EcooperationService ecooperationService;
 
     @ApiOperation(value = "查询合作伙伴信息", notes = "查询合作伙伴信息")
-    @GetMapping("/total")
+    @RequestMapping(value = "/total", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
     public ResultResponse getEcooperationList(@RequestBody EcInfo ecInfo){
         Integer cid = ecInfo.getCid();
         //根据cid查询
