@@ -33,4 +33,7 @@ public interface EccontactsMapper {
     int updateByExampleSelective(@Param("record") Eccontacts record, @Param("example") EccontactsExample example);
 
     int updateByExample(@Param("record") Eccontacts record, @Param("example") EccontactsExample example);
+
+    //用合作伙伴编号进行修改
+    int updateByPartnerNoSelective(Eccontacts record);
 }

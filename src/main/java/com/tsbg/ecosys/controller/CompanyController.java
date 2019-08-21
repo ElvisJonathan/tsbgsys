@@ -239,4 +239,85 @@ public class CompanyController {
         resultResponse = new ResultResponse(502,"提示信息：未收到id信息");
         return resultResponse;
     }
+
+    /**
+     * 合作伙伴信息、合作情况信息、公司联系人信息修改
+     */
+    @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse modifyCom(@RequestBody CompanyPackage companyPackage){
+        ResultResponse resultResponse = null;
+        //通过接受三个对象来进行修改 包含公司的cid
+        Integer cid = companyPackage.getEcInfo().getCid();
+        System.out.println("接收到的cid:"+cid);
+        EcInfo ecInfo = companyPackage.getEcInfo();
+        if (ecInfo==null){
+            resultResponse = new ResultResponse(501,"提示信息：公司信息为空异常！");
+            return resultResponse;
+        }
+        Ecooperation ecooperation = companyPackage.getEcooperation();
+        if (ecooperation==null){
+            resultResponse = new ResultResponse(502,"提示信息：公司合作关系信息为空异常！");
+            return resultResponse;
+        }
+        Eccontacts eccontacts = companyPackage.getEccontacts();
+        if (eccontacts==null){
+            resultResponse = new ResultResponse(503,"提示信息：公司联系人信息为空异常！");
+            return resultResponse;
+        }
+        //全都不为空的情况下才可以进行修改判断
+        //新建arr数组用于存储成功值
+        int []arr = new int[3];
+        if(cid!=null){
+            if (companyPackage.getEcInfo().getPartnerCname()!=null && companyPackage.getEcInfo().getPartnerCindustry()!=null
+                    && companyPackage.getEcInfo().getPartnerCregion()!=null && companyPackage.getEcInfo().getPartnerCproduct()!=null){
+                //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
+                //更新修改时间
+                ecInfo.setUpdateTime(new Date());
+                int num = ecInfoService.updateByPrimaryKeySelective(ecInfo);
+                if (num>0){
+                    arr[0]=1;
+                }
+            }
+
+            if (companyPackage.getEcooperation().getPartnerCname()!=null){
+                //只有当合作伙伴公司名称不为空才可以修改
+                //更新修改时间
+                ecooperation.setUpdateTime(new Date());
+                //需要赋值cid给partnerNo
+                companyPackage.getEcooperation().setPartnerNo(cid);
+                //输出查看
+                System.out.println("PartnerNo:"+companyPackage.getEcooperation().getPartnerNo());
+                int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
+                if (num>0){
+                    arr[1]=1;
+                }
+            }
+
+            if (companyPackage.getEccontacts().getName()!=null && companyPackage.getEccontacts().getPhoneNumber()!=null
+            && companyPackage.getEccontacts().getPartnerCname()!=null){
+                //只有当姓名、电话、所属公司都不为空才可以修改
+                //更新修改时间
+                eccontacts.setUpdateTime(new Date());
+                //需要赋值cid给partnerNo
+                companyPackage.getEccontacts().setPartnerNo(cid);
+                //输出查看
+                System.out.println("PartnerNo2:"+companyPackage.getEccontacts().getPartnerNo());
+                int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
+                if (num>0){
+                    arr[2]=1;
+                }
+            }
+
+            if (arr[0]==1 && arr[1]==1 && arr[2]==1){
+                resultResponse = new ResultResponse(0,"提示信息：修改成功！");
+                return resultResponse;
+            }
+
+            resultResponse = new ResultResponse(500,"提示信息：修改不彻底！");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(505,"提示信息：未查到对应公司编号！");
+        return resultResponse;
+    }
 }

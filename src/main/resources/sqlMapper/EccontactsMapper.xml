@@ -236,6 +236,51 @@
     </set>
     where ccid = #{ccid,jdbcType=INTEGER}
   </update>
+  <update id="updateByPartnerNoSelective" parameterType="com.tsbg.ecosys.model.Eccontacts" >
+    update eccontacts
+    <set >
+      <if test="partnerNo != null" >
+        partner_no = #{partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="partnerCname != null" >
+        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAddress != null" >
+        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where partner_no = #{partnerNo,jdbcType=INTEGER}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Eccontacts" >
     update eccontacts
     set partner_no = #{partnerNo,jdbcType=INTEGER},

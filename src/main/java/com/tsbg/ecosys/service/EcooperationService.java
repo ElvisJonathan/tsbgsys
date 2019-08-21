@@ -9,4 +9,7 @@ public interface EcooperationService {
     int insertSelective(Ecooperation record);
 
     List<Ecooperation> selectCooinfo(Integer partnerNo);
+
+    //用合作伙伴编号进行修改
+    int updateByPartnerNoSelective(Ecooperation record);
 }
