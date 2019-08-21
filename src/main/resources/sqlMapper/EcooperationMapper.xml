@@ -536,6 +536,6 @@
   <select id="selectEcooperationByCid"  resultMap="BaseResultMap" parameterType="Integer">
     select
     <include refid="Base_Column_List" />
-    from ecooperation where partner_no = #{cid}
+    from ecooperation where partner_no = #{cid} AND status = 0
   </select>
 </mapper>

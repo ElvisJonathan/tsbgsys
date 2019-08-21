@@ -398,6 +398,6 @@
   <select id="selectEccontactsByCid"  resultMap="BaseResultMap" parameterType="Integer">
     select
     <include refid="Base_Column_List" />
-    from eccontacts where partner_no = #{cid}
+    from eccontacts where partner_no = #{cid} AND status = 0
   </select>
 </mapper>
