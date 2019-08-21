@@ -128,7 +128,7 @@
     select 
     <include refid="Base_Column_List" />
     from ec_info
-    where cid = #{cid,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER} AND status = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from ec_info
