@@ -3,6 +3,7 @@ package com.tsbg.ecosys.model.bag;
 import com.tsbg.ecosys.model.EcInfo;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
+import com.tsbg.ecosys.model.EuserInfo;
 
 /**
  * 合作伙伴、合作情况、公司联系人的封装类
@@ -17,6 +18,8 @@ public class CompanyPackage {
     private Ecooperation ecooperation;
 
     private Eccontacts eccontacts;
+
+    private EuserInfo euserInfo;
 
     public EcInfo getEcInfo() {
         return ecInfo;
@@ -40,5 +43,13 @@ public class CompanyPackage {
 
     public void setEccontacts(Eccontacts eccontacts) {
         this.eccontacts = eccontacts;
+    }
+
+    public EuserInfo getEuserInfo() {
+        return euserInfo;
+    }
+
+    public void setEuserInfo(EuserInfo euserInfo) {
+        this.euserInfo = euserInfo;
     }
 }

@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.model.EuserInfo;
 import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.model.EcInfo;
 import com.tsbg.ecosys.model.Eccontacts;
@@ -74,26 +75,24 @@ public class CompanyController {
     @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultResponse addCom(@RequestBody CompanyPackage companyPackage){
-        //这是一堆模拟的数据
-        /*Ecooperation ecooperation = new Ecooperation("腾讯",new Date(),"test"
-        ,"合作开始阶段",0,"昨天",1,"腾讯",0,"生态系统",
-                "强强合作","进展顺利","mis",new Date(),"张三");
-        EcInfo ecInfo = new EcInfo("富士康",new Date(),"一个亿",0,"全球","龙华区","WWW.huawei.com","5G","手机","直营店和网售","一百个亿","全国",
-                "互联网",new Date());
-        Eccontacts eccontacts = new Eccontacts("富士康","郭台铭","总裁",1,"991","XXX");*/
         //初始化传参构造器
         ResultResponse resultResponse = null;
         //新建arr数组用于存储成功值
         int []arr = new int[3];
+        //获取当前添加人
+        EuserInfo euserInfo = companyPackage.getEuserInfo();
+        String userName=euserInfo.getUserName();
+        System.out.println("添加人："+userName);
         //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
         if (companyPackage.getEcInfo().getPartnerCname()!=null && companyPackage.getEcInfo().getPartnerCindustry()!=null
         && companyPackage.getEcInfo().getPartnerCregion()!=null && companyPackage.getEcInfo().getPartnerCproduct()!=null
-               /* ecInfo.getPartnerCname()!=null && ecInfo.getPartnerCindustry()!=null && ecInfo.getPartnerCregion()!=null
-        && ecInfo.getPartnerCproduct()!=null*/){
+               ){
             //合作伙伴信息中:合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空才可以进行添加
             EcInfo ecInfo = companyPackage.getEcInfo();
             //设置创建时间
             ecInfo.setCreateTime(new Date());
+            //设置创建人
+            ecInfo.setCreater(userName);
             //调用存储公司合作伙伴的业务逻辑存储
             int count = ecInfoService.insertSelective(ecInfo);
             if (count>0){
@@ -101,11 +100,13 @@ public class CompanyController {
             }
         }
 
-        if(companyPackage.getEcooperation().getPartnerCname()!=null/*ecooperation.getPartnerCname()!=null*/){
+        if(companyPackage.getEcooperation().getPartnerCname()!=null){
             //合作情况信息中：合作伙伴公司名称不能为空
             Ecooperation ecooperation = companyPackage.getEcooperation();
             //设置创建时间
             ecooperation.setCreateTime(new Date());
+            //设置创建人
+            ecooperation.setCreater(userName);
             //调用业务方法存储合作关系信息
             int num = ecooperationService.insertSelective(ecooperation);
             if (num>0){
@@ -114,12 +115,13 @@ public class CompanyController {
         }
 
         if (companyPackage.getEccontacts().getName()!=null && companyPackage.getEccontacts().getPhoneNumber()!=null
-            && companyPackage.getEccontacts().getPartnerCname()!=null
-                /*eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null && eccontacts.getPartnerCname()!=null*/){
+            && companyPackage.getEccontacts().getPartnerCname()!=null){
             //公司联系人信息中：联系人姓名、性别、电话和所属公司名称不能为空
             Eccontacts eccontacts = companyPackage.getEccontacts();
             //设置创建时间
             eccontacts.setCreateTime(new Date());
+            //设置创建人
+            eccontacts.setCreater(userName);
             //调用业务方法存储联系人信息
             int number = eccontactsService.insertSelective(eccontacts);
             if (number>0){
@@ -268,12 +270,18 @@ public class CompanyController {
         //全都不为空的情况下才可以进行修改判断
         //新建arr数组用于存储成功值
         int []arr = new int[3];
+        //获取当前修改人
+        EuserInfo euserInfo = companyPackage.getEuserInfo();
+        String userName=euserInfo.getUserName();
+        System.out.println("修改人："+userName);
         if(cid!=null){
             if (companyPackage.getEcInfo().getPartnerCname()!=null && companyPackage.getEcInfo().getPartnerCindustry()!=null
                     && companyPackage.getEcInfo().getPartnerCregion()!=null && companyPackage.getEcInfo().getPartnerCproduct()!=null){
                 //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
                 //更新修改时间
                 ecInfo.setUpdateTime(new Date());
+                //更新修改人
+                ecInfo.setUpdater(userName);
                 int num = ecInfoService.updateByPrimaryKeySelective(ecInfo);
                 if (num>0){
                     arr[0]=1;
@@ -284,6 +292,8 @@ public class CompanyController {
                 //只有当合作伙伴公司名称不为空才可以修改
                 //更新修改时间
                 ecooperation.setUpdateTime(new Date());
+                //更新修改人
+                ecooperation.setUpdater(userName);
                 //需要赋值cid给partnerNo
                 companyPackage.getEcooperation().setPartnerNo(cid);
                 //输出查看
@@ -299,6 +309,8 @@ public class CompanyController {
                 //只有当姓名、电话、所属公司都不为空才可以修改
                 //更新修改时间
                 eccontacts.setUpdateTime(new Date());
+                //更新修改人
+                eccontacts.setUpdater(userName);
                 //需要赋值cid给partnerNo
                 companyPackage.getEccontacts().setPartnerNo(cid);
                 //输出查看
