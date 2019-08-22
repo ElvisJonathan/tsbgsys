@@ -81,6 +81,7 @@ public class JurisdictionController {
 
     /**
      * 修改权限
+     * 整合管理员重置密码和停启用用户
      */
     @RequestMapping(value = "/updatepower", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -143,7 +144,7 @@ public class JurisdictionController {
                     for (int i=0;i<prid.size();i++){
                         //调用修改逻辑循环遍历修改所有权限ID
                         int num = eperRoleService.updatePowerByPrid(alist.get(i),prid.get(i));
-                        if (num==0 || arr[0]==0 || arr[1]==0){
+                        if (num==0 || arr[0]==0){
                             //如果某个权限id修改失败返回失败信息并中止修改过程
                             resultResponse = new ResultResponse(501,"提示信息：修改失败,请检查权限设置！");
                             return resultResponse;
