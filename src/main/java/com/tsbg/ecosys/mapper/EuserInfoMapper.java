@@ -60,4 +60,7 @@ public interface EuserInfoMapper {
 
     //通过工号和密码来判断是否存在此用户
     int judgeIfExistUserByUserPwd(@Param("userCode") String userCode,@Param("userPwd") String userPwd);
+
+    //管理员重置用户密码
+    int reSetPwdByUserCode(@Param("userPwd")String userPwd,@Param("userCode")String userCode);
 }

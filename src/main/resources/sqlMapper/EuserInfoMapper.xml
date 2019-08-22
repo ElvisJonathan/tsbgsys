@@ -297,4 +297,8 @@
     SELECT COUNT(0) FROM euser_info AS e WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR}
     AND e.`user_pwd`= #{userPwd,jdbcType=VARCHAR};
   </select>
+
+  <update id="reSetPwdByUserCode" parameterType="String">
+    UPDATE euser_info AS e SET e.`user_pwd`=#{userPwd,jdbcType=VARCHAR} WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </update>
 </mapper>

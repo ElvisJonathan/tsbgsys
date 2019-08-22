@@ -59,7 +59,7 @@ public class EuserController {
             if (num>0 && status == 1){
                 resultResponse = new ResultResponse(1,"提示信息：停用成功！");
                 return resultResponse;
-            }else if(num>0 && status == 0){
+            }else if(num>0){
                 resultResponse = new ResultResponse(0,"提示信息：启用成功！");
                 return resultResponse;
             }else {
@@ -113,5 +113,25 @@ public class EuserController {
         }
         resultResponse = new ResultResponse(502,"提示信息：请输入修改条件！");
         return resultResponse;
+    }
+
+    /**
+     * 管理员重置用户密码
+     */
+    @RequestMapping(value = "/reSetUserPwd", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse reSetUserPwd(@RequestBody EuserInfo euserInfo){
+        //重置用户的密码为：工号+"123",用户需要在被重置密码后进行密码的修改
+        //通过接受前端传来的工号进行修改
+        String userCode = euserInfo.getUserCode();
+        if (userCode!=null){
+            String userPwd = userCode+"123";
+            int num = euserInfoService.reSetPwdByUserCode(userPwd,userCode);
+            if(num>0){
+                return new ResultResponse(0,"重置密码成功！");
+            }
+            return new ResultResponse(501,"重置密码失败！");
+        }
+        return new ResultResponse(503,"未收到工号！");
     }
 }
