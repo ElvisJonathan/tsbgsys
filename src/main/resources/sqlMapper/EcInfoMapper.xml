@@ -110,20 +110,18 @@
     select
     <include refid="Base_Column_List" />
     from ec_info WHERE del_status=0
-    <where>
-      <if test = "partnerCname != null and partnerCname != ''">
-        and partner_cname like "%"#{partnerCname}"%"
-      </if>
-      <if test="partnerCproduct != null and partnerCproduct != ''">
-        and partner_cproduct like "%"#{partnerCproduct}"%"
-      </if>
-      <if test="partnerCregion != null and  partnerCregion != ''">
-        and  partner_cregion like "%"#{partnerCregion}"%"
-      </if>
-      <if test="partnerCindustry != null  and partnerCindustry  != ''">
-        and Partner_cindustry like "%"#{partnerCindustry}"%"
-      </if>
-    </where>
+    <if test = "partnerCname != null and partnerCname != ''">
+      and partner_cname LIKE CONCAT('%', #{partnerCname}, '%')
+    </if>
+    <if test="partnerCproduct != null and partnerCproduct != ''">
+      and partner_cproduct LIKE CONCAT('%', #{partnerCproduct}, '%')
+    </if>
+    <if test="partnerCregion != null and  partnerCregion != ''">
+      and  partner_cregion LIKE CONCAT('%', #{partnerCregion}, '%')
+    </if>
+    <if test="partnerCindustry != null  and partnerCindustry  != ''">
+      and Partner_cindustry LIKE CONCAT('%', #{partnerCindustry}, '%')
+    </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
