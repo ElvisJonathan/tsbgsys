@@ -28,6 +28,13 @@ public class LoginController {
         //获取用户在前台输入的用户名和密码
         String userCode = euserInfo.getUserCode();
         String userPwd = euserInfo.getUserPwd();
+        //登录时需要进行密码的判断：如果密码为工号+"123"的形式则提示用户修改密码
+        if (userPwd!=null){
+            if (userPwd.equals(userCode+"123")){
+                resultResponse = new ResultResponse(503,"用户密码被管理员重置需要修改密码！");
+                return resultResponse;
+            }
+        }
         //如果用户名和密码正确则成功登录
         if (userCode !=null && userPwd !=null){
             //如果用户名和密码存在会返回一条数据
