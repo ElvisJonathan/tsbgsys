@@ -15,6 +15,8 @@ public class PowerPackage {
 
     private Object[] data;
 
+    private Object sign;
+
     public EuserInfo getEuserInfo() {
         return euserInfo;
     }
@@ -29,5 +31,13 @@ public class PowerPackage {
 
     public void setData(Object[] data) {
         this.data = data;
+    }
+
+    public Object getSign() {
+        return sign;
+    }
+
+    public void setSign(Object sign) {
+        this.sign = sign;
     }
 }

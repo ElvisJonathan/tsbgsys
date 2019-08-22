@@ -90,6 +90,28 @@ public class JurisdictionController {
         //需要获取工号和修改后的四个权限ID
         //成功获取了工号
         String userCode = powerPackage.getEuserInfo().getUserCode();
+        //后续增加的用户状态
+        int status = powerPackage.getEuserInfo().getStatus();
+        //创建数组保存成功值
+        int[]arr = new int[3];
+        //在工号存在的情况下才可成功调用方法
+        if (userCode!=null){
+            //需要接收前端是否重置密码的提示：否0，是1
+            Object sign = powerPackage.getSign();
+            if (sign.equals("1")){
+                String userPwd = userCode+"123";//用于重置用户密码
+                int num = euserInfoService.reSetPwdByUserCode(userPwd,userCode);
+                if (num>0){
+                    arr[1]=1;
+                }
+            }
+            //调用方法修改用户状态：状态0为启用用户，1为停用用户
+            int num2 = euserInfoService.setEcoUserByUserCode(status,userCode);
+            //如果修改成功将数组下标第一位赋值为1，默认为0
+            if (num2>0){
+                arr[0]=1;
+            }
+        }
         //成功获取了data数组
         Object[] data = powerPackage.getData();//data的长度为前端传来的字符个数
         //由于只能从前端获取OBJ类型的数组所以要转为String类型的做字符串截取
@@ -108,8 +130,6 @@ public class JurisdictionController {
                 alist.add(data2[i].substring(6,7));//根据现有数据做截取，特定条件改数字
             }
         }
-        //验证输出的alist
-        System.out.println("输出alist值："+alist.toString());
         //根据传过来的userCode查询对应的uid
         Integer uid = euserInfoService.selectuidbyuserCode(userCode);
         if (uid!=null){
@@ -123,15 +143,16 @@ public class JurisdictionController {
                     for (int i=0;i<prid.size();i++){
                         //调用修改逻辑循环遍历修改所有权限ID
                         int num = eperRoleService.updatePowerByPrid(alist.get(i),prid.get(i));
-                        if (num==0){
+                        if (num==0 || arr[0]==0 || arr[1]==0){
                             //如果某个权限id修改失败返回失败信息并中止修改过程
                             resultResponse = new ResultResponse(501,"提示信息：修改失败,请检查权限设置！");
                             return resultResponse;
+                        }else if(num>0){
+                            //最终返回修改成功的提示给前端
+                            resultResponse = new ResultResponse(0,"提示信息：修改成功！");
+                            return resultResponse;
                         }
                     }
-                    //最终返回修改成功的提示给前端
-                    resultResponse = new ResultResponse(0,"提示信息：修改成功！");
-                    return resultResponse;
                 }
                 //prid为空返回异常信息
                 resultResponse = new ResultResponse(502,"提示信息：修改异常,未查到对应权限！");
