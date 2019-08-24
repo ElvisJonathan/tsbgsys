@@ -1,19 +1,19 @@
 package com.tsbg.ecosys.service;
 
-import com.tsbg.ecosys.model.EcInfo;
+import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.util.PageRequest;
 import com.tsbg.ecosys.util.PageResult;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface EcInfoService {
+public interface EpartnerService {
 
     //管理员隐藏/取消隐藏个别公司
     int updateByCid(@Param("status") int status,@Param("cid") int cid);
 
     //查询公司列表
-    List<EcInfo> findAll();
+    List<Epartner> findAll();
 
     /**
      * 分页查询接口
@@ -22,18 +22,18 @@ public interface EcInfoService {
      * 影响服务层以上的分页接口，起到了解耦的作用
      * 如果只需要单一的分页则不需要后面的实体类传参，只需要传pageRequest
      */
-    PageResult findPage(@Param("pageRequest") PageRequest pageRequest, @Param("ecInfo") EcInfo ecInfo);
+    PageResult findPage(@Param("pageRequest") PageRequest pageRequest, @Param("ecInfo") Epartner epartner);
 
 
-    List<EcInfo> selectCinfoBypartnerCname(String partnerCname);
-    List<EcInfo> selectCinfoBypartnerCproduct(String partnerCproduct);
-    List<EcInfo> selectCinfoBypartnerCregion(String partnerCregion);
-    List<EcInfo> selectCinfoBypartnerCindustry(String partnerCindustry);
-    List<EcInfo> selectCinfo(EcInfo ecinfo);
+    List<Epartner> selectCinfoBypartnerCname(String partnerCname);
+    List<Epartner> selectCinfoBypartnerCproduct(String partnerCproduct);
+    List<Epartner> selectCinfoBypartnerCregion(String partnerCregion);
+    List<Epartner> selectCinfoBypartnerCindustry(String partnerCindustry);
+    List<Epartner> selectCinfo(Epartner ecinfo);
 
-    int insertSelective(EcInfo record);
+    int insertSelective(Epartner record);
 
-    int updateByPrimaryKeySelective(EcInfo record);
+    int updateByPrimaryKeySelective(Epartner record);
 
     //管理员删除公司（软删除）
     int updateStatusByCid(int cid);

@@ -1,53 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.mapper.EuserInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.EuserInfo" >
-    <id column="uid" property="uid" jdbcType="INTEGER" />
+<mapper namespace="com.tsbg.ecosys.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.UserInfo" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_code" property="userCode" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="user_pwd" property="userPwd" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="is_manager" property="isManager" jdbcType="INTEGER" />
+    <result column="locked" property="locked" jdbcType="TINYINT" />
     <result column="gender" property="gender" jdbcType="INTEGER" />
     <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
-    <result column="mail_address" property="mailAddress" jdbcType="VARCHAR" />
+    <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
+    <result column="role_list" property="roleList" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="DATE" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
-    <result column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="proj_id" property="projId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    uid, user_code, user_name, user_pwd, is_manager, gender, phone_number, mail_address, 
-    status, create_time, update_time, creater, updater,aid
+    user_id, user_code, user_name, user_pwd, salt, is_manager, locked, gender, phone_number,
+    email_address, role_list, status, create_time, update_time, creater, updater, proj_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
-    from euser_info
-    where uid = #{uid,jdbcType=INTEGER}
+    from user_info
+    where user_id = #{userId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from euser_info
-    where uid = #{uid,jdbcType=INTEGER}
+    delete from user_info
+    where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.model.EuserInfo" >
-    insert into euser_info (uid, user_code, user_name, 
-      user_pwd, is_manager, gender, 
-      phone_number, mail_address, status, 
-      create_time, update_time, creater, 
-      updater,aid)
-    values (#{uid,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userPwd,jdbcType=VARCHAR}, #{isManager,jdbcType=INTEGER}, #{gender,jdbcType=INTEGER}, 
-      #{phoneNumber,jdbcType=VARCHAR}, #{mailAddress,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
-      #{updater,jdbcType=VARCHAR},#{aid,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.tsbg.ecosys.model.UserInfo" >
+    insert into user_info (user_id, user_code, user_name,
+      user_pwd, salt, is_manager,
+      locked, gender, phone_number,
+      email_address, role_list, status,
+      create_time, update_time, creater,
+      updater, proj_id)
+    values (#{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{userPwd,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{isManager,jdbcType=INTEGER},
+      #{locked,jdbcType=TINYINT}, #{gender,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR},
+      #{emailAddress,jdbcType=VARCHAR}, #{roleList,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR},
+      #{updater,jdbcType=VARCHAR}, #{projId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.EuserInfo" >
-    insert into euser_info
+  <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.UserInfo" >
+    insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="uid != null" >
-        uid,
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="userCode != null" >
         user_code,
@@ -58,8 +63,14 @@
       <if test="userPwd != null" >
         user_pwd,
       </if>
+      <if test="salt != null" >
+        salt,
+      </if>
       <if test="isManager != null" >
         is_manager,
+      </if>
+      <if test="locked != null" >
+        locked,
       </if>
       <if test="gender != null" >
         gender,
@@ -67,8 +78,11 @@
       <if test="phoneNumber != null" >
         phone_number,
       </if>
-      <if test="mailAddress != null" >
-        mail_address,
+      <if test="emailAddress != null" >
+        email_address,
+      </if>
+      <if test="roleList != null" >
+        role_list,
       </if>
       <if test="status != null" >
         status,
@@ -85,13 +99,13 @@
       <if test="updater != null" >
         updater,
       </if>
-      <if test="aid != null" >
-        aid,
+      <if test="projId != null" >
+        proj_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="uid != null" >
-      #{uid,jdbcType=INTEGER},
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="userCode != null" >
         #{userCode,jdbcType=VARCHAR},
@@ -102,8 +116,14 @@
       <if test="userPwd != null" >
         #{userPwd,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="isManager != null" >
         #{isManager,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null" >
+        #{locked,jdbcType=TINYINT},
       </if>
       <if test="gender != null" >
         #{gender,jdbcType=INTEGER},
@@ -111,8 +131,11 @@
       <if test="phoneNumber != null" >
         #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="roleList != null" >
+        #{roleList,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -129,13 +152,13 @@
       <if test="updater != null" >
         #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="aid != null" >
-        #{aid,jdbcType=INTEGER},
+      <if test="projId != null" >
+        #{projId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.model.EuserInfo" >
-    update euser_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.model.UserInfo" >
+    update user_info
     <set >
       <if test="userCode != null" >
         user_code = #{userCode,jdbcType=VARCHAR},
@@ -146,8 +169,14 @@
       <if test="userPwd != null" >
         user_pwd = #{userPwd,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="isManager != null" >
         is_manager = #{isManager,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null" >
+        locked = #{locked,jdbcType=TINYINT},
       </if>
       <if test="gender != null" >
         gender = #{gender,jdbcType=INTEGER},
@@ -155,8 +184,11 @@
       <if test="phoneNumber != null" >
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="roleList != null" >
+        role_list = #{roleList,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -173,62 +205,65 @@
       <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="aid != null" >
-        aid = #{aid,jdbcType=INTEGER},
+      <if test="projId != null" >
+        proj_id = #{projId,jdbcType=VARCHAR},
       </if>
     </set>
-    where uid = #{uid,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.EuserInfo" >
-    update euser_info
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.UserInfo" >
+    update user_info
     set user_code = #{userCode,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       user_pwd = #{userPwd,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
       is_manager = #{isManager,jdbcType=INTEGER},
+      locked = #{locked,jdbcType=TINYINT},
       gender = #{gender,jdbcType=INTEGER},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
-      mail_address = #{mailAddress,jdbcType=VARCHAR},
+      email_address = #{emailAddress,jdbcType=VARCHAR},
+      role_list = #{roleList,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=DATE},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       updater = #{updater,jdbcType=VARCHAR},
-      aid = #{aid,jdbcType=INTEGER}
-    where uid = #{uid,jdbcType=INTEGER}
+      proj_id = #{projId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
   <select id="selectUserByPwd" resultType="int" parameterType="String" >
-    SELECT COUNT(0)FROM euser_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR} AND e.`user_pwd`=#{userPwd,jdbcType=VARCHAR};
+    SELECT COUNT(0)FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR} AND e.`user_pwd`=#{userPwd,jdbcType=VARCHAR};
   </select>
   <select id="selectUserNameByUserCode" resultType="String" parameterType="String" >
-    SELECT e.user_name FROM euser_info AS e WHERE e.user_code = #{userCode,jdbcType=VARCHAR};
+    SELECT e.user_name FROM user_info AS e WHERE e.user_code = #{userCode,jdbcType=VARCHAR};
   </select>
   <select id="selectisExistUserCodeByStaffCode"  parameterType="String" resultType="int">
-    SELECT COUNT(0) FROM euser_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+    SELECT COUNT(0) FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
   <select id="selectuidbyuserCode"  parameterType="String" resultType="java.lang.Integer">
-    SELECT e.uid FROM euser_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+    SELECT e.user_id FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
   <insert id="insertDatatoEuserArea"  >
-    INSERT INTO euser_area (uid,aid,remark) VALUES (#{uid,jdbcType=INTEGER},#{aid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
+    INSERT INTO euser_area (user_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
   </insert>
   <insert id="insertDatatoEuserRole"  >
-    INSERT INTO euser_role (uid,rid,remark) VALUES (#{uid,jdbcType=INTEGER},#{rid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
+    INSERT INTO user_role (user_id,role_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{rid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
   </insert>
-  <select id="selectUidAndName"  parameterType="String" resultType="com.tsbg.ecosys.model.EuserInfo">
-    SELECT e.`uid`,e.`user_name` FROM euser_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  <select id="selectUidAndName"  parameterType="String" resultType="com.tsbg.ecosys.model.UserInfo">
+    SELECT e.`user_id`,e.`user_name` FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
   <select id="selectEuserList" resultMap="BaseResultMap">
-    SELECT e.uid,e.user_code,e.user_name,e.gender,e.phone_number,e.mail_address,e.status,e.create_time FROM euser_info AS e;
+    SELECT e.user_id,e.user_code,e.user_name,e.gender,e.phone_number,e.email_address,e.status,e.create_time FROM user_info AS e;
   </select>
   <update id="setEcoUserByUserCode"  >
-    UPDATE euser_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR};
+    UPDATE user_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR};
   </update>
   <select id="selectUserMsgbyUserCode" resultMap="BaseResultMap" parameterType="String">
-    SELECT e.`user_code`,e.`mail_address`,e.`user_name`,e.`phone_number`,e.`gender`,e.`aid` FROM euser_info AS e
+    SELECT e.`user_code`,e.`email_address`,e.`user_name`,e.`phone_number`,e.`gender` FROM user_info AS e
      WHERE e.`user_code` = #{userCode,jdbcType=VARCHAR};
   </select>
-  <update id="updateByUserCodeSelective" parameterType="com.tsbg.ecosys.model.EuserInfo" >
-    update euser_info
+  <update id="updateByUserCodeSelective" parameterType="com.tsbg.ecosys.model.UserInfo" >
+    update user_info
     <set >
       <if test="userCode != null" >
         user_code = #{userCode,jdbcType=VARCHAR},
@@ -239,8 +274,14 @@
       <if test="userPwd != null" >
         user_pwd = #{userPwd,jdbcType=VARCHAR},
       </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
       <if test="isManager != null" >
         is_manager = #{isManager,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null" >
+        locked = #{locked,jdbcType=TINYINT},
       </if>
       <if test="gender != null" >
         gender = #{gender,jdbcType=INTEGER},
@@ -248,8 +289,11 @@
       <if test="phoneNumber != null" >
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="roleList != null" >
+        role_list = #{roleList,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -266,15 +310,15 @@
       <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="aid != null" >
-        aid = #{aid,jdbcType=INTEGER},
+      <if test="projId != null" >
+        proj_id = #{projId,jdbcType=VARCHAR},
       </if>
     </set>
     where user_code = #{userCode,jdbcType=VARCHAR};
   </update>
 
-  <update id="modifyPasswordByUsername" parameterType="com.tsbg.ecosys.model.EuserInfo">
-    update euser_info
+  <update id="modifyPasswordByUsername" parameterType="com.tsbg.ecosys.model.UserInfo">
+    update user_info
     <set>
       <if test="userPwd != null" >
         user_pwd = #{userPwd,jdbcType=VARCHAR},
@@ -289,16 +333,16 @@
   <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
-    from euser_info
+    from user_info
     where user_code = #{userCode,jdbcType=VARCHAR}
   </select>
 
   <select id="judgeIfExistUserByUserPwd"  parameterType="String" resultType="int">
-    SELECT COUNT(0) FROM euser_info AS e WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR}
+    SELECT COUNT(0) FROM user_info AS e WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR}
     AND e.`user_pwd`= #{userPwd,jdbcType=VARCHAR};
   </select>
 
   <update id="reSetPwdByUserCode" parameterType="String">
-    UPDATE euser_info AS e SET e.`user_pwd`=#{userPwd,jdbcType=VARCHAR} WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+    UPDATE user_info AS e SET e.`user_pwd`=#{userPwd,jdbcType=VARCHAR} WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </update>
 </mapper>

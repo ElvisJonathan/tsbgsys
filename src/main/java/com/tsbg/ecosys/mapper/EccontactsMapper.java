@@ -10,13 +10,13 @@ import java.util.List;
 
 @Mapper
 public interface EccontactsMapper {
-    int deleteByPrimaryKey(Integer ccid);
+    int deleteByPrimaryKey(Integer contactId);
 
     int insert(Eccontacts record);
 
     int insertSelective(Eccontacts record);
 
-    Eccontacts selectByPrimaryKey(Integer ccid);
+    Eccontacts selectByPrimaryKey(Integer contactId);
 
     int updateByPrimaryKeySelective(Eccontacts record);
 

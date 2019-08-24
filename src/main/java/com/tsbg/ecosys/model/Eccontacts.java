@@ -3,11 +3,11 @@ package com.tsbg.ecosys.model;
 import java.util.Date;
 
 public class Eccontacts {
-    private Integer ccid;
+    private Integer contactId;
 
     private Integer partnerNo;
 
-    private String partnerCname;
+    private String partnerName;
 
     private String name;
 
@@ -17,7 +17,7 @@ public class Eccontacts {
 
     private String phoneNumber;
 
-    private String mailAddress;
+    private String emailAddress;
 
     private Date createTime;
 
@@ -29,26 +29,16 @@ public class Eccontacts {
 
     private Integer status;
 
+    private Integer delStatus;
+
     private String remark;
 
-    public Eccontacts() {
+    public Integer getContactId() {
+        return contactId;
     }
 
-    public Eccontacts(String partnerCname, String name, String title, Integer gender, String phoneNumber, String mailAddress) {
-        this.partnerCname = partnerCname;
-        this.name = name;
-        this.title = title;
-        this.gender = gender;
-        this.phoneNumber = phoneNumber;
-        this.mailAddress = mailAddress;
-    }
-
-    public Integer getCcid() {
-        return ccid;
-    }
-
-    public void setCcid(Integer ccid) {
-        this.ccid = ccid;
+    public void setContactId(Integer contactId) {
+        this.contactId = contactId;
     }
 
     public Integer getPartnerNo() {
@@ -59,12 +49,12 @@ public class Eccontacts {
         this.partnerNo = partnerNo;
     }
 
-    public String getPartnerCname() {
-        return partnerCname;
+    public String getPartnerName() {
+        return partnerName;
     }
 
-    public void setPartnerCname(String partnerCname) {
-        this.partnerCname = partnerCname == null ? null : partnerCname.trim();
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName == null ? null : partnerName.trim();
     }
 
     public String getName() {
@@ -99,12 +89,12 @@ public class Eccontacts {
         this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
     }
 
-    public String getMailAddress() {
-        return mailAddress;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress == null ? null : mailAddress.trim();
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress == null ? null : emailAddress.trim();
     }
 
     public Date getCreateTime() {
@@ -145,6 +135,14 @@ public class Eccontacts {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getDelStatus() {
+        return delStatus;
+    }
+
+    public void setDelStatus(Integer delStatus) {
+        this.delStatus = delStatus;
     }
 
     public String getRemark() {

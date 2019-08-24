@@ -1,32 +1,31 @@
 package com.tsbg.ecosys.serviceImpl;
 
-import com.tsbg.ecosys.mapper.EperRoleMapper;
-import com.tsbg.ecosys.model.EperRole;
-import com.tsbg.ecosys.service.EperRoleService;
+import com.tsbg.ecosys.mapper.PermRoleMapper;
+import com.tsbg.ecosys.service.PermRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EperRoleServiceImpl implements EperRoleService {
+public class PermRoleServiceImpl implements PermRoleService {
 
     @Autowired
-    private EperRoleMapper eperRoleMapper;
+    private PermRoleMapper permRoleMapper;
 
 
     @Override
     public List<Integer> selectPidByRid(Integer rid) {
-        return eperRoleMapper.selectPidByRid(rid);
+        return permRoleMapper.selectPidByRid(rid);
     }
 
     @Override
     public List<Integer> selectPridByRid(Integer rid) {
-        return eperRoleMapper.selectPridByRid(rid);
+        return permRoleMapper.selectPridByRid(rid);
     }
 
     @Override
     public int updatePowerByPrid(Object pid, Object prid) {
-        return eperRoleMapper.updatePowerByPrid(pid, prid);
+        return permRoleMapper.updatePowerByPrid(pid, prid);
     }
 }

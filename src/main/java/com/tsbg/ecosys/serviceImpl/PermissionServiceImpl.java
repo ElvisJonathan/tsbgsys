@@ -1,20 +1,20 @@
 package com.tsbg.ecosys.serviceImpl;
 
-import com.tsbg.ecosys.mapper.EpermissionMapper;
-import com.tsbg.ecosys.service.EpermissionService;
+import com.tsbg.ecosys.mapper.PermissionMapper;
+import com.tsbg.ecosys.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EpermissionServiceImpl implements EpermissionService {
+public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
-    private EpermissionMapper epermissionMapper;
+    private PermissionMapper permissionMapper;
 
     @Override
     public List<String> selectPowerDetailByPid(List<Integer> pid) {
-        return epermissionMapper.selectPowerDetailByPid(pid);
+        return permissionMapper.selectPowerDetailByPid(pid);
     }
 }

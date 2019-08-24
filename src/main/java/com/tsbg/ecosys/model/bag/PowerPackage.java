@@ -1,6 +1,6 @@
 package com.tsbg.ecosys.model.bag;
 
-import com.tsbg.ecosys.model.EuserInfo;
+import com.tsbg.ecosys.model.UserInfo;
 
 /**
  * 封装了用户、重置密码标志和权限ID的封装类
@@ -11,18 +11,18 @@ public class PowerPackage {
     public PowerPackage() {
     }
 
-    private EuserInfo euserInfo;
+    private UserInfo userInfo;
 
     private Object[] data;
 
     private Object sign;
 
-    public EuserInfo getEuserInfo() {
-        return euserInfo;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setEuserInfo(EuserInfo euserInfo) {
-        this.euserInfo = euserInfo;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public Object[] getData() {

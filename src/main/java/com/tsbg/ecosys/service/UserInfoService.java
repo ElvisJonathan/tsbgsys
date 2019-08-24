@@ -1,16 +1,16 @@
 package com.tsbg.ecosys.service;
 
 
-import com.tsbg.ecosys.model.EuserInfo;
+import com.tsbg.ecosys.model.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 
-public interface EuserInfoService {
+public interface UserInfoService {
 
     // 注册成功时添加用户信息
-    int insertSelective(EuserInfo record);
+    int insertSelective(UserInfo record);
 
     //根据用户名和密码来查询是否存在此用户
     int selectUserByPwd(@Param("userCode") String userCode, @Param("userPwd") String userPwd);
@@ -25,30 +25,30 @@ public interface EuserInfoService {
     Integer selectuidbyuserCode(String userCode);
 
     //更新euser_area表的数据
-    int insertDatatoEuserArea(@Param("uid") int uid,@Param("aid") int aid,@Param("remark") String remark);
+    int insertDatatoEuserArea(@Param("uid") int uid,@Param("remark") String remark);
 
-    //更新euser_role表的数据
+    //更新user_role表的数据
     int insertDatatoEuserRole(@Param("uid") int uid,@Param("rid") int rid,@Param("remark") String remark);
 
     //根据用户工号查询对应的uid和用户名
-    EuserInfo selectUidAndName(String userCode);
+    UserInfo selectUidAndName(String userCode);
 
     //查询用户列表
-    List<EuserInfo> selectEuserList();
+    List<UserInfo> selectEuserList();
 
     //管理员停用和启用用户
     int setEcoUserByUserCode(@Param("status") int status,@Param("userCode") String userCode);
 
     //根据工号查询用户个人信息
-    EuserInfo selectUserMsgbyUserCode(String userCode);
+    UserInfo selectUserMsgbyUserCode(String userCode);
 
     //根据工号修改个人信息
-    int updateByUserCodeSelective(EuserInfo euserInfo);
+    int updateByUserCodeSelective(UserInfo userInfo);
 
     //修改密码
     int modifyPasswordByUsername(String userPwd,String userCode);
 
-    EuserInfo selectByUserCode(String userCode);
+    UserInfo selectByUserCode(String userCode);
 
     //通过工号和密码来判断是否存在此用户
     int judgeIfExistUserByUserPwd(@Param("userCode") String userCode,@Param("userPwd") String userPwd);

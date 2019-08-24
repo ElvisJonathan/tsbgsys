@@ -3,10 +3,10 @@ package com.tsbg.ecosys.serviceImpl;
 import com.tsbg.ecosys.dto.EcTotalDto;
 import com.tsbg.ecosys.dto.EcTotalListDto;
 import com.tsbg.ecosys.dto.condition.EcooperationConditionDto;
-import com.tsbg.ecosys.mapper.EcInfoMapper;
+import com.tsbg.ecosys.mapper.EpartnerMapper;
 import com.tsbg.ecosys.mapper.EccontactsMapper;
 import com.tsbg.ecosys.mapper.EcooperationMapper;
-import com.tsbg.ecosys.model.EcInfo;
+import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.example.EcooperationExample;
@@ -27,7 +27,7 @@ import java.util.List;
 public class EcooperationService {
 
     @Autowired
-    private EcInfoMapper ecInfoMapper;
+    private EpartnerMapper epartnerMapper;
 
     @Autowired
     private EccontactsMapper eccontactsMapper;
@@ -39,13 +39,13 @@ public class EcooperationService {
     //查询合作伙伴信息
     public List<EcTotalDto> getEcooperationList(Integer cid) {
         //根据cid查询出来
-        EcInfo ecInfo1 = ecInfoMapper.selectByPrimaryKey(cid);
+        Epartner epartner1 = epartnerMapper.selectByPrimaryKey(cid);
         //根据cid查找eccontact
         List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCid(cid);
         //根据cid查在查询所有的Ecooperation
         List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCid(cid);
         EcTotalDto ecTotalDto = new EcTotalDto();
-        ecTotalDto.setEcInfo(ecInfo1);
+        ecTotalDto.setEpartner(epartner1);
         if(eccontacts != null && eccontacts.size()>0){
             ecTotalDto.setEccontacts(eccontacts.get(0));
         }
@@ -71,21 +71,21 @@ public class EcooperationService {
 
     //更新合作伙伴信息
     public void updateEcooperation(EcTotalDto ecTotalDto) throws Exception {
-        Ecooperation ecooperation = getByPrimaryKey(ecTotalDto.getEcooperation().getCoid());
+        Ecooperation ecooperation = getByPrimaryKey(ecTotalDto.getEcooperation().getCoopId());
         Date createTime = ecooperation.getCreateTime();
         BeanUtils.copyProperties(ecTotalDto.getEcooperation(), ecooperation);
         ecooperation.setCreateTime(createTime);
         ecooperation.setUpdateTime(new Date());
         updateByPrimaryKey(ecooperation);
 
-        EcInfo ecInfo = ecInfoMapper.selectByPrimaryKey(ecTotalDto.getEcInfo().getCid());
-        Date createTime1 = ecInfo.getCreateTime();
-        BeanUtils.copyProperties(ecTotalDto.getEcInfo(), ecInfo);
-        ecInfo.setCreateTime(createTime1);
-        ecInfo.setUpdateTime(new Date());
-        ecInfoMapper.updateByPrimaryKey(ecInfo);
+        Epartner epartner = epartnerMapper.selectByPrimaryKey(ecTotalDto.getEpartner().getPartnerNo());
+        Date createTime1 = epartner.getCreateTime();
+        BeanUtils.copyProperties(ecTotalDto.getEpartner(), epartner);
+        epartner.setCreateTime(createTime1);
+        epartner.setUpdateTime(new Date());
+        epartnerMapper.updateByPrimaryKey(epartner);
 
-        Eccontacts eccontacts = eccontactsMapper.selectByPrimaryKey(ecTotalDto.getEccontacts().getCcid());
+        Eccontacts eccontacts = eccontactsMapper.selectByPrimaryKey(ecTotalDto.getEccontacts().getContactId());
         Date createTime2 = eccontacts.getCreateTime();
         BeanUtils.copyProperties(ecTotalDto.getEccontacts(), eccontacts);
         eccontacts.setCreateTime(createTime2);

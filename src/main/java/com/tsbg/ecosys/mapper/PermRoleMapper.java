@@ -1,24 +1,25 @@
 package com.tsbg.ecosys.mapper;
 
-import com.tsbg.ecosys.model.EperRole;
+import com.tsbg.ecosys.model.PermRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
-public interface EperRoleMapper {
-    int deleteByPrimaryKey(Integer prid);
+public interface PermRoleMapper {
 
-    int insert(EperRole record);
+    int deleteByPrimaryKey(Integer permroleId);
 
-    int insertSelective(EperRole record);
+    int insert(PermRole record);
 
-    EperRole selectByPrimaryKey(Integer prid);
+    int insertSelective(PermRole record);
 
-    int updateByPrimaryKeySelective(EperRole record);
+    PermRole selectByPrimaryKey(Integer permroleId);
 
-    int updateByPrimaryKey(EperRole record);
+    int updateByPrimaryKeySelective(PermRole record);
+
+    int updateByPrimaryKey(PermRole record);
 
     //通过角色rid查询对应的权限id
     List<Integer> selectPidByRid(Integer rid);

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tsbg.ecosys.mapper.StaffInfoMapper" >
   <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.StaffInfo" >
-    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <id column="staff_id" property="staffId" jdbcType="INTEGER" />
     <result column="staff_code" property="staffCode" jdbcType="VARCHAR" />
     <result column="staff_name" property="staffName" jdbcType="VARCHAR" />
     <result column="BG" property="bg" jdbcType="VARCHAR" />
@@ -12,47 +12,46 @@
     <result column="cost_code" property="costCode" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="INTEGER" />
     <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
-    <result column="mail_address" property="mailAddress" jdbcType="VARCHAR" />
+    <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="DATE" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="proid" property="proid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    sid, staff_code, staff_name, BG, BU, department, depart_code, cost_code, gender, 
-    phone_number, mail_address, create_time, update_time, creater, updater, status, proid
+    staff_id, staff_code, staff_name, BG, BU, department, depart_code, cost_code, gender,
+    phone_number, email_address, create_time, update_time, creater, updater, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from staff_info
-    where sid = #{sid,jdbcType=INTEGER}
+    where staff_id = #{staffId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from staff_info
-    where sid = #{sid,jdbcType=INTEGER}
+    where staff_id = #{staffId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tsbg.ecosys.model.StaffInfo" >
-    insert into staff_info (sid, staff_code, staff_name, 
-      BG, BU, department, 
-      depart_code, cost_code, gender, 
-      phone_number, mail_address, create_time, 
-      update_time, creater, updater, 
-      status, proid)
-    values (#{sid,jdbcType=INTEGER}, #{staffCode,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
-      #{bg,jdbcType=VARCHAR}, #{bu,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
-      #{departCode,jdbcType=VARCHAR}, #{costCode,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
-      #{phoneNumber,jdbcType=VARCHAR}, #{mailAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{proid,jdbcType=VARCHAR})
+    insert into staff_info (staff_id, staff_code, staff_name,
+      BG, BU, department,
+      depart_code, cost_code, gender,
+      phone_number, email_address, create_time,
+      update_time, creater, updater,
+      status)
+    values (#{staffId,jdbcType=INTEGER}, #{staffCode,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR},
+      #{bg,jdbcType=VARCHAR}, #{bu,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
+      #{departCode,jdbcType=VARCHAR}, #{costCode,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+      #{phoneNumber,jdbcType=VARCHAR}, #{emailAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE},
+      #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.StaffInfo" >
     insert into staff_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        sid,
+      <if test="staffId != null" >
+        staff_id,
       </if>
       <if test="staffCode != null" >
         staff_code,
@@ -81,8 +80,8 @@
       <if test="phoneNumber != null" >
         phone_number,
       </if>
-      <if test="mailAddress != null" >
-        mail_address,
+      <if test="emailAddress != null" >
+        email_address,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -99,13 +98,10 @@
       <if test="status != null" >
         status,
       </if>
-      <if test="proid != null" >
-        proid,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sid != null" >
-        #{sid,jdbcType=INTEGER},
+      <if test="staffId != null" >
+        #{staffId,jdbcType=INTEGER},
       </if>
       <if test="staffCode != null" >
         #{staffCode,jdbcType=VARCHAR},
@@ -134,8 +130,8 @@
       <if test="phoneNumber != null" >
         #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        #{emailAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=DATE},
@@ -151,9 +147,6 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
-      </if>
-      <if test="proid != null" >
-        #{proid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -187,8 +180,8 @@
       <if test="phoneNumber != null" >
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=DATE},
@@ -205,11 +198,8 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="proid != null" >
-        proid = #{proid,jdbcType=VARCHAR},
-      </if>
     </set>
-    where sid = #{sid,jdbcType=INTEGER}
+    where staff_id = #{staffId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.StaffInfo" >
     update staff_info
@@ -222,14 +212,13 @@
       cost_code = #{costCode,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=INTEGER},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
-      mail_address = #{mailAddress,jdbcType=VARCHAR},
+      email_address = #{emailAddress,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=DATE},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       updater = #{updater,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      proid = #{proid,jdbcType=VARCHAR}
-    where sid = #{sid,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER}
+    where staff_id = #{staffId,jdbcType=INTEGER}
   </update>
   <select id="selectisExistStaffCodeByuserCode"  parameterType="String" resultType="int">
     SELECT COUNT(0) FROM staff_info AS s WHERE s.`staff_code`=#{userCode,jdbcType=VARCHAR};

@@ -2,11 +2,11 @@ package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.bag.PowerPackage;
-import com.tsbg.ecosys.model.EuserInfo;
-import com.tsbg.ecosys.service.EperRoleService;
-import com.tsbg.ecosys.service.EpermissionService;
-import com.tsbg.ecosys.service.EuserInfoService;
-import com.tsbg.ecosys.service.EuserRoleService;
+import com.tsbg.ecosys.model.UserInfo;
+import com.tsbg.ecosys.service.PermRoleService;
+import com.tsbg.ecosys.service.PermissionService;
+import com.tsbg.ecosys.service.UserInfoService;
+import com.tsbg.ecosys.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,38 +20,38 @@ import java.util.*;
 public class JurisdictionController {
 
     @Autowired
-    private EuserInfoService euserInfoService;
+    private UserInfoService userInfoService;
     @Autowired
-    private EuserRoleService euserRoleService;
+    private UserRoleService userRoleService;
     @Autowired
-    private EperRoleService eperRoleService;
+    private PermRoleService permRoleService;
     @Autowired
-    private EpermissionService epermissionService;
+    private PermissionService permissionService;
 
     /**
      * 权限详情
      */
     @RequestMapping(value = "/ecodetail", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse getPower(@RequestBody EuserInfo euserInfo) {
+    public ResultResponse getPower(@RequestBody UserInfo userInfo) {
         //初始化构造器
         ResultResponse resultResponse = null;
         //获取前端传来的工号
-        String userCode = euserInfo.getUserCode();
+        String userCode = userInfo.getUserCode();
         if (userCode!=null){
-            //通过userCode查询当前用户的uid
-            Integer uid = euserInfoService.selectuidbyuserCode(userCode);
+            //通过userCode查询当前用户的user_id
+            Integer uid = userInfoService.selectuidbyuserCode(userCode);
             //通过userCode查询当前用户的userName
-            String uName = euserInfoService.selectUserNameByUserCode(userCode);
+            String uName = userInfoService.selectUserNameByUserCode(userCode);
             if (uid!=null){
                 //通过uid查询用户对应的角色rid
-                Integer rid = euserRoleService.selectRidByUid(uid);
+                Integer rid = userRoleService.selectRidByUid(uid);
                 if (rid!=null){
                     //通过角色rid查询对应的权限id
-                    List<Integer> pid = eperRoleService.selectPidByRid(rid);
+                    List<Integer> pid = permRoleService.selectPidByRid(rid);
                     if (pid!=null){
                         //根据权限id查询对应的权限详情
-                        List<String> plist = epermissionService.selectPowerDetailByPid(pid);
+                        List<String> plist = permissionService.selectPowerDetailByPid(pid);
                         //如果plist不为null,则把查询出的list返回给前端
                         if (plist != null){
                             //将用户名和权限详情返给前端
@@ -90,9 +90,9 @@ public class JurisdictionController {
         ResultResponse resultResponse = null;
         //需要获取工号和修改后的四个权限ID
         //成功获取了工号
-        String userCode = powerPackage.getEuserInfo().getUserCode();
+        String userCode = powerPackage.getUserInfo().getUserCode();
         //后续增加的用户状态
-        int status = powerPackage.getEuserInfo().getStatus();
+        int status = powerPackage.getUserInfo().getStatus();
         //创建数组保存成功值
         int[]arr = new int[3];
         //在工号存在的情况下才可成功调用方法
@@ -101,13 +101,13 @@ public class JurisdictionController {
             Object sign = powerPackage.getSign();
             if (sign.equals("1")){
                 String userPwd = userCode+"123";//用于重置用户密码
-                int num = euserInfoService.reSetPwdByUserCode(userPwd,userCode);
+                int num = userInfoService.reSetPwdByUserCode(userPwd,userCode);
                 if (num>0){
                     arr[1]=1;
                 }
             }
             //调用方法修改用户状态：状态0为启用用户，1为停用用户
-            int num2 = euserInfoService.setEcoUserByUserCode(status,userCode);
+            int num2 = userInfoService.setEcoUserByUserCode(status,userCode);
             //如果修改成功将数组下标第一位赋值为1，默认为0
             if (num2>0){
                 arr[0]=1;
@@ -132,18 +132,18 @@ public class JurisdictionController {
             }
         }
         //根据传过来的userCode查询对应的uid
-        Integer uid = euserInfoService.selectuidbyuserCode(userCode);
+        Integer uid = userInfoService.selectuidbyuserCode(userCode);
         if (uid!=null){
             //通过uid查询用户对应的角色rid
-            Integer rid = euserRoleService.selectRidByUid(uid);
+            Integer rid = userRoleService.selectRidByUid(uid);
             if (rid!=null){
                 //根据rid去查询对应的prid,通过prid去修改pid
-                List prid = eperRoleService.selectPridByRid(rid);
+                List prid = permRoleService.selectPridByRid(rid);
                 if (prid!=null){
                     //for循环修改权限
                     for (int i=0;i<prid.size();i++){
                         //调用修改逻辑循环遍历修改所有权限ID
-                        int num = eperRoleService.updatePowerByPrid(alist.get(i),prid.get(i));
+                        int num = permRoleService.updatePowerByPrid(alist.get(i),prid.get(i));
                         if (num==0 || arr[0]==0){
                             //如果某个权限id修改失败返回失败信息并中止修改过程
                             resultResponse = new ResultResponse(501,"提示信息：修改失败,请检查权限设置！");

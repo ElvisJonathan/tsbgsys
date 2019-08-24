@@ -2,19 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tsbg.ecosys.mapper.EccontactsMapper" >
   <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.Eccontacts" >
-    <id column="ccid" property="ccid" jdbcType="INTEGER" />
+    <id column="contact_id" property="contactId" jdbcType="INTEGER" />
     <result column="partner_no" property="partnerNo" jdbcType="INTEGER" />
-    <result column="partner_cname" property="partnerCname" jdbcType="VARCHAR" />
+    <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="INTEGER" />
     <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
-    <result column="mail_address" property="mailAddress" jdbcType="VARCHAR" />
+    <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="DATE" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="del_status" property="delStatus" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -76,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ccid, partner_no, partner_cname, name, title, gender, phone_number, mail_address, 
-    create_time, update_time, creater, updater, status, remark
+    contact_id, partner_no, partner_name, name, title, gender, phone_number, email_address,
+    create_time, update_time, creater, updater, status, del_status, remark
   </sql>
 
 <!--  通过"公司名称"带出联系人 -->
@@ -86,31 +87,33 @@
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from eccontacts
-    where ccid = #{ccid,jdbcType=INTEGER}
+    where contact_id = #{contactId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tsbg.ecosys.model.Eccontacts" >
-    insert into eccontacts (ccid, partner_no, partner_cname, 
-      name, title, gender, 
-      phone_number, mail_address, create_time, 
-      update_time, creater, updater, 
-      status, remark)
-    values (#{ccid,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerCname,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
-      #{phoneNumber,jdbcType=VARCHAR}, #{mailAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+    insert into eccontacts (contact_id, partner_no, partner_name,
+      name, title, gender,
+      phone_number, email_address, create_time,
+      update_time, creater, updater,
+      status, del_status, remark
+      )
+    values (#{contactId,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+      #{phoneNumber,jdbcType=VARCHAR}, #{emailAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE},
+      #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR},
+      #{status,jdbcType=INTEGER}, #{delStatus,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.Eccontacts" >
     insert into eccontacts
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="ccid != null" >
-        ccid,
+      <if test="contactId != null" >
+        contact_id,
       </if>
       <if test="partnerNo != null" >
         partner_no,
       </if>
-      <if test="partnerCname != null" >
-        partner_cname,
+      <if test="partnerName != null" >
+        partner_name,
       </if>
       <if test="name != null" >
         name,
@@ -124,8 +127,8 @@
       <if test="phoneNumber != null" >
         phone_number,
       </if>
-      <if test="mailAddress != null" >
-        mail_address,
+      <if test="emailAddress != null" >
+        email_address,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -142,19 +145,22 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="delStatus != null" >
+        del_status,
+      </if>
       <if test="remark != null" >
         remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="ccid != null" >
-        #{ccid,jdbcType=INTEGER},
+      <if test="contactId != null" >
+        #{contactId,jdbcType=INTEGER},
       </if>
       <if test="partnerNo != null" >
         #{partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="partnerCname != null" >
-        #{partnerCname,jdbcType=VARCHAR},
+      <if test="partnerName != null" >
+        #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -168,8 +174,8 @@
       <if test="phoneNumber != null" >
         #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        #{emailAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=DATE},
@@ -186,6 +192,9 @@
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
+      <if test="delStatus != null" >
+        #{delStatus,jdbcType=INTEGER},
+      </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -197,8 +206,8 @@
       <if test="partnerNo != null" >
         partner_no = #{partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="partnerCname != null" >
-        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      <if test="partnerName != null" >
+        partner_name = #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -212,8 +221,8 @@
       <if test="phoneNumber != null" >
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=DATE},
@@ -230,11 +239,14 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="delStatus != null" >
+        del_status = #{delStatus,jdbcType=INTEGER},
+      </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
-    where ccid = #{ccid,jdbcType=INTEGER}
+    where contact_id = #{contactId,jdbcType=INTEGER}
   </update>
   <update id="updateByPartnerNoSelective" parameterType="com.tsbg.ecosys.model.Eccontacts" >
     update eccontacts
@@ -242,8 +254,8 @@
       <if test="partnerNo != null" >
         partner_no = #{partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="partnerCname != null" >
-        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      <if test="partnerName != null" >
+        partner_name = #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -257,8 +269,8 @@
       <if test="phoneNumber != null" >
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="mailAddress != null" >
-        mail_address = #{mailAddress,jdbcType=VARCHAR},
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=DATE},
@@ -274,6 +286,9 @@
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="delStatus != null" >
+        del_status = #{delStatus,jdbcType=INTEGER},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
@@ -284,19 +299,20 @@
   <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Eccontacts" >
     update eccontacts
     set partner_no = #{partnerNo,jdbcType=INTEGER},
-      partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      partner_name = #{partnerName,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=INTEGER},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
-      mail_address = #{mailAddress,jdbcType=VARCHAR},
+      email_address = #{emailAddress,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=DATE},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       updater = #{updater,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
+      del_status = #{delStatus,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR}
-    where ccid = #{ccid,jdbcType=INTEGER}
+    where contact_id = #{contactId,jdbcType=INTEGER}
   </update>
   <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EccontactsExample" resultMap="BaseResultMap">
     select
@@ -321,14 +337,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update eccontacts
     <set>
-      <if test="record.ccid != null">
-        ccid = #{record.ccid,jdbcType=INTEGER},
+      <if test="record.contactId != null">
+        contact_id = #{record.contactId,jdbcType=INTEGER},
       </if>
       <if test="record.partnerNo != null">
         partner_no = #{record.partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="record.partnerCname != null">
-        partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+      <if test="record.partnerName != null">
+        partner_name = #{record.partnerName,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
@@ -342,8 +358,8 @@
       <if test="record.phoneNumber != null">
         phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="record.mailAddress != null">
-        mail_address = #{record.mailAddress,jdbcType=VARCHAR},
+      <if test="record.emailAddress != null">
+        email_address = #{record.emailAddress,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=DATE},
@@ -360,6 +376,9 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=INTEGER},
+      </if>
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
@@ -370,19 +389,20 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update eccontacts
-    set ccid = #{record.ccid,jdbcType=INTEGER},
+    set contact_id = #{record.contactId,jdbcType=INTEGER},
     partner_no = #{record.partnerNo,jdbcType=INTEGER},
-    partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+    partner_name = #{record.partnerName,jdbcType=VARCHAR},
     name = #{record.name,jdbcType=VARCHAR},
     title = #{record.title,jdbcType=VARCHAR},
     gender = #{record.gender,jdbcType=INTEGER},
     phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
-    mail_address = #{record.mailAddress,jdbcType=VARCHAR},
+    email_address = #{record.emailAddress,jdbcType=VARCHAR},
     create_time = #{record.createTime,jdbcType=DATE},
     update_time = #{record.updateTime,jdbcType=TIMESTAMP},
     creater = #{record.creater,jdbcType=VARCHAR},
     updater = #{record.updater,jdbcType=VARCHAR},
     status = #{record.status,jdbcType=INTEGER},
+    del_status = #{record.delStatus,jdbcType=INTEGER},
     remark = #{record.remark,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -401,6 +421,6 @@
     from eccontacts where partner_no = #{cid} AND status = 0
   </select>
   <update id="updateStatusByCid" parameterType="int" >
-    UPDATE eccontacts AS e SET e.`status`=1 WHERE e.partner_no=#{partnerNo,jdbcType=INTEGER};
+    UPDATE eccontacts AS e SET e.`del_status`=1 WHERE e.partner_no=#{partnerNo,jdbcType=INTEGER};
   </update>
 </mapper>

@@ -3,11 +3,11 @@ package com.tsbg.ecosys.model;
 import java.util.Date;
 
 public class Ecooperation {
-    private Integer coid;
+    private Integer coopId;
 
     private Integer partnerNo;
 
-    private String partnerCname;
+    private String partnerName;
 
     private Date partnerCallintime;
 
@@ -41,36 +41,18 @@ public class Ecooperation {
 
     private String updater;
 
-    private String remark;
-
     private Integer status;
 
-    public Ecooperation(){}
+    private Integer delStatus;
 
-    public Ecooperation(String partnerCname, Date partnerCallintime, String partnerBdOwner, String partnerCostage, Integer signContract, String contractDate, Integer entrust, String entrustName, Integer partnerAwarding, String projectName, String coType, String coProgress, String fiiCodepartment, Date createTime, String creater) {
-        this.partnerCname = partnerCname;
-        this.partnerCallintime = partnerCallintime;
-        this.partnerBdOwner = partnerBdOwner;
-        this.partnerCostage = partnerCostage;
-        this.signContract = signContract;
-        this.contractDate = contractDate;
-        this.entrust = entrust;
-        this.entrustName = entrustName;
-        this.partnerAwarding = partnerAwarding;
-        this.projectName = projectName;
-        this.coType = coType;
-        this.coProgress = coProgress;
-        this.fiiCodepartment = fiiCodepartment;
-        this.createTime = createTime;
-        this.creater = creater;
+    private String remark;
+
+    public Integer getCoopId() {
+        return coopId;
     }
 
-    public Integer getCoid() {
-        return coid;
-    }
-
-    public void setCoid(Integer coid) {
-        this.coid = coid;
+    public void setCoopId(Integer coopId) {
+        this.coopId = coopId;
     }
 
     public Integer getPartnerNo() {
@@ -81,12 +63,12 @@ public class Ecooperation {
         this.partnerNo = partnerNo;
     }
 
-    public String getPartnerCname() {
-        return partnerCname;
+    public String getPartnerName() {
+        return partnerName;
     }
 
-    public void setPartnerCname(String partnerCname) {
-        this.partnerCname = partnerCname == null ? null : partnerCname.trim();
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName == null ? null : partnerName.trim();
     }
 
     public Date getPartnerCallintime() {
@@ -217,19 +199,27 @@ public class Ecooperation {
         this.updater = updater == null ? null : updater.trim();
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getDelStatus() {
+        return delStatus;
+    }
+
+    public void setDelStatus(Integer delStatus) {
+        this.delStatus = delStatus;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }

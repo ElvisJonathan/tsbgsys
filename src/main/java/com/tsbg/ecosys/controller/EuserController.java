@@ -1,8 +1,8 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
-import com.tsbg.ecosys.model.EuserInfo;
-import com.tsbg.ecosys.service.EuserInfoService;
+import com.tsbg.ecosys.model.UserInfo;
+import com.tsbg.ecosys.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ import java.util.List;
 public class EuserController {
 
     @Autowired
-    private EuserInfoService euserInfoService;
+    private UserInfoService userInfoService;
     /**
      * 查询用户列表
      */
@@ -26,7 +26,7 @@ public class EuserController {
         //初始化构造器
         ResultResponse resultResponse = null;
         //查询出用户列表给前端进行渲染
-        List<EuserInfo> elist = euserInfoService.selectEuserList();
+        List<UserInfo> elist = userInfoService.selectEuserList();
         if (elist != null){
             //如果查询出的用户列表不为空则返回给前端进行数据渲染
             resultResponse = new ResultResponse(0,"提示信息：成功返回用户列表信息",elist);
@@ -42,12 +42,12 @@ public class EuserController {
      */
     @RequestMapping(value = "/setecoUser", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse setUser(@RequestBody EuserInfo euserInfo){
+    public ResultResponse setUser(@RequestBody UserInfo userInfo){
         //初始化传参构造器
         ResultResponse resultResponse = null;
         //需要从前台获取工号和状态，状态0为启用用户，1为停用用户
-        int status = euserInfo.getStatus();
-        String userCode = euserInfo.getUserCode();
+        int status = userInfo.getStatus();
+        String userCode = userInfo.getUserCode();
         //如果状态为0和1以外的值则会提醒输入有效状态值
         if (status!=0 && status!=1){
             resultResponse = new ResultResponse(501,"提示信息：请输入有效状态值");
@@ -55,7 +55,7 @@ public class EuserController {
         }
         //在工号存在的情况下才可成功调用方法
         if (userCode!=null){
-            int num = euserInfoService.setEcoUserByUserCode(status,userCode);
+            int num = userInfoService.setEcoUserByUserCode(status,userCode);
             if (num>0 && status == 1){
                 resultResponse = new ResultResponse(1,"提示信息：停用成功！");
                 return resultResponse;
@@ -77,12 +77,12 @@ public class EuserController {
      */
     @RequestMapping(value = "/searchUserMsg", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse  searchUser(@RequestBody EuserInfo euserInfo) {
+    public ResultResponse  lookUser(@RequestBody UserInfo userInfo) {
         ResultResponse resultResponse = null;
         //通过前端传来的用户工号查询用户信息
-        String userCode = euserInfo.getUserCode();
+        String userCode = userInfo.getUserCode();
         if (userCode!=null){
-           EuserInfo info = euserInfoService.selectUserMsgbyUserCode(userCode);
+           UserInfo info = userInfoService.selectUserMsgbyUserCode(userCode);
            if (info!=null){
                resultResponse = new ResultResponse(0,"提示信息：成功查询到用户个人信息",info);
                return resultResponse;
@@ -99,11 +99,11 @@ public class EuserController {
      */
     @RequestMapping(value = "/modifyUserMsg", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse modifyUser(@RequestBody EuserInfo euserInfo){
+    public ResultResponse modifyUser(@RequestBody UserInfo userInfo){
         ResultResponse resultResponse = null;
         //根据前端传来的工号修改用户信息
-        if (euserInfo.getUserCode()!=null){
-           int num = euserInfoService.updateByUserCodeSelective(euserInfo);
+        if (userInfo.getUserCode()!=null){
+           int num = userInfoService.updateByUserCodeSelective(userInfo);
            if (num>0){
                resultResponse = new ResultResponse(0,"提示信息：修改用户信息成功！");
                return resultResponse;
@@ -111,7 +111,7 @@ public class EuserController {
             resultResponse = new ResultResponse(501,"提示信息：修改用户信息失败！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(502,"提示信息：请输入修改条件！");
+        resultResponse = new ResultResponse(502,"提示信息：未获取到工号！");
         return resultResponse;
     }
 
@@ -120,13 +120,13 @@ public class EuserController {
      */
     @RequestMapping(value = "/reSetUserPwd", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse reSetUserPwd(@RequestBody EuserInfo euserInfo){
+    public ResultResponse reSetUserPwd(@RequestBody UserInfo userInfo){
         //重置用户的密码为：工号+"123",用户需要在被重置密码后进行密码的修改
         //通过接受前端传来的工号进行修改
-        String userCode = euserInfo.getUserCode();
+        String userCode = userInfo.getUserCode();
         if (userCode!=null){
             String userPwd = userCode+"123";
-            int num = euserInfoService.reSetPwdByUserCode(userPwd,userCode);
+            int num = userInfoService.reSetPwdByUserCode(userPwd,userCode);
             if(num>0){
                 return new ResultResponse(0,"重置密码成功！");
             }

@@ -1,9 +1,10 @@
 package com.tsbg.ecosys.serviceImpl;
 
 import com.tsbg.ecosys.dto.condition.EcInfoConditionDto;
-import com.tsbg.ecosys.mapper.EcInfoMapper;
-import com.tsbg.ecosys.model.EcInfo;
+import com.tsbg.ecosys.mapper.EpartnerMapper;
+import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.example.EcInfoExample;
+import com.tsbg.ecosys.service.EpartnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,37 +20,37 @@ import java.util.List;
 public class EcInfoService {
 
     @Autowired
-    private EcInfoMapper ecInfoMapper;
+    private EpartnerMapper epartnerMapper;
 
-    private static final Logger LOG = LoggerFactory.getLogger(com.tsbg.ecosys.service.EcInfoService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(EpartnerService.class);
 
 
-    public void insertSelective(EcInfo ecInfo) {
-        ecInfo.setCreateTime(new Date());
-        ecInfoMapper.insertSelective(ecInfo);
+    public void insertSelective(Epartner epartner) {
+        epartner.setCreateTime(new Date());
+        epartnerMapper.insertSelective(epartner);
     }
 
     /**
      * 主键修改
      *
-     * @param ecInfo
+     * @param epartner
      *
      * @return
      * @throws
      */
-    public int updateByPrimaryKey(EcInfo ecInfo) throws Exception {
-        return ecInfoMapper.updateByPrimaryKey(ecInfo);
+    public int updateByPrimaryKey(Epartner epartner) throws Exception {
+        return epartnerMapper.updateByPrimaryKey(epartner);
     }
 
     /**
      * 主键修改
      *
-     * @param ecInfo
+     * @param epartner
      * @return
      * @throws
      */
-    public int updateByPrimaryKeySelective(EcInfo ecInfo) throws Exception {
-        return ecInfoMapper.updateByPrimaryKeySelective(ecInfo);
+    public int updateByPrimaryKeySelective(Epartner epartner) throws Exception {
+        return epartnerMapper.updateByPrimaryKeySelective(epartner);
     }
 
     /**
@@ -58,14 +59,14 @@ public class EcInfoService {
      * @param id
      * @return
      */
-    public EcInfo getByPrimaryKey(int id) {
-        return ecInfoMapper.selectByPrimaryKey(id);
+    public Epartner getByPrimaryKey(int id) {
+        return epartnerMapper.selectByPrimaryKey(id);
     }
 
 
-    public List<EcInfo> selectByCondition(EcInfoConditionDto condition) {
+    public List<Epartner> selectByCondition(EcInfoConditionDto condition) {
         EcInfoExample example = createExampleByCondition(condition);
-        return ecInfoMapper.selectByExample(example);
+        return epartnerMapper.selectByExample(example);
     }
 
     /**

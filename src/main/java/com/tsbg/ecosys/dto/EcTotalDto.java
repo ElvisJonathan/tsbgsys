@@ -1,22 +1,22 @@
 package com.tsbg.ecosys.dto;
 
-import com.tsbg.ecosys.model.EcInfo;
+import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.Ecooperation;
 
 public class EcTotalDto {
 
-    private EcInfo ecInfo;
+    private Epartner epartner;
 
     private com.tsbg.ecosys.model.Eccontacts Eccontacts;
 
     private Ecooperation ecooperation;
 
-    public EcInfo getEcInfo() {
-        return ecInfo;
+    public Epartner getEpartner() {
+        return epartner;
     }
 
-    public void setEcInfo(EcInfo ecInfo) {
-        this.ecInfo = ecInfo;
+    public void setEpartner(Epartner epartner) {
+        this.epartner = epartner;
     }
 
     public com.tsbg.ecosys.model.Eccontacts getEccontacts() {

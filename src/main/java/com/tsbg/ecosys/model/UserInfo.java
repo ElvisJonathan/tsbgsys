@@ -2,8 +2,8 @@ package com.tsbg.ecosys.model;
 
 import java.util.Date;
 
-public class EuserInfo {
-    private Integer uid;
+public class UserInfo {
+    private Integer userId;
 
     private String userCode;
 
@@ -11,13 +11,19 @@ public class EuserInfo {
 
     private String userPwd;
 
+    private String salt;
+
     private Integer isManager;
+
+    private Byte locked;
 
     private Integer gender;
 
     private String phoneNumber;
 
-    private String mailAddress;
+    private String emailAddress;
+
+    private String roleList;
 
     private Integer status;
 
@@ -29,14 +35,14 @@ public class EuserInfo {
 
     private String updater;
 
-    private Integer aid;
+    private String projId;
 
-    public Integer getUid() {
-        return uid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUserCode() {
@@ -63,12 +69,28 @@ public class EuserInfo {
         this.userPwd = userPwd == null ? null : userPwd.trim();
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
     public Integer getIsManager() {
         return isManager;
     }
 
     public void setIsManager(Integer isManager) {
         this.isManager = isManager;
+    }
+
+    public Byte getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Byte locked) {
+        this.locked = locked;
     }
 
     public Integer getGender() {
@@ -87,12 +109,20 @@ public class EuserInfo {
         this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
     }
 
-    public String getMailAddress() {
-        return mailAddress;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress == null ? null : mailAddress.trim();
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress == null ? null : emailAddress.trim();
+    }
+
+    public String getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(String roleList) {
+        this.roleList = roleList == null ? null : roleList.trim();
     }
 
     public Integer getStatus() {
@@ -135,11 +165,11 @@ public class EuserInfo {
         this.updater = updater == null ? null : updater.trim();
     }
 
-    public Integer getAid() {
-        return aid;
+    public String getProjId() {
+        return projId;
     }
 
-    public void setAid(Integer aid) {
-        this.aid = aid;
+    public void setProjId(String projId) {
+        this.projId = projId == null ? null : projId.trim();
     }
 }

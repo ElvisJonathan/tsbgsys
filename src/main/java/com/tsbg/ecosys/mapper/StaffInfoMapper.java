@@ -5,13 +5,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface StaffInfoMapper {
-    int deleteByPrimaryKey(Integer sid);
+
+    int deleteByPrimaryKey(Integer staffId);
 
     int insert(StaffInfo record);
 
     int insertSelective(StaffInfo record);
 
-    StaffInfo selectByPrimaryKey(Integer sid);
+    StaffInfo selectByPrimaryKey(Integer staffId);
 
     int updateByPrimaryKeySelective(StaffInfo record);
 

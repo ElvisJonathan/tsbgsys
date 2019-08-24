@@ -1,17 +1,18 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
-import com.tsbg.ecosys.model.EuserInfo;
+import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.model.bag.CompanyPackage;
-import com.tsbg.ecosys.model.EcInfo;
+import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.bag.SearchPackage;
-import com.tsbg.ecosys.service.EcInfoService;
+import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.EccontactsService;
 import com.tsbg.ecosys.service.EcooperationService;
 import com.tsbg.ecosys.util.PageRequest;
 import com.tsbg.ecosys.util.PageResult;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ import java.util.List;
 public class CompanyController {
 
     @Autowired
-    private EcInfoService ecInfoService;
+    private EpartnerService epartnerService;
     @Autowired
     private EcooperationService ecooperationService;
     @Autowired
@@ -37,13 +38,13 @@ public class CompanyController {
      */
     @RequestMapping(value = "/hideCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse hideCom(@RequestBody EcInfo ecInfo){
+    public ResultResponse hideCom(@RequestBody Epartner epartner){
         //初始化构造器
         ResultResponse resultResponse = null;
         //获取cid
-        Integer cid = ecInfo.getCid();
+        Integer cid = epartner.getPartnerNo();
         //获取STATUS
-        Integer status = ecInfo.getStatus();
+        Integer status = epartner.getStatus();
         //接受到的status为1则是隐藏公司,0则是取消隐藏公司
         if (status!=0 && status!=1){
             resultResponse = new ResultResponse(503,"提示信息：请输入正确的status！");
@@ -51,7 +52,7 @@ public class CompanyController {
         }
         if (cid!=null){
             //根据前端传过来的cid作为参数修改公司的状态
-            int num = ecInfoService.updateByCid(status,cid);
+            int num = epartnerService.updateByCid(status,cid);
             if (num>0 && status==1){
                 resultResponse = new ResultResponse(1,"提示信息：隐藏公司成功！");
                 return resultResponse;
@@ -80,27 +81,26 @@ public class CompanyController {
         //新建arr数组用于存储成功值
         int []arr = new int[3];
         //获取当前添加人
-        EuserInfo euserInfo = companyPackage.getEuserInfo();
-        String userName=euserInfo.getUserName();
-        System.out.println("添加人："+userName);
+        UserInfo userInfo = companyPackage.getUserInfo();
+        String userName= userInfo.getUserName();
         //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
-        if (companyPackage.getEcInfo().getPartnerCname()!=null && companyPackage.getEcInfo().getPartnerCindustry()!=null
-        && companyPackage.getEcInfo().getPartnerCregion()!=null && companyPackage.getEcInfo().getPartnerCproduct()!=null
+        if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
+        && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null
                ){
             //合作伙伴信息中:合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空才可以进行添加
-            EcInfo ecInfo = companyPackage.getEcInfo();
+            Epartner epartner = companyPackage.getEpartner();
             //设置创建时间
-            ecInfo.setCreateTime(new Date());
+            epartner.setCreateTime(new Date());
             //设置创建人
-            ecInfo.setCreater(userName);
+            epartner.setCreater(userName);
             //调用存储公司合作伙伴的业务逻辑存储
-            int count = ecInfoService.insertSelective(ecInfo);
+            int count = epartnerService.insertSelective(epartner);
             if (count>0){
                 arr[0]=1;
             }
         }
 
-        if(companyPackage.getEcooperation().getPartnerCname()!=null){
+        if(companyPackage.getEcooperation().getPartnerName()!=null){
             //合作情况信息中：合作伙伴公司名称不能为空
             Ecooperation ecooperation = companyPackage.getEcooperation();
             //设置创建时间
@@ -115,7 +115,7 @@ public class CompanyController {
         }
 
         if (companyPackage.getEccontacts().getName()!=null && companyPackage.getEccontacts().getPhoneNumber()!=null
-            && companyPackage.getEccontacts().getPartnerCname()!=null){
+            && companyPackage.getEccontacts().getPartnerName()!=null){
             //公司联系人信息中：联系人姓名、性别、电话和所属公司名称不能为空
             Eccontacts eccontacts = companyPackage.getEccontacts();
             //设置创建时间
@@ -148,11 +148,11 @@ public class CompanyController {
         //需要前台传参pageQuery:包含pageIndex和pageSize 即起始页码和页面容量 记得容量小于总条数才会有分页效果
         //接受分页参数pageRequest
         PageRequest pageRequest = searchPackage.getPageRequest();
-        //接受搜索条件传参实体类ecInfo
-        EcInfo ecInfo = searchPackage.getEcInfo();
+        //接受搜索条件传参实体类epartner
+        Epartner epartner = searchPackage.getEpartner();
         if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
-            PageResult page = ecInfoService.findPage(pageRequest,ecInfo);
+            PageResult page = epartnerService.findPage(pageRequest, epartner);
             if (page!=null){
                 resultResponse = new ResultResponse(0,"提示信息：成功查询到公司信息",page);
                 return resultResponse;
@@ -167,18 +167,18 @@ public class CompanyController {
     //查询公司信息
     @RequestMapping("/selectCinfo")
     @ResponseBody
-    public ResultResponse searchCinfo(@RequestBody EcInfo ecInfo) {
+    public ResultResponse searchCinfo(@RequestBody Epartner epartner) {
         ResultResponse resultResponse = null;
         //通过前端传来的信息查询对应的公司信息
-        String partnerCname = ecInfo.getPartnerCname();
-        String partnerCregion = ecInfo.getPartnerCregion();
-        String partnerCproduct = ecInfo.getPartnerCproduct();
-        String partnerCindustry = ecInfo.getPartnerCindustry();
+        String partnerCname = epartner.getPartnerName();
+        String partnerCregion = epartner.getPartnerRegion();
+        String partnerCproduct = epartner.getPartnerProduct();
+        String partnerCindustry = epartner.getPartnerIndustry();
         if (partnerCname != null || partnerCregion != null || partnerCproduct != null || partnerCindustry != null) {
-            List<EcInfo> infod1 = ecInfoService.selectCinfo(ecInfo);
-            List<EcInfo> infod2 = ecInfoService.selectCinfo(ecInfo);
-            List<EcInfo> infod3 = ecInfoService.selectCinfo(ecInfo);
-            List<EcInfo> infod4 = ecInfoService.selectCinfo(ecInfo);
+            List<Epartner> infod1 = epartnerService.selectCinfo(epartner);
+            List<Epartner> infod2 = epartnerService.selectCinfo(epartner);
+            List<Epartner> infod3 = epartnerService.selectCinfo(epartner);
+            List<Epartner> infod4 = epartnerService.selectCinfo(epartner);
             if (infod1 != null) {
                 resultResponse = new ResultResponse(0, "提示信息：成功查询到公司信息",infod1);
                 return resultResponse;
@@ -249,12 +249,12 @@ public class CompanyController {
     @ResponseBody
     public ResultResponse modifyCom(@RequestBody CompanyPackage companyPackage){
         ResultResponse resultResponse = null;
-        //通过接受三个对象来进行修改 包含公司的cid
-        Integer cid = companyPackage.getEcInfo().getCid();
-        System.out.println("接收到的cid:"+cid);
-        EcInfo ecInfo = companyPackage.getEcInfo();
-        if (ecInfo==null){
-            resultResponse = new ResultResponse(501,"提示信息：公司信息为空异常！");
+        //通过接受三个对象来进行修改 包含公司的partnerNo
+        Integer cid = companyPackage.getEpartner().getPartnerNo();
+        System.out.println("接收到的partnerNo:"+cid);
+        Epartner epartner = companyPackage.getEpartner();
+        if (epartner==null){
+            resultResponse = new ResultResponse(501,"提示信息：公司合作伙伴信息为空异常！");
             return resultResponse;
         }
         Ecooperation ecooperation = companyPackage.getEcooperation();
@@ -271,24 +271,24 @@ public class CompanyController {
         //新建arr数组用于存储成功值
         int []arr = new int[3];
         //获取当前修改人
-        EuserInfo euserInfo = companyPackage.getEuserInfo();
-        String userName=euserInfo.getUserName();
+        UserInfo userInfo = companyPackage.getUserInfo();
+        String userName= userInfo.getUserName();
         System.out.println("修改人："+userName);
         if(cid!=null){
-            if (companyPackage.getEcInfo().getPartnerCname()!=null && companyPackage.getEcInfo().getPartnerCindustry()!=null
-                    && companyPackage.getEcInfo().getPartnerCregion()!=null && companyPackage.getEcInfo().getPartnerCproduct()!=null){
+            if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
+                    && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null){
                 //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
                 //更新修改时间
-                ecInfo.setUpdateTime(new Date());
+                epartner.setUpdateTime(new Date());
                 //更新修改人
-                ecInfo.setUpdater(userName);
-                int num = ecInfoService.updateByPrimaryKeySelective(ecInfo);
+                epartner.setUpdater(userName);
+                int num = epartnerService.updateByPrimaryKeySelective(epartner);
                 if (num>0){
                     arr[0]=1;
                 }
             }
 
-            if (companyPackage.getEcooperation().getPartnerCname()!=null){
+            if (companyPackage.getEcooperation().getPartnerName()!=null){
                 //只有当合作伙伴公司名称不为空才可以修改
                 //更新修改时间
                 ecooperation.setUpdateTime(new Date());
@@ -305,7 +305,7 @@ public class CompanyController {
             }
 
             if (companyPackage.getEccontacts().getName()!=null && companyPackage.getEccontacts().getPhoneNumber()!=null
-            && companyPackage.getEccontacts().getPartnerCname()!=null){
+            && companyPackage.getEccontacts().getPartnerName()!=null){
                 //只有当姓名、电话、所属公司都不为空才可以修改
                 //更新修改时间
                 eccontacts.setUpdateTime(new Date());
@@ -329,7 +329,7 @@ public class CompanyController {
             resultResponse = new ResultResponse(500,"提示信息：修改不彻底！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(505,"提示信息：未查到对应公司编号！");
+        resultResponse = new ResultResponse(505,"提示信息：未查到对应公司合作伙伴编号！");
         return resultResponse;
     }
 
@@ -338,13 +338,14 @@ public class CompanyController {
      */
     @RequestMapping(value = "/del", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse delCom(@RequestBody EcInfo ecInfo){
-        //通过接受cid进行删除（隐藏） 需要对其合作伙伴以及联系人同时删除（隐藏）
+    public ResultResponse delCom(@RequestBody Epartner epartner){
+        //通过接受partnerNo进行删除（隐藏） 需要对其合作伙伴以及联系人同时删除（隐藏）
         //需要同时修改三张表的状态
         ResultResponse resultResponse = null;
-        Integer cid = ecInfo.getCid();
+        //获取公司对应的合作伙伴编号partnerNo
+        Integer cid = epartner.getPartnerNo();
         if (cid!=null){
-            int num = ecInfoService.updateStatusByCid(cid);
+            int num = epartnerService.updateStatusByCid(cid);
             if (num>0){
                 //如果成功修改了公司状态则同步修改联系人和合作关系
                 Integer partnerNo = cid;
@@ -360,7 +361,7 @@ public class CompanyController {
             resultResponse = new ResultResponse(501,"提示信息：删除失败！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(502,"提示信息：公司编号为空异常！");
+        resultResponse = new ResultResponse(502,"提示信息：公司合作伙伴编号为空异常！");
         return resultResponse;
     }
 }

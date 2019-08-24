@@ -10,13 +10,13 @@ import java.util.List;
 
 @Mapper
 public interface EcooperationMapper {
-    int deleteByPrimaryKey(Integer coid);
+    int deleteByPrimaryKey(Integer coopId);
 
     int insert(Ecooperation record);
 
     int insertSelective(Ecooperation record);
 
-    Ecooperation selectByPrimaryKey(Integer coid);
+    Ecooperation selectByPrimaryKey(Integer coopId);
 
     int updateByPrimaryKeySelective(Ecooperation record);
 

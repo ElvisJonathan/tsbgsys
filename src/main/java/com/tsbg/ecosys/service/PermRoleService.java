@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface EperRoleService {
+public interface PermRoleService {
 
     //通过角色rid查询对应的权限id
     List<Integer> selectPidByRid(Integer rid);

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.mapper.EpartnerMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.Epartner" >
+    <id column="partner_no" property="partnerNo" jdbcType="INTEGER" />
+    <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
+    <result column="partner_date" property="partnerDate" jdbcType="DATE" />
+    <result column="partner_registcapital" property="partnerRegistcapital" jdbcType="VARCHAR" />
+    <result column="partner_list" property="partnerList" jdbcType="INTEGER" />
+    <result column="partner_scale" property="partnerScale" jdbcType="VARCHAR" />
+    <result column="partner_addr" property="partnerAddr" jdbcType="VARCHAR" />
+    <result column="partner_webddr" property="partnerWebddr" jdbcType="VARCHAR" />
+    <result column="partner_tech" property="partnerTech" jdbcType="VARCHAR" />
+    <result column="partner_product" property="partnerProduct" jdbcType="VARCHAR" />
+    <result column="partner_channel" property="partnerChannel" jdbcType="VARCHAR" />
+    <result column="partner_turnover" property="partnerTurnover" jdbcType="VARCHAR" />
+    <result column="partner_region" property="partnerRegion" jdbcType="VARCHAR" />
+    <result column="partner_industry" property="partnerIndustry" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="del_status" property="delStatus" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    partner_no, partner_name, partner_date, partner_registcapital, partner_list, partner_scale,
+    partner_addr, partner_webddr, partner_tech, partner_product, partner_channel, partner_turnover,
+    partner_region, partner_industry, status, del_status, create_time, update_time, creater,
+    updater, remark
+  </sql>
+  <select id="selectCinfo" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.model.Epartner">
+    select * from epartner
+    <where>
+      <if test = "partnerName != null and partnerName != ''">
+        partner_name like "%"#{partnerName}"%"
+      </if>
+      <if test="partnerProduct != null and partnerProduct != ''">
+        or partner_product like "%"#{partnerProduct}"%"
+      </if>
+      <if test="partnerRegion != null and  partnerRegion != ''">
+        or  partner_region like "%"#{partnerRegion}"%"
+      </if>
+      <if test="partnerIndustry != null  and partnerIndustry  != ''">
+        or Partner_industry like "%"#{partnerIndustry}"%"
+      </if>
+    </where>
+  </select>
+  <!-- 分页查询公司信息+搜索：如果不用搜索则不需要加动态sql -->
+  <select id="selectPage"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from epartner WHERE del_status=0
+    <if test = "partnerName != null and partnerName != ''">
+      and partner_name LIKE CONCAT('%', #{partnerName}, '%')
+    </if>
+    <if test="partnerProduct != null and partnerProduct != ''">
+      and partner_product LIKE CONCAT('%', #{partnerProduct}, '%')
+    </if>
+    <if test="partnerRegion != null and  partnerRegion != ''">
+      and  partner_region LIKE CONCAT('%', #{partnerRegion}, '%')
+    </if>
+    <if test="partnerIndustry != null  and partnerIndustry  != ''">
+      and Partner_industry LIKE CONCAT('%', #{partnerIndustry}, '%')
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from epartner
+    where partner_no = #{partnerNo,jdbcType=INTEGER} AND status = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from epartner
+    where partner_no = #{partnerNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.ecosys.model.Epartner" >
+    insert into epartner (partner_no, partner_name, partner_date,
+      partner_registcapital, partner_list, partner_scale,
+      partner_addr, partner_webddr, partner_tech,
+      partner_product, partner_channel, partner_turnover,
+      partner_region, partner_industry, status,
+      del_status, create_time, update_time,
+      creater, updater, remark
+      )
+    values (#{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR}, #{partnerDate,jdbcType=DATE},
+      #{partnerRegistcapital,jdbcType=VARCHAR}, #{partnerList,jdbcType=INTEGER}, #{partnerScale,jdbcType=VARCHAR},
+      #{partnerAddr,jdbcType=VARCHAR}, #{partnerWebddr,jdbcType=VARCHAR}, #{partnerTech,jdbcType=VARCHAR},
+      #{partnerProduct,jdbcType=VARCHAR}, #{partnerChannel,jdbcType=VARCHAR}, #{partnerTurnover,jdbcType=VARCHAR},
+      #{partnerRegion,jdbcType=VARCHAR}, #{partnerIndustry,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{delStatus,jdbcType=INTEGER}, #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP},
+      #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.Epartner" >
+    insert into epartner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="partnerNo != null" >
+        partner_no,
+      </if>
+      <if test="partnerName != null" >
+        partner_name,
+      </if>
+      <if test="partnerDate != null" >
+        partner_date,
+      </if>
+      <if test="partnerRegistcapital != null" >
+        partner_registcapital,
+      </if>
+      <if test="partnerList != null" >
+        partner_list,
+      </if>
+      <if test="partnerScale != null" >
+        partner_scale,
+      </if>
+      <if test="partnerAddr != null" >
+        partner_addr,
+      </if>
+      <if test="partnerWebddr != null" >
+        partner_webddr,
+      </if>
+      <if test="partnerTech != null" >
+        partner_tech,
+      </if>
+      <if test="partnerProduct != null" >
+        partner_product,
+      </if>
+      <if test="partnerChannel != null" >
+        partner_channel,
+      </if>
+      <if test="partnerTurnover != null" >
+        partner_turnover,
+      </if>
+      <if test="partnerRegion != null" >
+        partner_region,
+      </if>
+      <if test="partnerIndustry != null" >
+        partner_industry,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="delStatus != null" >
+        del_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="partnerNo != null" >
+        #{partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="partnerName != null" >
+        #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerDate != null" >
+        #{partnerDate,jdbcType=DATE},
+      </if>
+      <if test="partnerRegistcapital != null" >
+        #{partnerRegistcapital,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerList != null" >
+        #{partnerList,jdbcType=INTEGER},
+      </if>
+      <if test="partnerScale != null" >
+        #{partnerScale,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerAddr != null" >
+        #{partnerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerWebddr != null" >
+        #{partnerWebddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerTech != null" >
+        #{partnerTech,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerProduct != null" >
+        #{partnerProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerChannel != null" >
+        #{partnerChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerTurnover != null" >
+        #{partnerTurnover,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRegion != null" >
+        #{partnerRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerIndustry != null" >
+        #{partnerIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="delStatus != null" >
+        #{delStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.model.Epartner" >
+    update epartner
+    <set >
+      <if test="partnerName != null" >
+        partner_name = #{partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerDate != null" >
+        partner_date = #{partnerDate,jdbcType=DATE},
+      </if>
+      <if test="partnerRegistcapital != null" >
+        partner_registcapital = #{partnerRegistcapital,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerList != null" >
+        partner_list = #{partnerList,jdbcType=INTEGER},
+      </if>
+      <if test="partnerScale != null" >
+        partner_scale = #{partnerScale,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerAddr != null" >
+        partner_addr = #{partnerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerWebddr != null" >
+        partner_webddr = #{partnerWebddr,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerTech != null" >
+        partner_tech = #{partnerTech,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerProduct != null" >
+        partner_product = #{partnerProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerChannel != null" >
+        partner_channel = #{partnerChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerTurnover != null" >
+        partner_turnover = #{partnerTurnover,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerRegion != null" >
+        partner_region = #{partnerRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerIndustry != null" >
+        partner_industry = #{partnerIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="delStatus != null" >
+        del_status = #{delStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where partner_no = #{partnerNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Epartner" >
+    update epartner
+    set partner_name = #{partnerName,jdbcType=VARCHAR},
+      partner_date = #{partnerDate,jdbcType=DATE},
+      partner_registcapital = #{partnerRegistcapital,jdbcType=VARCHAR},
+      partner_list = #{partnerList,jdbcType=INTEGER},
+      partner_scale = #{partnerScale,jdbcType=VARCHAR},
+      partner_addr = #{partnerAddr,jdbcType=VARCHAR},
+      partner_webddr = #{partnerWebddr,jdbcType=VARCHAR},
+      partner_tech = #{partnerTech,jdbcType=VARCHAR},
+      partner_product = #{partnerProduct,jdbcType=VARCHAR},
+      partner_channel = #{partnerChannel,jdbcType=VARCHAR},
+      partner_turnover = #{partnerTurnover,jdbcType=VARCHAR},
+      partner_region = #{partnerRegion,jdbcType=VARCHAR},
+      partner_industry = #{partnerIndustry,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      del_status = #{delStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where partner_no = #{partnerNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateByCid" parameterType="int" >
+    UPDATE epartner AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`partner_no`=#{cid,jdbcType=INTEGER};
+  </update>
+    <update id="updateStatusByCid" parameterType="int" >
+    UPDATE epartner AS e SET e.`del_status`=1 WHERE e.`partner_no`=#{cid,jdbcType=INTEGER};
+  </update>
+  <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from epartner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="countByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample" resultType="java.lang.Long">
+    select count(*) from epartner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.tsbg.ecosys.model.example.EcInfoExample">
+    delete from epartner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <update id="updateByExampleSelective" parameterType="map">
+    update epartner
+    <set>
+      <if test="record.partnerNo != null">
+        partner_no = #{record.partnerNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerName != null">
+        partner_name = #{record.partnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerDate != null">
+        partner_date = #{record.partnerDate,jdbcType=DATE},
+      </if>
+      <if test="record.partnerRegistcapital != null">
+        partner_registcapital = #{record.partnerRegistcapital,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerList != null">
+        partner_list = #{record.partnerList,jdbcType=INTEGER},
+      </if>
+      <if test="record.partnerScale != null">
+        partner_scale = #{record.partnerScale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerAddr != null">
+        partner_addr = #{record.partnerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerWebddr != null">
+        partner_webddr = #{record.partnerWebddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerTech != null">
+        partner_tech = #{record.partnerTech,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerProduct != null">
+        partner_product = #{record.partnerProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerChannel != null">
+        partner_channel = #{record.partnerChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerTurnover != null">
+        partner_turnover = #{record.partnerTurnover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerRegion != null">
+        partner_region = #{record.partnerRegion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partnerIndustry != null">
+        Partner_industry = #{record.partnerIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creater != null">
+        creater = #{record.creater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updater != null">
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.delStatus != null">
+        del_status = #{record.delStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update epartner
+    set partner_no = #{record.partnerNo,jdbcType=INTEGER},
+    partner_name = #{record.partnerName,jdbcType=VARCHAR},
+    partner_date = #{record.partnerDate,jdbcType=DATE},
+    partner_registcapital = #{record.partnerRegistcapital,jdbcType=VARCHAR},
+    partner_list = #{record.partnerList,jdbcType=INTEGER},
+    partner_scale = #{record.partnerScale,jdbcType=VARCHAR},
+    partner_addr = #{record.partnerAddr,jdbcType=VARCHAR},
+    partner_webddr = #{record.partnerWebddr,jdbcType=VARCHAR},
+    partner_tech = #{record.partnerTech,jdbcType=VARCHAR},
+    partner_product = #{record.partnerProduct,jdbcType=VARCHAR},
+    partner_channel = #{record.partnerChannel,jdbcType=VARCHAR},
+    partner_turnover = #{record.partnerTurnover,jdbcType=VARCHAR},
+    partner_region = #{record.partnerRegion,jdbcType=VARCHAR},
+    Partner_industry = #{record.partnerIndustry,jdbcType=VARCHAR},
+    status = #{record.status,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=DATE},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    creater = #{record.creater,jdbcType=VARCHAR},
+    updater = #{record.updater,jdbcType=VARCHAR},
+    remark = #{record.remark,jdbcType=VARCHAR},
+    del_status = #{record.delStatus,jdbcType=INTEGER},
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

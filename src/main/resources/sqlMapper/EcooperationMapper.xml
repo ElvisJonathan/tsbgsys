@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tsbg.ecosys.mapper.EcooperationMapper" >
   <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.Ecooperation" >
-    <id column="coid" property="coid" jdbcType="INTEGER" />
+    <id column="coop_id" property="coopId" jdbcType="INTEGER" />
     <result column="partner_no" property="partnerNo" jdbcType="INTEGER" />
-    <result column="partner_cname" property="partnerCname" jdbcType="VARCHAR" />
+    <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
     <result column="partner_callintime" property="partnerCallintime" jdbcType="DATE" />
     <result column="partner_BD_owner" property="partnerBdOwner" jdbcType="VARCHAR" />
     <result column="partner_costage" property="partnerCostage" jdbcType="VARCHAR" />
@@ -21,8 +21,9 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="del_status" property="delStatus" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -83,54 +84,54 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    coid, partner_no, partner_cname, partner_callintime, partner_BD_owner, partner_costage,
-    sign_contract, contract_date, entrust, entrust_name, partner_awarding, project_name, 
-    co_type, co_progress, fii_codepartment, create_time, update_time, creater, updater, 
-    remark, status
+    coop_id, partner_no, partner_name, partner_callintime, partner_BD_owner, partner_costage,
+    sign_contract, contract_date, entrust, entrust_name, partner_awarding, project_name,
+    co_type, co_progress, fii_codepartment, create_time, update_time, creater, updater,
+    status, del_status, remark
   </sql>
 <!--  查询合作关系  -->
   <select id="selectCooinfo" resultMap="BaseResultMap" parameterType="Integer">
     select * from ecooperation where partner_no = #{partnerNo}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from ecooperation
-    where coid = #{coid,jdbcType=INTEGER}
+    where coop_id = #{coopId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from ecooperation
-    where coid = #{coid,jdbcType=INTEGER}
+    where coop_id = #{coopId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tsbg.ecosys.model.Ecooperation" >
-    insert into ecooperation (coid, partner_no, partner_cname, 
+    insert into ecooperation (coop_id, partner_no, partner_name,
       partner_callintime, partner_BD_owner, partner_costage,
-      sign_contract, contract_date, entrust, 
-      entrust_name, partner_awarding, project_name, 
-      co_type, co_progress, fii_codepartment, 
-      create_time, update_time, creater, 
-      updater, remark, status
-      )
-    values (#{coid,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerCname,jdbcType=VARCHAR}, 
-      #{partnerCallintime,jdbcType=DATE}, #{partnerBdOwner,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR}, 
-      #{signContract,jdbcType=INTEGER}, #{contractDate,jdbcType=VARCHAR}, #{entrust,jdbcType=INTEGER}, 
-      #{entrustName,jdbcType=VARCHAR}, #{partnerAwarding,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, 
-      #{coType,jdbcType=VARCHAR}, #{coProgress,jdbcType=VARCHAR}, #{fiiCodepartment,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
-      #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
-      )
+      sign_contract, contract_date, entrust,
+      entrust_name, partner_awarding, project_name,
+      co_type, co_progress, fii_codepartment,
+      create_time, update_time, creater,
+      updater, status, del_status,
+      remark)
+    values (#{coopId,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR},
+      #{partnerCallintime,jdbcType=DATE}, #{partnerBdOwner,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR},
+      #{signContract,jdbcType=INTEGER}, #{contractDate,jdbcType=VARCHAR}, #{entrust,jdbcType=INTEGER},
+      #{entrustName,jdbcType=VARCHAR}, #{partnerAwarding,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR},
+      #{coType,jdbcType=VARCHAR}, #{coProgress,jdbcType=VARCHAR}, #{fiiCodepartment,jdbcType=VARCHAR},
+      #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR},
+      #{updater,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{delStatus,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.Ecooperation" >
     insert into ecooperation
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="coid != null" >
-        coid,
+      <if test="coopId != null" >
+        coop_id,
       </if>
       <if test="partnerNo != null" >
         partner_no,
       </if>
-      <if test="partnerCname != null" >
-        partner_cname,
+      <if test="partnerName != null" >
+        partner_name,
       </if>
       <if test="partnerCallintime != null" >
         partner_callintime,
@@ -180,22 +181,25 @@
       <if test="updater != null" >
         updater,
       </if>
-      <if test="remark != null" >
-        remark,
-      </if>
       <if test="status != null" >
         status,
       </if>
+      <if test="delStatus != null" >
+        del_status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="coid != null" >
-        #{coid,jdbcType=INTEGER},
+      <if test="coopId != null" >
+        #{coopId,jdbcType=INTEGER},
       </if>
       <if test="partnerNo != null" >
         #{partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="partnerCname != null" >
-        #{partnerCname,jdbcType=VARCHAR},
+      <if test="partnerName != null" >
+        #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerCallintime != null" >
         #{partnerCallintime,jdbcType=DATE},
@@ -245,11 +249,14 @@
       <if test="updater != null" >
         #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
-      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="delStatus != null" >
+        #{delStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -259,8 +266,8 @@
       <if test="partnerNo != null" >
         partner_no = #{partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="partnerCname != null" >
-        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      <if test="partnerName != null" >
+        partner_name = #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerCallintime != null" >
         partner_callintime = #{partnerCallintime,jdbcType=DATE},
@@ -310,14 +317,17 @@
       <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="delStatus != null" >
+        del_status = #{delStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
     </set>
-    where coid = #{coid,jdbcType=INTEGER}
+    where coop_id = #{coopId,jdbcType=INTEGER}
   </update>
   <update id="updateByPartnerNoSelective" parameterType="com.tsbg.ecosys.model.Ecooperation" >
     update ecooperation
@@ -325,8 +335,8 @@
       <if test="partnerNo != null" >
         partner_no = #{partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="partnerCname != null" >
-        partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      <if test="partnerName != null" >
+        partner_name = #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerCallintime != null" >
         partner_callintime = #{partnerCallintime,jdbcType=DATE},
@@ -376,11 +386,14 @@
       <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
-      <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="delStatus != null" >
+        del_status = #{delStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where partner_no = #{partnerNo,jdbcType=INTEGER}
@@ -388,7 +401,7 @@
   <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Ecooperation" >
     update ecooperation
     set partner_no = #{partnerNo,jdbcType=INTEGER},
-      partner_cname = #{partnerCname,jdbcType=VARCHAR},
+      partner_name = #{partnerName,jdbcType=VARCHAR},
       partner_callintime = #{partnerCallintime,jdbcType=DATE},
       partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
       partner_costage = #{partnerCostage,jdbcType=VARCHAR},
@@ -405,9 +418,10 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       updater = #{updater,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER}
-    where coid = #{coid,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      del_status = #{delStatus,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where coop_id = #{coopId,jdbcType=INTEGER}
   </update>
   <select id="selectByExample" parameterType="com.tsbg.ecosys.model.example.EcooperationExample" resultMap="BaseResultMap">
     select
@@ -438,14 +452,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update ecooperation
     <set>
-      <if test="record.coid != null">
-        coid = #{record.coid,jdbcType=INTEGER},
+      <if test="record.coopId != null">
+        coop_id = #{record.coopId,jdbcType=INTEGER},
       </if>
       <if test="record.partnerNo != null">
         partner_no = #{record.partnerNo,jdbcType=INTEGER},
       </if>
-      <if test="record.partnerCname != null">
-        partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+      <if test="record.partnerName != null">
+        partner_name = #{record.partnerName,jdbcType=VARCHAR},
       </if>
       <if test="record.partnerCallintime != null">
         partner_callintime = #{record.partnerCallintime,jdbcType=DATE},
@@ -508,9 +522,9 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update ecooperation
-    set coid = #{record.coid,jdbcType=INTEGER},
+    set coop_id = #{record.coopId,jdbcType=INTEGER},
     partner_no = #{record.partnerNo,jdbcType=INTEGER},
-    partner_cname = #{record.partnerCname,jdbcType=VARCHAR},
+    partner_name = #{record.partnerName,jdbcType=VARCHAR},
     partner_callintime = #{record.partnerCallintime,jdbcType=DATE},
     partner_BD_owner = #{record.partnerBdOwner,jdbcType=VARCHAR},
     partner_costage = #{record.partnerCostage,jdbcType=VARCHAR},
@@ -539,6 +553,6 @@
     from ecooperation where partner_no = #{cid} AND status = 0
   </select>
   <update id="updateStatusByCid" parameterType="int" >
-    UPDATE ecooperation AS e SET e.`status`=1 WHERE e.`partner_no`=#{partnerNo,jdbcType=INTEGER};
+    UPDATE ecooperation AS e SET e.`del_status`=1 WHERE e.`partner_no`=#{partnerNo,jdbcType=INTEGER};
   </update>
 </mapper>

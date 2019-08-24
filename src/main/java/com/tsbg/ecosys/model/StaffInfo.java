@@ -3,7 +3,7 @@ package com.tsbg.ecosys.model;
 import java.util.Date;
 
 public class StaffInfo {
-    private Integer sid;
+    private Integer staffId;
 
     private String staffCode;
 
@@ -23,7 +23,7 @@ public class StaffInfo {
 
     private String phoneNumber;
 
-    private String mailAddress;
+    private String emailAddress;
 
     private Date createTime;
 
@@ -35,14 +35,12 @@ public class StaffInfo {
 
     private Integer status;
 
-    private String proid;
-
-    public Integer getSid() {
-        return sid;
+    public Integer getStaffId() {
+        return staffId;
     }
 
-    public void setSid(Integer sid) {
-        this.sid = sid;
+    public void setStaffId(Integer staffId) {
+        this.staffId = staffId;
     }
 
     public String getStaffCode() {
@@ -117,12 +115,12 @@ public class StaffInfo {
         this.phoneNumber = phoneNumber == null ? null : phoneNumber.trim();
     }
 
-    public String getMailAddress() {
-        return mailAddress;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress == null ? null : mailAddress.trim();
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress == null ? null : emailAddress.trim();
     }
 
     public Date getCreateTime() {
@@ -163,13 +161,5 @@ public class StaffInfo {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public String getProid() {
-        return proid;
-    }
-
-    public void setProid(String proid) {
-        this.proid = proid == null ? null : proid.trim();
     }
 }
