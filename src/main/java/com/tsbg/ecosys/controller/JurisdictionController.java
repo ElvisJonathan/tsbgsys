@@ -148,12 +148,11 @@ public class JurisdictionController {
                             //如果某个权限id修改失败返回失败信息并中止修改过程
                             resultResponse = new ResultResponse(501,"提示信息：修改失败,请检查权限设置！");
                             return resultResponse;
-                        }else if(num>0){
-                            //最终返回修改成功的提示给前端
-                            resultResponse = new ResultResponse(0,"提示信息：修改成功！");
-                            return resultResponse;
                         }
                     }
+                    //最终返回修改成功的提示给前端
+                    resultResponse = new ResultResponse(0,"提示信息：修改成功！");
+                    return resultResponse;
                 }
                 //prid为空返回异常信息
                 resultResponse = new ResultResponse(502,"提示信息：修改异常,未查到对应权限！");
