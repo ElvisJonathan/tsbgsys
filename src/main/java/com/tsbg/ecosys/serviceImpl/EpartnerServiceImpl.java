@@ -52,6 +52,11 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
+    public int selectID() {
+        return epartnerMapper.selectID();
+    }
+
+    @Override
     public List<Epartner> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return epartnerMapper.selectCinfoBypartnerCindustry(partnerCindustry);

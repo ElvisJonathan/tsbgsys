@@ -50,4 +50,7 @@ public interface EpartnerMapper {
 
     //管理员删除公司（软删除）
     int updateStatusByCid(int cid);
+
+    //查询新插入记录的ID
+    int selectID();
 }

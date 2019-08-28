@@ -83,6 +83,8 @@ public class CompanyController {
         //获取当前添加人
         UserInfo userInfo = companyPackage.getUserInfo();
         String userName= userInfo.getUserName();
+        //初始化公司id为0
+        int no = 0;
         //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
         if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
         && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null
@@ -97,6 +99,8 @@ public class CompanyController {
             int count = epartnerService.insertSelective(epartner);
             if (count>0){
                 arr[0]=1;
+                //需要把添加成功后的对应合作伙伴编号查询出来
+                no = epartnerService.selectID();
             }
         }
 
@@ -107,6 +111,8 @@ public class CompanyController {
             ecooperation.setCreateTime(new Date());
             //设置创建人
             ecooperation.setCreater(userName);
+            //设置合作伙伴编号
+            ecooperation.setPartnerNo(no);
             //调用业务方法存储合作关系信息
             int num = ecooperationService.insertSelective(ecooperation);
             if (num>0){
@@ -122,6 +128,8 @@ public class CompanyController {
             eccontacts.setCreateTime(new Date());
             //设置创建人
             eccontacts.setCreater(userName);
+            //设置合作伙伴编号
+            eccontacts.setPartnerNo(no);
             //调用业务方法存储联系人信息
             int number = eccontactsService.insertSelective(eccontacts);
             if (number>0){
