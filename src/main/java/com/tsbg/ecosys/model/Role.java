@@ -1,7 +1,7 @@
 package com.tsbg.ecosys.model;
 
 public class Role {
-    private Integer roleId;
+    private Integer roleid;
 
     private Boolean available;
 
@@ -13,13 +13,7 @@ public class Role {
 
     private Integer projId;
 
-    public Integer getRoleId() {
-        return roleId;
-    }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
 
     public Boolean getAvailable() {
         return available;
@@ -59,5 +53,13 @@ public class Role {
 
     public void setProjId(Integer projId) {
         this.projId = projId;
+    }
+
+    public Integer getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(Integer roleid) {
+        this.roleid = roleid;
     }
 }

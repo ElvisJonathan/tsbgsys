@@ -12,6 +12,7 @@ public class ResultResponse {
     private String message; //返回的信息详情
     private Object data; //返回的对象数据
     private Object dataSecond;//返回的第二个对象
+    private Object dataThird;//返回的第三个对象
 
     /**
      * 构造注入
@@ -39,6 +40,18 @@ public class ResultResponse {
         this.message = message;
         this.data = data;
         this.dataSecond = dataSecond;
+    }
+
+    /**
+     * 构造方法重载
+     * 有三个对象传递时使用
+     */
+    public ResultResponse(int code, String message, Object data, Object dataSecond, Object dataThird) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+        this.dataSecond = dataSecond;
+        this.dataThird = dataThird;
     }
 
     /**
@@ -74,5 +87,13 @@ public class ResultResponse {
 
     public void setDataSecond(Object dataSecond) {
         this.dataSecond = dataSecond;
+    }
+
+    public Object getDataThird() {
+        return dataThird;
+    }
+
+    public void setDataThird(Object dataThird) {
+        this.dataThird = dataThird;
     }
 }

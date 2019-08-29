@@ -35,4 +35,7 @@ public interface PermissionMapper {
     int updateByExampleSelective(@Param("record") Permission record, @Param("example") EpermissionExample example);
 
     int updateByExample(@Param("record") Permission record, @Param("example") EpermissionExample example);
+
+    //根据角色ID查询角色对应的权限信息
+    List<Permission> findPermissionByRoleId(@Param("roleId") Integer roleId);
 }

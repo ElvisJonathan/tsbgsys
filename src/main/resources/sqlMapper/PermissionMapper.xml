@@ -146,4 +146,19 @@
     </foreach>
     AND e.`perm_id`!=6
   </select>
+  <select id="findPermissionByRoleId" resultType="com.tsbg.ecosys.model.Permission">
+        SELECT
+            role.roleid,
+            role.available,
+            role.description,
+            role.role,
+            permission.`name`,
+            permission.permission,
+            permission.uri
+        FROM
+            (permission, role)
+        RIGHT JOIN perm_role ON permission.perm_id = perm_role.perm_id
+        AND perm_role.role_id = role.roleid
+        WHERE role.roleid=#{roleId} AND permission.`perm_id`!=6 ;
+    </select>
 </mapper>

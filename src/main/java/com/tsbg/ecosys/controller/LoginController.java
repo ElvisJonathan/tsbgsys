@@ -1,7 +1,13 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.mapper.PermissionMapper;
+import com.tsbg.ecosys.mapper.RoleMapper;
+import com.tsbg.ecosys.model.Permission;
+import com.tsbg.ecosys.model.Role;
 import com.tsbg.ecosys.model.UserInfo;
+import com.tsbg.ecosys.service.PermissionService;
+import com.tsbg.ecosys.service.RoleService;
 import com.tsbg.ecosys.service.UserInfoService;
 import com.tsbg.ecosys.vo.LoginResultVo;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 登录
@@ -19,6 +27,10 @@ public class LoginController {
 
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private PermissionService permissionService;
 
     @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -44,7 +56,18 @@ public class LoginController {
                 //成功登录返回用户名给前端
                 String userName = userInfoService.selectUserNameByUserCode(userCode);
                 //成功登录返回成功码0并且提示成功
-                resultResponse = new ResultResponse(0,"用户名和密码存在成功登录！",userName,userCode);
+                //返回权限列表
+                List<Role> roleList = roleService.findRoleByUserCode(userCode);
+                int arr[] = new int[1];//当前用户为单角色只给一个长度
+                for (int i=0;i<=arr.length-1;i++){
+                    arr[i]=roleList.get(i).getRoleid();
+                }
+                List<Permission> plist = permissionService.findPermissionByRoleId(arr[0]);
+                String arr2[] = new String[plist.size()];
+                for (int i=0;i<=plist.size()-1;i++){
+                    arr2[i]=plist.get(i).getName();
+                }
+                resultResponse = new ResultResponse(0,"用户名和密码存在成功登录！",userName,userCode,arr2);
                 //设置当前用户的登录session
                 session.setAttribute("userName",userName);
                 session.setAttribute("userCode",userCode);

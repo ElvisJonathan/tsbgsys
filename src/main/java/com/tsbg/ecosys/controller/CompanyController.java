@@ -259,7 +259,7 @@ public class CompanyController {
         ResultResponse resultResponse = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
         Integer cid = companyPackage.getEpartner().getPartnerNo();
-        System.out.println("接收到的partnerNo:"+cid);
+        //System.out.println("接收到的partnerNo:"+cid);
         Epartner epartner = companyPackage.getEpartner();
         if (epartner==null){
             resultResponse = new ResultResponse(501,"提示信息：公司合作伙伴信息为空异常！");
@@ -281,7 +281,7 @@ public class CompanyController {
         //获取当前修改人
         UserInfo userInfo = companyPackage.getUserInfo();
         String userName= userInfo.getUserName();
-        System.out.println("修改人："+userName);
+        //System.out.println("修改人："+userName);
         if(cid!=null){
             if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
                     && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null){
@@ -305,7 +305,7 @@ public class CompanyController {
                 //需要赋值cid给partnerNo
                 companyPackage.getEcooperation().setPartnerNo(cid);
                 //输出查看
-                System.out.println("PartnerNo:"+companyPackage.getEcooperation().getPartnerNo());
+                //System.out.println("PartnerNo:"+companyPackage.getEcooperation().getPartnerNo());
                 int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
                 if (num>0){
                     arr[1]=1;
@@ -322,7 +322,7 @@ public class CompanyController {
                 //需要赋值cid给partnerNo
                 companyPackage.getEccontacts().setPartnerNo(cid);
                 //输出查看
-                System.out.println("PartnerNo2:"+companyPackage.getEccontacts().getPartnerNo());
+                //System.out.println("PartnerNo2:"+companyPackage.getEccontacts().getPartnerNo());
                 int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
                 if (num>0){
                     arr[2]=1;
