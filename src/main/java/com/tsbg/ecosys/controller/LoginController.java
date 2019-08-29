@@ -58,20 +58,31 @@ public class LoginController {
                 //成功登录返回成功码0并且提示成功
                 //返回权限列表
                 List<Role> roleList = roleService.findRoleByUserCode(userCode);
-                int arr[] = new int[1];//当前用户为单角色只给一个长度
-                for (int i=0;i<=arr.length-1;i++){
-                    arr[i]=roleList.get(i).getRoleid();
+                if (roleList.size()!=0){
+                    int arr[] = new int[1];//当前用户为单角色只给一个长度
+                    for (int i=0;i<=arr.length-1;i++){
+                        arr[i]=roleList.get(i).getRoleid();
+                    }
+                    List<Permission> plist = permissionService.findPermissionByRoleId(arr[0]);
+                    if (plist!=null){
+                        String arr2[] = new String[plist.size()];
+                        for (int i=0;i<=plist.size()-1;i++){
+                            arr2[i]=plist.get(i).getName();
+                        }
+                        resultResponse = new ResultResponse(0,"成功登录并且获取了权限！",userName,userCode,arr2);
+                        //设置当前用户的登录session
+                        session.setAttribute("userName",userName);
+                        session.setAttribute("userCode",userCode);
+                        return resultResponse;
+                    }
+                    session.setAttribute("userName",userName);
+                    session.setAttribute("userCode",userCode);
+                    return new ResultResponse(0,"成功登录但未获取到对应权限信息！",userName,userCode);
                 }
-                List<Permission> plist = permissionService.findPermissionByRoleId(arr[0]);
-                String arr2[] = new String[plist.size()];
-                for (int i=0;i<=plist.size()-1;i++){
-                    arr2[i]=plist.get(i).getName();
-                }
-                resultResponse = new ResultResponse(0,"用户名和密码存在成功登录！",userName,userCode,arr2);
                 //设置当前用户的登录session
                 session.setAttribute("userName",userName);
                 session.setAttribute("userCode",userCode);
-                return resultResponse;
+                return new ResultResponse(0,"成功登录但是未找到对应角色信息！",userName,userCode);
             }
         }
         //如果用户名或密码为空或是不存在此用户提示登录失败
