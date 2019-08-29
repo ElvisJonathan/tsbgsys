@@ -45,6 +45,8 @@ public class Epartner {
 
     private String remark;
 
+    private Integer projId;
+
     public Integer getPartnerNo() {
         return partnerNo;
     }
@@ -211,5 +213,13 @@ public class Epartner {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Integer getProjId() {
+        return projId;
+    }
+
+    public void setProjId(Integer projId) {
+        this.projId = projId;
     }
 }

@@ -23,6 +23,7 @@
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="proj_id" property="projId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -86,7 +87,7 @@
     partner_no, partner_name, partner_date, partner_registcapital, partner_list, partner_scale,
     partner_addr, partner_webddr, partner_tech, partner_product, partner_channel, partner_turnover,
     partner_region, partner_industry, status, del_status, create_time, update_time, creater,
-    updater, remark
+    updater, remark,proj_id
   </sql>
   <select id="selectCinfo" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.model.Epartner">
     select * from epartner
@@ -140,7 +141,7 @@
       partner_product, partner_channel, partner_turnover,
       partner_region, partner_industry, status,
       del_status, create_time, update_time,
-      creater, updater, remark
+      creater, updater, remark,proj_id
       )
     values (#{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR}, #{partnerDate,jdbcType=DATE},
       #{partnerRegistcapital,jdbcType=VARCHAR}, #{partnerList,jdbcType=INTEGER}, #{partnerScale,jdbcType=VARCHAR},
@@ -148,7 +149,7 @@
       #{partnerProduct,jdbcType=VARCHAR}, #{partnerChannel,jdbcType=VARCHAR}, #{partnerTurnover,jdbcType=VARCHAR},
       #{partnerRegion,jdbcType=VARCHAR}, #{partnerIndustry,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
       #{delStatus,jdbcType=INTEGER}, #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP},
-      #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{projId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.Epartner" >
@@ -217,6 +218,9 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="projId != null" >
+        proj_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="partnerNo != null" >
@@ -281,6 +285,9 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="projId != null" >
+        #{projId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -347,6 +354,9 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="projId != null" >
+        proj_id = #{projId,jdbcType=INTEGER},
+      </if>
     </set>
     where partner_no = #{partnerNo,jdbcType=INTEGER}
   </update>
@@ -371,7 +381,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       updater = #{updater,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      proj_id = #{projId,jdbcType=INTEGER}
     where partner_no = #{partnerNo,jdbcType=INTEGER}
   </update>
   <update id="updateByCid" parameterType="int" >
