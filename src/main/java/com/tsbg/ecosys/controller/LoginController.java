@@ -1,8 +1,6 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
-import com.tsbg.ecosys.mapper.PermissionMapper;
-import com.tsbg.ecosys.mapper.RoleMapper;
 import com.tsbg.ecosys.model.Permission;
 import com.tsbg.ecosys.model.Role;
 import com.tsbg.ecosys.model.UserInfo;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
