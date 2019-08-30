@@ -104,8 +104,13 @@ public class EuserController {
         //根据前端传来的工号修改用户信息
         if (userInfo.getUserCode()!=null){
            int num = userInfoService.updateByUserCodeSelective(userInfo);
-           if (num>0){
-               resultResponse = new ResultResponse(0,"提示信息：修改用户信息成功！");
+           //通过工号查询当前用户的用户名
+           String userName = userInfoService.selectUserNameByUserCode(userInfo.getUserCode());
+           if (num>0 && userName!=null){
+               resultResponse = new ResultResponse(0,"提示信息：修改用户信息成功！",userName);
+               return resultResponse;
+           }else if (num>0){
+               resultResponse = new ResultResponse(0,"提示信息：修改用户信息成功但用户名不存在！");
                return resultResponse;
            }
             resultResponse = new ResultResponse(501,"提示信息：修改用户信息失败！");
