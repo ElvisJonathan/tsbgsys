@@ -1,21 +1,23 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
-import com.tsbg.ecosys.model.UserInfo;
+import com.tsbg.ecosys.model.*;
 import com.tsbg.ecosys.model.bag.CompanyPackage;
-import com.tsbg.ecosys.model.Epartner;
-import com.tsbg.ecosys.model.Eccontacts;
-import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.bag.SearchPackage;
 import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.EccontactsService;
 import com.tsbg.ecosys.service.EcooperationService;
+import com.tsbg.ecosys.service.FileInfoService;
 import com.tsbg.ecosys.util.PageRequest;
 import com.tsbg.ecosys.util.PageResult;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +34,10 @@ public class CompanyController {
     private EcooperationService ecooperationService;
     @Autowired
     private EccontactsService eccontactsService;
+    @Autowired
+    private FileInfoService fileInfoService;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 
     /**
      * 管理员隐藏/取消隐藏公司
@@ -72,17 +78,19 @@ public class CompanyController {
 
     /**
      * 合作伙伴信息、合作情况信息、公司联系人信息新增
+     * 集成文件上传
      */
     @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse addCom(@RequestBody CompanyPackage companyPackage){
+    public ResultResponse addCom(@RequestBody CompanyPackage companyPackage, MultipartFile file, HttpServletRequest req)throws IOException {
         //初始化传参构造器
         ResultResponse resultResponse = null;
         //新建arr数组用于存储成功值
-        int []arr = new int[3];
+        int []arr = new int[4];
         //获取当前添加人
         UserInfo userInfo = companyPackage.getUserInfo();
         String userName= userInfo.getUserName();
+        String userCode= userInfo.getUserCode();//让前端传一个工号
         //初始化公司id为0
         int no = 0;
         //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
@@ -137,11 +145,53 @@ public class CompanyController {
             }
         }
 
-        if (arr[0]==1 && arr[1]==1 && arr[2]==1){
+        //此处增加文件上传
+        if (!file.isEmpty()){
+            //根据原始文件名的后缀进行文件类型判断
+            String oldName = file.getOriginalFilename();
+            System.out.println("原始文件名："+oldName);
+            //进行重复文件名判断
+            int count = fileInfoService.selectFileCountByFileName(oldName);
+            if(count>0){
+                return  new ResultResponse(503,"该文件已存在，请选择其他文件上传!");
+            }
+            String Suffix = oldName.substring(oldName.lastIndexOf("."));
+            System.out.println("文件后缀："+Suffix);
+            if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
+                    || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
+                    || Suffix.equals(".txt")){
+                String format = sdf.format(new Date());//用于转换当前日期
+                String realPath = req.getServletContext().getRealPath("/ecoUpload") + format;//此方法用于获取上传路径
+                System.out.println("实际路径："+realPath);
+                File folder = new File(realPath);
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }//无报错则上传成功
+                //获取上传者
+                System.out.println("上传者："+userCode);
+                file.transferTo(new File(folder,oldName));
+                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
+                System.out.println(url);//真实存储的url
+                //进行文件上传记录的存储
+                FileInfo fileInfo = new FileInfo();
+                fileInfo.setFileName(oldName);
+                fileInfo.setFilePath(url);
+                fileInfo.setRelDocId(no);//与epartner表的partnerNo对应 要集成到新增和修改页面
+                fileInfo.setLastUpdateUser(userCode);
+                fileInfo.setUpdatedTime(new Date());
+                fileInfo.setKeyword(oldName);
+                int num = fileInfoService.insertSelective(fileInfo);
+                if (num>0){
+                    arr[3]=1;
+                }
+            }
+            return new ResultResponse(505,"上传文件格式不符合需求");
+          }
+
+        if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
             resultResponse = new ResultResponse(0,"提示信息：新增信息成功！");
             return resultResponse;
         }
-
         resultResponse = new ResultResponse(501,"提示信息：未能成功添加");
         return resultResponse;
     }
@@ -252,6 +302,7 @@ public class CompanyController {
 
     /**
      * 合作伙伴信息、合作情况信息、公司联系人信息修改
+     * 集成文件上传和删除
      */
     @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
