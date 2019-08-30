@@ -57,6 +57,11 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
+    public List<String> selectFileByParNo(Integer partnerNo) {
+        return epartnerMapper.selectFileByParNo(partnerNo);
+    }
+
+    @Override
     public List<Epartner> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return epartnerMapper.selectCinfoBypartnerCindustry(partnerCindustry);

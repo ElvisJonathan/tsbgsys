@@ -53,4 +53,7 @@ public interface EpartnerMapper {
 
     //查询新插入记录的ID
     int selectID();
+
+    //查询当前公司的文件详情
+    List<String> selectFileByParNo(Integer partnerNo);
 }

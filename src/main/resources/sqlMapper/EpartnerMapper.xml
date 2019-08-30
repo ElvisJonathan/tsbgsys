@@ -518,4 +518,12 @@
   <select id="selectID" resultType="int" >
     SELECT LAST_INSERT_ID();
   </select>
+  <select id="selectFileByParNo" resultType="String" parameterType="java.lang.Integer" >
+    SELECT
+    f.`file_path`
+    FROM epartner AS e
+    LEFT JOIN file_info AS f
+    ON e.`partner_no`=f.`rel_doc_id`
+    WHERE e.partner_no = #{partnerNo,jdbcType=INTEGER} AND e.`status`=0 AND f.`status`=0;
+  </select>
 </mapper>
