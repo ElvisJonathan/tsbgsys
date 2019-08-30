@@ -306,7 +306,7 @@ public class CompanyController {
      */
     @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse modifyCom(@RequestBody CompanyPackage companyPackage){
+    public ResultResponse modifyCom(@RequestBody CompanyPackage companyPackage, MultipartFile file, HttpServletRequest req)throws IOException{
         ResultResponse resultResponse = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
         Integer cid = companyPackage.getEpartner().getPartnerNo();
@@ -328,11 +328,12 @@ public class CompanyController {
         }
         //全都不为空的情况下才可以进行修改判断
         //新建arr数组用于存储成功值
-        int []arr = new int[3];
+        int []arr = new int[4];
         //获取当前修改人
         UserInfo userInfo = companyPackage.getUserInfo();
         String userName= userInfo.getUserName();
-        //System.out.println("修改人："+userName);
+        String userCode = userInfo.getUserCode();//向前端要一个userCode
+        System.out.println("修改人："+userName);
         if(cid!=null){
             if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
                     && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null){
@@ -355,8 +356,6 @@ public class CompanyController {
                 ecooperation.setUpdater(userName);
                 //需要赋值cid给partnerNo
                 companyPackage.getEcooperation().setPartnerNo(cid);
-                //输出查看
-                //System.out.println("PartnerNo:"+companyPackage.getEcooperation().getPartnerNo());
                 int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
                 if (num>0){
                     arr[1]=1;
@@ -372,23 +371,71 @@ public class CompanyController {
                 eccontacts.setUpdater(userName);
                 //需要赋值cid给partnerNo
                 companyPackage.getEccontacts().setPartnerNo(cid);
-                //输出查看
-                //System.out.println("PartnerNo2:"+companyPackage.getEccontacts().getPartnerNo());
                 int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
                 if (num>0){
                     arr[2]=1;
                 }
             }
 
-            if (arr[0]==1 && arr[1]==1 && arr[2]==1){
+            //此处进行文件的删除:如果没有收到文件证明文件已被删除
+            if (file.isEmpty()){
+                //修改文件的status
+                int num = epartnerService.deleteFileByParNo(cid);
+                if (num>0){
+                    arr[3]=1;
+                }
+            }else{
+                //说明文件被修改
+                //根据原始文件名的后缀进行文件类型判断
+                String oldName = file.getOriginalFilename();
+                System.out.println("原始文件名："+oldName);
+                //进行重复文件名判断
+                int count = fileInfoService.selectFileCountByFileName(oldName);
+                if(count>0){
+                    return  new ResultResponse(505,"该文件已存在，请选择其他文件上传!");
+                }
+                String Suffix = oldName.substring(oldName.lastIndexOf("."));
+                System.out.println("文件后缀："+Suffix);
+                if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
+                        || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
+                        || Suffix.equals(".txt")){
+                    String format = sdf.format(new Date());//用于转换当前日期
+                    String realPath = req.getServletContext().getRealPath("/ecoUpload") + format;//此方法用于获取上传路径
+                    System.out.println("实际路径："+realPath);
+                    File folder = new File(realPath);
+                    if (!folder.exists()) {
+                        folder.mkdirs();
+                    }//无报错则上传成功
+                    //获取上传者
+                    System.out.println("上传者："+userCode);
+                    file.transferTo(new File(folder,oldName));
+                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
+                    System.out.println(url);//真实存储的url
+                    //进行文件上传记录的存储
+                    FileInfo fileInfo = new FileInfo();
+                    fileInfo.setFileName(oldName);
+                    fileInfo.setFilePath(url);
+                    fileInfo.setRelDocId(cid);//与epartner表的partnerNo对应 要集成到新增和修改页面
+                    fileInfo.setLastUpdateUser(userCode);
+                    fileInfo.setUpdatedTime(new Date());
+                    fileInfo.setKeyword(oldName);
+                    int num = fileInfoService.insertSelective(fileInfo);
+                    if (num>0){
+                        arr[3]=1;
+                    }
+                }
+                return new ResultResponse(506,"上传文件格式不符合需求");
+            }
+
+            if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
                 resultResponse = new ResultResponse(0,"提示信息：修改成功！");
                 return resultResponse;
             }
 
-            resultResponse = new ResultResponse(500,"提示信息：修改不彻底！");
+            resultResponse = new ResultResponse(508,"提示信息：修改不彻底！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(505,"提示信息：未查到对应公司合作伙伴编号！");
+        resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
         return resultResponse;
     }
 

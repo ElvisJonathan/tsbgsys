@@ -56,4 +56,7 @@ public interface EpartnerMapper {
 
     //查询当前公司的文件详情
     List<String> selectFileByParNo(Integer partnerNo);
+
+    //根据partnerNo删除文件
+    int deleteFileByParNo(Integer partnerNo);
 }
