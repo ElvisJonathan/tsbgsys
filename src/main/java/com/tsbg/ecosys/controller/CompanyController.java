@@ -167,8 +167,6 @@ public class CompanyController {
                 if (!folder.exists()) {
                     folder.mkdirs();
                 }//无报错则上传成功
-                //获取上传者
-                System.out.println("上传者："+userCode);
                 file.transferTo(new File(folder,oldName));
                 String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
                 System.out.println(url);//真实存储的url
@@ -188,11 +186,11 @@ public class CompanyController {
             return new ResultResponse(505,"上传文件格式不符合需求");
           }
 
-        if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
-            resultResponse = new ResultResponse(0,"提示信息：新增信息成功！");
+        if (arr[0]==1 && arr[1]==1 && arr[2]==1){
+            resultResponse = new ResultResponse(0,"提示信息：新增成功！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(501,"提示信息：未能成功添加");
+        resultResponse = new ResultResponse(501,"提示信息：新增失败！");
         return resultResponse;
     }
 
@@ -310,7 +308,7 @@ public class CompanyController {
         ResultResponse resultResponse = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
         Integer cid = companyPackage.getEpartner().getPartnerNo();
-        //System.out.println("接收到的partnerNo:"+cid);
+        System.out.println("接收到的partnerNo:"+cid);
         Epartner epartner = companyPackage.getEpartner();
         if (epartner==null){
             resultResponse = new ResultResponse(501,"提示信息：公司合作伙伴信息为空异常！");
@@ -334,6 +332,7 @@ public class CompanyController {
         String userName= userInfo.getUserName();
         String userCode = userInfo.getUserCode();//向前端要一个userCode
         System.out.println("修改人："+userName);
+        System.out.println("工号："+userCode);
         if(cid!=null){
             if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
                     && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null){
@@ -377,6 +376,17 @@ public class CompanyController {
                 }
             }
 
+            if(file.getSize()>0){
+                String oldName = file.getOriginalFilename();
+                System.out.println("原始文件名："+oldName);
+                //根据公司合作伙伴编号和文件名查询附件是否未修改
+                int number  = fileInfoService.judgeIfFileChanged(cid,oldName);
+                if (number>0){
+                    //说明文件未修改
+                    arr[3]=1;
+                }
+            }
+
             //此处进行文件的删除:如果没有收到文件证明文件已被删除
             if (file.isEmpty()){
                 //修改文件的status
@@ -384,7 +394,9 @@ public class CompanyController {
                 if (num>0){
                     arr[3]=1;
                 }
-            }else{
+            }
+
+            if (arr[3]==0){
                 //说明文件被修改
                 //根据原始文件名的后缀进行文件类型判断
                 String oldName = file.getOriginalFilename();
@@ -406,8 +418,6 @@ public class CompanyController {
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
-                    //获取上传者
-                    System.out.println("上传者："+userCode);
                     file.transferTo(new File(folder,oldName));
                     String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
                     System.out.println(url);//真实存储的url
@@ -431,7 +441,6 @@ public class CompanyController {
                 resultResponse = new ResultResponse(0,"提示信息：修改成功！");
                 return resultResponse;
             }
-
             resultResponse = new ResultResponse(508,"提示信息：修改不彻底！");
             return resultResponse;
         }

@@ -21,4 +21,9 @@ public class FileInfoServiceImpl implements FileInfoService {
     public int selectFileCountByFileName(String filename) {
         return fileInfoMapper.selectFileCountByFileName(filename);
     }
+
+    @Override
+    public int judgeIfFileChanged(Integer partnerNo, String fileName) {
+        return fileInfoMapper.judgeIfFileChanged(partnerNo,fileName);
+    }
 }

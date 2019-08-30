@@ -22,6 +22,7 @@ import java.util.Date;
  * 文件上传与下载
  */
 @Controller
+@RequestMapping("/tsbg/upload")
 public class FileController {
 
     @Autowired
@@ -40,7 +41,10 @@ public class FileController {
 
     @RequestMapping(value = "/import", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse importData(MultipartFile file, HttpServletRequest req/*, @RequestBody UserInfo userInfo*/) throws IOException {
+    public ResultResponse importData(MultipartFile file, HttpServletRequest req, @RequestBody CompanyPackage companyPackage) throws IOException {
+        //获取对应公司的合作伙伴编号
+        Epartner epartner = companyPackage.getEpartner();
+        Integer partnerNo = epartner.getPartnerNo();
         if (file.isEmpty()) {
             return new ResultResponse(500,"上传文件为空！");
         }
@@ -65,8 +69,9 @@ public class FileController {
                 folder.mkdirs();
             }//无报错则上传成功
             //获取上传者
-            String userCode = "F1336602";//先虚拟一个上传者
-            //System.out.println("上传者："+userCode);
+            UserInfo userInfo = companyPackage.getUserInfo();
+            String userCode = userInfo.getUserCode();
+            System.out.println("上传者："+userCode);
             file.transferTo(new File(folder,oldName));
             String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
             System.out.println(url);//真实存储的url
@@ -74,7 +79,7 @@ public class FileController {
             FileInfo fileInfo = new FileInfo();
             fileInfo.setFileName(oldName);
             fileInfo.setFilePath(url);
-            fileInfo.setRelDocId(4);//与epartner表的partnerNo对应 要集成到新增和修改页面
+            fileInfo.setRelDocId(partnerNo);//与epartner表的partnerNo对应 要集成到新增和修改页面
             fileInfo.setLastUpdateUser(userCode);
             fileInfo.setUpdatedTime(new Date());
             fileInfo.setKeyword(oldName);

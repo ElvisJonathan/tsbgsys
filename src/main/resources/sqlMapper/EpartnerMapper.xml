@@ -526,7 +526,7 @@
     ON e.`partner_no`=f.`rel_doc_id`
     WHERE e.partner_no = #{partnerNo,jdbcType=INTEGER} AND e.`status`=0 AND f.`status`=0;
   </select>
-  <update id="deleteFileByParNo" parameterType="java.lang.Integer" >
+  <update id="deleteFileByParNo" parameterType="java.lang.Integer">
     UPDATE file_info AS f SET f.`status`=1 WHERE f.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER};
   </update>
   <update id="logDownloader">

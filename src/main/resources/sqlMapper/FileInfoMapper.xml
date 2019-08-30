@@ -177,4 +177,8 @@
   <select id="selectFileCountByFileName" resultType="int" parameterType="String" >
     SELECT COUNT(0) FROM file_info WHERE file_name = #{filename,jdbcType=VARCHAR};
   </select>
+  <select id="judgeIfFileChanged" resultType="int">
+    SELECT COUNT(0) FROM file_info AS f WHERE f.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER}
+    AND f.`file_name`= #{fileName,jdbcType=VARCHAR};
+  </select>
 </mapper>
