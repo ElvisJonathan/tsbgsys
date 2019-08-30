@@ -19,6 +19,11 @@ mybatis:
     cache: false
     mode: HTML
 
+  servlet:
+    multipart:
+      max-file-size: 30Mb
+      max-request-size: 30Mb
+
 # pagehelper
 pagehelper:
   helperDialect: mysql

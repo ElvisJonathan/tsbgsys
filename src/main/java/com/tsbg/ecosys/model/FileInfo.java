@@ -15,9 +15,9 @@ public class FileInfo {
 
     private Integer relDocId;
 
-    private Integer lastUpdateUser;
+    private String lastUpdateUser;
 
-    private Integer lastDownloadUser;
+    private String lastDownloadUser;
 
     private Date updatedTime;
 
@@ -75,19 +75,19 @@ public class FileInfo {
         this.relDocId = relDocId;
     }
 
-    public Integer getLastUpdateUser() {
+    public String getLastUpdateUser() {
         return lastUpdateUser;
     }
 
-    public void setLastUpdateUser(Integer lastUpdateUser) {
+    public void setLastUpdateUser(String lastUpdateUser) {
         this.lastUpdateUser = lastUpdateUser;
     }
 
-    public Integer getLastDownloadUser() {
+    public String getLastDownloadUser() {
         return lastDownloadUser;
     }
 
-    public void setLastDownloadUser(Integer lastDownloadUser) {
+    public void setLastDownloadUser(String lastDownloadUser) {
         this.lastDownloadUser = lastDownloadUser;
     }
 
@@ -122,4 +122,6 @@ public class FileInfo {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+
 }

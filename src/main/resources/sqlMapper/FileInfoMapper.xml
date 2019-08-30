@@ -8,8 +8,8 @@
     <result column="file_path" property="filePath" jdbcType="VARCHAR" />
     <result column="proj_id" property="projId" jdbcType="INTEGER" />
     <result column="rel_doc_id" property="relDocId" jdbcType="INTEGER" />
-    <result column="last_update_user" property="lastUpdateUser" jdbcType="INTEGER" />
-    <result column="last_download_user" property="lastDownloadUser" jdbcType="INTEGER" />
+    <result column="last_update_user" property="lastUpdateUser" jdbcType="VARCHAR" />
+    <result column="last_download_user" property="lastDownloadUser" jdbcType="VARCHAR" />
     <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
     <result column="keyword" property="keyword" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -37,7 +37,7 @@
       )
     values (#{fileId,jdbcType=INTEGER}, #{dispName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
       #{filePath,jdbcType=VARCHAR}, #{projId,jdbcType=INTEGER}, #{relDocId,jdbcType=INTEGER}, 
-      #{lastUpdateUser,jdbcType=INTEGER}, #{lastDownloadUser,jdbcType=INTEGER}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateUser,jdbcType=VARCHAR}, #{lastDownloadUser,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP},
       #{keyword,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
@@ -101,10 +101,10 @@
         #{relDocId,jdbcType=INTEGER},
       </if>
       <if test="lastUpdateUser != null" >
-        #{lastUpdateUser,jdbcType=INTEGER},
+        #{lastUpdateUser,jdbcType=VARCHAR},
       </if>
       <if test="lastDownloadUser != null" >
-        #{lastDownloadUser,jdbcType=INTEGER},
+        #{lastDownloadUser,jdbcType=VARCHAR},
       </if>
       <if test="updatedTime != null" >
         #{updatedTime,jdbcType=TIMESTAMP},
@@ -139,10 +139,10 @@
         rel_doc_id = #{relDocId,jdbcType=INTEGER},
       </if>
       <if test="lastUpdateUser != null" >
-        last_update_user = #{lastUpdateUser,jdbcType=INTEGER},
+        last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
       </if>
       <if test="lastDownloadUser != null" >
-        last_download_user = #{lastDownloadUser,jdbcType=INTEGER},
+        last_download_user = #{lastDownloadUser,jdbcType=VARCHAR},
       </if>
       <if test="updatedTime != null" >
         updated_time = #{updatedTime,jdbcType=TIMESTAMP},
@@ -166,12 +166,15 @@
       file_path = #{filePath,jdbcType=VARCHAR},
       proj_id = #{projId,jdbcType=INTEGER},
       rel_doc_id = #{relDocId,jdbcType=INTEGER},
-      last_update_user = #{lastUpdateUser,jdbcType=INTEGER},
-      last_download_user = #{lastDownloadUser,jdbcType=INTEGER},
+      last_update_user = #{lastUpdateUser,jdbcType=VARCHAR},
+      last_download_user = #{lastDownloadUser,jdbcType=VARCHAR},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       keyword = #{keyword,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
+  <select id="selectFileCountByFileName" resultType="int" parameterType="String" >
+    SELECT COUNT(0) FROM file_info WHERE file_name = #{filename,jdbcType=VARCHAR};
+  </select>
 </mapper>
