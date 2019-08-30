@@ -59,4 +59,7 @@ public interface EpartnerMapper {
 
     //根据partnerNo删除文件
     int deleteFileByParNo(Integer partnerNo);
+
+    //下载文件记录下载者
+    int logDownloader(@Param("userCode")String userCode,@Param("partnerNo")Integer partnerNo);
 }

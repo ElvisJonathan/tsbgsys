@@ -67,6 +67,11 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
+    public int logDownloader(String userCode, Integer partnerNo) {
+        return epartnerMapper.logDownloader(userCode,partnerNo);
+    }
+
+    @Override
     public List<Epartner> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return epartnerMapper.selectCinfoBypartnerCindustry(partnerCindustry);

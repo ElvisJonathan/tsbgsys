@@ -1,8 +1,11 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.FileInfo;
 import com.tsbg.ecosys.model.UserInfo;
+import com.tsbg.ecosys.model.bag.CompanyPackage;
+import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.FileInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +18,16 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 文件上传与下载
+ */
 @Controller
 public class FileController {
 
     @Autowired
     private FileInfoService fileInfoService;
+    @Autowired
+    private EpartnerService epartnerService;
 
     //跳转到上传文件的页面
     @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
@@ -77,5 +85,24 @@ public class FileController {
             return new ResultResponse(503,"上传失败！");
         }
         return new ResultResponse(505,"上传文件格式不符合需求");
+    }
+
+
+    @RequestMapping(value = "/download", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse downloadFile(@RequestBody CompanyPackage companyPackage){
+        //通过接收公司的partnerNo和userCode来记录下载者
+        Epartner epartner = companyPackage.getEpartner();
+        Integer partnerNo= epartner.getPartnerNo();
+        UserInfo userInfo = companyPackage.getUserInfo();
+        String userCode = userInfo.getUserCode();
+        if (partnerNo!=null && userCode!=null){
+           int num = epartnerService.logDownloader(userCode,partnerNo);
+           if (num>0){
+               return new ResultResponse(0,"记录下载者成功!");
+           }
+           return  new ResultResponse(500,"记录下载者失败！");
+        }
+        return new ResultResponse(501,"合作伙伴编号或工号为空异常！");
     }
 }

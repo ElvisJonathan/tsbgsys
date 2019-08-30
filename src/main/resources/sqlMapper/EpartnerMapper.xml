@@ -529,4 +529,7 @@
   <update id="deleteFileByParNo" parameterType="java.lang.Integer" >
     UPDATE file_info AS f SET f.`status`=1 WHERE f.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER};
   </update>
+  <update id="logDownloader">
+    UPDATE file_info AS f SET f.`last_download_user`= #{userCode,jdbcType=VARCHAR} WHERE f.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER};
+  </update>
 </mapper>
