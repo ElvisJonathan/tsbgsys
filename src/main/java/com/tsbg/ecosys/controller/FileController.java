@@ -7,14 +7,16 @@ import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.FileInfoService;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,6 +31,9 @@ public class FileController {
     private FileInfoService fileInfoService;
     @Autowired
     private EpartnerService epartnerService;
+
+    /*private final static String rootPath =
+            System.getProperty("user.home")+File.separator+fileDir+File.separator;*/
 
     //跳转到上传文件的页面
     @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
@@ -109,5 +114,54 @@ public class FileController {
            return  new ResultResponse(500,"记录下载者失败！");
         }
         return new ResultResponse(501,"合作伙伴编号或工号为空异常！");
+    }
+
+    /**
+     * 下载
+     */
+    @RequestMapping("/testdownload")
+    public Object downloadFile(@RequestParam String fileName, final HttpServletResponse response, final HttpServletRequest request){
+        OutputStream os = null;
+        InputStream is= null;
+        try {
+            // 取得输出流
+            os = response.getOutputStream();
+            // 清空输出流
+            response.reset();
+            response.setContentType("application/x-download;charset=GBK");
+            response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
+            String rootPath = "http://localhost:8080/ecoUpload/";
+            //读取流
+            File f = new File(rootPath+fileName);
+            is = new FileInputStream(f);
+            if (is == null) {
+                System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
+                return "下载附件失败，请检查文件“" + fileName + "”是否存在";
+            }
+            //复制
+            IOUtils.copy(is, response.getOutputStream());
+            response.getOutputStream().flush();
+        } catch (IOException e) {
+            return "下载附件失败,error:"+e.getMessage();
+        }
+            //文件的关闭放在finally中
+        finally
+        {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                System.out.println(ExceptionUtils.getFullStackTrace(e));
+            }
+            try {
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                System.out.println(ExceptionUtils.getFullStackTrace(e));
+            }
+        }
+        return "下载成功！";
     }
 }

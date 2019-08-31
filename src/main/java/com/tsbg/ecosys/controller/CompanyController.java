@@ -37,7 +37,7 @@ public class CompanyController {
     @Autowired
     private FileInfoService fileInfoService;
 
-    SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
+    //SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 
     /**
      * 管理员隐藏/取消隐藏公司
@@ -163,15 +163,15 @@ public class CompanyController {
             if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
                     || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
                     || Suffix.equals(".txt")){
-                String format = sdf.format(new Date());//用于转换当前日期
-                String realPath = req.getServletContext().getRealPath("/ecoUpload") + format;//此方法用于获取上传路径
+                //String format = sdf.format(new Date());//用于转换当前日期
+                String realPath = req.getServletContext().getRealPath("/ecoUpload");//此方法用于获取上传路径
                 System.out.println("实际路径："+realPath);
                 File folder = new File(realPath);
                 if (!folder.exists()) {
                     folder.mkdirs();
                 }//无报错则上传成功
                 file.transferTo(new File(folder,oldName));
-                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
+                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + oldName;
                 System.out.println(url);//真实存储的url
                 //进行文件上传记录的存储
                 FileInfo fileInfo = new FileInfo();
@@ -414,15 +414,15 @@ public class CompanyController {
                 if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
                         || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
                         || Suffix.equals(".txt")){
-                    String format = sdf.format(new Date());//用于转换当前日期
-                    String realPath = req.getServletContext().getRealPath("/ecoUpload") + format;//此方法用于获取上传路径
+                    //String format = sdf.format(new Date());//用于转换当前日期
+                    String realPath = req.getServletContext().getRealPath("/ecoUpload");//此方法用于获取上传路径
                     System.out.println("实际路径："+realPath);
                     File folder = new File(realPath);
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
                     file.transferTo(new File(folder,oldName));
-                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
+                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+ oldName;
                     System.out.println(url);//真实存储的url
                     //进行文件上传记录的存储
                     FileInfo fileInfo = new FileInfo();
