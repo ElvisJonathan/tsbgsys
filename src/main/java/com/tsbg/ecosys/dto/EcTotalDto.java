@@ -3,13 +3,15 @@ package com.tsbg.ecosys.dto;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.Ecooperation;
 
+import java.util.List;
+
 public class EcTotalDto {
 
     private Epartner epartner;
 
-    private com.tsbg.ecosys.model.Eccontacts Eccontacts;
+    private List<Ecooperation> ecooperation;
 
-    private Ecooperation ecooperation;
+    private List<com.tsbg.ecosys.model.Eccontacts> Eccontacts;
 
     public Epartner getEpartner() {
         return epartner;
@@ -19,19 +21,20 @@ public class EcTotalDto {
         this.epartner = epartner;
     }
 
-    public com.tsbg.ecosys.model.Eccontacts getEccontacts() {
-        return Eccontacts;
-    }
 
-    public void setEccontacts(com.tsbg.ecosys.model.Eccontacts eccontacts) {
-        Eccontacts = eccontacts;
-    }
-
-    public Ecooperation getEcooperation() {
+    public List<Ecooperation> getEcooperation() {
         return ecooperation;
     }
 
-    public void setEcooperation(Ecooperation ecooperation) {
+    public void setEcooperation(List<Ecooperation> ecooperation) {
         this.ecooperation = ecooperation;
+    }
+
+    public List<com.tsbg.ecosys.model.Eccontacts> getEccontacts() {
+        return Eccontacts;
+    }
+
+    public void setEccontacts(List<com.tsbg.ecosys.model.Eccontacts> eccontacts) {
+        Eccontacts = eccontacts;
     }
 }

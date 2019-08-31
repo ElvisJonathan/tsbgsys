@@ -1,7 +1,6 @@
 package com.tsbg.ecosys.serviceImpl;
 
 import com.tsbg.ecosys.dto.EcTotalDto;
-import com.tsbg.ecosys.dto.EcTotalListDto;
 import com.tsbg.ecosys.dto.condition.EcooperationConditionDto;
 import com.tsbg.ecosys.mapper.EpartnerMapper;
 import com.tsbg.ecosys.mapper.EccontactsMapper;
@@ -12,7 +11,6 @@ import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.example.EcooperationExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,10 +45,10 @@ public class EcooperationService {
         EcTotalDto ecTotalDto = new EcTotalDto();
         ecTotalDto.setEpartner(epartner1);
         if(eccontacts != null && eccontacts.size()>0){
-            ecTotalDto.setEccontacts(eccontacts.get(0));
+            ecTotalDto.setEccontacts(eccontacts);
         }
         if(ecooperations != null && ecooperations.size()>0){
-            ecTotalDto.setEcooperation(ecooperations.get(0));
+            ecTotalDto.setEcooperation(ecooperations);
         }
         List<EcTotalDto> ecTotalDtoList = new ArrayList<>();
         ecTotalDtoList.add(ecTotalDto);
@@ -59,18 +57,18 @@ public class EcooperationService {
     }
 
     //批量更新合作伙伴信息
-    public void updateEcooperationList(EcTotalListDto ecTotalListDto) throws Exception {
+    /*public void updateEcooperationList(EcTotalListDto ecTotalListDto) throws Exception {
         if (ecTotalListDto == null || ecTotalListDto.getEcTotalDtoList() == null || ecTotalListDto.getEcTotalDtoList().size() == 0) {
             return;
         }
         for (EcTotalDto ecTotalDto : ecTotalListDto.getEcTotalDtoList()) {
             updateEcooperation(ecTotalDto);
         }
-    }
+    }*/
 
 
     //更新合作伙伴信息
-    public void updateEcooperation(EcTotalDto ecTotalDto) throws Exception {
+    /*public void updateEcooperation(EcTotalDto ecTotalDto) throws Exception {
         Ecooperation ecooperation = getByPrimaryKey(ecTotalDto.getEcooperation().getCoopId());
         Date createTime = ecooperation.getCreateTime();
         BeanUtils.copyProperties(ecTotalDto.getEcooperation(), ecooperation);
@@ -92,7 +90,7 @@ public class EcooperationService {
         eccontacts.setUpdateTime(new Date());
         eccontactsMapper.updateByPrimaryKey(eccontacts);
 
-    }
+    }*/
 
     public void insertSelective(Ecooperation ecooperation) {
         ecooperation.setCreateTime(new Date());
