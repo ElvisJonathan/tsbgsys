@@ -59,6 +59,9 @@ public class CompanyController {
         if (cid!=null){
             //根据前端传过来的cid作为参数修改公司的状态
             int num = epartnerService.updateByCid(status,cid);
+            //同步更新合作关系和联系人状态
+            ecooperationService.updateByCid(status,cid);
+            eccontactsService.updateByCid(status,cid);
             if (num>0 && status==1){
                 resultResponse = new ResultResponse(1,"提示信息：隐藏公司成功！");
                 return resultResponse;

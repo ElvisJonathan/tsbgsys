@@ -3,6 +3,7 @@ package com.tsbg.ecosys.service;
 
 
 import com.tsbg.ecosys.model.Eccontacts;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface EccontactsService {
     int updateStatusByCid(int partnerNo);
 
     List<Eccontacts> selectByPartnerNo(Integer partnerNo);
+
+    int updateByCid(@Param("status") int status, @Param("cid") int cid);
 }

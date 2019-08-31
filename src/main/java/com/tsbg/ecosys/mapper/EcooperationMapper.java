@@ -41,4 +41,6 @@ public interface EcooperationMapper {
     int updateStatusByCid(int partnerNo);
 
     List<Ecooperation> selectByPartnerNo(Integer partnerNo);
+
+    int updateByCid(@Param("status") int status,@Param("cid") int cid);
 }
