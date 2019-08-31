@@ -39,4 +39,6 @@ public interface EcooperationMapper {
     int updateByPartnerNoSelective(Ecooperation record);
     //管理员删除公司（软删除）
     int updateStatusByCid(int partnerNo);
+
+    List<Ecooperation> selectByPartnerNo(Integer partnerNo);
 }

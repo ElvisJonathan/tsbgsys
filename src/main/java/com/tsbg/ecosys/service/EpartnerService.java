@@ -49,4 +49,6 @@ public interface EpartnerService {
 
     //下载文件记录下载者
     int logDownloader(@Param("userCode")String userCode,@Param("partnerNo")Integer partnerNo);
+
+    Epartner selectByPrimaryKey(Integer partnerNo);
 }

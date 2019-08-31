@@ -423,4 +423,10 @@
   <update id="updateStatusByCid" parameterType="int" >
     UPDATE eccontacts AS e SET e.`del_status`=1 WHERE e.partner_no=#{partnerNo,jdbcType=INTEGER};
   </update>
+  <select id="selectByPartnerNo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from eccontacts
+    where partner_no = #{partnerNo,jdbcType=INTEGER} AND status = 0
+  </select>
 </mapper>
