@@ -3,7 +3,6 @@ package com.tsbg.ecosys.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-//Excel导出日期工具类
 public  class ExcelTimeUtils {
 
     public static String getTimeString(Date time) {

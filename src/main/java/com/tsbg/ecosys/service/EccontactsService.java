@@ -23,7 +23,6 @@ public interface EccontactsService {
     List<Eccontacts> selectByPartnerNo(Integer partnerNo);
 
     int updateByCid(@Param("status") int status, @Param("cid") int cid);
-
     //导出Excel查询所有
     List<Eccontacts> selecteccontactsExcellAll();
 }

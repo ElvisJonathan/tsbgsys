@@ -7,9 +7,8 @@ import com.tsbg.ecosys.dto.EcTotal_Excel;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.Epartner;
-import com.tsbg.ecosys.service.EccontactsService;
-//import com.tsbg.ecosys.service.EcooperationService;
 import com.tsbg.ecosys.service.EpartnerService;
+import com.tsbg.ecosys.service.EccontactsService;
 import com.tsbg.ecosys.serviceImpl.EcooperationService;
 import com.tsbg.ecosys.util.ExcelTimeUtils;
 import io.swagger.annotations.Api;
@@ -77,7 +76,6 @@ public class EcController {
         }
         return new ResultResponse(501,"未收到PartnerNo");
     }
-
 
     //根据partnerNo导出Excel
     @ApiOperation(value = "根据partnerNo导出Excel", notes = "根据partnerNo导出Excel")
@@ -339,7 +337,7 @@ public class EcController {
 		* */
         //eccontacts表头
         row = sheet.createRow(1);
-        row.setHeight((short) (50 * 20));//设置行高
+        row.setHeight((short) (22.50 * 20));//设置行高
         row.createCell(0).setCellValue("公司联系人编号");//为第一个单元格设值
         row.createCell(1).setCellValue("合作伙伴编号");//为第二个单元格设值
         row.createCell(2).setCellValue("所属公司名称");//为第三个单元格设值
@@ -498,7 +496,7 @@ public class EcController {
         sheet.setDefaultRowHeight((short) (30 * 30));
         //列宽自适应
         for (int i = 0; i <= 58; i++) {
-            sheet.autoSizeColumn(totalRow);
+            sheet.autoSizeColumn(i);
         }
 
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
@@ -509,6 +507,4 @@ public class EcController {
         os.flush();
         os.close();
     }
-
-
 }

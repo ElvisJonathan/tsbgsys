@@ -4,9 +4,9 @@ import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.*;
 import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.model.bag.SearchPackage;
-import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.EccontactsService;
 import com.tsbg.ecosys.service.EcooperationService;
+import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.FileInfoService;
 import com.tsbg.ecosys.util.PageRequest;
 import com.tsbg.ecosys.util.PageResult;
@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

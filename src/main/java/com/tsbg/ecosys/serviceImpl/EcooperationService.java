@@ -4,9 +4,9 @@ import com.tsbg.ecosys.dto.EcTotalDto;
 import com.tsbg.ecosys.dto.EcTotalDtol;
 import com.tsbg.ecosys.dto.EcTotal_Excel;
 import com.tsbg.ecosys.dto.condition.EcooperationConditionDto;
-import com.tsbg.ecosys.mapper.EpartnerMapper;
 import com.tsbg.ecosys.mapper.EccontactsMapper;
 import com.tsbg.ecosys.mapper.EcooperationMapper;
+import com.tsbg.ecosys.mapper.EpartnerMapper;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
@@ -76,7 +76,6 @@ public class EcooperationService {
         }
         List<EcTotalDtol> ecTotalDtoList = new ArrayList<>();
         ecTotalDtoList.add(ecTotalDtol);
-
         return ecTotalDtoList;
     }
 
@@ -86,9 +85,7 @@ public class EcooperationService {
         List<Epartner> epartner1 = epartnerMapper.selectepartnerExcellAll();
         List<Eccontacts> eccontacts = eccontactsMapper.selecteccontactsExcellAll();
         List<Ecooperation> ecooperations = ecooperationMapper.selectecooperationsExcellAll();
-
         EcTotal_Excel ecTotal_excel = new EcTotal_Excel();
-
         ecTotal_excel.setEpartnerList(epartner1);
         ecTotal_excel.setEccontactsList(eccontacts);
         ecTotal_excel.setEcooperationList(ecooperations);

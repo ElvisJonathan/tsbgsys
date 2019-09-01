@@ -1,6 +1,5 @@
 package com.tsbg.ecosys.mapper;
 
-import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.example.EcInfoExample;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,7 +23,7 @@ public interface EpartnerMapper {
     int updateByPrimaryKey(Epartner record);
 
     //管理员隐藏/取消隐藏个别公司
-    int updateByCid(@Param("status") int status,@Param("cid") int cid);
+    int updateByCid(@Param("status") int status, @Param("cid") int cid);
 
     //查询公司列表
     List<Epartner> selectAll();
@@ -59,11 +58,10 @@ public interface EpartnerMapper {
     List<String> selectFileByParNo(Integer partnerNo);
 
     //根据partnerNo删除文件
-    int deleteFileByParNo(@Param("partnerNo")Integer partnerNo);
+    int deleteFileByParNo(@Param("partnerNo") Integer partnerNo);
 
     //下载文件记录下载者
-    int logDownloader(@Param("userCode")String userCode,@Param("partnerNo")Integer partnerNo);
-
+    int logDownloader(@Param("userCode") String userCode, @Param("partnerNo") Integer partnerNo);
     //查询全部导出Excel
     List<Epartner> selectepartnerExcellAll();
 }

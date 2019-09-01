@@ -79,15 +79,9 @@ public class EcInfoService {
         EcInfoExample example = new EcInfoExample();
         EcInfoExample.Criteria criteria = example.createCriteria();
 
-        //===============Base Condition Start==============
         if (condition.getCid() != null) {
             criteria.andCidEqualTo(condition.getCid());
         }
-
-        //===============Base Condition End==============
-
-
-
         return example;
     }
 

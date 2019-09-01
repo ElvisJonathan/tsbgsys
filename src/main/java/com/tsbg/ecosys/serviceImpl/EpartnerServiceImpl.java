@@ -77,6 +77,11 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
+    public List<Epartner> selectepartnerExcellAll() {
+        return epartnerMapper.selectepartnerExcellAll();
+    }
+
+    @Override
     public List<Epartner> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return epartnerMapper.selectCinfoBypartnerCindustry(partnerCindustry);
@@ -115,10 +120,5 @@ public class EpartnerServiceImpl implements EpartnerService {
     @Override
     public PageResult findPage(PageRequest pageRequest, Epartner epartner) {
         return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest, epartner));
-    }
-
-    @Override
-    public List<Epartner> selectepartnerExcellAll() {
-        return epartnerMapper.selectepartnerExcellAll();
     }
 }

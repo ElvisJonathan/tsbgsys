@@ -20,7 +20,6 @@ public interface EcooperationService {
     List<Ecooperation> selectByPartnerNo(Integer partnerNo);
 
     int updateByCid(@Param("status") int status, @Param("cid") int cid);
-
     //查询全部导出Excel
     List<Ecooperation> selectecooperationsExcellAll();
 }
