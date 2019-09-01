@@ -23,7 +23,6 @@ import java.util.List;
 @RequestMapping("/tsbg/ec")
 @Api(value = "EcController", tags = "EcController")
 public class EcController {
-
     @Autowired
     private EcooperationService ecooperationService;
     @Autowired
