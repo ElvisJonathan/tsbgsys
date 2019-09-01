@@ -116,4 +116,9 @@ public class EpartnerServiceImpl implements EpartnerService {
     public PageResult findPage(PageRequest pageRequest, Epartner epartner) {
         return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest, epartner));
     }
+
+    @Override
+    public List<Epartner> selectepartnerExcellAll() {
+        return epartnerMapper.selectepartnerExcellAll();
+    }
 }

@@ -51,4 +51,7 @@ public interface EpartnerService {
     int logDownloader(@Param("userCode")String userCode,@Param("partnerNo")Integer partnerNo);
 
     Epartner selectByPrimaryKey(Integer partnerNo);
+
+    //查询全部导出Excel
+    List<Epartner> selectepartnerExcellAll();
 }

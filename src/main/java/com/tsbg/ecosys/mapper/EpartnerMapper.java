@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.mapper;
 
+import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.example.EcInfoExample;
 import org.apache.ibatis.annotations.Mapper;
@@ -62,4 +63,7 @@ public interface EpartnerMapper {
 
     //下载文件记录下载者
     int logDownloader(@Param("userCode")String userCode,@Param("partnerNo")Integer partnerNo);
+
+    //查询全部导出Excel
+    List<Epartner> selectepartnerExcellAll();
 }

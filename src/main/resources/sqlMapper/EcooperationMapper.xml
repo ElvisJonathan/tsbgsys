@@ -564,4 +564,10 @@
   <update id="updateByCid" parameterType="int" >
     UPDATE ecooperation AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`partner_no`=#{cid,jdbcType=INTEGER};
   </update>
+
+  <select id="selectecooperationsExcellAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM ecooperation
+  </select>
 </mapper>

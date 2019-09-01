@@ -432,4 +432,10 @@
   <update id="updateByCid" parameterType="int" >
     UPDATE eccontacts AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`partner_no`=#{cid,jdbcType=INTEGER};
   </update>
+
+  <select id="selecteccontactsExcellAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM eccontacts
+  </select>
 </mapper>

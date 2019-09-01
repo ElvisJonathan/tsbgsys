@@ -1,6 +1,8 @@
 package com.tsbg.ecosys.serviceImpl;
 
 import com.tsbg.ecosys.dto.EcTotalDto;
+import com.tsbg.ecosys.dto.EcTotalDtol;
+import com.tsbg.ecosys.dto.EcTotal_Excel;
 import com.tsbg.ecosys.dto.condition.EcooperationConditionDto;
 import com.tsbg.ecosys.mapper.EpartnerMapper;
 import com.tsbg.ecosys.mapper.EccontactsMapper;
@@ -56,41 +58,42 @@ public class EcooperationService {
         return ecTotalDtoList;
     }
 
-    //批量更新合作伙伴信息
-    /*public void updateEcooperationList(EcTotalListDto ecTotalListDto) throws Exception {
-        if (ecTotalListDto == null || ecTotalListDto.getEcTotalDtoList() == null || ecTotalListDto.getEcTotalDtoList().size() == 0) {
-            return;
+    //根据cid导出Excel
+    public List<EcTotalDtol> getEcooperationListall(Integer cid) {
+        //根据cid查询出来
+        Epartner epartner1 = epartnerMapper.selectByPrimaryKey(cid);
+        //根据cid查找eccontact
+        List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCid(cid);
+        //根据cid查在查询所有的Ecooperation
+        List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCid(cid);
+        EcTotalDtol ecTotalDtol = new EcTotalDtol();
+        ecTotalDtol.setEpartner(epartner1);
+        if (eccontacts != null && eccontacts.size() > 0) {
+            ecTotalDtol.setEccontacts(eccontacts.get(0));
         }
-        for (EcTotalDto ecTotalDto : ecTotalListDto.getEcTotalDtoList()) {
-            updateEcooperation(ecTotalDto);
+        if (ecooperations != null && ecooperations.size() > 0) {
+            ecTotalDtol.setEcooperation(ecooperations.get(0));
         }
-    }*/
+        List<EcTotalDtol> ecTotalDtoList = new ArrayList<>();
+        ecTotalDtoList.add(ecTotalDtol);
+
+        return ecTotalDtoList;
+    }
 
 
-    //更新合作伙伴信息
-    /*public void updateEcooperation(EcTotalDto ecTotalDto) throws Exception {
-        Ecooperation ecooperation = getByPrimaryKey(ecTotalDto.getEcooperation().getCoopId());
-        Date createTime = ecooperation.getCreateTime();
-        BeanUtils.copyProperties(ecTotalDto.getEcooperation(), ecooperation);
-        ecooperation.setCreateTime(createTime);
-        ecooperation.setUpdateTime(new Date());
-        updateByPrimaryKey(ecooperation);
+    //全部导出Excel
+    public EcTotal_Excel getEpartnerList() {
+        List<Epartner> epartner1 = epartnerMapper.selectepartnerExcellAll();
+        List<Eccontacts> eccontacts = eccontactsMapper.selecteccontactsExcellAll();
+        List<Ecooperation> ecooperations = ecooperationMapper.selectecooperationsExcellAll();
 
-        Epartner epartner = epartnerMapper.selectByPrimaryKey(ecTotalDto.getEpartner().getPartnerNo());
-        Date createTime1 = epartner.getCreateTime();
-        BeanUtils.copyProperties(ecTotalDto.getEpartner(), epartner);
-        epartner.setCreateTime(createTime1);
-        epartner.setUpdateTime(new Date());
-        epartnerMapper.updateByPrimaryKey(epartner);
+        EcTotal_Excel ecTotal_excel = new EcTotal_Excel();
 
-        Eccontacts eccontacts = eccontactsMapper.selectByPrimaryKey(ecTotalDto.getEccontacts().getContactId());
-        Date createTime2 = eccontacts.getCreateTime();
-        BeanUtils.copyProperties(ecTotalDto.getEccontacts(), eccontacts);
-        eccontacts.setCreateTime(createTime2);
-        eccontacts.setUpdateTime(new Date());
-        eccontactsMapper.updateByPrimaryKey(eccontacts);
-
-    }*/
+        ecTotal_excel.setEpartnerList(epartner1);
+        ecTotal_excel.setEccontactsList(eccontacts);
+        ecTotal_excel.setEcooperationList(ecooperations);
+        return ecTotal_excel;
+    }
 
     public void insertSelective(Ecooperation ecooperation) {
         ecooperation.setCreateTime(new Date());

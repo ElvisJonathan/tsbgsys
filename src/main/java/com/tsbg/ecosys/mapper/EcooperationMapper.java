@@ -2,6 +2,7 @@ package com.tsbg.ecosys.mapper;
 
 
 import com.tsbg.ecosys.model.Ecooperation;
+import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.example.EcooperationExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,4 +44,6 @@ public interface EcooperationMapper {
     List<Ecooperation> selectByPartnerNo(Integer partnerNo);
 
     int updateByCid(@Param("status") int status,@Param("cid") int cid);
+    //查询全部导出Excel
+    List<Ecooperation> selectecooperationsExcellAll();
 }

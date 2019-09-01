@@ -46,4 +46,9 @@ public class EccontactsServiceImpl implements EccontactsService {
     public int updateByCid(int status, int cid) {
         return eccontactsMapper.updateByCid(status,cid);
     }
+
+    @Override
+    public List<Eccontacts> selecteccontactsExcellAll() {
+        return eccontactsMapper.selecteccontactsExcellAll();
+    }
 }

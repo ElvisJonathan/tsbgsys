@@ -45,4 +45,9 @@ public class EcooperationServiceImpl implements EcooperationService {
         return ecooperationMapper.updateByCid(status,cid);
     }
 
+    @Override
+    public List<Ecooperation> selectecooperationsExcellAll() {
+        return ecooperationMapper.selectecooperationsExcellAll();
+    }
+
 }

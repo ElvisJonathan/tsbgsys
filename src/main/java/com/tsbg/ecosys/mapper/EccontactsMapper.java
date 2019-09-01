@@ -43,4 +43,6 @@ public interface EccontactsMapper {
     List<Eccontacts> selectByPartnerNo(Integer partnerNo);
 
     int updateByCid(@Param("status") int status,@Param("cid") int cid);
+    //查询全部导出Excel
+    List<Eccontacts> selecteccontactsExcellAll();
 }
