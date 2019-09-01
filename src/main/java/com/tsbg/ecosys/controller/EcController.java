@@ -81,7 +81,7 @@ public class EcController {
     @ApiOperation(value = "根据partnerNo导出Excel", notes = "根据partnerNo导出Excel")
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public void getEcooperationAll(HttpServletResponse response, Epartner epartner) throws IOException {
+    public void getEcooperationAll(HttpServletResponse response, @RequestBody Epartner epartner) throws IOException {
         //获取公司合作伙伴编号
         Integer cid = epartner.getPartnerNo();
         //根据合作伙伴编号同步查询合作情况与联系人
