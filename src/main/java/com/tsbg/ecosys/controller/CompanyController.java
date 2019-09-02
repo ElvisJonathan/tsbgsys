@@ -148,7 +148,7 @@ public class CompanyController {
         }
 
         //此处增加文件上传
-        if (!file.isEmpty()){
+        if (file!=null){
             //根据原始文件名的后缀进行文件类型判断
             String oldName = file.getOriginalFilename();
             System.out.println("原始文件名："+oldName);
@@ -390,7 +390,7 @@ public class CompanyController {
             }
 
             //此处进行文件的删除:如果没有收到文件证明文件已被删除
-            if (file.isEmpty()){
+            if (file.getSize()==0){
                 //修改文件的status
                 int num = epartnerService.deleteFileByParNo(cid);
                 if (num>0){

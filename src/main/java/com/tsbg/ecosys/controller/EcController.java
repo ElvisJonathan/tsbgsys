@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -291,10 +292,15 @@ public class EcController {
         for (int i = 0; i <= 58; i++) {
             sheet.autoSizeColumn(i);
         }
-        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        //response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
+        //response.setCharacterEncoding("utf-8");
+        //response.setHeader("Content-type", "text/html;charset=UTF-8");
         OutputStream os = response.getOutputStream();
-        String fileName = "Excel"+ExcelTimeUtils.getDateString()+".xls";
-        response.setHeader("Content-disposition", "attachment;filename="+fileName+"");//默认Excel名称
+        //String fileName = "Excel"+ExcelTimeUtils.getDateString()+".xls";
+        String fileName = "Excel.xls";
+        //response.setHeader("Content-disposition", "attachment;filename="+fileName+"");//默认Excel名称
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(fileName, "utf-8"));
         wb.write(os);
         os.flush();
         os.close();
@@ -500,10 +506,13 @@ public class EcController {
             sheet.autoSizeColumn(i);
         }
 
-        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        //response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
+        //response.setCharacterEncoding("utf-8");
         OutputStream os = response.getOutputStream();
-        String fileName = "Excel"+ExcelTimeUtils.getDateString()+".xls";
-        response.setHeader("Content-disposition", "attachment;filename="+fileName+"");//默认Excel名称
+        String fileName = "Excel.xls";
+        //response.setHeader("Content-disposition", "attachment;filename="+fileName+"");//默认Excel名称
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(fileName, "utf-8"));
         wb.write(os);
         os.flush();
         os.close();
