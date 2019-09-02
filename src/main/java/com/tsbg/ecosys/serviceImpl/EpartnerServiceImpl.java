@@ -77,8 +77,8 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
-    public Epartner selectByPrimaryKeyl(Integer partnerNo) {
-        return epartnerMapper.selectByPrimaryKeyl(partnerNo);
+    public Epartner selectByPrimaryKeyl(Epartner epartner) {
+        return epartnerMapper.selectByPrimaryKeyl(epartner);
     }
 
     @Override
