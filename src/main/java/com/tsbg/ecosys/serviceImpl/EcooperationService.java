@@ -58,10 +58,11 @@ public class EcooperationService {
         return ecTotalDtoList;
     }
 
-    //根据cid导出Excel
-    public List<EcTotalDtol> getEcooperationListall(Integer cid) {
+    //根据查询条件导出Excel
+    public List<EcTotalDtol> getEcooperationListall(Epartner epartner) {
+        int cid =epartner.getPartnerNo();
         //根据cid查询出来
-        Epartner epartner1 = epartnerMapper.selectByPrimaryKey(cid);
+        Epartner epartner1 = epartnerMapper.selectByPrimaryKeyl(cid);
         //根据cid查找eccontact
         List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCid(cid);
         //根据cid查在查询所有的Ecooperation

@@ -83,15 +83,12 @@ public class EcController {
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public void getEcooperationAll(@RequestBody Epartner epartner,HttpServletResponse response) throws IOException {
+        //设置服务器的编码
+        response.setCharacterEncoding("utf-8");
         //获取公司合作伙伴编号
-        Integer cid = epartner.getPartnerNo();
-        System.out.println("接收到的CID:"+cid);
-        //根据合作伙伴编号同步查询合作情况与联系人
-        if (cid!=null){
-            List<EcTotalDtol> ecTotalDtoList = ecooperationService.getEcooperationListall(cid);
-            export(response,ecTotalDtoList);
+        List<EcTotalDtol> ecTotalDtoList = ecooperationService.getEcooperationListall(epartner);
+        export(response,ecTotalDtoList);
         }
-    }
 
     //全部导出Excel
     @RequestMapping(value = "/exportall")
@@ -292,20 +289,15 @@ public class EcController {
         for (int i = 0; i <= 58; i++) {
             sheet.autoSizeColumn(i);
         }
-        //response.setContentType("application/vnd.ms-excel;charset=utf-8");
         response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
-        //response.setCharacterEncoding("utf-8");
-        //response.setHeader("Content-type", "text/html;charset=UTF-8");
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
         OutputStream os = response.getOutputStream();
-        //String fileName = "Excel"+ExcelTimeUtils.getDateString()+".xls";
         String fileName = "Excel.xls";
-        //response.setHeader("Content-disposition", "attachment;filename="+fileName+"");//默认Excel名称
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(fileName, "utf-8"));
         wb.write(os);
         os.flush();
         os.close();
     }
-
 
     //根据partnerNo导出Excel
     public void export(HttpServletResponse response, List<EcTotalDtol> ecTotalDtoList ) throws IOException {
@@ -505,13 +497,9 @@ public class EcController {
         for (int i = 0; i <= 58; i++) {
             sheet.autoSizeColumn(i);
         }
-
-        //response.setContentType("application/vnd.ms-excel;charset=utf-8");
         response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
-        //response.setCharacterEncoding("utf-8");
         OutputStream os = response.getOutputStream();
         String fileName = "Excel.xls";
-        //response.setHeader("Content-disposition", "attachment;filename="+fileName+"");//默认Excel名称
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(fileName, "utf-8"));
         wb.write(os);
         os.flush();

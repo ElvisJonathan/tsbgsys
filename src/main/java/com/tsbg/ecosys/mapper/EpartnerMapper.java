@@ -18,6 +18,8 @@ public interface EpartnerMapper {
 
     Epartner selectByPrimaryKey(Integer partnerNo);
 
+    Epartner selectByPrimaryKeyl(Integer partnerNo);
+
     int updateByPrimaryKeySelective(Epartner record);
 
     int updateByPrimaryKey(Epartner record);
