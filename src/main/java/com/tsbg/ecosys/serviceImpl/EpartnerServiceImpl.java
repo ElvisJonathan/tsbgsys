@@ -81,6 +81,7 @@ public class EpartnerServiceImpl implements EpartnerService {
         return epartnerMapper.selectByPrimaryKeyl(epartner);
     }
 
+
     @Override
     public List<Epartner> selectepartnerExcellAll() {
         return epartnerMapper.selectepartnerExcellAll();

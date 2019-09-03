@@ -4,12 +4,15 @@ import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.Epartner;
 
+import java.util.List;
+
 public class EcTotalDtol {
     private Epartner epartner;
 
     private com.tsbg.ecosys.model.Eccontacts Eccontacts;
 
     private Ecooperation ecooperation;
+
 
     public Epartner getEpartner() {
         return epartner;
