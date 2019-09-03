@@ -6,6 +6,8 @@ import com.tsbg.ecosys.service.FileInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 public class FileInfoServiceImpl implements FileInfoService {
 
@@ -40,5 +42,10 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public int updateRecord(int partnerNo, String updater, int fileId) {
         return fileInfoMapper.updateRecord(partnerNo,updater,fileId);
+    }
+
+    @Override
+    public String selectRealPathByName(String fileName) {
+        return fileInfoMapper.selectRealPathByName(fileName);
     }
 }

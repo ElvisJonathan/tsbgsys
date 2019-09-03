@@ -62,6 +62,11 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
+    public List<String> selectFileByParNo2(Integer partnerNo) {
+        return epartnerMapper.selectFileByParNo2(partnerNo);
+    }
+
+    @Override
     public int deleteFileByParNo(Integer partnerNo) {
         return epartnerMapper.deleteFileByParNo(partnerNo);
     }
@@ -127,4 +132,6 @@ public class EpartnerServiceImpl implements EpartnerService {
     public PageResult findPage(PageRequest pageRequest, Epartner epartner) {
         return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest, epartner));
     }
+
+
 }
