@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.model.bag;
 
 import com.tsbg.ecosys.model.Epartner;
+import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.util.PageRequest;
 
 /**
@@ -14,6 +15,8 @@ public class SearchPackage {
     private PageRequest pageRequest;
 
     private Epartner epartner;
+
+    private UserInfo userInfo;
 
     public PageRequest getPageRequest() {
         return pageRequest;
@@ -29,5 +32,14 @@ public class SearchPackage {
 
     public void setEpartner(Epartner epartner) {
         this.epartner = epartner;
+    }
+
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }

@@ -43,6 +43,8 @@ public interface EpartnerService {
 
     //查询当前公司的文件详情
     List<String> selectFileByParNo(Integer partnerNo);
+    //查询当前公司的文件详情
+    List<String> selectFileByParNo2(Integer partnerNo);
 
     //根据partnerNo删除文件
     int deleteFileByParNo(@Param("partnerNo") Integer partnerNo);
@@ -55,4 +57,6 @@ public interface EpartnerService {
     Epartner selectByPrimaryKeyl(Epartner epartner);
     //查询全部导出Excel
     List<Epartner> selectepartnerExcellAll();
+
+
 }

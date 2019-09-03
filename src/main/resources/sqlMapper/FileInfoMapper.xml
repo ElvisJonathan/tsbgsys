@@ -190,4 +190,7 @@
   <update id="updateRecord">
     UPDATE file_info AS a SET a.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER},a.`last_update_user`=#{updater,jdbcType=VARCHAR} WHERE a.`file_id`=#{fileId,jdbcType=INTEGER};
   </update>
+  <select id="selectRealPathByName" resultType="String" parameterType="String">
+    SELECT a.`file_path` FROM file_info AS a WHERE a.`keyword` = #{fileName,jdbcType=VARCHAR};
+  </select>
 </mapper>

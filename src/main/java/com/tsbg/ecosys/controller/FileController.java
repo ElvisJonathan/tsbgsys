@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.FileInfo;
@@ -120,8 +121,19 @@ public class FileController {
     /**
      * 下载
      */
-    @RequestMapping("/testdownload")
-    public Object downloadFile(@RequestParam String fileName, final HttpServletResponse response, final HttpServletRequest request){
+    @RequestMapping(value = "/testdownload", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public Object downloadFile(final HttpServletResponse response, final HttpServletRequest request){
+        String fileName = request.getParameter("fileName");
+        System.out.println("文件名："+fileName);
+        //根据文件名去数据库查询URL
+        String name = fileInfoService.selectRealPathByName(fileName);
+        //String newUrl = request.getServletContext().getRealPath("/ecoUpload")+"\\" + fileName;
+        System.out.println("真实URL："+name);
+        if (name==null){
+            System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
+            return "下载附件失败，请检查文件“" + fileName + "”是否存在";
+        }
         OutputStream os = null;
         InputStream is= null;
         try {
@@ -131,14 +143,11 @@ public class FileController {
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
             response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
-            String rootPath = "http://localhost:80/ecoUpload/";
+            //String rootPath2 = "http://10.177.116.51:80/ecoUpload/";
+            //String rootPath = "C://Users/Administrator/AppData/Local/Temp/tomcat-docbase.5185449430869371222.80/ecoUpload/";
             //读取流
-            File f = new File(rootPath+fileName);
+            File f = new File(name);
             is = new FileInputStream(f);
-            if (is == null) {
-                System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
-                return "下载附件失败，请检查文件“" + fileName + "”是否存在";
-            }
             //复制
             IOUtils.copy(is, response.getOutputStream());
             response.getOutputStream().flush();

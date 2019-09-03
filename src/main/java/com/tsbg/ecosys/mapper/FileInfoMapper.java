@@ -4,6 +4,8 @@ import com.tsbg.ecosys.model.FileInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface FileInfoMapper {
     int deleteByPrimaryKey(Integer fileId);
@@ -32,4 +34,7 @@ public interface FileInfoMapper {
 
     //更新最新的文件记录
     int updateRecord(@Param("partnerNo")int partnerNo,@Param("updater")String updater,@Param("fileId")int fileId);
+
+    //通过文件名查询文件路径
+    String selectRealPathByName(String fileName);
 }

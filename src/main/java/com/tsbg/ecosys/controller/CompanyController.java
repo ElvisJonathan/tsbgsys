@@ -177,12 +177,14 @@ public class CompanyController {
                     folder.mkdirs();
                 }//无报错则上传成功
                 file.transferTo(new File(folder,oldName));
-                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + oldName;
-                System.out.println(url);//真实存储的url
+                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+"/" + oldName;
+                System.out.println(url);
+                String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\" + oldName;
+                System.out.println("真实URL："+newUrl);
                 //进行文件上传记录的存储
                 FileInfo fileInfo = new FileInfo();
                 fileInfo.setFileName(oldName);
-                fileInfo.setFilePath(url);
+                fileInfo.setFilePath(newUrl);
                 fileInfo.setRelDocId(no);
                 fileInfo.setLastUpdateUser(userCode);
                 fileInfo.setUpdatedTime(new Date());
@@ -191,8 +193,9 @@ public class CompanyController {
                 if (num>0){
                     arr[3]=1;
                 }
+            }else {
+                return new ResultResponse(505,"上传文件格式不符合需求");
             }
-            return new ResultResponse(505,"上传文件格式不符合需求");
           }
 
         if (arr[0]==1 && arr[1]==1 && arr[2]==1){
@@ -215,6 +218,10 @@ public class CompanyController {
         PageRequest pageRequest = searchPackage.getPageRequest();
         //接受搜索条件传参实体类epartner
         Epartner epartner = searchPackage.getEpartner();
+        //获取当前用户身份是否为管理员，通过工号查询是否为管理
+        /*UserInfo userInfo = searchPackage.getUserInfo();
+        String userCode = userInfo.getUserCode();
+        System.out.println("工号："+userCode);*/
         if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
             PageResult page = epartnerService.findPage(pageRequest, epartner);
@@ -429,12 +436,14 @@ public class CompanyController {
                         folder.mkdirs();
                     }//无报错则上传成功
                     file.transferTo(new File(folder,oldName));
-                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+ oldName;
+                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+"/"+ oldName;
                     System.out.println(url);//真实存储的url
+                    String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\" + oldName;
+                    System.out.println("真实URL："+newUrl);
                     //进行文件上传记录的存储
                     FileInfo fileInfo = new FileInfo();
                     fileInfo.setFileName(oldName);
-                    fileInfo.setFilePath(url);
+                    fileInfo.setFilePath(newUrl);
                     fileInfo.setRelDocId(cid);
                     fileInfo.setLastUpdateUser(userCode);
                     fileInfo.setUpdatedTime(new Date());
@@ -443,8 +452,9 @@ public class CompanyController {
                     if (num>0){
                         arr[3]=1;
                     }
+                }else{
+                    return new ResultResponse(506,"上传文件格式不符合需求");
                 }
-                return new ResultResponse(506,"上传文件格式不符合需求");
             }
 
             if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
