@@ -1,8 +1,8 @@
 package com.tsbg.ecosys.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.*;
-import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.model.bag.SearchPackage;
 import com.tsbg.ecosys.service.EccontactsService;
 import com.tsbg.ecosys.service.EcooperationService;
@@ -35,8 +35,6 @@ public class CompanyController {
     private EccontactsService eccontactsService;
     @Autowired
     private FileInfoService fileInfoService;
-
-    //SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 
     /**
      * 管理员隐藏/取消隐藏公司
@@ -84,23 +82,30 @@ public class CompanyController {
      */
     @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse addCom(@RequestBody CompanyPackage companyPackage, MultipartFile file, HttpServletRequest req)throws IOException {
+    public ResultResponse addCom(HttpServletRequest req,MultipartFile file)throws Exception {
         //初始化传参构造器
         ResultResponse resultResponse = null;
+        //成功获取的对象数据
+        String json = req.getParameter("userInfo");
+        UserInfo userInfo = JSONObject.parseObject(json, UserInfo.class);
+        String json2 = req.getParameter("epartner");
+        Epartner epartner = JSONObject.parseObject(json2, Epartner.class);
+        String json3 = req.getParameter("ecooperation");
+        Ecooperation ecooperation = JSONObject.parseObject(json3, Ecooperation.class);
+        String json4 = req.getParameter("eccontacts");
+        Eccontacts eccontacts = JSONObject.parseObject(json4, Eccontacts.class);
         //新建arr数组用于存储成功值
         int []arr = new int[4];
         //获取当前添加人
-        UserInfo userInfo = companyPackage.getUserInfo();
         String userName= userInfo.getUserName();
-        String userCode= userInfo.getUserCode();//让前端传一个工号
+        String userCode= userInfo.getUserCode();
         //初始化公司id为0
         int no = 0;
         //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
-        if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
-        && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null
+        if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null &&
+                epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null
                ){
             //合作伙伴信息中:合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空才可以进行添加
-            Epartner epartner = companyPackage.getEpartner();
             //设置创建时间
             epartner.setCreateTime(new Date());
             //设置创建人
@@ -114,15 +119,16 @@ public class CompanyController {
             }
         }
 
-        if(companyPackage.getEcooperation().getPartnerName()!=null){
+        if(ecooperation.getPartnerName()!=null){
             //合作情况信息中：合作伙伴公司名称不能为空
-            Ecooperation ecooperation = companyPackage.getEcooperation();
             //设置创建时间
             ecooperation.setCreateTime(new Date());
             //设置创建人
             ecooperation.setCreater(userName);
             //设置合作伙伴编号
-            ecooperation.setPartnerNo(no);
+            if (no!=0){
+                ecooperation.setPartnerNo(no);
+            }
             //调用业务方法存储合作关系信息
             int num = ecooperationService.insertSelective(ecooperation);
             if (num>0){
@@ -130,16 +136,17 @@ public class CompanyController {
             }
         }
 
-        if (companyPackage.getEccontacts().getName()!=null && companyPackage.getEccontacts().getPhoneNumber()!=null
-            && companyPackage.getEccontacts().getPartnerName()!=null){
+        if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
+            && eccontacts.getPartnerName()!=null){
             //公司联系人信息中：联系人姓名、性别、电话和所属公司名称不能为空
-            Eccontacts eccontacts = companyPackage.getEccontacts();
             //设置创建时间
             eccontacts.setCreateTime(new Date());
             //设置创建人
             eccontacts.setCreater(userName);
             //设置合作伙伴编号
-            eccontacts.setPartnerNo(no);
+            if (no!=0){
+                eccontacts.setPartnerNo(no);
+            }
             //调用业务方法存储联系人信息
             int number = eccontactsService.insertSelective(eccontacts);
             if (number>0){
@@ -176,7 +183,7 @@ public class CompanyController {
                 FileInfo fileInfo = new FileInfo();
                 fileInfo.setFileName(oldName);
                 fileInfo.setFilePath(url);
-                fileInfo.setRelDocId(no);//与epartner表的partnerNo对应 要集成到新增和修改页面
+                fileInfo.setRelDocId(no);
                 fileInfo.setLastUpdateUser(userCode);
                 fileInfo.setUpdatedTime(new Date());
                 fileInfo.setKeyword(oldName);
@@ -192,7 +199,7 @@ public class CompanyController {
             resultResponse = new ResultResponse(0,"提示信息：新增成功！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(501,"提示信息：新增失败！");
+        resultResponse = new ResultResponse(501,"提示信息：新增失败或不完全成功！");
         return resultResponse;
     }
 
@@ -306,22 +313,24 @@ public class CompanyController {
      */
     @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse modifyCom(@RequestBody CompanyPackage companyPackage, MultipartFile file, HttpServletRequest req)throws IOException{
+    public ResultResponse modifyCom(MultipartFile file, HttpServletRequest req)throws IOException{
         ResultResponse resultResponse = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
-        Integer cid = companyPackage.getEpartner().getPartnerNo();
+        //成功获取的对象数据
+        String json = req.getParameter("userInfo");
+        UserInfo userInfo = JSONObject.parseObject(json, UserInfo.class);
+        String json2 = req.getParameter("epartner");
+        Epartner epartner = JSONObject.parseObject(json2, Epartner.class);
+        String json3 = req.getParameter("ecooperation");
+        Ecooperation ecooperation = JSONObject.parseObject(json3, Ecooperation.class);
+        String json4 = req.getParameter("eccontacts");
+        Eccontacts eccontacts = JSONObject.parseObject(json4, Eccontacts.class);
+        Integer cid = epartner.getPartnerNo();
         System.out.println("接收到的partnerNo:"+cid);
-        Epartner epartner = companyPackage.getEpartner();
-        if (epartner==null){
-            resultResponse = new ResultResponse(501,"提示信息：公司合作伙伴信息为空异常！");
-            return resultResponse;
-        }
-        Ecooperation ecooperation = companyPackage.getEcooperation();
         if (ecooperation==null){
             resultResponse = new ResultResponse(502,"提示信息：公司合作关系信息为空异常！");
             return resultResponse;
         }
-        Eccontacts eccontacts = companyPackage.getEccontacts();
         if (eccontacts==null){
             resultResponse = new ResultResponse(503,"提示信息：公司联系人信息为空异常！");
             return resultResponse;
@@ -330,14 +339,13 @@ public class CompanyController {
         //新建arr数组用于存储成功值
         int []arr = new int[4];
         //获取当前修改人
-        UserInfo userInfo = companyPackage.getUserInfo();
         String userName= userInfo.getUserName();
-        String userCode = userInfo.getUserCode();//向前端要一个userCode
+        String userCode = userInfo.getUserCode();
         System.out.println("修改人："+userName);
         System.out.println("工号："+userCode);
         if(cid!=null){
-            if (companyPackage.getEpartner().getPartnerName()!=null && companyPackage.getEpartner().getPartnerIndustry()!=null
-                    && companyPackage.getEpartner().getPartnerRegion()!=null && companyPackage.getEpartner().getPartnerProduct()!=null){
+            if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
+                    && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
                 //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
                 //更新修改时间
                 epartner.setUpdateTime(new Date());
@@ -349,29 +357,29 @@ public class CompanyController {
                 }
             }
 
-            if (companyPackage.getEcooperation().getPartnerName()!=null){
+            if (ecooperation.getPartnerName()!=null){
                 //只有当合作伙伴公司名称不为空才可以修改
                 //更新修改时间
                 ecooperation.setUpdateTime(new Date());
                 //更新修改人
                 ecooperation.setUpdater(userName);
                 //需要赋值cid给partnerNo
-                companyPackage.getEcooperation().setPartnerNo(cid);
+                ecooperation.setPartnerNo(cid);
                 int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
                 if (num>0){
                     arr[1]=1;
                 }
             }
 
-            if (companyPackage.getEccontacts().getName()!=null && companyPackage.getEccontacts().getPhoneNumber()!=null
-            && companyPackage.getEccontacts().getPartnerName()!=null){
+            if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
+            && eccontacts.getPartnerName()!=null){
                 //只有当姓名、电话、所属公司都不为空才可以修改
                 //更新修改时间
                 eccontacts.setUpdateTime(new Date());
                 //更新修改人
                 eccontacts.setUpdater(userName);
                 //需要赋值cid给partnerNo
-                companyPackage.getEccontacts().setPartnerNo(cid);
+                eccontacts.setPartnerNo(cid);
                 int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
                 if (num>0){
                     arr[2]=1;
@@ -427,7 +435,7 @@ public class CompanyController {
                     FileInfo fileInfo = new FileInfo();
                     fileInfo.setFileName(oldName);
                     fileInfo.setFilePath(url);
-                    fileInfo.setRelDocId(cid);//与epartner表的partnerNo对应 要集成到新增和修改页面
+                    fileInfo.setRelDocId(cid);
                     fileInfo.setLastUpdateUser(userCode);
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setKeyword(oldName);

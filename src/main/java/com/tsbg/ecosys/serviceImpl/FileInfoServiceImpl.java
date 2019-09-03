@@ -26,4 +26,19 @@ public class FileInfoServiceImpl implements FileInfoService {
     public int judgeIfFileChanged(Integer partnerNo, String fileName) {
         return fileInfoMapper.judgeIfFileChanged(partnerNo,fileName);
     }
+
+    @Override
+    public FileInfo selectIDandDate() {
+        return fileInfoMapper.selectIDandDate();
+    }
+
+    @Override
+    public int selectIfExistId(int fileId) {
+        return fileInfoMapper.selectIfExistId(fileId);
+    }
+
+    @Override
+    public int updateRecord(int partnerNo, String updater, int fileId) {
+        return fileInfoMapper.updateRecord(partnerNo,updater,fileId);
+    }
 }

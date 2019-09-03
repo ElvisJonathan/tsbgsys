@@ -9,10 +9,13 @@ import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.FileInfoService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,11 +35,8 @@ public class FileController {
     @Autowired
     private EpartnerService epartnerService;
 
-    /*private final static String rootPath =
-            System.getProperty("user.home")+File.separator+fileDir+File.separator;*/
-
     //跳转到上传文件的页面
-    @RequestMapping(value="/gouploadimg", method = RequestMethod.GET)
+    @RequestMapping(value = "/gouploadimg", method = RequestMethod.GET)
     public String goUploadImg() {
         //跳转到 templates 目录下的 uploadimg.html
         return "uploadimg";
@@ -44,59 +44,60 @@ public class FileController {
 
     SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 
-    @RequestMapping(value = "/import", method = { RequestMethod.GET, RequestMethod.POST })
+    //新增时的上传
+    @RequestMapping(value = "/import", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse importData(MultipartFile file, HttpServletRequest req, @RequestBody CompanyPackage companyPackage) throws IOException {
-        //获取对应公司的合作伙伴编号
-        Epartner epartner = companyPackage.getEpartner();
-        Integer partnerNo = epartner.getPartnerNo();
-        if (file.isEmpty()) {
-            return new ResultResponse(500,"上传文件为空！");
-        }
-        //根据原始文件名的后缀进行文件类型判断
-        String oldName = file.getOriginalFilename();
-        System.out.println("原始文件名："+oldName);
-        //进行重复文件名判断
-        int count = fileInfoService.selectFileCountByFileName(oldName);
-        if(count>0){
-            return  new ResultResponse(501,"该文件已存在，请选择其他文件上传!");
-        }
-        String Suffix = oldName.substring(oldName.lastIndexOf("."));
-        System.out.println("文件后缀："+Suffix);
-        if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
-        || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
-        || Suffix.equals(".txt")){
-            String format = sdf.format(new Date());//用于转换当前日期
-            String realPath = req.getServletContext().getRealPath("/ecoUpload") + format;//此方法用于获取上传路径
-            System.out.println("实际路径："+realPath);
-            File folder = new File(realPath);
-            if (!folder.exists()) {
-                folder.mkdirs();
-            }//无报错则上传成功
-            //获取上传者
-            UserInfo userInfo = companyPackage.getUserInfo();
-            String userCode = userInfo.getUserCode();
-            System.out.println("上传者："+userCode);
-            file.transferTo(new File(folder,oldName));
-            String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + format + oldName;
-            System.out.println(url);//真实存储的url
-            //进行文件上传记录的存储
-            FileInfo fileInfo = new FileInfo();
-            fileInfo.setFileName(oldName);
-            fileInfo.setFilePath(url);
-            fileInfo.setRelDocId(partnerNo);//与epartner表的partnerNo对应 要集成到新增和修改页面
-            fileInfo.setLastUpdateUser(userCode);
-            fileInfo.setUpdatedTime(new Date());
-            fileInfo.setKeyword(oldName);
-            int num = fileInfoService.insertSelective(fileInfo);
-            if (num>0){
-                return new ResultResponse(0,"上传成功！");
+    public ResultResponse importData(HttpServletRequest req) throws IOException {
+        boolean isMultipart = ServletFileUpload.isMultipartContent(req);
+        if (isMultipart) {
+            MultipartHttpServletRequest multipartRequest = WebUtils.getNativeRequest(req, MultipartHttpServletRequest.class);
+            MultipartFile file = multipartRequest.getFile("file");
+            if (file.isEmpty()) {
+                return new ResultResponse(500, "上传文件为空！");
             }
-            return new ResultResponse(503,"上传失败！");
+            //根据原始文件名的后缀进行文件类型判断
+            String oldName = file.getOriginalFilename();
+            System.out.println("原始文件名：" + oldName);
+            //进行重复文件名判断
+            int count = fileInfoService.selectFileCountByFileName(oldName);
+            if (count > 0) {
+                return new ResultResponse(501, "该文件已存在，请选择其他文件上传!");
+            }
+            String Suffix = oldName.substring(oldName.lastIndexOf("."));
+            System.out.println("文件后缀：" + Suffix);
+            if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
+                    || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
+                    || Suffix.equals(".txt")) {
+                //String format = sdf.format(new Date());//用于转换当前日期
+                String realPath = req.getServletContext().getRealPath("/ecoUpload");//此方法用于获取上传路径
+                System.out.println("实际路径：" + realPath);
+                File folder = new File(realPath);
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }//无报错则上传成功
+                //获取上传者
+                file.transferTo(new File(folder, oldName));
+                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload/" + oldName;
+                System.out.println(url);//真实存储的url
+                //进行文件上传记录的存储
+                FileInfo fileInfo = new FileInfo();
+                fileInfo.setFileName(oldName);
+                fileInfo.setFilePath(url);
+                fileInfo.setUpdatedTime(new Date());
+                fileInfo.setKeyword(oldName);
+                int num = fileInfoService.insertSelective(fileInfo);
+                //查询出当前成功文件的编号
+                int number = epartnerService.selectID();
+                System.out.println("刚刚增加成功的记录的编号为：" + number);
+                if (num > 0) {
+                    return new ResultResponse(0, "上传成功！");
+                }
+                return new ResultResponse(503, "上传失败！");
+            }
+            return new ResultResponse(505, "上传文件格式不符合需求");
         }
-        return new ResultResponse(505,"上传文件格式不符合需求");
+        return new ResultResponse(506, "没有文件");
     }
-
 
     @RequestMapping(value = "/download", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -130,7 +131,7 @@ public class FileController {
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
             response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
-            String rootPath = "http://localhost:8080/ecoUpload/";
+            String rootPath = "http://localhost:80/ecoUpload/";
             //读取流
             File f = new File(rootPath+fileName);
             is = new FileInputStream(f);
