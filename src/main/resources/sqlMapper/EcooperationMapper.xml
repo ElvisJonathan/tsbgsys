@@ -567,6 +567,6 @@
   <select id="selectecooperationsExcellAll" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM ecooperation
+    FROM ecooperation where status=0 and del_status=0
   </select>
 </mapper>

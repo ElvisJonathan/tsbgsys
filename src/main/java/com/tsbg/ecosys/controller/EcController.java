@@ -114,8 +114,7 @@ public class EcController {
 
         row = sheet.createRow(0);//创建第一个单元格
         row.setHeight((short) (40 * 20));
-        row.createCell(0).setCellValue("公司、合作伙伴，公司联系人信息列表");//为第一行单元格设值
-
+        row.createCell(0).setCellValue("公司聯繫人、合作情況、合作夥伴信息表");//为第一行单元格设值
 		/*为标题设计空间
 		* firstRow从第1行开始
 		* lastRow从第0行结束
@@ -130,69 +129,69 @@ public class EcController {
         //eccontacts表头
         row = sheet.createRow(1);
         row.setHeight((short) (22.50 * 20));//设置行高
-        row.createCell(0).setCellValue("公司联系人编号");//为第一个单元格设值
-        row.createCell(1).setCellValue("合作伙伴编号");//为第二个单元格设值
-        row.createCell(2).setCellValue("所属公司名称");//为第三个单元格设值
-        row.createCell(3).setCellValue("联系人名字");//为第四个单元格设值
-        row.createCell(4).setCellValue("职称");//为第五个单元格设值
-        row.createCell(5).setCellValue("性别:1男/0女");//为第六个单元格设值
-        row.createCell(6).setCellValue("电话号码");//为第七个单元格设值
-        row.createCell(7).setCellValue("邮箱地址");//为第八个单元格设值
-        row.createCell(8).setCellValue("创建时间");//为第九个单元格设值
-        row.createCell(9).setCellValue("修改时间");//为第十个单元格设值
-        row.createCell(10).setCellValue("创建人");//为第十一个单元格设值
+        row.createCell(0).setCellValue("公司聯繫人編號");//为第一个单元格设值
+        row.createCell(1).setCellValue("合作夥伴編號");//为第二个单元格设值
+        row.createCell(2).setCellValue("所屬公司名稱");//为第三个单元格设值
+        row.createCell(3).setCellValue("聯繫人名字");//为第四个单元格设值
+        row.createCell(4).setCellValue("職稱");//为第五个单元格设值
+        row.createCell(5).setCellValue("性別:1男/0女");//为第六个单元格设值
+        row.createCell(6).setCellValue("電話號碼");//为第七个单元格设值
+        row.createCell(7).setCellValue("郵箱地址");//为第八个单元格设值
+        row.createCell(8).setCellValue("創建時間");//为第九个单元格设值
+        row.createCell(9).setCellValue("修改時間");//为第十个单元格设值
+        row.createCell(10).setCellValue("創建人");//为第十一个单元格设值
         row.createCell(11).setCellValue("修改人");//为第十二个单元格设值
        /* row.createCell(12).setCellValue("隐藏状态：0未隐藏/1隐藏");//为第十三个单元格设值
         row.createCell(13).setCellValue("删除状态：0未删除/1删除");//为第十四个单元格设值*/
-        row.createCell(12).setCellValue("备注");//为第十五个单元格设值
+        row.createCell(12).setCellValue("備註");//为第十五个单元格设值
 
         //epartner表头
-        row.createCell(13).setCellValue("合作伙伴编号");//为第一个单元格设值
-        row.createCell(14).setCellValue("合作伙伴公司名称");//为第二个单元格设值
-        row.createCell(15).setCellValue("公司注册时间");//为第三个单元格设值
-        row.createCell(16).setCellValue("公司注册资本");//为第四个单元格设值
-        row.createCell(17).setCellValue("是否为上市公司：1是/0否");//为第五个单元格设值
-        row.createCell(18).setCellValue("公司规模/分布");//为第六个单元格设值
+        row.createCell(13).setCellValue("合作夥伴編號");//为第一个单元格设值
+        row.createCell(14).setCellValue("合作夥伴公司名稱");//为第二个单元格设值
+        row.createCell(15).setCellValue("公司註冊時間");//为第三个单元格设值
+        row.createCell(16).setCellValue("公司註冊資本");//为第四个单元格设值
+        row.createCell(17).setCellValue("是否為上市公司：1是/0否");//为第五个单元格设值
+        row.createCell(18).setCellValue("公司規模/分佈");//为第六个单元格设值
         row.createCell(19).setCellValue("公司地址");//为第七个单元格设值
-        row.createCell(20).setCellValue("公司网址");//为第八个单元格设值
-        row.createCell(21).setCellValue("公司核心技术");//为第九个单元格设值
-        row.createCell(22).setCellValue("主营产品/业务/服务");//为第十个单元格设值
-        row.createCell(23).setCellValue("业务渠道");//为第十一个单元格设值
-        row.createCell(24).setCellValue("营业额");//为第十二个单元格设值
-        row.createCell(25).setCellValue("业务主要区域");//为第十三个单元格设值
-        row.createCell(26).setCellValue("行业");//为第十四个单元格设值
+        row.createCell(20).setCellValue("公司網址");//为第八个单元格设值
+        row.createCell(21).setCellValue("公司核心技術");//为第九个单元格设值
+        row.createCell(22).setCellValue("主營產品/業務/服務");//为第十个单元格设值
+        row.createCell(23).setCellValue("業務渠道");//为第十一个单元格设值
+        row.createCell(24).setCellValue("營業額");//为第十二个单元格设值
+        row.createCell(25).setCellValue("業務主要區域");//为第十三个单元格设值
+        row.createCell(26).setCellValue("行業");//为第十四个单元格设值
         /*row.createCell(29).setCellValue("隐藏状态：0未隐藏/1隐藏");//为第十五个单元格设值
         row.createCell(30).setCellValue("删除状态：0未删除/1删除");//为第十五个单元格设值*/
-        row.createCell(27).setCellValue("创建时间");//为第十五个单元格设值
-        row.createCell(28).setCellValue("修改时间");//为第十五个单元格设值
-        row.createCell(29).setCellValue("创建人");//为第十五个单元格设值
+        row.createCell(27).setCellValue("創建時間");//为第十五个单元格设值
+        row.createCell(28).setCellValue("修改時間");//为第十五个单元格设值
+        row.createCell(29).setCellValue("創建人");//为第十五个单元格设值
         row.createCell(30).setCellValue("修改人");//为第十五个单元格设值
-        row.createCell(31).setCellValue("备注");//为第十五个单元格设值
-        row.createCell(32).setCellValue("项目ID");//为第十五个单元格设值
+        row.createCell(31).setCellValue("備註");//为第十五个单元格设值
+        row.createCell(32).setCellValue("項目ID");//为第十五个单元格设值
 
         //ecooperation表头
-        row.createCell(33).setCellValue("合作情况编号");//为第一个单元格设值
-        row.createCell(34).setCellValue("合作伙伴编号");//为第二个单元格设值
-        row.createCell(35).setCellValue("合作伙伴公司名称");//为第三个单元格设值
-        row.createCell(36).setCellValue("Callin 时间");//为第四个单元格设值
+        row.createCell(33).setCellValue("合作情況編號");//为第一个单元格设值
+        row.createCell(34).setCellValue("合作夥伴編號");//为第二个单元格设值
+        row.createCell(35).setCellValue("合作夥伴公司名稱");//为第三个单元格设值
+        row.createCell(36).setCellValue("Callin 時間");//为第四个单元格设值
         row.createCell(37).setCellValue("Callin BD Owner");//为第五个单元格设值
-        row.createCell(38).setCellValue("合作阶段");//为第六个单元格设值
-        row.createCell(39).setCellValue("是否有签署合约：1是/0否");//为第七个单元格设值
-        row.createCell(40).setCellValue("合约起始日");//为第八个单元格设值
-        row.createCell(41).setCellValue("是否有委托签署关系:1是/0否");//为第九个单元格设值
-        row.createCell(42).setCellValue("合约委托方");//为第十个单元格设值
+        row.createCell(38).setCellValue("合作階段");//为第六个单元格设值
+        row.createCell(39).setCellValue("是否簽署合約：1是/0否");//为第七个单元格设值
+        row.createCell(40).setCellValue("合約起始日");//为第八个单元格设值
+        row.createCell(41).setCellValue("是否有委託簽署關係:1是/0否");//为第九个单元格设值
+        row.createCell(42).setCellValue("合約委託方");//为第十个单元格设值
         row.createCell(43).setCellValue("是否有授牌:1是/0否");//为第十一个单元格设值
-        row.createCell(44).setCellValue("合作项目名称");//为第十二个单元格设值
-        row.createCell(45).setCellValue("合作业务类型");//为第十三个单元格设值
-        row.createCell(46).setCellValue("合作项目进度");//为第十四个单元格设值
-        row.createCell(47).setCellValue("Fii合作部门");//为第十五个单元格设值
-        row.createCell(48).setCellValue("创建时间");//为第十五个单元格设值
-        row.createCell(49).setCellValue("修改时间");//为第十五个单元格设值
-        row.createCell(50).setCellValue("创建人");//为第十五个单元格设值
+        row.createCell(44).setCellValue("合作項目名稱");//为第十二个单元格设值
+        row.createCell(45).setCellValue("合作業務類型");//为第十三个单元格设值
+        row.createCell(46).setCellValue("合作項目進度");//为第十四个单元格设值
+        row.createCell(47).setCellValue("Fii合作部門");//为第十五个单元格设值
+        row.createCell(48).setCellValue("創建時間");//为第十五个单元格设值
+        row.createCell(49).setCellValue("修改時間");//为第十五个单元格设值
+        row.createCell(50).setCellValue("創建人");//为第十五个单元格设值
         row.createCell(51).setCellValue("修改人");//为第十五个单元格设值
      /*   row.createCell(56).setCellValue("隐藏状态：0未隐藏/1隐藏");//为第十五个单元格设值
         row.createCell(57).setCellValue("删除状态：0未删除/1删除");//为第十五个单元格设值*/
-        row.createCell(52).setCellValue("备注");//为第十五个单元格设值
+        row.createCell(52).setCellValue("備註");//为第十五个单元格设值
 
         int totalRow = 2;
         for (int i = 0; eccontactss.size()>0 && i < eccontactss.size(); i++) {
@@ -320,7 +319,7 @@ public class EcController {
 
         row = sheet.createRow(0);//创建第一个单元格
         row.setHeight((short) (26.25 * 20));
-        row.createCell(0).setCellValue("公司联系人、公司信息表，合作情况信息列表");//为第一行单元格设值
+        row.createCell(0).setCellValue("公司聯繫人、合作情況、合作夥伴信息表");//为第一行单元格设值
 
 		/*为标题设计空间
 		* firstRow从第1行开始
@@ -340,69 +339,69 @@ public class EcController {
         //eccontacts表头
         row = sheet.createRow(1);
         row.setHeight((short) (22.50 * 20));//设置行高
-        row.createCell(0).setCellValue("公司联系人编号");//为第一个单元格设值
-        row.createCell(1).setCellValue("合作伙伴编号");//为第二个单元格设值
-        row.createCell(2).setCellValue("所属公司名称");//为第三个单元格设值
-        row.createCell(3).setCellValue("联系人名字");//为第四个单元格设值
-        row.createCell(4).setCellValue("职称");//为第五个单元格设值
-        row.createCell(5).setCellValue("性别:1男/0女");//为第六个单元格设值
-        row.createCell(6).setCellValue("电话号码");//为第七个单元格设值
-        row.createCell(7).setCellValue("邮箱地址");//为第八个单元格设值
-        row.createCell(8).setCellValue("创建时间");//为第九个单元格设值
-        row.createCell(9).setCellValue("修改时间");//为第十个单元格设值
-        row.createCell(10).setCellValue("创建人");//为第十一个单元格设值
+        row.createCell(0).setCellValue("公司聯繫人編號");//为第一个单元格设值
+        row.createCell(1).setCellValue("合作夥伴編號");//为第二个单元格设值
+        row.createCell(2).setCellValue("所屬公司名稱");//为第三个单元格设值
+        row.createCell(3).setCellValue("聯繫人名字");//为第四个单元格设值
+        row.createCell(4).setCellValue("職稱");//为第五个单元格设值
+        row.createCell(5).setCellValue("性別:1男/0女");//为第六个单元格设值
+        row.createCell(6).setCellValue("電話號碼");//为第七个单元格设值
+        row.createCell(7).setCellValue("郵箱地址");//为第八个单元格设值
+        row.createCell(8).setCellValue("創建時間");//为第九个单元格设值
+        row.createCell(9).setCellValue("修改時間");//为第十个单元格设值
+        row.createCell(10).setCellValue("創建人");//为第十一个单元格设值
         row.createCell(11).setCellValue("修改人");//为第十二个单元格设值
-        row.createCell(12).setCellValue("隐藏状态：0未隐藏/1隐藏");//为第十三个单元格设值
-        row.createCell(13).setCellValue("删除状态：0未删除/1删除");//为第十四个单元格设值
-        row.createCell(14).setCellValue("备注");//为第十五个单元格设值
+        row.createCell(12).setCellValue("隱藏狀態：0未隱藏/1隱藏");//为第十三个单元格设值
+        row.createCell(13).setCellValue("隱藏狀態：0未隱藏/1隱藏");//为第十四个单元格设值
+        row.createCell(14).setCellValue("備註");//为第十五个单元格设值
 
         //epartner表头
-        row.createCell(15).setCellValue("合作伙伴编号");//为第一个单元格设值
-        row.createCell(16).setCellValue("合作伙伴公司名称");//为第二个单元格设值
-        row.createCell(17).setCellValue("公司注册时间");//为第三个单元格设值
-        row.createCell(18).setCellValue("公司注册资本");//为第四个单元格设值
-        row.createCell(19).setCellValue("是否为上市公司：1是/0否");//为第五个单元格设值
-        row.createCell(20).setCellValue("公司规模/分布");//为第六个单元格设值
+        row.createCell(15).setCellValue("合作夥伴編號");//为第一个单元格设值
+        row.createCell(16).setCellValue("合作夥伴公司名稱");//为第二个单元格设值
+        row.createCell(17).setCellValue("公司註冊時間");//为第三个单元格设值
+        row.createCell(18).setCellValue("公司註冊資本");//为第四个单元格设值
+        row.createCell(19).setCellValue("是否為上市公司：1是/0否");//为第五个单元格设值
+        row.createCell(20).setCellValue("公司規模/分佈");//为第六个单元格设值
         row.createCell(21).setCellValue("公司地址");//为第七个单元格设值
-        row.createCell(22).setCellValue("公司网址");//为第八个单元格设值
-        row.createCell(23).setCellValue("公司核心技术");//为第九个单元格设值
-        row.createCell(24).setCellValue("主营产品/业务/服务");//为第十个单元格设值
-        row.createCell(25).setCellValue("业务渠道");//为第十一个单元格设值
-        row.createCell(26).setCellValue("营业额");//为第十二个单元格设值
-        row.createCell(27).setCellValue("业务主要区域");//为第十三个单元格设值
-        row.createCell(28).setCellValue("行业");//为第十四个单元格设值
-        row.createCell(29).setCellValue("隐藏状态：0未隐藏/1隐藏");//为第十五个单元格设值
+        row.createCell(22).setCellValue("公司網址");//为第八个单元格设值
+        row.createCell(23).setCellValue("公司核心技術");//为第九个单元格设值
+        row.createCell(24).setCellValue("主營產品/業務/服務");//为第十个单元格设值
+        row.createCell(25).setCellValue("業務渠道");//为第十一个单元格设值
+        row.createCell(26).setCellValue("營業額");//为第十二个单元格设值
+        row.createCell(27).setCellValue("業務主要區域");//为第十三个单元格设值
+        row.createCell(28).setCellValue("行業");//为第十四个单元格设值
+        row.createCell(29).setCellValue("隱藏狀態：0未隱藏/1隱藏");//为第十五个单元格设值
         row.createCell(30).setCellValue("删除状态：0未删除/1删除");//为第十五个单元格设值
-        row.createCell(31).setCellValue("创建时间");//为第十五个单元格设值
-        row.createCell(32).setCellValue("修改时间");//为第十五个单元格设值
-        row.createCell(33).setCellValue("创建人");//为第十五个单元格设值
+        row.createCell(31).setCellValue("創建時間");//为第十五个单元格设值
+        row.createCell(32).setCellValue("修改時間");//为第十五个单元格设值
+        row.createCell(33).setCellValue("創建人");//为第十五个单元格设值
         row.createCell(34).setCellValue("修改人");//为第十五个单元格设值
-        row.createCell(35).setCellValue("备注");//为第十五个单元格设值
-        row.createCell(36).setCellValue("项目ID");//为第十五个单元格设值
+        row.createCell(35).setCellValue("備註");//为第十五个单元格设值
+        row.createCell(36).setCellValue("項目ID");//为第十五个单元格设值
 
         //ecooperation表头
-        row.createCell(37).setCellValue("合作情况编号");//为第一个单元格设值
-        row.createCell(38).setCellValue("合作伙伴编号");//为第二个单元格设值
-        row.createCell(39).setCellValue("合作伙伴公司名称");//为第三个单元格设值
-        row.createCell(40).setCellValue("Callin 时间");//为第四个单元格设值
+        row.createCell(37).setCellValue("合作情况編號");//为第一个单元格设值
+        row.createCell(38).setCellValue("合作夥伴編號");//为第二个单元格设值
+        row.createCell(39).setCellValue("合作夥伴公司名稱");//为第三个单元格设值
+        row.createCell(40).setCellValue("Callin 時間");//为第四个单元格设值
         row.createCell(41).setCellValue("Callin BD Owner");//为第五个单元格设值
-        row.createCell(42).setCellValue("合作阶段");//为第六个单元格设值
-        row.createCell(43).setCellValue("是否有签署合约：1是/0否");//为第七个单元格设值
-        row.createCell(44).setCellValue("合约起始日");//为第八个单元格设值
-        row.createCell(45).setCellValue("是否有委托签署关系:1是/0否");//为第九个单元格设值
-        row.createCell(46).setCellValue("合约委托方");//为第十个单元格设值
+        row.createCell(42).setCellValue("合作階段");//为第六个单元格设值
+        row.createCell(43).setCellValue("是否簽署合約：1是/0否");//为第七个单元格设值
+        row.createCell(44).setCellValue("合約起始日");//为第八个单元格设值
+        row.createCell(45).setCellValue("是否有委託簽署關係:1是/0否");//为第九个单元格设值
+        row.createCell(46).setCellValue("合約委託方");//为第十个单元格设值
         row.createCell(47).setCellValue("是否有授牌:1是/0否");//为第十一个单元格设值
-        row.createCell(48).setCellValue("合作项目名称");//为第十二个单元格设值
-        row.createCell(49).setCellValue("合作业务类型");//为第十三个单元格设值
-        row.createCell(50).setCellValue("合作项目进度");//为第十四个单元格设值
-        row.createCell(51).setCellValue("Fii合作部门");//为第十五个单元格设值
-        row.createCell(52).setCellValue("创建时间");//为第十五个单元格设值
-        row.createCell(53).setCellValue("修改时间");//为第十五个单元格设值
-        row.createCell(54).setCellValue("创建人");//为第十五个单元格设值
+        row.createCell(48).setCellValue("合作項目名稱");//为第十二个单元格设值
+        row.createCell(49).setCellValue("合作業務類型");//为第十三个单元格设值
+        row.createCell(50).setCellValue("合作項目進度");//为第十四个单元格设值
+        row.createCell(51).setCellValue("Fii合作部門");//为第十五个单元格设值
+        row.createCell(52).setCellValue("創建時間");//为第十五个单元格设值
+        row.createCell(53).setCellValue("修改時間");//为第十五个单元格设值
+        row.createCell(54).setCellValue("創建人");//为第十五个单元格设值
         row.createCell(55).setCellValue("修改人");//为第十五个单元格设值
         row.createCell(56).setCellValue("隐藏状态：0未隐藏/1隐藏");//为第十五个单元格设值
         row.createCell(57).setCellValue("删除状态：0未删除/1删除");//为第十五个单元格设值
-        row.createCell(58).setCellValue("备注");//为第十五个单元格设值
+        row.createCell(58).setCellValue("備註");//为第十五个单元格设值
 
         int totalRow = 2;
         for (int i = 0; eccontactss.size()>0 && i < eccontactss.size(); i++) {

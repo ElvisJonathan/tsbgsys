@@ -435,6 +435,6 @@
   <select id="selecteccontactsExcellAll" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM eccontacts
+    FROM eccontacts where status=0 and del_status=0
   </select>
 </mapper>

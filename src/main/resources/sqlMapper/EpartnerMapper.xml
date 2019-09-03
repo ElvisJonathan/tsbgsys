@@ -553,6 +553,6 @@
   <select id="selectepartnerExcellAll" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM epartner
+    FROM epartner where status=0 and del_status=0
   </select>
 </mapper>
