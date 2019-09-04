@@ -45,4 +45,6 @@ public interface EcooperationMapper {
     int updateByCid(@Param("status") int status, @Param("cid") int cid);
     //查询全部导出Excel
     List<Ecooperation> selectecooperationsExcellAll();
+    //根据查询条件导出Excel
+    List<Ecooperation> selectEcooperationByCidl(Integer cid);
 }

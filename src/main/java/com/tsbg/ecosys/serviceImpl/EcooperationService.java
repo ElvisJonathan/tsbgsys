@@ -58,15 +58,14 @@ public class EcooperationService {
         return ecTotalDtoList;
     }
 
-    //根据查询条件导出Excel
+    //根据查询条件导出Excelartner.getPartnerNo();
     public List<EcTotalDtol> getEcooperationListall(Epartner epartner) {
         int cid = epartner.getPartnerNo();
-        //根据cid查询出来
         Epartner epartner1 = epartnerMapper.selectByPrimaryKeyl(epartner);
         //根据cid查找eccontact
-        List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCid(cid);
+        List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCidl(cid);
         //根据cid查在查询所有的Ecooperation
-        List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCid(cid);
+        List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCidl(cid);
         EcTotalDtol ecTotalDtol = new EcTotalDtol();
         ecTotalDtol.setEpartner(epartner1);
         if (eccontacts != null && eccontacts.size() > 0) {

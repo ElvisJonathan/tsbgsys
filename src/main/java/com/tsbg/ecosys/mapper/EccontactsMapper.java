@@ -46,4 +46,6 @@ public interface EccontactsMapper {
 
     //查询全部导出Excel
     List<Eccontacts> selecteccontactsExcellAll();
+    //根据查询条件导出Excel
+    List<Eccontacts> selectEccontactsByCidl(Integer cid);
 }

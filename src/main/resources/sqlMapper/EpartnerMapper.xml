@@ -138,7 +138,7 @@
     select
     <include refid="Base_Column_List" />
     from epartner
-    where status = 0
+    where status = 0 AND del_status=0
    <if test = "partnerName != null and partnerName != ''">
       and partner_name LIKE CONCAT('%', #{partnerName}, '%')
     </if>
@@ -575,6 +575,6 @@
   <select id="selectepartnerExcellAll" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM epartner
+    FROM epartner where status=0 and del_status=0
   </select>
 </mapper>
