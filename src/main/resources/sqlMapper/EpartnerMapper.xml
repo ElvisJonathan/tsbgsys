@@ -112,7 +112,7 @@
     select
     <include refid="Base_Column_List" />
     from epartner WHERE del_status=0
-    <if test = "createrIdentity != 1">
+    <if  test="createrIdentity==0">
       and status=0
     </if>
     <if test = "partnerName != null and partnerName != ''">

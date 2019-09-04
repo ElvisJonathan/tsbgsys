@@ -41,32 +41,37 @@ public class CompanyController {
      */
     @RequestMapping(value = "/hideCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse hideCom(@RequestBody HidePackage hidePackage){
+    public ResultResponse hideCom(@RequestBody Epartner epartner){
         //初始化构造器
         ResultResponse resultResponse = null;
         //获取cid 此处需要改为获取数组
-        Object[] data = hidePackage.getData();
+        /*Object[] data = hidePackage.getData();
         for (int i =0;i<=data.length-1;i++){
             System.out.println("公司数组："+data[i]);
         }
         int[] data2 = new int[data.length];
         for (int i =0;i<=data.length-1;i++){
             data2[i]=(int)data[i];
-        }
+        }*/
+        Integer cid = epartner.getPartnerNo();
         //获取STATUS
-        Integer status = hidePackage.getEpartner().getStatus();
+        Integer status = epartner.getStatus();
         System.out.println("修改的状态："+status);
         //接受到的status为1则是隐藏公司,0则是取消隐藏公司
         if (status!=0 && status!=1){
             resultResponse = new ResultResponse(503,"提示信息：请输入正确的status！");
             return resultResponse;
         }
-        int num = 0;
-            for (int i=0;i<=data.length-1;i++){
+        //int num = 0;
+        if (cid!=null){
+            int num = epartnerService.updateByCid(status,cid);
+            ecooperationService.updateByCid(status,cid);
+            eccontactsService.updateByCid(status,cid);
+            /*for (int i=0;i<=data.length-1;i++){
                  num =  epartnerService.updateByCid(status,data2[i]);
                 ecooperationService.updateByCid(status,data2[i]);
                 eccontactsService.updateByCid(status,data2[i]);
-            }
+            }*/
             //根据前端传过来的cid作为参数修改公司的状态
             //同步更新合作关系和联系人状态
             if (num>0 && status==1){
@@ -80,6 +85,9 @@ public class CompanyController {
                 resultResponse = new ResultResponse(501,"提示信息：公司编号不存在或操作失败！");
                 return resultResponse;
             }
+
+        }
+        return new ResultResponse(503,"partnerNo为空异常！");
     }
 
     /**
@@ -477,19 +485,32 @@ public class CompanyController {
      */
     @RequestMapping(value = "/del", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse delCom(@RequestBody Epartner epartner){
+    public ResultResponse delCom(@RequestBody HidePackage hidePackage){
         //通过接受partnerNo进行删除（隐藏） 需要对其合作伙伴以及联系人同时删除（隐藏）
         //需要同时修改三张表的状态
         ResultResponse resultResponse = null;
         //获取公司对应的合作伙伴编号partnerNo
-        Integer cid = epartner.getPartnerNo();
-        if (cid!=null){
-            int num = epartnerService.updateStatusByCid(cid);
+        //Integer cid = epartner.getPartnerNo();
+        Object[] data = hidePackage.getData();
+        for (int i =0;i<=data.length-1;i++){
+            System.out.println("公司数组："+data[i]);
+        }
+        int[] data2 = new int[data.length];
+        for (int i =0;i<=data.length-1;i++){
+            data2[i]=(int)data[i];
+        }
+        int num = 0;
+        int count = 0;
+        int count2 = 0;
+        for (int i=0;i<=data2.length-1;i++){
+            num =  epartnerService.updateStatusByCid(data2[i]);
+        }
             if (num>0){
                 //如果成功修改了公司状态则同步修改联系人和合作关系
-                Integer partnerNo = cid;
-                int count = eccontactsService.updateStatusByCid(partnerNo);
-                int count2 = ecooperationService.updateStatusByCid(partnerNo);
+                for (int i=0;i<=data2.length-1;i++) {
+                    count = ecooperationService.updateStatusByCid(data2[i]);
+                    count2 = eccontactsService.updateStatusByCid(data2[i]);
+                }
                 if (count>0 && count2>0){
                     resultResponse = new ResultResponse(0,"提示信息：删除成功！");
                     return resultResponse;
@@ -499,8 +520,6 @@ public class CompanyController {
             }
             resultResponse = new ResultResponse(501,"提示信息：删除失败！");
             return resultResponse;
-        }
-        resultResponse = new ResultResponse(502,"提示信息：公司合作伙伴编号为空异常！");
-        return resultResponse;
+
     }
 }
