@@ -3,6 +3,7 @@ package com.tsbg.ecosys.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.*;
+import com.tsbg.ecosys.model.bag.HidePackage;
 import com.tsbg.ecosys.model.bag.SearchPackage;
 import com.tsbg.ecosys.service.*;
 import com.tsbg.ecosys.util.PageRequest;
@@ -40,24 +41,34 @@ public class CompanyController {
      */
     @RequestMapping(value = "/hideCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse hideCom(@RequestBody Epartner epartner){
+    public ResultResponse hideCom(@RequestBody HidePackage hidePackage){
         //初始化构造器
         ResultResponse resultResponse = null;
-        //获取cid
-        Integer cid = epartner.getPartnerNo();
+        //获取cid 此处需要改为获取数组
+        Object[] data = hidePackage.getData();
+        for (int i =0;i<=data.length-1;i++){
+            System.out.println("公司数组："+data[i]);
+        }
+        int[] data2 = new int[data.length];
+        for (int i =0;i<=data.length-1;i++){
+            data2[i]=(int)data[i];
+        }
         //获取STATUS
-        Integer status = epartner.getStatus();
+        Integer status = hidePackage.getEpartner().getStatus();
+        System.out.println("修改的状态："+status);
         //接受到的status为1则是隐藏公司,0则是取消隐藏公司
         if (status!=0 && status!=1){
             resultResponse = new ResultResponse(503,"提示信息：请输入正确的status！");
             return resultResponse;
         }
-        if (cid!=null){
+        int num = 0;
+            for (int i=0;i<=data.length-1;i++){
+                 num =  epartnerService.updateByCid(status,data2[i]);
+                ecooperationService.updateByCid(status,data2[i]);
+                eccontactsService.updateByCid(status,data2[i]);
+            }
             //根据前端传过来的cid作为参数修改公司的状态
-            int num = epartnerService.updateByCid(status,cid);
             //同步更新合作关系和联系人状态
-            ecooperationService.updateByCid(status,cid);
-            eccontactsService.updateByCid(status,cid);
             if (num>0 && status==1){
                 resultResponse = new ResultResponse(1,"提示信息：隐藏公司成功！");
                 return resultResponse;
@@ -69,10 +80,6 @@ public class CompanyController {
                 resultResponse = new ResultResponse(501,"提示信息：公司编号不存在或操作失败！");
                 return resultResponse;
             }
-        }
-        //公司编号为空则返回异常信息
-        resultResponse = new ResultResponse(502,"提示信息：公司编号为空异常！");
-        return resultResponse;
     }
 
     /**

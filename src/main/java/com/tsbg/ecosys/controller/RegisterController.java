@@ -42,7 +42,7 @@ public class RegisterController {
             return resultResponse;
         }
         //如果存在该工号并且部门代码为生态部门代码则成功创建该用户
-        if (number>0 && deptCode.equals("GE11700800")){
+        if (number>0 && deptCode.equals("GE11700800") || deptCode.equals("GE11000600")){
             //可以注册
             //设置创建人和创建时间
             userInfo.setCreater(userInfo.getUserName());
