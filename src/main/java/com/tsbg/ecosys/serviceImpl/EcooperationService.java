@@ -54,7 +54,6 @@ public class EcooperationService {
         }
         List<EcTotalDto> ecTotalDtoList = new ArrayList<>();
         ecTotalDtoList.add(ecTotalDto);
-
         return ecTotalDtoList;
     }
 
@@ -79,8 +78,7 @@ public class EcooperationService {
         return ecTotalDtoList;
     }
 
-
-    //全部导出Excel
+    //全部导出Excel（只导出status=0 and del_status=0）
     public EcTotal_Excel getEpartnerList() {
         List<Epartner> epartner1 = epartnerMapper.selectepartnerExcellAll();
         List<Eccontacts> eccontacts = eccontactsMapper.selecteccontactsExcellAll();

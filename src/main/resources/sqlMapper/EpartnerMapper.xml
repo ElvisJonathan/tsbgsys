@@ -139,7 +139,7 @@
     <include refid="Base_Column_List" />
     from epartner
     where status = 0 AND del_status=0
-   <if test = "partnerName != null and partnerName != ''">
+    <if test = "partnerName != null and partnerName != ''">
       and partner_name LIKE CONCAT('%', #{partnerName}, '%')
     </if>
     <if test="partnerProduct != null and partnerProduct != ''">
