@@ -188,10 +188,7 @@ public class CompanyController {
                 fileInfo.setLastUpdateUser(userCode);
                 fileInfo.setUpdatedTime(new Date());
                 fileInfo.setKeyword(oldName);
-                int num = fileInfoService.insertSelective(fileInfo);
-                if (num>0){
-                    arr[3]=1;
-                }
+                fileInfoService.insertSelective(fileInfo);
             }else {
                 return new ResultResponse(505,"上传文件格式不符合需求");
             }
@@ -220,11 +217,8 @@ public class CompanyController {
         //获取当前用户身份是否为管理员，通过工号查询是否为管理
         UserInfo userInfo = searchPackage.getUserInfo();
         String userCode = userInfo.getUserCode();
-        System.out.println("工号："+userCode);
-       int identity =  userInfoService.selectIdentityByUserCode(userCode);
-       System.out.println("身份："+identity);
-       epartner.setCreaterIdentity(identity);
-       System.out.println("身份2："+epartner.getCreaterIdentity());
+        Integer identity =  userInfoService.selectIdentityByUserCode(userCode);
+        epartner.setCreaterIdentity(identity);
         if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
             PageResult page = epartnerService.findPage(pageRequest, epartner);
