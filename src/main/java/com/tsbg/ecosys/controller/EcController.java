@@ -71,7 +71,7 @@ public class EcController {
         return new ResultResponse(501,"未收到PartnerNo");
     }
 
-    //根据查询条件导出Excel
+    //根据查询条件导出Excel(条件partnerNo=5&partnerName=aaa&&partnerProduct=aaa&partnerRegion=aaa&partnerIndustry=aaa)and status=0 and del_status=0才能导出
     @ApiOperation(value = "根据partnerNo导出Excel", notes = "根据partnerNo导出Excel")
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -83,7 +83,7 @@ public class EcController {
         export(response,ecTotalDtoList);
         }
 
-    //全部导出Excel
+    //全部导出Excel（只导出status=0 and del_status=0）
     @RequestMapping(value = "/exportall")
     @ResponseBody
     public void exportAll(HttpServletResponse response) throws IOException {
@@ -298,7 +298,6 @@ public class EcController {
         List<Eccontacts> eccontactss = new ArrayList<>();
         List<Epartner> epartners = new ArrayList<>();
         List<Ecooperation> ecooperations = new ArrayList<>();
-        //
         ecTotalDtoList.forEach(item->{
             eccontactss.add(item.getEccontacts());
             epartners.add(item.getEpartner());
