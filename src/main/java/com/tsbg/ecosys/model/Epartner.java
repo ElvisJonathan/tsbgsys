@@ -41,6 +41,8 @@ public class Epartner {
 
     private String creater;
 
+    private Integer createrIdentity;
+
     private String updater;
 
     private String remark;
@@ -221,5 +223,13 @@ public class Epartner {
 
     public void setProjId(Integer projId) {
         this.projId = projId;
+    }
+
+    public Integer getCreaterIdentity() {
+        return createrIdentity;
+    }
+
+    public void setCreaterIdentity(Integer createrIdentity) {
+        this.createrIdentity = createrIdentity;
     }
 }

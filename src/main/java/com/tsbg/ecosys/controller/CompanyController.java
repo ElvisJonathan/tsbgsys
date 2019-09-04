@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.*;
 import com.tsbg.ecosys.model.bag.SearchPackage;
-import com.tsbg.ecosys.service.EccontactsService;
-import com.tsbg.ecosys.service.EcooperationService;
-import com.tsbg.ecosys.service.EpartnerService;
-import com.tsbg.ecosys.service.FileInfoService;
+import com.tsbg.ecosys.service.*;
 import com.tsbg.ecosys.util.PageRequest;
 import com.tsbg.ecosys.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +32,8 @@ public class CompanyController {
     private EccontactsService eccontactsService;
     @Autowired
     private FileInfoService fileInfoService;
+    @Autowired
+    private UserInfoService userInfoService;
 
     /**
      * 管理员隐藏/取消隐藏公司
@@ -219,9 +218,13 @@ public class CompanyController {
         //接受搜索条件传参实体类epartner
         Epartner epartner = searchPackage.getEpartner();
         //获取当前用户身份是否为管理员，通过工号查询是否为管理
-        /*UserInfo userInfo = searchPackage.getUserInfo();
+        UserInfo userInfo = searchPackage.getUserInfo();
         String userCode = userInfo.getUserCode();
-        System.out.println("工号："+userCode);*/
+        System.out.println("工号："+userCode);
+       int identity =  userInfoService.selectIdentityByUserCode(userCode);
+       System.out.println("身份："+identity);
+       epartner.setCreaterIdentity(identity);
+       System.out.println("身份2："+epartner.getCreaterIdentity());
         if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
             PageResult page = epartnerService.findPage(pageRequest, epartner);

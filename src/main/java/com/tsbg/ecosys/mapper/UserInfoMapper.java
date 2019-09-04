@@ -64,4 +64,7 @@ public interface UserInfoMapper {
 
     //管理员重置用户密码
     int reSetPwdByUserCode(@Param("userPwd")String userPwd,@Param("userCode")String userCode);
+
+    //根据工号查询当前用户身份是否为管理员
+    int selectIdentityByUserCode(String userCode);
 }

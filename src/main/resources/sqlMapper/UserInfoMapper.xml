@@ -345,4 +345,8 @@
   <update id="reSetPwdByUserCode" parameterType="String">
     UPDATE user_info AS e SET e.`user_pwd`=#{userPwd,jdbcType=VARCHAR} WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </update>
+
+  <select id="selectIdentityByUserCode"  parameterType="String" resultType="int">
+    SELECT a.`is_manager` FROM user_info AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
 </mapper>

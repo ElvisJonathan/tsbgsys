@@ -21,6 +21,7 @@
     <result column="create_time" property="createTime" jdbcType="DATE" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="creater_identity" property="createrIdentity" jdbcType="INTEGER" />
     <result column="updater" property="updater" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="proj_id" property="projId" jdbcType="INTEGER" />
@@ -86,7 +87,7 @@
   <sql id="Base_Column_List" >
     partner_no, partner_name, partner_date, partner_registcapital, partner_list, partner_scale,
     partner_addr, partner_webddr, partner_tech, partner_product, partner_channel, partner_turnover,
-    partner_region, partner_industry, status, del_status, create_time, update_time, creater,
+    partner_region, partner_industry, status, del_status, create_time, update_time, creater,creater_identity,
     updater, remark,proj_id
   </sql>
   <select id="selectCinfo" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.model.Epartner">
@@ -111,6 +112,9 @@
     select
     <include refid="Base_Column_List" />
     from epartner WHERE del_status=0
+    <if test = "createrIdentity != 1">
+      and status=0
+    </if>
     <if test = "partnerName != null and partnerName != ''">
       and partner_name LIKE CONCAT('%', #{partnerName}, '%')
     </if>
@@ -159,7 +163,7 @@
       partner_product, partner_channel, partner_turnover,
       partner_region, partner_industry, status,
       del_status, create_time, update_time,
-      creater, updater, remark,proj_id
+      creater,creater_identity, updater, remark,proj_id
       )
     values (#{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR}, #{partnerDate,jdbcType=DATE},
       #{partnerRegistcapital,jdbcType=VARCHAR}, #{partnerList,jdbcType=INTEGER}, #{partnerScale,jdbcType=VARCHAR},
@@ -167,7 +171,7 @@
       #{partnerProduct,jdbcType=VARCHAR}, #{partnerChannel,jdbcType=VARCHAR}, #{partnerTurnover,jdbcType=VARCHAR},
       #{partnerRegion,jdbcType=VARCHAR}, #{partnerIndustry,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
       #{delStatus,jdbcType=INTEGER}, #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP},
-      #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{projId,jdbcType=INTEGER}
+      #{creater,jdbcType=VARCHAR},#{createrIdentity,jdbcType=INTEGER} ,#{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{projId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.ecosys.model.Epartner" >
@@ -229,6 +233,9 @@
       </if>
       <if test="creater != null" >
         creater,
+      </if>
+      <if test="createrIdentity != null" >
+        creater_identity,
       </if>
       <if test="updater != null" >
         updater,
@@ -298,6 +305,9 @@
       <if test="creater != null" >
         #{creater,jdbcType=VARCHAR},
       </if>
+      <if test="createrIdentity != null" >
+        #{createrIdentity,jdbcType=INTEGER},
+      </if>
       <if test="updater != null" >
         #{updater,jdbcType=VARCHAR},
       </if>
@@ -366,6 +376,9 @@
       <if test="creater != null" >
         creater = #{creater,jdbcType=VARCHAR},
       </if>
+      <if test="createrIdentity != null" >
+        creater_identity = #{createrIdentity,jdbcType=INTEGER},
+      </if>
       <if test="updater != null" >
         updater = #{updater,jdbcType=VARCHAR},
       </if>
@@ -398,6 +411,7 @@
       create_time = #{createTime,jdbcType=DATE},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
+      creater_identity = #{createrIdentity,jdbcType=INTEGER},
       updater = #{updater,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       proj_id = #{projId,jdbcType=INTEGER}

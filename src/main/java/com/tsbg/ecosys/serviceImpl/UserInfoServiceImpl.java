@@ -94,4 +94,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public int reSetPwdByUserCode(String userPwd, String userCode) {
         return userInfoMapper.reSetPwdByUserCode(userPwd,userCode);
     }
+
+    @Override
+    public int selectIdentityByUserCode(String userCode) {
+        return userInfoMapper.selectIdentityByUserCode(userCode);
+    }
 }
