@@ -71,7 +71,7 @@ public class EcController {
         return new ResultResponse(501,"未收到PartnerNo");
     }
 
-    //根据查询条件导出Excel(条件partnerNo=5&partnerName=aaa&&partnerProduct=aaa&partnerRegion=aaa&partnerIndustry=aaa)
+    //根据查询条件导出Excel(条件partnerNo=5&partnerName=aaa&&partnerProduct=aaa&partnerRegion=aaa&partnerIndustry=aaa)and status=0 and del_status=0才能导出
     @ApiOperation(value = "根据partnerNo导出Excel", notes = "根据partnerNo导出Excel")
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
