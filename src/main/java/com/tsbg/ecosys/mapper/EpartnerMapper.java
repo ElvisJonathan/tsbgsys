@@ -18,8 +18,6 @@ public interface EpartnerMapper {
 
     Epartner selectByPrimaryKey(Integer partnerNo);
 
-    Epartner selectByPrimaryKeyl(Epartner epartner);
-
     int updateByPrimaryKeySelective(Epartner record);
 
     int updateByPrimaryKey(Epartner record);
@@ -68,4 +66,6 @@ public interface EpartnerMapper {
     int logDownloader(@Param("userCode") String userCode, @Param("partnerNo") Integer partnerNo);
     //查询全部导出Excel
     List<Epartner> selectepartnerExcellAll();
+    //根据查询条件导出Excel
+    Epartner selectByPrimaryKeyl(Epartner epartner);
 }
