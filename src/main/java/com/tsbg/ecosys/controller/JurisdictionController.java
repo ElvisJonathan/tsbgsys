@@ -38,6 +38,8 @@ public class JurisdictionController {
         ResultResponse resultResponse = null;
         //获取前端传来的工号
         String userCode = userInfo.getUserCode();
+        //根据工号查询用户状态
+        Integer status = userInfoService.selectStatusByUserCode(userCode);
         if (userCode!=null){
             //通过userCode查询当前用户的user_id
             Integer uid = userInfoService.selectuidbyuserCode(userCode);
@@ -55,7 +57,7 @@ public class JurisdictionController {
                         //如果plist不为null,则把查询出的list返回给前端
                         if (plist != null){
                             //将用户名和权限详情返给前端
-                            resultResponse = new ResultResponse(0,"提示信息：成功查询到权限信息",plist,uName);
+                            resultResponse = new ResultResponse(0,"提示信息：成功查询到权限信息",plist,uName,status);
                             return resultResponse;
                         }
                         //plist为null则是未查询到完整的权限信息只返回用户名给前端

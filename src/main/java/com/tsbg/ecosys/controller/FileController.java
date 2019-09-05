@@ -1,6 +1,5 @@
 package com.tsbg.ecosys.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.FileInfo;
@@ -194,7 +193,7 @@ public class FileController {
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
             response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
-            //String rootPath2 = "http://10.177.116.51:80/ecoUpload/";
+            //String rootPath2 = "http://10.124.131.80:80/ecoUpload/";
             //String rootPath = "C://Users/Administrator/AppData/Local/Temp/tomcat-docbase.5185449430869371222.80/ecoUpload/";
             //读取流
             File f = new File(name);

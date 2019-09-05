@@ -67,4 +67,7 @@ public interface UserInfoMapper {
 
     //根据工号查询当前用户身份是否为管理员
     int selectIdentityByUserCode(String userCode);
+
+    //通过工号查询用户状态
+    int selectStatusByUserCode(String userCode);
 }

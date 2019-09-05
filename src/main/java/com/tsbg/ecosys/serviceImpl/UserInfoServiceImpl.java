@@ -99,4 +99,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public int selectIdentityByUserCode(String userCode) {
         return userInfoMapper.selectIdentityByUserCode(userCode);
     }
+
+    @Override
+    public int selectStatusByUserCode(String userCode) {
+        return userInfoMapper.selectStatusByUserCode(userCode);
+    }
 }

@@ -259,7 +259,7 @@
     UPDATE user_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR};
   </update>
   <select id="selectUserMsgbyUserCode" resultMap="BaseResultMap" parameterType="String">
-    SELECT e.`user_code`,e.`email_address`,e.`user_name`,e.`phone_number`,e.`gender` FROM user_info AS e
+    SELECT e.`user_code`,e.`email_address`,e.`user_name`,e.`status`,e.`phone_number`,e.`gender` FROM user_info AS e
      WHERE e.`user_code` = #{userCode,jdbcType=VARCHAR};
   </select>
   <update id="updateByUserCodeSelective" parameterType="com.tsbg.ecosys.model.UserInfo" >
@@ -348,5 +348,10 @@
 
   <select id="selectIdentityByUserCode"  parameterType="String" resultType="int">
     SELECT a.`is_manager` FROM user_info AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+
+  <select id="selectStatusByUserCode"  parameterType="String" resultType="int">
+    SELECT e.`status` FROM user_info AS e
+     WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
 </mapper>
