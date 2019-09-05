@@ -76,9 +76,19 @@ public class EcController {
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public void getEcooperationAll(Epartner epartner, HttpServletResponse response) throws IOException {
+        //从前端获取添加的四个条件
+        String partnerName = epartner.getPartnerName();
+        String partnerProduct = epartner.getPartnerProduct();
+        String partnerRegion = epartner.getPartnerRegion();
+        String partnerIndustry = epartner.getPartnerIndustry();
+        //然后将他们添加到对象里面
+        epartner.setPartnerName(partnerName);
+        epartner.setPartnerProduct(partnerProduct);
+        epartner.setPartnerRegion(partnerRegion);
+        epartner.setPartnerIndustry(partnerIndustry);
         //设置服务器的编码
         response.setCharacterEncoding("utf-8");
-        //获取公司合作伙伴编号
+        //根据epartner查询
         List<EcTotalDtol> ecTotalDtoList = ecooperationService.getEcooperationListall(epartner);
         export(response,ecTotalDtoList);
         }
@@ -282,6 +292,7 @@ public class EcController {
         //列宽自适应
         for (int i = 0; i <= 52; i++) {
             sheet.autoSizeColumn(i);
+//            sheet.getColumnWidth(4, 20*256);
         }
         response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
         response.setContentType("application/vnd.ms-excel;charset=utf-8");

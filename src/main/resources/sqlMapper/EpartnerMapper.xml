@@ -134,6 +134,7 @@
     from epartner
     where partner_no = #{partnerNo,jdbcType=INTEGER} AND status = 0
   </select>
+  <!--根据查询条件导出Excel-->
   <select id="selectByPrimaryKeyl" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -572,6 +573,7 @@
   <update id="logDownloader">
     UPDATE file_info AS f SET f.`last_download_user`= #{userCode,jdbcType=VARCHAR} WHERE f.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER};
   </update>
+  <!--全部导出Excel-->
   <select id="selectepartnerExcellAll" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
