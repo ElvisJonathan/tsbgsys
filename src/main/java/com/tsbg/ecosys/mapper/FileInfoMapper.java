@@ -37,4 +37,16 @@ public interface FileInfoMapper {
 
     //通过文件名查询文件路径
     String selectRealPathByName(String fileName);
+
+    //根据公司编号查询文件列表
+    List<String> selectFileListByNo(Integer partnerNo);
+
+    //根据公司编号查询当前文件列表对应的编号
+    List<Integer> selectFileNoByNo(Integer partnerNo);
+
+    //根据文件名查询当前文件编号
+    Integer selectFileIdByFileName(String fileName);
+
+    //根据文件编号修改文件状态
+    int updateFileStatusByFileNo(Integer fileNo);
 }

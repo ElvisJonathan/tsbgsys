@@ -193,4 +193,17 @@
   <select id="selectRealPathByName" resultType="String" parameterType="String">
     SELECT a.`file_path` FROM file_info AS a WHERE a.`keyword` = #{fileName,jdbcType=VARCHAR};
   </select>
+  <select id="selectFileListByNo" resultType="String" parameterType="java.lang.Integer">
+    SELECT a.`file_name` FROM file_info AS a WHERE a.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER} AND STATUS=0;
+  </select>
+  <select id="selectFileNoByNo" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+    SELECT a.`file_id` FROM file_info AS a WHERE a.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER} AND STATUS=0;
+  </select>
+  <select id="selectFileIdByFileName" resultType="java.lang.Integer" parameterType="String">
+    SELECT a.`file_id` FROM file_info AS a WHERE a.`file_name`=#{fileName,jdbcType=VARCHAR};
+  </select>
+  <update id="updateFileStatusByFileNo" parameterType="java.lang.Integer">
+    UPDATE file_info AS a SET a.`status`=1
+     WHERE a.`file_id`=#{fileNo,jdbcType=INTEGER};
+  </update>
 </mapper>

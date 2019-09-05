@@ -6,6 +6,7 @@ import com.tsbg.ecosys.service.FileInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
@@ -47,5 +48,25 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public String selectRealPathByName(String fileName) {
         return fileInfoMapper.selectRealPathByName(fileName);
+    }
+
+    @Override
+    public List<String> selectFileListByNo(Integer partnerNo) {
+        return fileInfoMapper.selectFileListByNo(partnerNo);
+    }
+
+    @Override
+    public List<Integer> selectFileNoByNo(Integer partnerNo) {
+        return fileInfoMapper.selectFileNoByNo(partnerNo);
+    }
+
+    @Override
+    public Integer selectFileIdByFileName(String fileName) {
+        return fileInfoMapper.selectFileIdByFileName(fileName);
+    }
+
+    @Override
+    public int updateFileStatusByFileNo(Integer fileNo) {
+        return fileInfoMapper.updateFileStatusByFileNo(fileNo);
     }
 }

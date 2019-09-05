@@ -100,6 +100,57 @@ public class FileController {
         return new ResultResponse(506, "没有文件");
     }
 
+    //多文件的上传
+    @RequestMapping(value = "/importmore", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public ResultResponse importMore(MultipartFile[] file,HttpServletRequest req) throws IOException {
+         StringBuffer buffer = new StringBuffer();
+        // int[] array = new int[file.length];
+         for (MultipartFile multipartFile : file) {
+             //重复文件名判断
+             int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
+             if (count > 0) {
+                 return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
+             }
+             buffer.append(multipartFile.getOriginalFilename());
+             buffer.append(",");
+             String all = buffer.substring(0, buffer.length() - 1);
+             System.out.println("所有文件："+all);
+             String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+             System.out.println("文件后缀：" + Suffix);
+             //根据原始文件名的后缀进行文件类型判断
+             if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
+                     || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
+                     || Suffix.equals(".txt")) {
+                 String realPath = req.getServletContext().getRealPath("/ecoUpload");//此方法用于获取上传路径
+                 System.out.println("实际路径：" + realPath);
+                 File folder = new File(realPath);
+                 if (!folder.exists()) {
+                     folder.mkdirs();
+                 }//无报错则上传成功
+                 //获取上传者
+                 multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
+                 String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+"/"+ multipartFile.getOriginalFilename();
+                 System.out.println(url);//真实存储的url
+                 String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\" + multipartFile.getOriginalFilename();
+                 System.out.println("真实URL："+newUrl);
+                 //进行文件上传记录的存储
+                 FileInfo fileInfo = new FileInfo();
+                 fileInfo.setFileName(multipartFile.getOriginalFilename());
+                 fileInfo.setFilePath(newUrl);
+                 fileInfo.setUpdatedTime(new Date());
+                 fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                 int num = fileInfoService.insertSelective(fileInfo);
+                 //查询出当前成功文件的编号
+                 int number = epartnerService.selectID();
+                 System.out.println("刚刚增加成功的记录的编号为：" + number);
+             }else{
+                 return new ResultResponse(505, "上传文件格式不符合需求");
+             }
+         }
+         return null;
+    }
+
     @RequestMapping(value = "/download", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultResponse downloadFile(@RequestBody CompanyPackage companyPackage){

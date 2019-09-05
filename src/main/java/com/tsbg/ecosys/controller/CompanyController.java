@@ -3,6 +3,7 @@ package com.tsbg.ecosys.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.*;
+import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.model.bag.HidePackage;
 import com.tsbg.ecosys.model.bag.SearchPackage;
 import com.tsbg.ecosys.service.*;
@@ -96,7 +97,7 @@ public class CompanyController {
      */
     @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse addCom(HttpServletRequest req,MultipartFile file)throws Exception {
+    public ResultResponse addCom(HttpServletRequest req,MultipartFile[] file)throws Exception {
         //初始化传参构造器
         ResultResponse resultResponse = null;
         //成功获取的对象数据
@@ -169,51 +170,58 @@ public class CompanyController {
         }
 
         //此处增加文件上传
-        if (file!=null){
-            //根据原始文件名的后缀进行文件类型判断
-            String oldName = file.getOriginalFilename();
-            System.out.println("原始文件名："+oldName);
-            //进行重复文件名判断
-            int count = fileInfoService.selectFileCountByFileName(oldName);
-            if(count>0){
-                return  new ResultResponse(503,"该文件已存在，请选择其他文件上传!");
+        if (file!=null) {
+            StringBuffer buffer = new StringBuffer();
+            for (MultipartFile multipartFile : file) {
+                //重复文件名判断
+                int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
+                if (count > 0) {
+                    return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
+                }
+                buffer.append(multipartFile.getOriginalFilename());
+                buffer.append(",");
+                String all = buffer.substring(0, buffer.length() - 1);
+                System.out.println("所有文件：" + all);
+                String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+                System.out.println("文件后缀：" + Suffix);
+                //根据原始文件名的后缀进行文件类型判断
+                if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
+                        || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
+                        || Suffix.equals(".txt")) {
+                    String realPath = req.getServletContext().getRealPath("/ecoUpload"+"/"+epartner.getPartnerName());//此方法用于获取上传路径
+                    System.out.println("实际路径：" + realPath);
+                    File folder = new File(realPath);
+                    if (!folder.exists()) {
+                        folder.mkdirs();
+                    }//无报错则上传成功
+                    //获取上传者
+                    multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
+                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
+                    System.out.println(url);//真实存储的url
+                    String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"\\"+epartner.getPartnerName()+"\\" + multipartFile.getOriginalFilename();
+                    System.out.println("真实URL：" + newUrl);
+                    //进行文件上传记录的存储
+                    FileInfo fileInfo = new FileInfo();
+                    fileInfo.setFileName(multipartFile.getOriginalFilename());
+                    fileInfo.setFilePath(newUrl);
+                    fileInfo.setRelDocId(no);
+                    fileInfo.setUpdatedTime(new Date());
+                    fileInfo.setLastUpdateUser(userCode);
+                    fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                    int num = fileInfoService.insertSelective(fileInfo);
+                    //查询出当前成功文件的编号
+                    int number = epartnerService.selectID();
+                    System.out.println("刚刚增加成功的记录的编号为：" + number);
+                } else {
+                    return new ResultResponse(505, "上传文件格式不符合需求");
+                }
             }
-            String Suffix = oldName.substring(oldName.lastIndexOf("."));
-            System.out.println("文件后缀："+Suffix);
-            if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
-                    || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
-                    || Suffix.equals(".txt")){
-                //String format = sdf.format(new Date());//用于转换当前日期
-                String realPath = req.getServletContext().getRealPath("/ecoUpload");//此方法用于获取上传路径
-                System.out.println("实际路径："+realPath);
-                File folder = new File(realPath);
-                if (!folder.exists()) {
-                    folder.mkdirs();
-                }//无报错则上传成功
-                file.transferTo(new File(folder,oldName));
-                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+"/" + oldName;
-                System.out.println(url);
-                String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\" + oldName;
-                System.out.println("真实URL："+newUrl);
-                //进行文件上传记录的存储
-                FileInfo fileInfo = new FileInfo();
-                fileInfo.setFileName(oldName);
-                fileInfo.setFilePath(newUrl);
-                fileInfo.setRelDocId(no);
-                fileInfo.setLastUpdateUser(userCode);
-                fileInfo.setUpdatedTime(new Date());
-                fileInfo.setKeyword(oldName);
-                fileInfoService.insertSelective(fileInfo);
-            }else {
-                return new ResultResponse(505,"上传文件格式不符合需求");
-            }
-          }
-
-        if (arr[0]==1 && arr[1]==1 && arr[2]==1){
-            resultResponse = new ResultResponse(0,"提示信息：新增成功！");
+        }
+        if (arr[0] == 1 && arr[1] == 1 && arr[2] == 1) {
+            resultResponse = new ResultResponse(0, "提示信息：新增成功！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(501,"提示信息：新增失败或不完全成功！");
+        resultResponse = new ResultResponse(501, "提示信息：新增失败或不完全成功！");
         return resultResponse;
     }
 
@@ -232,7 +240,7 @@ public class CompanyController {
         //获取当前用户身份是否为管理员，通过工号查询是否为管理
         UserInfo userInfo = searchPackage.getUserInfo();
         String userCode = userInfo.getUserCode();
-        Integer identity =  userInfoService.selectIdentityByUserCode(userCode);
+        int identity =  userInfoService.selectIdentityByUserCode(userCode);
         epartner.setCreaterIdentity(identity);
         if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
             //根据给到的分页条件查询公司信息
@@ -328,11 +336,11 @@ public class CompanyController {
 
     /**
      * 合作伙伴信息、合作情况信息、公司联系人信息修改
-     * 集成文件上传和删除
+     * 集成文件上传和删除(当文件数量等于或多于当前文件数量时调用)
      */
     @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse modifyCom(MultipartFile file, HttpServletRequest req)throws IOException{
+    public ResultResponse modifyCom(MultipartFile[] file, HttpServletRequest req)throws IOException{
         ResultResponse resultResponse = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
         //成功获取的对象数据
@@ -405,70 +413,190 @@ public class CompanyController {
                 }
             }
 
-            if(file.getSize()>0){
-                String oldName = file.getOriginalFilename();
-                System.out.println("原始文件名："+oldName);
-                //根据公司合作伙伴编号和文件名查询附件是否未修改
-                int number  = fileInfoService.judgeIfFileChanged(cid,oldName);
-                if (number>0){
-                    //说明文件未修改
-                    arr[3]=1;
+            //当文件等于或多于原文件数量时
+            if(file!=null){
+                for (MultipartFile multipartFile : file) {
+                    String name = multipartFile.getOriginalFilename();
+                    System.out.println("原始文件名：" + name);
+                    //如果文件被删除则查询出被删除的文件名修改其状态
+                    //根据当前文件名查询文件编号
+                    //根据公司合作伙伴编号和文件名查询附件是否未修改
+                    int number = fileInfoService.judgeIfFileChanged(cid, name);
+                    if (number > 0) {
+                        //说明文件未修改 默认跳过修改返回修改成功
+                        arr[3] = 1;
+                    }else{
+                        //说明有多的文件需要上传
+                        //重复文件名判断
+                        int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
+                        if (count > 0) {
+                            return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
+                        }
+                        String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+                        System.out.println("文件后缀：" + Suffix);
+                        //根据原始文件名的后缀进行文件类型判断
+                        if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
+                                || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
+                                || Suffix.equals(".txt")) {
+                            String realPath = req.getServletContext().getRealPath("/ecoUpload"+"/"+epartner.getPartnerName());//此方法用于获取上传路径
+                            System.out.println("实际路径：" + realPath);
+                            File folder = new File(realPath);
+                            if (!folder.exists()) {
+                                folder.mkdirs();
+                            }//无报错则上传成功
+                            //获取上传者
+                            multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
+                            String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
+                            System.out.println(url);//真实存储的url
+                            String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\"+epartner.getPartnerName() + "\\" + multipartFile.getOriginalFilename();
+                            System.out.println("真实URL：" + newUrl);
+                            //进行文件上传记录的存储
+                            FileInfo fileInfo = new FileInfo();
+                            fileInfo.setFileName(multipartFile.getOriginalFilename());
+                            fileInfo.setFilePath(newUrl);
+                            fileInfo.setRelDocId(cid);
+                            fileInfo.setUpdatedTime(new Date());
+                            fileInfo.setLastUpdateUser(userCode);
+                            fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                            int num = fileInfoService.insertSelective(fileInfo);
+                            //查询出当前成功文件的编号
+                            int count2 = epartnerService.selectID();
+                            System.out.println("刚刚增加成功的记录的编号为：" + count2);
+                            if (num>0){
+                                arr[3]=1;
+                            }
+                        } else {
+                            return new ResultResponse(506, "上传文件格式不符合需求");
+                        }
+                    }
                 }
             }
 
-            //此处进行文件的删除:如果没有收到文件证明文件已被删除
-            if (file.getSize()==0){
-                //修改文件的status
+            if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
+                resultResponse = new ResultResponse(0,"提示信息：修改成功！");
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(508,"提示信息：修改不彻底！");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
+        return resultResponse;
+    }
+
+    /**
+     * 合作伙伴信息、合作情况信息、公司联系人信息修改
+     * 集成删除文件(当文件数量少于当前文件数量时调用)
+     * 接收的参数是文件名
+     */
+    @RequestMapping(value = "/updateCompany2", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultResponse modifyCom2(@RequestBody CompanyPackage filePackage, HttpServletRequest req){
+        ResultResponse resultResponse = null;
+        //通过接受三个对象来进行修改 包含公司的partnerNo
+        //成功获取的对象数据
+        Object[] fileName = filePackage.getFileName();
+        /*for (int i=0;i<=fileName.length-1;i++){
+            System.out.println("文件名列表："+fileName[i]);
+        }*/
+        Epartner epartner = filePackage.getEpartner();
+        if (epartner==null){
+            resultResponse = new ResultResponse(502,"提示信息：公司合作关系信息为空异常！");
+            return resultResponse;
+        }
+        Eccontacts eccontacts = filePackage.getEccontacts();
+        if (eccontacts==null){
+            resultResponse = new ResultResponse(503,"提示信息：公司联系人信息为空异常！");
+            return resultResponse;
+        }
+        Ecooperation ecooperation = filePackage.getEcooperation();
+        if (ecooperation==null){
+            resultResponse = new ResultResponse(502,"提示信息：公司合作关系信息为空异常！");
+            return resultResponse;
+        }
+        UserInfo userInfo = filePackage.getUserInfo();
+        Integer cid = epartner.getPartnerNo();
+        System.out.println("接收到的partnerNo:"+cid);
+        //全都不为空的情况下才可以进行修改判断
+        //新建arr数组用于存储成功值
+        int []arr = new int[4];
+        //获取当前修改人
+        String userName= userInfo.getUserName();
+        String userCode = userInfo.getUserCode();
+        System.out.println("修改人："+userName);
+        System.out.println("工号："+userCode);
+        if(cid!=null){
+            if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
+                    && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
+                //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
+                //更新修改时间
+                epartner.setUpdateTime(new Date());
+                //更新修改人
+                epartner.setUpdater(userName);
+                int num = epartnerService.updateByPrimaryKeySelective(epartner);
+                if (num>0){
+                    arr[0]=1;
+                }
+            }
+
+            if (ecooperation.getPartnerName()!=null){
+                //只有当合作伙伴公司名称不为空才可以修改
+                //更新修改时间
+                ecooperation.setUpdateTime(new Date());
+                //更新修改人
+                ecooperation.setUpdater(userName);
+                //需要赋值cid给partnerNo
+                ecooperation.setPartnerNo(cid);
+                int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
+                if (num>0){
+                    arr[1]=1;
+                }
+            }
+
+            if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
+                    && eccontacts.getPartnerName()!=null){
+                //只有当姓名、电话、所属公司都不为空才可以修改
+                //更新修改时间
+                eccontacts.setUpdateTime(new Date());
+                //更新修改人
+                eccontacts.setUpdater(userName);
+                //需要赋值cid给partnerNo
+                eccontacts.setPartnerNo(cid);
+                int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
+                if (num>0){
+                    arr[2]=1;
+                }
+            }
+
+            //当文件少于原文件数量时
+            if(fileName!=null){
+                //对应的文件编号
+                List<Integer> list2 = fileInfoService.selectFileNoByNo(cid);
+                for (Object file : fileName) {
+                    //如果文件被删除则查询出被删除的文件名修改其状态
+                    //根据当前文件名查询文件编号
+                    Integer num2 = fileInfoService.selectFileIdByFileName(file.toString());
+                    if (list2.contains(num2)){
+                        System.out.println("该文件被包含，文件名为："+file.toString());
+                       list2.remove(num2);
+                    }
+                }
+                System.out.println("LIST2:"+list2.toString());
+                //根据剩余的编号修改状态
+                int num =0 ;
+                for (int i=0;i<=list2.size()-1;i++){
+                    //看看是否剩下的编号都被修改了
+                   num = fileInfoService.updateFileStatusByFileNo(list2.get(i));
+                }
+                if (num>0){
+                    arr[3]=1;
+                }
+            }else{
+                //此处进行文件的删除:如果没有收到文件证明文件已被删除
                 int num = epartnerService.deleteFileByParNo(cid);
                 if (num>0){
                     arr[3]=1;
                 }
             }
-
-            if (arr[3]==0){
-                //说明文件被修改
-                //根据原始文件名的后缀进行文件类型判断
-                String oldName = file.getOriginalFilename();
-                System.out.println("原始文件名："+oldName);
-                //进行重复文件名判断
-                int count = fileInfoService.selectFileCountByFileName(oldName);
-                if(count>0){
-                    return  new ResultResponse(505,"该文件已存在，请选择其他文件上传!");
-                }
-                String Suffix = oldName.substring(oldName.lastIndexOf("."));
-                System.out.println("文件后缀："+Suffix);
-                if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
-                        || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
-                        || Suffix.equals(".txt")){
-                    //String format = sdf.format(new Date());//用于转换当前日期
-                    String realPath = req.getServletContext().getRealPath("/ecoUpload");//此方法用于获取上传路径
-                    System.out.println("实际路径："+realPath);
-                    File folder = new File(realPath);
-                    if (!folder.exists()) {
-                        folder.mkdirs();
-                    }//无报错则上传成功
-                    file.transferTo(new File(folder,oldName));
-                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+"/"+ oldName;
-                    System.out.println(url);//真实存储的url
-                    String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\" + oldName;
-                    System.out.println("真实URL："+newUrl);
-                    //进行文件上传记录的存储
-                    FileInfo fileInfo = new FileInfo();
-                    fileInfo.setFileName(oldName);
-                    fileInfo.setFilePath(newUrl);
-                    fileInfo.setRelDocId(cid);
-                    fileInfo.setLastUpdateUser(userCode);
-                    fileInfo.setUpdatedTime(new Date());
-                    fileInfo.setKeyword(oldName);
-                    int num = fileInfoService.insertSelective(fileInfo);
-                    if (num>0){
-                        arr[3]=1;
-                    }
-                }else{
-                    return new ResultResponse(506,"上传文件格式不符合需求");
-                }
-            }
-
             if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
                 resultResponse = new ResultResponse(0,"提示信息：修改成功！");
                 return resultResponse;
@@ -490,7 +618,6 @@ public class CompanyController {
         //需要同时修改三张表的状态
         ResultResponse resultResponse = null;
         //获取公司对应的合作伙伴编号partnerNo
-        //Integer cid = epartner.getPartnerNo();
         Object[] data = hidePackage.getData();
         for (int i =0;i<=data.length-1;i++){
             System.out.println("公司数组："+data[i]);

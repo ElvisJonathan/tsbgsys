@@ -21,6 +21,8 @@ public class CompanyPackage {
 
     private UserInfo userInfo;
 
+    private Object[] fileName;
+
     public Epartner getEpartner() {
         return epartner;
     }
@@ -51,5 +53,13 @@ public class CompanyPackage {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public Object[] getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(Object[] fileName) {
+        this.fileName = fileName;
     }
 }
