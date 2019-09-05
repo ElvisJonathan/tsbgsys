@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.dto.EcTotalDto;
 import com.tsbg.ecosys.dto.EcTotalDtol;
@@ -7,6 +8,7 @@ import com.tsbg.ecosys.dto.EcTotal_Excel;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.Epartner;
+import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.serviceImpl.EcooperationService;
 import com.tsbg.ecosys.util.ExcelTimeUtils;
@@ -19,6 +21,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -75,17 +78,17 @@ public class EcController {
     @ApiOperation(value = "根据partnerNo导出Excel", notes = "根据partnerNo导出Excel")
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public void getEcooperationAll(Epartner epartner, HttpServletResponse response) throws IOException {
+    public void getEcooperationAll(HttpServletRequest req,HttpServletResponse response) throws IOException {
         //从前端获取添加的四个条件
-        String partnerName = epartner.getPartnerName();
-        String partnerProduct = epartner.getPartnerProduct();
-        String partnerRegion = epartner.getPartnerRegion();
-        String partnerIndustry = epartner.getPartnerIndustry();
-        //然后将他们添加到对象里面
-        epartner.setPartnerName(partnerName);
-        epartner.setPartnerProduct(partnerProduct);
-        epartner.setPartnerRegion(partnerRegion);
-        epartner.setPartnerIndustry(partnerIndustry);
+        String json = req.getParameter("partnerName");
+        String json2 = req.getParameter("partnerProduct");
+        String json3 = req.getParameter("partnerRegion");
+        String json4 = req.getParameter("partnerIndustry");
+        Epartner epartner = new Epartner();
+        epartner.setPartnerName(json);
+        epartner.setPartnerProduct(json2);
+        epartner.setPartnerRegion(json3);
+        epartner.setPartnerIndustry(json4);
         //设置服务器的编码
         response.setCharacterEncoding("utf-8");
         //根据epartner查询
