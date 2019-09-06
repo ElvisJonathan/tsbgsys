@@ -12,6 +12,8 @@ import java.util.List;
 public interface EccontactsMapper {
     int deleteByPrimaryKey(Integer contactId);
 
+    int deleteByPrimaryKey3(Integer partnerNo);
+
     int insert(Eccontacts record);
 
     int insertSelective(Eccontacts record);

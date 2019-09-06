@@ -89,6 +89,10 @@
     delete from eccontacts
     where contact_id = #{contactId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByPrimaryKey3" parameterType="java.lang.Integer" >
+    delete from eccontacts
+    WHERE partner_no = #{partnerNo,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.tsbg.ecosys.model.Eccontacts" >
     insert into eccontacts (contact_id, partner_no, partner_name,
       name, title, gender,

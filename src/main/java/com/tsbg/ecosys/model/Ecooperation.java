@@ -9,7 +9,7 @@ public class Ecooperation {
 
     private String partnerName;
 
-    private Date partnerCallintime;
+    private String partnerCallintime;
 
     private String partnerBdOwner;
 
@@ -69,14 +69,6 @@ public class Ecooperation {
 
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName == null ? null : partnerName.trim();
-    }
-
-    public Date getPartnerCallintime() {
-        return partnerCallintime;
-    }
-
-    public void setPartnerCallintime(Date partnerCallintime) {
-        this.partnerCallintime = partnerCallintime;
     }
 
     public String getPartnerBdOwner() {
@@ -221,5 +213,13 @@ public class Ecooperation {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getPartnerCallintime() {
+        return partnerCallintime;
+    }
+
+    public void setPartnerCallintime(String partnerCallintime) {
+        this.partnerCallintime = partnerCallintime;
     }
 }

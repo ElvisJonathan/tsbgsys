@@ -25,4 +25,6 @@ public interface EccontactsService {
     int updateByCid(@Param("status") int status, @Param("cid") int cid);
     //导出Excel查询所有
     List<Eccontacts> selecteccontactsExcellAll();
+
+    int deleteByPrimaryKey3(Integer partnerNo);
 }

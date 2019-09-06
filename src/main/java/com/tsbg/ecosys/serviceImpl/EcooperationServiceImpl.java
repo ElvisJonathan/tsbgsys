@@ -50,4 +50,9 @@ public class EcooperationServiceImpl implements EcooperationService {
         return ecooperationMapper.selectecooperationsExcellAll();
     }
 
+    @Override
+    public int deleteByPrimaryKey2(Integer partnerNo) {
+        return ecooperationMapper.deleteByPrimaryKey2(partnerNo);
+    }
+
 }

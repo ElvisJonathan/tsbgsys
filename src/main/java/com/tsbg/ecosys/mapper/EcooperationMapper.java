@@ -12,6 +12,8 @@ import java.util.List;
 public interface EcooperationMapper {
     int deleteByPrimaryKey(Integer coopId);
 
+    int deleteByPrimaryKey2(Integer partnerNo);
+
     int insert(Ecooperation record);
 
     int insertSelective(Ecooperation record);

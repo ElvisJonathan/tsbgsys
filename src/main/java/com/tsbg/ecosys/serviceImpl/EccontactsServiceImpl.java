@@ -51,4 +51,9 @@ public class EccontactsServiceImpl implements EccontactsService {
     public List<Eccontacts> selecteccontactsExcellAll() {
         return eccontactsMapper.selecteccontactsExcellAll();
     }
+
+    @Override
+    public int deleteByPrimaryKey3(Integer partnerNo) {
+        return eccontactsMapper.deleteByPrimaryKey3(partnerNo);
+    }
 }

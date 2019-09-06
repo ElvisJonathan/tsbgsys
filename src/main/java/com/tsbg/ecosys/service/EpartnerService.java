@@ -58,5 +58,5 @@ public interface EpartnerService {
     //查询全部导出Excel
     List<Epartner> selectepartnerExcellAll();
 
-
+    int deleteByPrimaryKey(Integer partnerNo);
 }

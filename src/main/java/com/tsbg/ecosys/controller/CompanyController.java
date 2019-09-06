@@ -178,6 +178,10 @@ public class CompanyController {
                 //重复文件名判断
                 int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
                 if (count > 0) {
+                    //如果文件存在则将之前新增的记录删除
+                    epartnerService.deleteByPrimaryKey(no);
+                    ecooperationService.deleteByPrimaryKey2(no);
+                    eccontactsService.deleteByPrimaryKey3(no);
                     return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
                 }
                 buffer.append(multipartFile.getOriginalFilename());
@@ -215,6 +219,10 @@ public class CompanyController {
                     int number = epartnerService.selectID();
                     System.out.println("刚刚增加成功的记录的编号为：" + number);
                 } else {
+                    //如果文件存在则将之前新增的记录删除
+                    epartnerService.deleteByPrimaryKey(no);
+                    ecooperationService.deleteByPrimaryKey2(no);
+                    eccontactsService.deleteByPrimaryKey3(no);
                     return new ResultResponse(505, "上传文件格式不符合需求");
                 }
             }

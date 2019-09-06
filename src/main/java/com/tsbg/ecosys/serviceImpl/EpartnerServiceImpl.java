@@ -92,6 +92,11 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
+    public int deleteByPrimaryKey(Integer partnerNo) {
+        return epartnerMapper.deleteByPrimaryKey(partnerNo);
+    }
+
+    @Override
     public List<Epartner> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return epartnerMapper.selectCinfoBypartnerCindustry(partnerCindustry);

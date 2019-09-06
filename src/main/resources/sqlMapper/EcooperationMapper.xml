@@ -5,7 +5,7 @@
     <id column="coop_id" property="coopId" jdbcType="INTEGER" />
     <result column="partner_no" property="partnerNo" jdbcType="INTEGER" />
     <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
-    <result column="partner_callintime" property="partnerCallintime" jdbcType="DATE" />
+    <result column="partner_callintime" property="partnerCallintime" jdbcType="VARCHAR" />
     <result column="partner_BD_owner" property="partnerBdOwner" jdbcType="VARCHAR" />
     <result column="partner_costage" property="partnerCostage" jdbcType="VARCHAR" />
     <result column="sign_contract" property="signContract" jdbcType="INTEGER" />
@@ -113,7 +113,7 @@
       updater, status, del_status,
       remark)
     values (#{coopId,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR},
-      #{partnerCallintime,jdbcType=DATE}, #{partnerBdOwner,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR},
+      #{partnerCallintime,jdbcType=VARCHAR}, #{partnerBdOwner,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR},
       #{signContract,jdbcType=INTEGER}, #{contractDate,jdbcType=VARCHAR}, #{entrust,jdbcType=INTEGER},
       #{entrustName,jdbcType=VARCHAR}, #{partnerAwarding,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR},
       #{coType,jdbcType=VARCHAR}, #{coProgress,jdbcType=VARCHAR}, #{fiiCodepartment,jdbcType=VARCHAR},
@@ -202,7 +202,7 @@
         #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerCallintime != null" >
-        #{partnerCallintime,jdbcType=DATE},
+        #{partnerCallintime,jdbcType=VARCHAR},
       </if>
       <if test="partnerBdOwner != null" >
         #{partnerBdOwner,jdbcType=VARCHAR},
@@ -270,7 +270,7 @@
         partner_name = #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerCallintime != null" >
-        partner_callintime = #{partnerCallintime,jdbcType=DATE},
+        partner_callintime = #{partnerCallintime,jdbcType=VARCHAR},
       </if>
       <if test="partnerBdOwner != null" >
         partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
@@ -339,7 +339,7 @@
         partner_name = #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerCallintime != null" >
-        partner_callintime = #{partnerCallintime,jdbcType=DATE},
+        partner_callintime = #{partnerCallintime,jdbcType=VARCHAR},
       </if>
       <if test="partnerBdOwner != null" >
         partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
@@ -402,7 +402,7 @@
     update ecooperation
     set partner_no = #{partnerNo,jdbcType=INTEGER},
       partner_name = #{partnerName,jdbcType=VARCHAR},
-      partner_callintime = #{partnerCallintime,jdbcType=DATE},
+      partner_callintime = #{partnerCallintime,jdbcType=VARCHAR},
       partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
       partner_costage = #{partnerCostage,jdbcType=VARCHAR},
       sign_contract = #{signContract,jdbcType=INTEGER},
@@ -462,7 +462,7 @@
         partner_name = #{record.partnerName,jdbcType=VARCHAR},
       </if>
       <if test="record.partnerCallintime != null">
-        partner_callintime = #{record.partnerCallintime,jdbcType=DATE},
+        partner_callintime = #{record.partnerCallintime,jdbcType=VARCHAR},
       </if>
       <if test="record.partnerBdOwner != null">
         partner_BD_owner = #{record.partnerBdOwner,jdbcType=VARCHAR},
@@ -525,7 +525,7 @@
     set coop_id = #{record.coopId,jdbcType=INTEGER},
     partner_no = #{record.partnerNo,jdbcType=INTEGER},
     partner_name = #{record.partnerName,jdbcType=VARCHAR},
-    partner_callintime = #{record.partnerCallintime,jdbcType=DATE},
+    partner_callintime = #{record.partnerCallintime,jdbcType=VARCHAR},
     partner_BD_owner = #{record.partnerBdOwner,jdbcType=VARCHAR},
     partner_costage = #{record.partnerCostage,jdbcType=VARCHAR},
     sign_contract = #{record.signContract,jdbcType=INTEGER},
@@ -574,4 +574,7 @@
     <include refid="Base_Column_List"/>
     FROM ecooperation where status=0 and del_status=0
   </select>
+  <delete id="deleteByPrimaryKey2" parameterType="java.lang.Integer" >
+    DELETE FROM ecooperation WHERE partner_no = #{partnerNo,jdbcType=INTEGER}
+  </delete>
 </mapper>

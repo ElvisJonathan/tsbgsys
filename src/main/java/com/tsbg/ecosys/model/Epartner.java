@@ -7,7 +7,7 @@ public class Epartner {
 
     private String partnerName;
 
-    private Date partnerDate;
+    private String partnerDate;
 
     private String partnerRegistcapital;
 
@@ -64,15 +64,6 @@ public class Epartner {
     public void setPartnerName(String partnerName) {
         this.partnerName = partnerName == null ? null : partnerName.trim();
     }
-
-    public Date getPartnerDate() {
-        return partnerDate;
-    }
-
-    public void setPartnerDate(Date partnerDate) {
-        this.partnerDate = partnerDate;
-    }
-
     public String getPartnerRegistcapital() {
         return partnerRegistcapital;
     }
@@ -231,5 +222,13 @@ public class Epartner {
 
     public void setCreaterIdentity(Integer createrIdentity) {
         this.createrIdentity = createrIdentity;
+    }
+
+    public String getPartnerDate() {
+        return partnerDate;
+    }
+
+    public void setPartnerDate(String partnerDate) {
+        this.partnerDate = partnerDate;
     }
 }

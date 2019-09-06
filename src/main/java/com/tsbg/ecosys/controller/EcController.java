@@ -235,7 +235,8 @@ public class EcController {
             if (epartner != null) {
                 row.createCell(13).setCellValue(epartner.getPartnerNo() == null ? "" : epartner.getPartnerNo().toString());
                 row.createCell(14).setCellValue(epartner.getPartnerName() == null ? "" : epartner.getPartnerName().toString());
-                row.createCell(15).setCellValue(epartner.getPartnerDate() == null ? "" : ExcelTimeUtils.getTimehhString(epartner.getPartnerDate()));
+                //row.createCell(15).setCellValue(epartner.getPartnerDate() == null ? "" : ExcelTimeUtils.getTimehhString(epartner.getPartnerDate()));
+                row.createCell(15).setCellValue(epartner.getPartnerDate() == null ? "" : epartner.getPartnerDate());
                 row.createCell(16).setCellValue(epartner.getPartnerRegistcapital() == null ? "" : epartner.getPartnerRegistcapital().toString());
                 row.createCell(17).setCellValue(epartner.getPartnerList() == null ? "" : epartner.getPartnerList().toString());
                 row.createCell(18).setCellValue(epartner.getPartnerScale() == null ? "" : epartner.getPartnerScale().toString());
@@ -270,7 +271,8 @@ public class EcController {
                 row.createCell(33).setCellValue(ecooperation.getCoopId() == null ? "" : ecooperation.getCoopId().toString());
                 row.createCell(34).setCellValue(ecooperation.getPartnerNo() == null ? "" : ecooperation.getPartnerNo().toString());
                 row.createCell(35).setCellValue(ecooperation.getPartnerName() == null ? "" : ecooperation.getPartnerName().toString());
-                row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" : ExcelTimeUtils.getTimehhString(ecooperation.getPartnerCallintime()));
+               // row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" : ExcelTimeUtils.getTimehhString(ecooperation.getPartnerCallintime()));
+                row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" :ecooperation.getPartnerCallintime());
                 row.createCell(37).setCellValue(ecooperation.getPartnerBdOwner() == null ? "" : ecooperation.getPartnerBdOwner().toString());
                 row.createCell(38).setCellValue(ecooperation.getPartnerCostage() == null ? "" : ecooperation.getPartnerCostage().toString());
                 row.createCell(39).setCellValue(ecooperation.getSignContract() == null ? "" : ecooperation.getSignContract().toString());
@@ -442,7 +444,8 @@ public class EcController {
             if (epartner != null) {
                 row.createCell(13).setCellValue(epartner.getPartnerNo() == null ? "" : epartner.getPartnerNo().toString());
                 row.createCell(14).setCellValue(epartner.getPartnerName() == null ? "" : epartner.getPartnerName().toString());
-                row.createCell(15).setCellValue(epartner.getPartnerDate() == null ? "" : ExcelTimeUtils.getTimehhString(epartner.getPartnerDate()));
+                //row.createCell(15).setCellValue(epartner.getPartnerDate() == null ? "" : ExcelTimeUtils.getTimehhString(epartner.getPartnerDate()));
+                row.createCell(15).setCellValue(epartner.getPartnerDate() == null ? "" : epartner.getPartnerDate());
                 row.createCell(16).setCellValue(epartner.getPartnerRegistcapital() == null ? "" : epartner.getPartnerRegistcapital().toString());
                 row.createCell(17).setCellValue(epartner.getPartnerList() == null ? "" : epartner.getPartnerList().toString());
                 row.createCell(18).setCellValue(epartner.getPartnerScale() == null ? "" : epartner.getPartnerScale().toString());
@@ -478,7 +481,8 @@ public class EcController {
                 row.createCell(33).setCellValue(ecooperation.getCoopId() == null ? "" : ecooperation.getCoopId().toString());
                 row.createCell(34).setCellValue(ecooperation.getPartnerNo() == null ? "" : ecooperation.getPartnerNo().toString());
                 row.createCell(35).setCellValue(ecooperation.getPartnerName() == null ? "" : ecooperation.getPartnerName().toString());
-                row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" : ExcelTimeUtils.getTimehhString(ecooperation.getPartnerCallintime()));
+                //row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" : ExcelTimeUtils.getTimehhString(ecooperation.getPartnerCallintime()));
+                row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" :ecooperation.getPartnerCallintime());
                 row.createCell(37).setCellValue(ecooperation.getPartnerBdOwner() == null ? "" : ecooperation.getPartnerBdOwner().toString());
                 row.createCell(38).setCellValue(ecooperation.getPartnerCostage() == null ? "" : ecooperation.getPartnerCostage().toString());
                 row.createCell(39).setCellValue(ecooperation.getSignContract() == null ? "" : ecooperation.getSignContract().toString());

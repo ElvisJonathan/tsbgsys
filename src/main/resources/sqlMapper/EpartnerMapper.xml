@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.tsbg.ecosys.model.Epartner" >
     <id column="partner_no" property="partnerNo" jdbcType="INTEGER" />
     <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
-    <result column="partner_date" property="partnerDate" jdbcType="DATE" />
+    <result column="partner_date" property="partnerDate" jdbcType="VARCHAR" />
     <result column="partner_registcapital" property="partnerRegistcapital" jdbcType="VARCHAR" />
     <result column="partner_list" property="partnerList" jdbcType="INTEGER" />
     <result column="partner_scale" property="partnerScale" jdbcType="VARCHAR" />
@@ -166,7 +166,7 @@
       del_status, create_time, update_time,
       creater,creater_identity, updater, remark,proj_id
       )
-    values (#{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR}, #{partnerDate,jdbcType=DATE},
+    values (#{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR}, #{partnerDate,jdbcType=VARCHAR},
       #{partnerRegistcapital,jdbcType=VARCHAR}, #{partnerList,jdbcType=INTEGER}, #{partnerScale,jdbcType=VARCHAR},
       #{partnerAddr,jdbcType=VARCHAR}, #{partnerWebddr,jdbcType=VARCHAR}, #{partnerTech,jdbcType=VARCHAR},
       #{partnerProduct,jdbcType=VARCHAR}, #{partnerChannel,jdbcType=VARCHAR}, #{partnerTurnover,jdbcType=VARCHAR},
@@ -256,7 +256,7 @@
         #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerDate != null" >
-        #{partnerDate,jdbcType=DATE},
+        #{partnerDate,jdbcType=VARCHAR},
       </if>
       <if test="partnerRegistcapital != null" >
         #{partnerRegistcapital,jdbcType=VARCHAR},
@@ -327,7 +327,7 @@
         partner_name = #{partnerName,jdbcType=VARCHAR},
       </if>
       <if test="partnerDate != null" >
-        partner_date = #{partnerDate,jdbcType=DATE},
+        partner_date = #{partnerDate,jdbcType=VARCHAR},
       </if>
       <if test="partnerRegistcapital != null" >
         partner_registcapital = #{partnerRegistcapital,jdbcType=VARCHAR},
@@ -395,7 +395,7 @@
   <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.model.Epartner" >
     update epartner
     set partner_name = #{partnerName,jdbcType=VARCHAR},
-      partner_date = #{partnerDate,jdbcType=DATE},
+      partner_date = #{partnerDate,jdbcType=VARCHAR},
       partner_registcapital = #{partnerRegistcapital,jdbcType=VARCHAR},
       partner_list = #{partnerList,jdbcType=INTEGER},
       partner_scale = #{partnerScale,jdbcType=VARCHAR},
@@ -460,7 +460,7 @@
         partner_name = #{record.partnerName,jdbcType=VARCHAR},
       </if>
       <if test="record.partnerDate != null">
-        partner_date = #{record.partnerDate,jdbcType=DATE},
+        partner_date = #{record.partnerDate,jdbcType=VARCHAR},
       </if>
       <if test="record.partnerRegistcapital != null">
         partner_registcapital = #{record.partnerRegistcapital,jdbcType=VARCHAR},
@@ -525,7 +525,7 @@
     update epartner
     set partner_no = #{record.partnerNo,jdbcType=INTEGER},
     partner_name = #{record.partnerName,jdbcType=VARCHAR},
-    partner_date = #{record.partnerDate,jdbcType=DATE},
+    partner_date = #{record.partnerDate,jdbcType=VARCHAR},
     partner_registcapital = #{record.partnerRegistcapital,jdbcType=VARCHAR},
     partner_list = #{record.partnerList,jdbcType=INTEGER},
     partner_scale = #{record.partnerScale,jdbcType=VARCHAR},
