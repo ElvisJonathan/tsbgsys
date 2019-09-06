@@ -104,4 +104,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public Integer selectStatusByUserCode(String userCode) {
         return userInfoMapper.selectStatusByUserCode(userCode);
     }
+
+    @Override
+    public Integer selectCountByUserCode(String userCode) {
+        return userInfoMapper.selectCountByUserCode(userCode);
+    }
 }

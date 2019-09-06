@@ -39,9 +39,15 @@ public class LoginController {
         String userPwd = userInfo.getUserPwd();
         //如果用户被停用则阻止其登录
         if (userCode!=null){
+            //查询工号是否存在
+            Integer count = userInfoService.selectCountByUserCode(userCode);
+            if (count==0){
+                resultResponse = new ResultResponse(501,"该工号未注册或不存在！");
+                return resultResponse;
+            }
             Integer status = userInfoService.selectStatusByUserCode(userCode);
             if (status==1){
-                resultResponse = new ResultResponse(501,"用户被管理员停用！");
+                resultResponse = new ResultResponse(502,"用户被管理员停用！");
                 return resultResponse;
             }
         }

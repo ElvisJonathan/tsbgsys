@@ -195,8 +195,13 @@ public class CompanyController {
                         || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
                         || Suffix.equals(".txt")) {
                     String realPath = req.getServletContext().getRealPath("/ecoUpload"+"/"+epartner.getPartnerName());//此方法用于获取上传路径
-                    System.out.println("实际路径：" + realPath);
-                    File folder = new File(realPath);
+                    //本地路径测试文件上传
+                    String Path = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName();
+                    System.out.println("本地实际路径：" + Path);
+                    //服务器路径测试文件上传
+                    String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
+                    System.out.println("服务器实际路径：" + Path2);
+                    File folder = new File(Path);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
@@ -204,12 +209,21 @@ public class CompanyController {
                     multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                     String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                     System.out.println(url);//真实存储的url
-                    String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                    System.out.println("真实URL：" + newUrl);
+                    //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                    //System.out.println("真实URL：" + newUrl);
+                    //本地路径测试文件上传
+                    String URL = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                    System.out.println("本地存储URL:"+URL);
+                    //服务器路径测试文件上传
+                    String URL2 = "/tmp/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                    System.out.println("服务器存储URL:"+URL2);
                     //进行文件上传记录的存储
                     FileInfo fileInfo = new FileInfo();
                     fileInfo.setFileName(multipartFile.getOriginalFilename());
-                    fileInfo.setFilePath(newUrl);
+                    //本地存储
+                    fileInfo.setFilePath(URL);
+                    //服务器存储   打包上去前需要置换
+                    //fileInfo.setFilePath(URL2);
                     fileInfo.setRelDocId(no);
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setLastUpdateUser(userCode);
@@ -449,8 +463,13 @@ public class CompanyController {
                                 || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
                                 || Suffix.equals(".txt")) {
                             String realPath = req.getServletContext().getRealPath("/ecoUpload"+"/"+epartner.getPartnerName());//此方法用于获取上传路径
-                            System.out.println("实际路径：" + realPath);
-                            File folder = new File(realPath);
+                            //本地路径测试文件上传
+                            String Path = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName();
+                            System.out.println("本地实际路径：" + Path);
+                            //服务器路径测试文件上传
+                            String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
+                            System.out.println("服务器实际路径：" + Path2);
+                            File folder = new File(Path);
                             if (!folder.exists()) {
                                 folder.mkdirs();
                             }//无报错则上传成功
@@ -458,12 +477,20 @@ public class CompanyController {
                             multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                             String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                             System.out.println(url);//真实存储的url
-                            String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"/"+epartner.getPartnerName() + "/" + multipartFile.getOriginalFilename();
-                            System.out.println("真实URL：" + newUrl);
+                           /* String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"/"+epartner.getPartnerName() + "/" + multipartFile.getOriginalFilename();
+                            System.out.println("真实URL：" + newUrl);*/
+                            //本地路径测试文件上传
+                            String URL = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                            System.out.println("本地存储URL:"+URL);
+                            //服务器路径测试文件上传
+                            String URL2 = "/tmp/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                            System.out.println("服务器存储URL:"+URL2);
                             //进行文件上传记录的存储
                             FileInfo fileInfo = new FileInfo();
                             fileInfo.setFileName(multipartFile.getOriginalFilename());
-                            fileInfo.setFilePath(newUrl);
+                            fileInfo.setFilePath(URL);
+                            //服务器存储   打包上去前需要置换
+                            //fileInfo.setFilePath(URL2);
                             fileInfo.setRelDocId(cid);
                             fileInfo.setUpdatedTime(new Date());
                             fileInfo.setLastUpdateUser(userCode);

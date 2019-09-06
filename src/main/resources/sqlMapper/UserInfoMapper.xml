@@ -354,4 +354,8 @@
     SELECT e.`status` FROM user_info AS e
      WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
+
+  <select id="selectCountByUserCode"  parameterType="String" resultType="java.lang.Integer">
+   SELECT COUNT(0) FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
+  </select>
 </mapper>

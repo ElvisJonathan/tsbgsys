@@ -70,4 +70,7 @@ public interface UserInfoMapper {
 
     //通过工号查询用户状态
     Integer selectStatusByUserCode(String userCode);
+
+    //根据工号查询是否存在该用户
+    Integer selectCountByUserCode(String userCode);
 }
