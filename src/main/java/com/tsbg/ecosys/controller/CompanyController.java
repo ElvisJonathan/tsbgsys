@@ -176,7 +176,7 @@ public class CompanyController {
             StringBuffer buffer = new StringBuffer();
             for (MultipartFile multipartFile : file) {
                 //重复文件名判断
-                int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
+                int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),no);
                 if (count > 0) {
                     //如果文件存在则将之前新增的记录删除
                     epartnerService.deleteByPrimaryKey(no);
@@ -201,7 +201,7 @@ public class CompanyController {
                     //服务器路径测试文件上传
                     String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
                     System.out.println("服务器实际路径：" + Path2);
-                    File folder = new File(Path);//此处打包上去之前需要置换路径
+                    File folder = new File(Path2);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
@@ -221,9 +221,9 @@ public class CompanyController {
                     FileInfo fileInfo = new FileInfo();
                     fileInfo.setFileName(multipartFile.getOriginalFilename());
                     //本地存储
-                    fileInfo.setFilePath(URL);
+                    //fileInfo.setFilePath(URL);
                     //服务器存储   打包上去前需要置换
-                    //fileInfo.setFilePath(URL2);
+                    fileInfo.setFilePath(URL2);
                     fileInfo.setRelDocId(no);
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setLastUpdateUser(userCode);
@@ -445,16 +445,20 @@ public class CompanyController {
                     //如果文件被删除则查询出被删除的文件名修改其状态
                     //根据当前文件名查询文件编号
                     //根据公司合作伙伴编号和文件名查询附件是否未修改
-                    int number = fileInfoService.judgeIfFileChanged(cid, name);
+                    /*int number = fileInfoService.judgeIfFileChanged(cid, name);
                     if (number > 0) {
                         //说明文件未修改 默认跳过修改返回修改成功
                         arr[3] = 1;
-                    }else{
+                    }else{*/
                         //说明有多的文件需要上传
                         //重复文件名判断
-                        int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
-                        if (count > 0) {
-                            return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
+                        int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),cid);
+                        //如果文件为删除状态则还可以上传
+                    List<Integer> count2=  fileInfoService.selectFileStatusByFileName(multipartFile.getOriginalFilename(),cid);
+                        for (int i=0;i<=count2.size()-1;i++){
+                            if (count > 0 && count2.get(i)==0) {
+                                return new ResultResponse(501, "文件已存在，请选择其他文件上传!");
+                            }
                         }
                         String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                         System.out.println("文件后缀：" + Suffix);
@@ -469,7 +473,7 @@ public class CompanyController {
                             //服务器路径测试文件上传
                             String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
                             System.out.println("服务器实际路径：" + Path2);
-                            File folder = new File(Path);
+                            File folder = new File(Path2);
                             if (!folder.exists()) {
                                 folder.mkdirs();
                             }//无报错则上传成功
@@ -488,25 +492,25 @@ public class CompanyController {
                             //进行文件上传记录的存储
                             FileInfo fileInfo = new FileInfo();
                             fileInfo.setFileName(multipartFile.getOriginalFilename());
-                            fileInfo.setFilePath(URL);
+                            //fileInfo.setFilePath(URL);
                             //服务器存储   打包上去前需要置换
-                            //fileInfo.setFilePath(URL2);
+                            fileInfo.setFilePath(URL2);
                             fileInfo.setRelDocId(cid);
                             fileInfo.setUpdatedTime(new Date());
                             fileInfo.setLastUpdateUser(userCode);
                             fileInfo.setKeyword(multipartFile.getOriginalFilename());
                             fileInfoService.insertSelective(fileInfo);
                             //查询出当前成功文件的编号
-                            int count2 = epartnerService.selectID();
-                            System.out.println("刚刚增加成功的记录的编号为：" + count2);
+                            int count3 = epartnerService.selectID();
+                            System.out.println("刚刚增加成功的记录的编号为：" + count3);
                         } else {
                             return new ResultResponse(506, "上传文件格式不符合需求");
                         }
-                    }
+                    //}
                 }
             }
 
-            if (arr[0]==1 && arr[1]==1 && arr[2]==1 || arr[3]==1){
+            if (arr[0]==1 && arr[1]==1 && arr[2]==1){
                 resultResponse = new ResultResponse(0,"提示信息：修改成功！");
                 return resultResponse;
             }
@@ -602,10 +606,12 @@ public class CompanyController {
                 for (Object file : fileName) {
                     //如果文件被删除则查询出被删除的文件名修改其状态
                     //根据当前文件名查询文件编号
-                    Integer num2 = fileInfoService.selectFileIdByFileName(file.toString());
-                    if (list2.contains(num2)){
-                        System.out.println("该文件被包含，文件名为："+file.toString());
-                       list2.remove(num2);
+                    List<Integer> num2 = fileInfoService.selectFileIdByFileName(file.toString());
+                    for (int i=0;i<=num2.size()-1;i++){
+                        if (list2.contains(num2.get(i))){
+                            System.out.println("该文件被包含，文件名为："+file.toString());
+                            list2.remove(num2.get(i));
+                        }
                     }
                 }
                 System.out.println("LIST2:"+list2.toString());

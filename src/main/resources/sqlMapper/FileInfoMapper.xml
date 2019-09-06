@@ -174,8 +174,8 @@
       remark = #{remark,jdbcType=VARCHAR}
     where file_id = #{fileId,jdbcType=INTEGER}
   </update>
-  <select id="selectFileCountByFileName" resultType="int" parameterType="String" >
-    SELECT COUNT(0) FROM file_info WHERE file_name = #{filename,jdbcType=VARCHAR};
+  <select id="selectFileCountByFileName" resultType="int">
+    SELECT COUNT(0) FROM file_info WHERE file_name = #{filename,jdbcType=VARCHAR} AND STATUS=0 AND rel_doc_id= #{partnerNo,jdbcType=INTEGER};
   </select>
   <select id="judgeIfFileChanged" resultType="int">
     SELECT COUNT(0) FROM file_info AS f WHERE f.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER}
@@ -191,7 +191,7 @@
     UPDATE file_info AS a SET a.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER},a.`last_update_user`=#{updater,jdbcType=VARCHAR} WHERE a.`file_id`=#{fileId,jdbcType=INTEGER};
   </update>
   <select id="selectRealPathByName" resultType="String" parameterType="String">
-    SELECT a.`file_path` FROM file_info AS a WHERE a.`keyword` = #{fileName,jdbcType=VARCHAR};
+    SELECT a.`file_path` FROM file_info AS a WHERE a.`file_name` = #{fileName,jdbcType=VARCHAR} AND a.`status`=0
   </select>
   <select id="selectFileListByNo" resultType="String" parameterType="java.lang.Integer">
     SELECT a.`file_name` FROM file_info AS a WHERE a.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER} AND STATUS=0;
@@ -206,4 +206,7 @@
     UPDATE file_info AS a SET a.`status`=1
      WHERE a.`file_id`=#{fileNo,jdbcType=INTEGER};
   </update>
+  <select id="selectFileStatusByFileName" resultType="java.lang.Integer">
+    SELECT STATUS FROM file_info WHERE file_name=#{fileName,jdbcType=VARCHAR} AND rel_doc_id=#{partnerNo,jdbcType=INTEGER};
+  </select>
 </mapper>

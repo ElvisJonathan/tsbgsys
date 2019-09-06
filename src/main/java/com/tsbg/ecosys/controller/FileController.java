@@ -59,10 +59,10 @@ public class FileController {
             String oldName = file.getOriginalFilename();
             System.out.println("原始文件名：" + oldName);
             //进行重复文件名判断
-            int count = fileInfoService.selectFileCountByFileName(oldName);
+            /*int count = fileInfoService.selectFileCountByFileName(oldName);
             if (count > 0) {
                 return new ResultResponse(501, "该文件已存在，请选择其他文件上传!");
-            }
+            }*/
             String Suffix = oldName.substring(oldName.lastIndexOf("."));
             System.out.println("文件后缀：" + Suffix);
             if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
@@ -107,10 +107,10 @@ public class FileController {
         // int[] array = new int[file.length];
          for (MultipartFile multipartFile : file) {
              //重复文件名判断
-             int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
+             /*int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
              if (count > 0) {
                  return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
-             }
+             }*/
              buffer.append(multipartFile.getOriginalFilename());
              buffer.append(",");
              String all = buffer.substring(0, buffer.length() - 1);
