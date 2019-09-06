@@ -51,8 +51,16 @@ public class EcooperationServiceImpl implements EcooperationService {
     }
 
     @Override
+<<<<<<< Updated upstream
     public int deleteByPrimaryKey2(Integer partnerNo) {
         return ecooperationMapper.deleteByPrimaryKey2(partnerNo);
     }
 
+=======
+    public List<Ecooperation> selectEcooperationByCidl(String partnerName) {
+        return ecooperationMapper.selectEcooperationByCidl(partnerName);
+    }
+
+
+>>>>>>> Stashed changes
 }

@@ -74,15 +74,9 @@ public class EccontactsService {
         EccontactsExample example = new EccontactsExample();
         EccontactsExample.Criteria criteria = example.createCriteria();
 
-        //===============Base Condition Start==============
         if (condition.getCcid() != null) {
             criteria.andCcidEqualTo(condition.getCcid());
         }
-
-        //===============Base Condition End==============
-
-
-
         return example;
     }
 

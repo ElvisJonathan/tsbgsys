@@ -1,6 +1,5 @@
 package com.tsbg.ecosys.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.dto.EcTotalDto;
 import com.tsbg.ecosys.dto.EcTotalDtol;
@@ -42,44 +41,43 @@ public class EcController {
     private EpartnerService epartnerService;
 
     @ApiOperation(value = "查询合作伙伴信息", notes = "查询合作伙伴信息")
-    @RequestMapping(value = "/total", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/total", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse getEcooperationList(@RequestBody Epartner epartner){
+    public ResultResponse getEcooperationList(@RequestBody Epartner epartner) {
         //获取公司合作伙伴编号
         Integer cid = epartner.getPartnerNo();
         //根据合作伙伴编号同步查询合作情况与联系人
-        if (cid!=null){
+        if (cid != null) {
             List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList(cid);
-            return new ResultResponse(0,"根据PartnerNo查询",ecTotalDtoList);
+            return new ResultResponse(0, "根据PartnerNo查询", ecTotalDtoList);
         }
-        return new ResultResponse(500,"未收到PartnerNo");
+        return new ResultResponse(500, "未收到PartnerNo");
     }
 
     /**
      * 查询公司文件
      */
-    @RequestMapping(value = "/filedetail", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/filedetail", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse getFileDetail(@RequestBody Epartner epartner){
+    public ResultResponse getFileDetail(@RequestBody Epartner epartner) {
         Integer partnerNo = epartner.getPartnerNo();
-        if (partnerNo!=null){
+        if (partnerNo != null) {
             //查询当前公司的文件详情
             List<String> filelist = epartnerService.selectFileByParNo(partnerNo);
             List<String> filelist2 = epartnerService.selectFileByParNo2(partnerNo);
-            if (filelist!=null){
-                return new ResultResponse(0,"查询公司文件(公司隐藏情况下文件也隐藏)",filelist,filelist2);
+            if (filelist != null) {
+                return new ResultResponse(0, "查询公司文件(公司隐藏情况下文件也隐藏)", filelist, filelist2);
             }
-            return new ResultResponse(500,"未查到相关文件");
+            return new ResultResponse(500, "未查到相关文件");
         }
-        return new ResultResponse(501,"未收到PartnerNo");
+        return new ResultResponse(501, "未收到PartnerNo");
     }
 
-    //根据查询条件导出Excel(条件partnerNo=5&partnerName=aaa&&partnerProduct=aaa&partnerRegion=aaa&partnerIndustry=aaa)and status=0 and del_status=0才能导出
-    @ApiOperation(value = "根据partnerNo导出Excel", notes = "根据partnerNo导出Excel")
-    @RequestMapping(value = "/totalo", method = { RequestMethod.GET, RequestMethod.POST })
+    //根据查询条件导出Excel(条件Epartner表查&partnerName=aaa&&partnerProduct=aaa&partnerRegion=aaa&partnerIndustry=aaa)and status=0 and del_status=0才能导出
+    @RequestMapping(value = "/totalo", method = { RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    public void getEcooperationAll(HttpServletRequest req,HttpServletResponse response) throws IOException {
-        //从前端获取添加的四个条件
+    public void getEcooperationAll(HttpServletRequest req, HttpServletResponse response) throws IOException {
+      /* //从前端获取添加的四个条件进行查询*/
         String json = req.getParameter("partnerName");
         String json2 = req.getParameter("partnerProduct");
         String json3 = req.getParameter("partnerRegion");
@@ -91,13 +89,13 @@ public class EcController {
         epartner.setPartnerIndustry(json4);
         //设置服务器的编码
         response.setCharacterEncoding("utf-8");
-        //根据epartner查询
         List<EcTotalDtol> ecTotalDtoList = ecooperationService.getEcooperationListall(epartner);
-        export(response,ecTotalDtoList);
-        }
+        export(response, ecTotalDtoList);
+    }
+
 
     //全部导出Excel（只导出status=0 and del_status=0）
-    @RequestMapping(value = "/exportall")
+    @RequestMapping(value = "/exportall", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public void exportAll(HttpServletResponse response) throws IOException {
         EcTotal_Excel epartnerList = ecooperationService.getEpartnerList();
@@ -297,7 +295,6 @@ public class EcController {
         //列宽自适应
         for (int i = 0; i <= 52; i++) {
             sheet.autoSizeColumn(i);
-//            sheet.getColumnWidth(4, 20*256);
         }
         response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
