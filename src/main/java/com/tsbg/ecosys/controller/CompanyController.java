@@ -223,7 +223,7 @@ public class CompanyController {
             resultResponse = new ResultResponse(0, "提示信息：新增成功！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(501, "提示信息：新增失败或不完全成功！");
+        resultResponse = new ResultResponse(501, "提示信息：新增失败！");
         return resultResponse;
     }
 
@@ -370,8 +370,8 @@ public class CompanyController {
         //获取当前修改人
         String userName= userInfo.getUserName();
         String userCode = userInfo.getUserCode();
-        System.out.println("修改人："+userName);
-        System.out.println("工号："+userCode);
+        System.out.println("修改者："+userName);
+        System.out.println("获取的工号："+userCode);
         if(cid!=null){
             if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
                     && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
@@ -460,13 +460,10 @@ public class CompanyController {
                             fileInfo.setUpdatedTime(new Date());
                             fileInfo.setLastUpdateUser(userCode);
                             fileInfo.setKeyword(multipartFile.getOriginalFilename());
-                            int num = fileInfoService.insertSelective(fileInfo);
+                            fileInfoService.insertSelective(fileInfo);
                             //查询出当前成功文件的编号
                             int count2 = epartnerService.selectID();
                             System.out.println("刚刚增加成功的记录的编号为：" + count2);
-                            if (num>0){
-                                arr[3]=1;
-                            }
                         } else {
                             return new ResultResponse(506, "上传文件格式不符合需求");
                         }
@@ -474,12 +471,10 @@ public class CompanyController {
                 }
             }
 
-            if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
+            if (arr[0]==1 && arr[1]==1 && arr[2]==1 || arr[3]==1){
                 resultResponse = new ResultResponse(0,"提示信息：修改成功！");
                 return resultResponse;
             }
-            resultResponse = new ResultResponse(508,"提示信息：修改不彻底！");
-            return resultResponse;
         }
         resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
         return resultResponse;
@@ -495,11 +490,7 @@ public class CompanyController {
     public ResultResponse modifyCom2(@RequestBody CompanyPackage filePackage, HttpServletRequest req){
         ResultResponse resultResponse = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
-        //成功获取的对象数据
         Object[] fileName = filePackage.getFileName();
-        /*for (int i=0;i<=fileName.length-1;i++){
-            System.out.println("文件名列表："+fileName[i]);
-        }*/
         Epartner epartner = filePackage.getEpartner();
         if (epartner==null){
             resultResponse = new ResultResponse(502,"提示信息：公司合作关系信息为空异常！");
@@ -584,27 +575,18 @@ public class CompanyController {
                 }
                 System.out.println("LIST2:"+list2.toString());
                 //根据剩余的编号修改状态
-                int num =0 ;
                 for (int i=0;i<=list2.size()-1;i++){
                     //看看是否剩下的编号都被修改了
-                   num = fileInfoService.updateFileStatusByFileNo(list2.get(i));
-                }
-                if (num>0){
-                    arr[3]=1;
+                   fileInfoService.updateFileStatusByFileNo(list2.get(i));
                 }
             }else{
                 //此处进行文件的删除:如果没有收到文件证明文件已被删除
-                int num = epartnerService.deleteFileByParNo(cid);
-                if (num>0){
-                    arr[3]=1;
-                }
+                epartnerService.deleteFileByParNo(cid);
             }
-            if (arr[0]==1 && arr[1]==1 && arr[2]==1 && arr[3]==1){
+            if (arr[0]==1 && arr[1]==1 && arr[2]==1){
                 resultResponse = new ResultResponse(0,"提示信息：修改成功！");
                 return resultResponse;
             }
-            resultResponse = new ResultResponse(508,"提示信息：修改不彻底！");
-            return resultResponse;
         }
         resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
         return resultResponse;
@@ -644,11 +626,8 @@ public class CompanyController {
                     resultResponse = new ResultResponse(0,"提示信息：删除成功！");
                     return resultResponse;
                 }
-                resultResponse = new ResultResponse(500,"提示信息：删除不彻底！");
-                return resultResponse;
             }
             resultResponse = new ResultResponse(501,"提示信息：删除失败！");
             return resultResponse;
-
     }
 }

@@ -60,5 +60,5 @@ public interface UserInfoService {
     int selectIdentityByUserCode(String userCode);
 
     //通过工号查询用户状态
-    int selectStatusByUserCode(String userCode);
+    Integer selectStatusByUserCode(String userCode);
 }

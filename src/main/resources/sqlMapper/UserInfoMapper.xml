@@ -350,7 +350,7 @@
     SELECT a.`is_manager` FROM user_info AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
 
-  <select id="selectStatusByUserCode"  parameterType="String" resultType="int">
+  <select id="selectStatusByUserCode"  parameterType="String" resultType="java.lang.Integer">
     SELECT e.`status` FROM user_info AS e
      WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>

@@ -101,7 +101,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public int selectStatusByUserCode(String userCode) {
+    public Integer selectStatusByUserCode(String userCode) {
         return userInfoMapper.selectStatusByUserCode(userCode);
     }
 }
