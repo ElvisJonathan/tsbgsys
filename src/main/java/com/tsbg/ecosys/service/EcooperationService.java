@@ -22,11 +22,9 @@ public interface EcooperationService {
     int updateByCid(@Param("status") int status, @Param("cid") int cid);
     //查询全部导出Excel
     List<Ecooperation> selectecooperationsExcellAll();
-<<<<<<< Updated upstream
 
     int deleteByPrimaryKey2(Integer partnerNo);
-=======
+
     //根据查询条件导出Excel
     List<Ecooperation> selectEcooperationByCidl(String partnerName);
->>>>>>> Stashed changes
 }

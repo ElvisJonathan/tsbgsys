@@ -26,7 +26,7 @@ public interface FileInfoService {
     int updateRecord(@Param("partnerNo")int partnerNo,@Param("updater")String updater,@Param("fileId")int fileId);
 
     //通过文件名查询文件路径
-    String selectRealPathByName(String fileName);
+    String selectRealPathByName(String fileName,Integer partnerNo);
 
     //根据公司编号查询文件列表
     List<String> selectFileListByNo(Integer partnerNo);

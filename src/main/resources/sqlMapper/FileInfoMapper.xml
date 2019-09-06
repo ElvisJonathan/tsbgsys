@@ -190,8 +190,9 @@
   <update id="updateRecord">
     UPDATE file_info AS a SET a.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER},a.`last_update_user`=#{updater,jdbcType=VARCHAR} WHERE a.`file_id`=#{fileId,jdbcType=INTEGER};
   </update>
-  <select id="selectRealPathByName" resultType="String" parameterType="String">
+  <select id="selectRealPathByName" resultType="String">
     SELECT a.`file_path` FROM file_info AS a WHERE a.`file_name` = #{fileName,jdbcType=VARCHAR} AND a.`status`=0
+    AND a.`rel_doc_id`= #{partnerNo,jdbcType=INTEGER};
   </select>
   <select id="selectFileListByNo" resultType="String" parameterType="java.lang.Integer">
     SELECT a.`file_name` FROM file_info AS a WHERE a.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER} AND STATUS=0;

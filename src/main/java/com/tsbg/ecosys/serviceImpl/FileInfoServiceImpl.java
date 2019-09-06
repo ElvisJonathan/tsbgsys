@@ -46,8 +46,8 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     @Override
-    public String selectRealPathByName(String fileName) {
-        return fileInfoMapper.selectRealPathByName(fileName);
+    public String selectRealPathByName(String fileName, Integer partnerNo) {
+        return fileInfoMapper.selectRealPathByName(fileName,partnerNo);
     }
 
     @Override

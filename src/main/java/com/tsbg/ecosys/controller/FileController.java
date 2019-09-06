@@ -173,11 +173,19 @@ public class FileController {
      */
     @RequestMapping(value = "/testdownload", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Object downloadFile(final HttpServletResponse response, final HttpServletRequest request){
+    public Object downloadFile(@RequestBody Epartner epartner,HttpServletResponse response, HttpServletRequest request){
         String fileName = request.getParameter("fileName");
+        if (fileName==null){
+            return "未收到文件名";
+        }
         System.out.println("文件名："+fileName);
+        Integer partnerNo = epartner.getPartnerNo();
+        if (partnerNo==null){
+            return "未收到公司编号";
+        }
+        System.out.println("收到公司编号为："+partnerNo);
         //根据文件名去数据库查询URL
-        String name = fileInfoService.selectRealPathByName(fileName);
+        String name = fileInfoService.selectRealPathByName(fileName,partnerNo);
         //String newUrl = request.getServletContext().getRealPath("/ecoUpload")+"\\" + fileName;
         System.out.println("真实URL："+name);
         if (name==null){
