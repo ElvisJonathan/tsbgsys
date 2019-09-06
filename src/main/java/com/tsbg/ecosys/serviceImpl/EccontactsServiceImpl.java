@@ -53,7 +53,15 @@ public class EccontactsServiceImpl implements EccontactsService {
     }
 
     @Override
+<<<<<<< Updated upstream
     public int deleteByPrimaryKey3(Integer partnerNo) {
         return eccontactsMapper.deleteByPrimaryKey3(partnerNo);
     }
+=======
+    public List<Eccontacts> selectEccontactsByCidl(String partnerName) {
+        return eccontactsMapper.selectEccontactsByCidl(partnerName);
+    }
+
+
+>>>>>>> Stashed changes
 }

@@ -21,10 +21,14 @@ public interface EccontactsService {
     int updateStatusByCid(int partnerNo);
 
     List<Eccontacts> selectByPartnerNo(Integer partnerNo);
-
     int updateByCid(@Param("status") int status, @Param("cid") int cid);
     //导出Excel查询所有
     List<Eccontacts> selecteccontactsExcellAll();
+<<<<<<< Updated upstream
 
     int deleteByPrimaryKey3(Integer partnerNo);
+=======
+    //根据查询条件导出Excel
+    List<Eccontacts> selectEccontactsByCidl(String partnerName);
+>>>>>>> Stashed changes
 }

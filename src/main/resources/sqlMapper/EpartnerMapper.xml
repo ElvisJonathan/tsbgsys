@@ -577,6 +577,6 @@
   <select id="selectepartnerExcellAll" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
-    FROM epartner where status=0 and del_status=0
+    FROM epartner where status=0 AND del_status=0
   </select>
 </mapper>

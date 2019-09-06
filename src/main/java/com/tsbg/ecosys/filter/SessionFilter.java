@@ -58,7 +58,6 @@ public class SessionFilter extends BaseController implements Filter {
             return;
         }
 
-        //应该是请求的时候需要带一个参数，浏览器直接访问不行，要用postman哦哦 那你帮我弄下我有那个软件
         String liteToken = httpServletRequest.getHeader("Token");
 
         LOG.info("liteToken = [{}]", liteToken);
@@ -88,7 +87,6 @@ public class SessionFilter extends BaseController implements Filter {
     private void initIgnoreUrl() {
         //login
         ignoreUrlList.add("http://localhost:80/eco/tsbg/login/ecologin");
-
     }
 }
 
