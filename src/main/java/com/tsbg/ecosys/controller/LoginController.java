@@ -37,6 +37,14 @@ public class LoginController {
         //获取用户在前台输入的用户名和密码
         String userCode = userInfo.getUserCode();
         String userPwd = userInfo.getUserPwd();
+        //如果用户被停用则阻止其登录
+        if (userCode!=null){
+            Integer status = userInfoService.selectStatusByUserCode(userCode);
+            if (status==1){
+                resultResponse = new ResultResponse(501,"用户被管理员停用！");
+                return resultResponse;
+            }
+        }
         //登录时需要进行密码的判断：如果密码为工号+"123"的形式则提示用户修改密码
         if (userPwd!=null){
             if (userPwd.equals(userCode+"123")){
