@@ -38,9 +38,9 @@ public class JurisdictionController {
         ResultResponse resultResponse = null;
         //获取前端传来的工号
         String userCode = userInfo.getUserCode();
-        //根据工号查询用户状态
-        Integer status = userInfoService.selectStatusByUserCode(userCode);
         if (userCode!=null){
+            //根据工号查询用户状态
+            Integer status = userInfoService.selectStatusByUserCode(userCode);
             //通过userCode查询当前用户的user_id
             Integer uid = userInfoService.selectuidbyuserCode(userCode);
             //通过userCode查询当前用户的userName

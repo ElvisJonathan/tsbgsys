@@ -116,7 +116,7 @@
             role.role
         FROM
             user_info
-        RIGHT JOIN user_role ON user_info.user_id = user_role.role_id
+        RIGHT JOIN user_role ON user_info.user_id = user_role.user_id
         LEFT JOIN role ON user_role.role_id = role.roleid
         WHERE user_code=#{userCode};
     </select>

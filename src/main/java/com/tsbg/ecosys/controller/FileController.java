@@ -77,7 +77,7 @@ public class FileController {
                 }//无报错则上传成功
                 //获取上传者
                 file.transferTo(new File(folder, oldName));
-                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload/" + oldName;
+                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+"/" + oldName;
                 System.out.println(url);//真实存储的url
                 //进行文件上传记录的存储
                 FileInfo fileInfo = new FileInfo();
@@ -131,7 +131,7 @@ public class FileController {
                  multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                  String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload"+"/"+ multipartFile.getOriginalFilename();
                  System.out.println(url);//真实存储的url
-                 String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\" + multipartFile.getOriginalFilename();
+                 String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"/" + multipartFile.getOriginalFilename();
                  System.out.println("真实URL："+newUrl);
                  //进行文件上传记录的存储
                  FileInfo fileInfo = new FileInfo();

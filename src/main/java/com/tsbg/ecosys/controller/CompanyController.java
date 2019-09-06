@@ -114,6 +114,8 @@ public class CompanyController {
         //获取当前添加人
         String userName= userInfo.getUserName();
         String userCode= userInfo.getUserCode();
+        //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有add权限
+
         //初始化公司id为0
         int no = 0;
         //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
@@ -198,7 +200,7 @@ public class CompanyController {
                     multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                     String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                     System.out.println(url);//真实存储的url
-                    String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"\\"+epartner.getPartnerName()+"\\" + multipartFile.getOriginalFilename();
+                    String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
                     System.out.println("真实URL：" + newUrl);
                     //进行文件上传记录的存储
                     FileInfo fileInfo = new FileInfo();
@@ -448,7 +450,7 @@ public class CompanyController {
                             multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                             String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                             System.out.println(url);//真实存储的url
-                            String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"\\"+epartner.getPartnerName() + "\\" + multipartFile.getOriginalFilename();
+                            String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"/"+epartner.getPartnerName() + "/" + multipartFile.getOriginalFilename();
                             System.out.println("真实URL：" + newUrl);
                             //进行文件上传记录的存储
                             FileInfo fileInfo = new FileInfo();
