@@ -173,20 +173,16 @@ public class FileController {
      */
     @RequestMapping(value = "/testdownload", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Object downloadFile(@RequestBody Epartner epartner,HttpServletResponse response, HttpServletRequest request){
+    public Object downloadFile(HttpServletResponse response, HttpServletRequest request){
         String fileName = request.getParameter("fileName");
         if (fileName==null){
             return "未收到文件名";
         }
         System.out.println("文件名："+fileName);
-        Integer partnerNo = epartner.getPartnerNo();
-        if (partnerNo==null){
-            return "未收到公司编号";
-        }
+        Integer partnerNo=Integer.parseInt(request.getParameter("partnerNo"));
         System.out.println("收到公司编号为："+partnerNo);
         //根据文件名去数据库查询URL
         String name = fileInfoService.selectRealPathByName(fileName,partnerNo);
-        //String newUrl = request.getServletContext().getRealPath("/ecoUpload")+"\\" + fileName;
         System.out.println("真实URL："+name);
         if (name==null){
             System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
@@ -201,7 +197,6 @@ public class FileController {
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
             response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
-            //String rootPath = "C://Users/Administrator/AppData/Local/Temp/tomcat-docbase.5185449430869371222.80/ecoUpload/";
             //读取流
             File f = new File(name);
             is = new FileInputStream(f);
