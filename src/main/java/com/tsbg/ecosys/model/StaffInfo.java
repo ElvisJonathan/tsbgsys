@@ -9,6 +9,8 @@ public class StaffInfo {
 
     private String staffName;
 
+    private String factoryLocation;
+
     private String bg;
 
     private String bu;
@@ -18,6 +20,8 @@ public class StaffInfo {
     private String departCode;
 
     private String costCode;
+
+    private String legalPerson;
 
     private Integer gender;
 
@@ -161,5 +165,22 @@ public class StaffInfo {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+
+    public String getFactoryLocation() {
+        return factoryLocation;
+    }
+
+    public void setFactoryLocation(String factoryLocation) {
+        this.factoryLocation = factoryLocation;
+    }
+
+    public String getLegalPerson() {
+        return legalPerson;
+    }
+
+    public void setLegalPerson(String legalPerson) {
+        this.legalPerson = legalPerson;
     }
 }

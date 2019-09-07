@@ -5,11 +5,13 @@
     <id column="staff_id" property="staffId" jdbcType="INTEGER" />
     <result column="staff_code" property="staffCode" jdbcType="VARCHAR" />
     <result column="staff_name" property="staffName" jdbcType="VARCHAR" />
+    <result column="factory_location" property="factoryLocation" jdbcType="VARCHAR" />
     <result column="BG" property="bg" jdbcType="VARCHAR" />
     <result column="BU" property="bu" jdbcType="VARCHAR" />
     <result column="department" property="department" jdbcType="VARCHAR" />
     <result column="depart_code" property="departCode" jdbcType="VARCHAR" />
     <result column="cost_code" property="costCode" jdbcType="VARCHAR" />
+    <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="INTEGER" />
     <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
     <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
@@ -20,7 +22,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    staff_id, staff_code, staff_name, BG, BU, department, depart_code, cost_code, gender,
+    staff_id, staff_code, staff_name,factory_location,BG, BU, department, depart_code, cost_code,legal_person,gender,
     phone_number, email_address, create_time, update_time, creater, updater, status
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -34,15 +36,15 @@
     where staff_id = #{staffId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tsbg.ecosys.model.StaffInfo" >
-    insert into staff_info (staff_id, staff_code, staff_name,
+    insert into staff_info (staff_id, staff_code, staff_name,factory_location,
       BG, BU, department,
-      depart_code, cost_code, gender,
+      depart_code, cost_code,legal_person,gender,
       phone_number, email_address, create_time,
       update_time, creater, updater,
       status)
-    values (#{staffId,jdbcType=INTEGER}, #{staffCode,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR},
+    values (#{staffId,jdbcType=INTEGER}, #{staffCode,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR},#{factoryLocation,jdbcType=VARCHAR},
       #{bg,jdbcType=VARCHAR}, #{bu,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR},
-      #{departCode,jdbcType=VARCHAR}, #{costCode,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER},
+      #{departCode,jdbcType=VARCHAR}, #{costCode,jdbcType=VARCHAR},#{legalPerson,jdbcType=VARCHAR},#{gender,jdbcType=INTEGER},
       #{phoneNumber,jdbcType=VARCHAR}, #{emailAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE},
       #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR},
       #{status,jdbcType=INTEGER})
@@ -59,6 +61,9 @@
       <if test="staffName != null" >
         staff_name,
       </if>
+      <if test="factoryLocation != null" >
+        factory_location,
+      </if>
       <if test="bg != null" >
         BG,
       </if>
@@ -73,6 +78,9 @@
       </if>
       <if test="costCode != null" >
         cost_code,
+      </if>
+      <if test="legalPerson != null" >
+        legal_person,
       </if>
       <if test="gender != null" >
         gender,
@@ -109,6 +117,9 @@
       <if test="staffName != null" >
         #{staffName,jdbcType=VARCHAR},
       </if>
+      <if test="factoryLocation != null" >
+        #{factoryLocation,jdbcType=VARCHAR},
+      </if>
       <if test="bg != null" >
         #{bg,jdbcType=VARCHAR},
       </if>
@@ -123,6 +134,9 @@
       </if>
       <if test="costCode != null" >
         #{costCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        #{legalPerson,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
         #{gender,jdbcType=INTEGER},
@@ -159,6 +173,9 @@
       <if test="staffName != null" >
         staff_name = #{staffName,jdbcType=VARCHAR},
       </if>
+      <if test="factoryLocation != null" >
+        factory_location = #{factoryLocation,jdbcType=VARCHAR},
+      </if>
       <if test="bg != null" >
         BG = #{bg,jdbcType=VARCHAR},
       </if>
@@ -173,6 +190,9 @@
       </if>
       <if test="costCode != null" >
         cost_code = #{costCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
         gender = #{gender,jdbcType=INTEGER},
@@ -205,11 +225,13 @@
     update staff_info
     set staff_code = #{staffCode,jdbcType=VARCHAR},
       staff_name = #{staffName,jdbcType=VARCHAR},
+      factory_location = #{factoryLocation,jdbcType=VARCHAR},
       BG = #{bg,jdbcType=VARCHAR},
       BU = #{bu,jdbcType=VARCHAR},
       department = #{department,jdbcType=VARCHAR},
       depart_code = #{departCode,jdbcType=VARCHAR},
       cost_code = #{costCode,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=INTEGER},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
       email_address = #{emailAddress,jdbcType=VARCHAR},
