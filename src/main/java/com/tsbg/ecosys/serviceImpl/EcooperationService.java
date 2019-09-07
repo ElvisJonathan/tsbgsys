@@ -59,13 +59,12 @@ public class EcooperationService {
 
     //根据查询条件导出
     public List<EcTotalDtol> getEcooperationListall(Epartner epartner) {
-        String partnerName = epartner.getPartnerName();
-        epartner.setPartnerName(partnerName);
+        int cid = epartner.getPartnerNo();
         Epartner epartner1 = epartnerMapper.selectByPrimaryKeyl(epartner);
         //根据cid查找eccontact  selectEccontactsByCidl();
-        List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCidl(partnerName);
+        List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCidl(cid);
         //根据cid查在查询所有的Ecooperation
-        List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCidl(partnerName);
+        List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCidl(cid);
         EcTotalDtol ecTotalDtol = new EcTotalDtol();
         ecTotalDtol.setEpartner(epartner1);
        if (eccontacts != null && eccontacts.size() > 0) {

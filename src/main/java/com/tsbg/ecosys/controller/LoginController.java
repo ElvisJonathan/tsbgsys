@@ -29,6 +29,15 @@ public class LoginController {
     @Autowired
     private PermissionService permissionService;
 
+    @PostMapping("loginTest")
+    public UserInfo loginTest(@RequestParam("username")String username,
+                                    @RequestParam("password")String password,HttpSession session){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserName(username);
+        session.setAttribute("session_user",userInfo);
+        return userInfo;
+    }
+
     @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultResponse login(@RequestBody UserInfo userInfo, HttpSession session){

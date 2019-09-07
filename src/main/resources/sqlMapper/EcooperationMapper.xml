@@ -552,10 +552,10 @@
     <include refid="Base_Column_List" />
     from ecooperation where partner_no = #{cid} AND status = 0
   </select>
-  <select id="selectEcooperationByCidl"  resultMap="BaseResultMap" parameterType="String">
+  <select id="selectEcooperationByCidl"  resultMap="BaseResultMap" parameterType="Integer">
     select
     <include refid="Base_Column_List" />
-    from ecooperation where  partner_name = #{partnerName,jdbcType=VARCHAR} AND status = 0 AND del_status=0
+    from ecooperation where  partner_no = #{cid} AND status = 0 AND del_status=0
   </select>
   <update id="updateStatusByCid" parameterType="int" >
     UPDATE ecooperation AS e SET e.`del_status`=1 WHERE e.`partner_no`=#{partnerNo,jdbcType=INTEGER};

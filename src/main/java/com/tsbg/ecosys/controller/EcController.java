@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.common.NeedLogin;
 import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.dto.EcTotalDto;
 import com.tsbg.ecosys.dto.EcTotalDtol;
@@ -7,7 +8,6 @@ import com.tsbg.ecosys.dto.EcTotal_Excel;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
 import com.tsbg.ecosys.model.Epartner;
-import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.serviceImpl.EcooperationService;
 import com.tsbg.ecosys.util.ExcelTimeUtils;
@@ -76,6 +76,7 @@ public class EcController {
     //根据查询条件导出Excel(条件Epartner表查&partnerName=aaa&&partnerProduct=aaa&partnerRegion=aaa&partnerIndustry=aaa)and status=0 and del_status=0才能导出
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
+    @NeedLogin
     public void getEcooperationAll(HttpServletRequest req, HttpServletResponse response) throws IOException {
       /* //从前端获取添加的四个条件进行查询*/
         String json = req.getParameter("partnerName");
@@ -95,6 +96,7 @@ public class EcController {
 
 
     //全部导出Excel（只导出status=0 and del_status=0）
+    @NeedLogin
     @RequestMapping(value = "/exportall", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public void exportAll(HttpServletResponse response) throws IOException {
