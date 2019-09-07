@@ -56,7 +56,7 @@ public class EcooperationServiceImpl implements EcooperationService {
     }
 
     @Override
-    public List<Ecooperation> selectEcooperationByCidl(String partnerName) {
-        return ecooperationMapper.selectEcooperationByCidl(partnerName);
+    public List<Ecooperation> selectEcooperationByCidl(Integer cid) {
+        return ecooperationMapper.selectEcooperationByCidl(cid);
     }
 }

@@ -24,7 +24,6 @@ public interface EcooperationService {
     List<Ecooperation> selectecooperationsExcellAll();
 
     int deleteByPrimaryKey2(Integer partnerNo);
-
     //根据查询条件导出Excel
-    List<Ecooperation> selectEcooperationByCidl(String partnerName);
+    List<Ecooperation> selectEcooperationByCidl(Integer cid);
 }

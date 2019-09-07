@@ -26,7 +26,6 @@ public interface EccontactsService {
     List<Eccontacts> selecteccontactsExcellAll();
 
     int deleteByPrimaryKey3(Integer partnerNo);
-
     //根据查询条件导出Excel
-    List<Eccontacts> selectEccontactsByCidl(String partnerName);
+    List<Eccontacts> selectEccontactsByCidl(Integer cid);
 }

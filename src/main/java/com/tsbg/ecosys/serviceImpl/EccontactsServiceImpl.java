@@ -58,7 +58,7 @@ public class EccontactsServiceImpl implements EccontactsService {
     }
 
     @Override
-    public List<Eccontacts> selectEccontactsByCidl(String partnerName) {
-        return eccontactsMapper.selectEccontactsByCidl(partnerName);
+    public List<Eccontacts> selectEccontactsByCidl(Integer cid) {
+        return eccontactsMapper.selectEccontactsByCidl(cid);
     }
 }
