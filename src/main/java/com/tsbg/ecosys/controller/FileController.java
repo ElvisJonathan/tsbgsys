@@ -153,7 +153,7 @@ public class FileController {
     @RequestMapping(value = "/download", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultResponse downloadFile(@RequestBody CompanyPackage companyPackage){
-        //通过接收公司的partnerNo和userCode来记录下载者
+        //通过接收公司的partnerNo和userCode来记录下载者 还需要获取文件名
         Epartner epartner = companyPackage.getEpartner();
         Integer partnerNo= epartner.getPartnerNo();
         UserInfo userInfo = companyPackage.getUserInfo();
@@ -181,6 +181,15 @@ public class FileController {
         System.out.println("文件名："+fileName);
         Integer partnerNo=Integer.parseInt(request.getParameter("partnerNo"));
         System.out.println("收到公司编号为："+partnerNo);
+        //获取userCode用于记录最后下载者  让前端传
+        /*String userCode = request.getParameter("userCode");
+        System.out.println("获取到的userCode:"+userCode);
+        //通过公司编号和文件名定位文件编号
+        Integer fileNo = fileInfoService.selectFileNo(partnerNo,fileName);
+        if (fileNo!=null){
+            //根据公司编号和用户工号去修改最后下载者
+            fileInfoService.updateDownloader(userCode,fileNo);
+        }*/
         //根据文件名去数据库查询URL
         String name = fileInfoService.selectRealPathByName(fileName,partnerNo);
         System.out.println("真实URL："+name);

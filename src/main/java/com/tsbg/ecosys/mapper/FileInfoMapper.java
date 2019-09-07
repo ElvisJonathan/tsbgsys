@@ -53,4 +53,10 @@ public interface FileInfoMapper {
 
     //根据上传时的文件名查询文件状态
     List<Integer> selectFileStatusByFileName(String fileName,Integer partnerNo);
+
+    //通过公司编号和文件名定位文件ID
+    Integer selectFileNo(Integer partnerNo,String fileName);
+
+    //根据公司编号和用户工号去修改最后下载者
+    int updateDownloader(String userCode,Integer fileNo);
 }

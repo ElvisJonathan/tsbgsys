@@ -74,4 +74,14 @@ public class FileInfoServiceImpl implements FileInfoService {
     public List<Integer> selectFileStatusByFileName(String fileName, Integer partnerNo) {
         return fileInfoMapper.selectFileStatusByFileName(fileName,partnerNo);
     }
+
+    @Override
+    public Integer selectFileNo(Integer partnerNo, String fileName) {
+        return fileInfoMapper.selectFileNo(partnerNo,fileName);
+    }
+
+    @Override
+    public int updateDownloader(String userCode, Integer fileNo) {
+        return fileInfoMapper.updateDownloader(userCode,fileNo);
+    }
 }
