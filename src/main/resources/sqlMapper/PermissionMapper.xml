@@ -161,4 +161,13 @@
         AND perm_role.role_id = role.roleid
         WHERE role.roleid=#{roleId} AND permission.`perm_id`!=6 ;
     </select>
+  <select id="findPermissionByRoleId2" resultType="String" parameterType="java.lang.Integer">
+        SELECT
+            permission.`name`
+        FROM
+            (permission, role)
+        RIGHT JOIN perm_role ON permission.perm_id = perm_role.perm_id
+        AND perm_role.role_id = role.roleid
+        WHERE role.roleid=#{roleId} AND permission.`perm_id`!=6 ;
+    </select>
 </mapper>

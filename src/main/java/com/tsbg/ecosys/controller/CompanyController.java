@@ -36,6 +36,10 @@ public class CompanyController {
     private FileInfoService fileInfoService;
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private PermissionService permissionService;
 
     /**
      * 管理员隐藏/取消隐藏公司
@@ -93,7 +97,7 @@ public class CompanyController {
 
     /**
      * 合作伙伴信息、合作情况信息、公司联系人信息新增
-     * 集成文件上传
+     * 集成文件上传、权限控制
      */
     @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -114,143 +118,170 @@ public class CompanyController {
         //获取当前添加人
         String userName= userInfo.getUserName();
         String userCode= userInfo.getUserCode();
-        //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有add权限
-
-        //初始化公司id为0
-        int no = 0;
-        //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
-        if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null &&
-                epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null
-               ){
-            //合作伙伴信息中:合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空才可以进行添加
-            //设置创建时间
-            epartner.setCreateTime(new Date());
-            //设置创建人
-            epartner.setCreater(userName);
-            //调用存储公司合作伙伴的业务逻辑存储
-            int count = epartnerService.insertSelective(epartner);
-            if (count>0){
-                arr[0]=1;
-                //需要把添加成功后的对应合作伙伴编号查询出来
-                no = epartnerService.selectID();
-            }
-        }
-
-        if(ecooperation.getPartnerName()!=null){
-            //合作情况信息中：合作伙伴公司名称不能为空
-            //设置创建时间
-            ecooperation.setCreateTime(new Date());
-            //设置创建人
-            ecooperation.setCreater(userName);
-            //设置合作伙伴编号
-            if (no!=0){
-                ecooperation.setPartnerNo(no);
-            }
-            //调用业务方法存储合作关系信息
-            int num = ecooperationService.insertSelective(ecooperation);
-            if (num>0){
-                arr[1]=1;
-            }
-        }
-
-        if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
-            && eccontacts.getPartnerName()!=null){
-            //公司联系人信息中：联系人姓名、性别、电话和所属公司名称不能为空
-            //设置创建时间
-            eccontacts.setCreateTime(new Date());
-            //设置创建人
-            eccontacts.setCreater(userName);
-            //设置合作伙伴编号
-            if (no!=0){
-                eccontacts.setPartnerNo(no);
-            }
-            //调用业务方法存储联系人信息
-            int number = eccontactsService.insertSelective(eccontacts);
-            if (number>0){
-                arr[2]=1;
-            }
-        }
-
-        //此处增加文件上传
-        if (file!=null) {
-            StringBuffer buffer = new StringBuffer();
-            for (MultipartFile multipartFile : file) {
-                //重复文件名判断
-                int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),no);
-                if (count > 0) {
-                    //如果文件存在则将之前新增的记录删除
-                    epartnerService.deleteByPrimaryKey(no);
-                    ecooperationService.deleteByPrimaryKey2(no);
-                    eccontactsService.deleteByPrimaryKey3(no);
-                    return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
-                }
-                buffer.append(multipartFile.getOriginalFilename());
-                buffer.append(",");
-                String all = buffer.substring(0, buffer.length() - 1);
-                System.out.println("所有文件：" + all);
-                String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
-                System.out.println("文件后缀：" + Suffix);
-                //根据原始文件名的后缀进行文件类型判断
-                if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
-                        || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
-                        || Suffix.equals(".txt")) {
-                    String realPath = req.getServletContext().getRealPath("/ecoUpload"+"/"+epartner.getPartnerName());//此方法用于获取上传路径
-                    //本地路径测试文件上传
-                    String Path = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName();
-                    System.out.println("本地实际路径：" + Path);
-                    //服务器路径测试文件上传
-                    String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
-                    System.out.println("服务器实际路径：" + Path2);
-                    File folder = new File(Path);//此处打包上去之前需要置换路径
-                    if (!folder.exists()) {
-                        folder.mkdirs();
-                    }//无报错则上传成功
-                    //获取上传者
-                    multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
-                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
-                    System.out.println(url);//真实存储的url
-                    //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                    //System.out.println("真实URL：" + newUrl);
-                    //本地路径测试文件上传
-                    String URL = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                    System.out.println("本地存储URL:"+URL);
-                    //服务器路径测试文件上传
-                    String URL2 = "/tmp/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                    System.out.println("服务器存储URL:"+URL2);
-                    //进行文件上传记录的存储
-                    FileInfo fileInfo = new FileInfo();
-                    fileInfo.setFileName(multipartFile.getOriginalFilename());
-                    //本地存储
-                    fileInfo.setFilePath(URL);
-                    //服务器存储   打包上去前需要置换
-                    //fileInfo.setFilePath(URL2);
-                    fileInfo.setRelDocId(no);
-                    fileInfo.setUpdatedTime(new Date());
-                    fileInfo.setLastUpdateUser(userCode);
-                    fileInfo.setKeyword(multipartFile.getOriginalFilename());
-                    int num = fileInfoService.insertSelective(fileInfo);
-                    //查询出当前成功文件的编号
-                    int number = epartnerService.selectID();
-                    System.out.println("刚刚增加成功的记录的编号为：" + number);
-                } else {
-                    //如果文件存在则将之前新增的记录删除
-                    epartnerService.deleteByPrimaryKey(no);
-                    ecooperationService.deleteByPrimaryKey2(no);
-                    eccontactsService.deleteByPrimaryKey3(no);
-                    return new ResultResponse(505, "上传文件格式不符合需求");
-                }
-            }
-        }
-        if (arr[0] == 1 && arr[1] == 1 && arr[2] == 1) {
-            resultResponse = new ResultResponse(0, "提示信息：新增成功！");
+        if (userCode==null){
+            resultResponse = new ResultResponse(510, "提示信息：工号不能为空！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(501, "提示信息：新增失败！");
+        //权限标识符
+        Boolean powerFlag = false;
+        //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有add权限
+        List<Integer> list= roleService.findRoleByUserCode2(userCode);
+        if (list!=null){
+            for (int i=0;i<=list.size()-1;i++){
+                List<String> pList = permissionService.findPermissionByRoleId2(list.get(i));
+                for (int j=0;j<=pList.size()-1;j++){
+                    if (pList.get(j).contains("add")){
+                        //权限标识符置为true
+                        powerFlag = true;
+                    }
+                }
+            }
+        }
+        if (powerFlag.equals(true)){
+            //初始化公司id为0
+            int no = 0;
+            //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
+            if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null &&
+                    epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null
+            ){
+                //合作伙伴信息中:合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空才可以进行添加
+                //设置创建时间
+                epartner.setCreateTime(new Date());
+                //设置创建人
+                epartner.setCreater(userName);
+                //设置创建人身份 如果通过工号查询出其为管理员则赋值1
+                int num = userInfoService.selectIdentityByUserCode(userCode);
+                if (num==1){
+                    epartner.setCreaterIdentity(num);
+                }
+                //调用存储公司合作伙伴的业务逻辑存储
+                int count = epartnerService.insertSelective(epartner);
+                if (count>0){
+                    arr[0]=1;
+                    //需要把添加成功后的对应合作伙伴编号查询出来
+                    no = epartnerService.selectID();
+                }
+            }
+
+            if(ecooperation.getPartnerName()!=null){
+                //合作情况信息中：合作伙伴公司名称不能为空
+                //设置创建时间
+                ecooperation.setCreateTime(new Date());
+                //设置创建人
+                ecooperation.setCreater(userName);
+                //设置合作伙伴编号
+                if (no!=0){
+                    ecooperation.setPartnerNo(no);
+                }
+                //调用业务方法存储合作关系信息
+                int num = ecooperationService.insertSelective(ecooperation);
+                if (num>0){
+                    arr[1]=1;
+                }
+            }
+
+            if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
+                    && eccontacts.getPartnerName()!=null){
+                //公司联系人信息中：联系人姓名、性别、电话和所属公司名称不能为空
+                //设置创建时间
+                eccontacts.setCreateTime(new Date());
+                //设置创建人
+                eccontacts.setCreater(userName);
+                //设置合作伙伴编号
+                if (no!=0){
+                    eccontacts.setPartnerNo(no);
+                }
+                //调用业务方法存储联系人信息
+                int number = eccontactsService.insertSelective(eccontacts);
+                if (number>0){
+                    arr[2]=1;
+                }
+            }
+
+            //此处增加文件上传
+            if (file!=null) {
+                StringBuffer buffer = new StringBuffer();
+                for (MultipartFile multipartFile : file) {
+                    //重复文件名判断
+                    int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),no);
+                    if (count > 0) {
+                        //如果文件存在则将之前新增的记录删除
+                        epartnerService.deleteByPrimaryKey(no);
+                        ecooperationService.deleteByPrimaryKey2(no);
+                        eccontactsService.deleteByPrimaryKey3(no);
+                        return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
+                    }
+                    buffer.append(multipartFile.getOriginalFilename());
+                    buffer.append(",");
+                    String all = buffer.substring(0, buffer.length() - 1);
+                    System.out.println("所有文件：" + all);
+                    String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
+                    System.out.println("文件后缀：" + Suffix);
+                    //根据原始文件名的后缀进行文件类型判断
+                    if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
+                            || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
+                            || Suffix.equals(".txt")) {
+                        String realPath = req.getServletContext().getRealPath("/ecoUpload"+"/"+epartner.getPartnerName());//此方法用于获取上传路径
+                        //本地路径测试文件上传
+                        String Path = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName();
+                        System.out.println("本地实际路径：" + Path);
+                        //服务器路径测试文件上传
+                        String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
+                        System.out.println("服务器实际路径：" + Path2);
+                        File folder = new File(Path);//此处打包上去之前需要置换路径
+                        if (!folder.exists()) {
+                            folder.mkdirs();
+                        }//无报错则上传成功
+                        //获取上传者
+                        multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
+                        String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
+                        System.out.println(url);//真实存储的url
+                        //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                        //System.out.println("真实URL：" + newUrl);
+                        //本地路径测试文件上传
+                        String URL = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                        System.out.println("本地存储URL:"+URL);
+                        //服务器路径测试文件上传
+                        String URL2 = "/tmp/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                        System.out.println("服务器存储URL:"+URL2);
+                        //进行文件上传记录的存储
+                        FileInfo fileInfo = new FileInfo();
+                        fileInfo.setFileName(multipartFile.getOriginalFilename());
+                        //本地存储
+                        fileInfo.setFilePath(URL);
+                        //服务器存储   打包上去前需要置换
+                        //fileInfo.setFilePath(URL2);
+                        fileInfo.setRelDocId(no);
+                        fileInfo.setUpdatedTime(new Date());
+                        fileInfo.setLastUpdateUser(userCode);
+                        fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                        int num = fileInfoService.insertSelective(fileInfo);
+                        //查询出当前成功文件的编号
+                        int number = epartnerService.selectID();
+                        System.out.println("刚刚增加成功的记录的编号为：" + number);
+                    } else {
+                        //如果文件存在则将之前新增的记录删除
+                        epartnerService.deleteByPrimaryKey(no);
+                        ecooperationService.deleteByPrimaryKey2(no);
+                        eccontactsService.deleteByPrimaryKey3(no);
+                        return new ResultResponse(505, "上传文件格式不符合需求");
+                    }
+                }
+            }
+            if (arr[0] == 1 && arr[1] == 1 && arr[2] == 1) {
+                resultResponse = new ResultResponse(0, "提示信息：新增成功！");
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(501, "提示信息：新增失败！");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(509, "提示信息：无此权限！");
         return resultResponse;
     }
 
     /**
      * 分页查询公司信息+搜索
+     * 集成权限控制
      */
     @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -264,19 +295,43 @@ public class CompanyController {
         //获取当前用户身份是否为管理员，通过工号查询是否为管理
         UserInfo userInfo = searchPackage.getUserInfo();
         String userCode = userInfo.getUserCode();
-        int identity =  userInfoService.selectIdentityByUserCode(userCode);
-        epartner.setCreaterIdentity(identity);
-        if (pageRequest.getPageIndex()!=0 && pageRequest.getPageSize()!=0){
-            //根据给到的分页条件查询公司信息
-            PageResult page = epartnerService.findPage(pageRequest, epartner);
-            if (page!=null){
-                resultResponse = new ResultResponse(0,"提示信息：成功查询到公司信息",page);
-                return resultResponse;
-            }
-            resultResponse = new ResultResponse(501,"提示信息：未查询到公司信息");
+        //此处做一个权限控制
+        if (userCode==null){
+            resultResponse = new ResultResponse(510, "提示信息：工号不能为空！");
             return resultResponse;
         }
-        resultResponse = new ResultResponse(502,"提示信息：分页条件不明确异常");
+        //权限标识符
+        Boolean powerFlag = false;
+        //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有view权限
+        List<Integer> list= roleService.findRoleByUserCode2(userCode);
+        if (list!=null){
+            for (int i=0;i<=list.size()-1;i++){
+                List<String> pList = permissionService.findPermissionByRoleId2(list.get(i));
+                for (int j=0;j<=pList.size()-1;j++){
+                    if (pList.get(j).contains("view")){
+                        //权限标识符置为true
+                        powerFlag = true;
+                    }
+                }
+            }
+        }
+        if (powerFlag.equals(true)) {
+            int identity = userInfoService.selectIdentityByUserCode(userCode);
+            epartner.setCreaterIdentity(identity);
+            if (pageRequest.getPageIndex() != 0 && pageRequest.getPageSize() != 0) {
+                //根据给到的分页条件查询公司信息
+                PageResult page = epartnerService.findPage(pageRequest, epartner);
+                if (page != null) {
+                    resultResponse = new ResultResponse(0, "提示信息：成功查询到公司信息", page);
+                    return resultResponse;
+                }
+                resultResponse = new ResultResponse(501, "提示信息：未查询到公司信息");
+                return resultResponse;
+            }
+            resultResponse = new ResultResponse(502, "提示信息：分页条件不明确异常");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(509, "提示信息：无此权限！");
         return resultResponse;
     }
 
@@ -392,59 +447,80 @@ public class CompanyController {
         //获取当前修改人
         String userName= userInfo.getUserName();
         String userCode = userInfo.getUserCode();
+        //此处做一个权限控制
+        if (userCode==null){
+            resultResponse = new ResultResponse(510, "提示信息：工号不能为空！");
+            return resultResponse;
+        }
         System.out.println("修改者："+userName);
         System.out.println("获取的工号："+userCode);
-        if(cid!=null){
-            if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
-                    && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
-                //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
-                //更新修改时间
-                epartner.setUpdateTime(new Date());
-                //更新修改人
-                epartner.setUpdater(userName);
-                int num = epartnerService.updateByPrimaryKeySelective(epartner);
-                if (num>0){
-                    arr[0]=1;
+        //权限标识符
+        Boolean powerFlag = false;
+        //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有update权限
+        List<Integer> list= roleService.findRoleByUserCode2(userCode);
+        if (list!=null){
+            for (int i=0;i<=list.size()-1;i++){
+                List<String> pList = permissionService.findPermissionByRoleId2(list.get(i));
+                for (int j=0;j<=pList.size()-1;j++){
+                    if (pList.get(j).contains("update")){
+                        //权限标识符置为true
+                        powerFlag = true;
+                    }
                 }
             }
-
-            if (ecooperation.getPartnerName()!=null){
-                //只有当合作伙伴公司名称不为空才可以修改
-                //更新修改时间
-                ecooperation.setUpdateTime(new Date());
-                //更新修改人
-                ecooperation.setUpdater(userName);
-                //需要赋值cid给partnerNo
-                ecooperation.setPartnerNo(cid);
-                int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
-                if (num>0){
-                    arr[1]=1;
+        }
+        if (powerFlag.equals(true)) {
+            if(cid!=null){
+                if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
+                        && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
+                    //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
+                    //更新修改时间
+                    epartner.setUpdateTime(new Date());
+                    //更新修改人
+                    epartner.setUpdater(userName);
+                    int num = epartnerService.updateByPrimaryKeySelective(epartner);
+                    if (num>0){
+                        arr[0]=1;
+                    }
                 }
-            }
 
-            if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
-            && eccontacts.getPartnerName()!=null){
-                //只有当姓名、电话、所属公司都不为空才可以修改
-                //更新修改时间
-                eccontacts.setUpdateTime(new Date());
-                //更新修改人
-                eccontacts.setUpdater(userName);
-                //需要赋值cid给partnerNo
-                eccontacts.setPartnerNo(cid);
-                int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
-                if (num>0){
-                    arr[2]=1;
+                if (ecooperation.getPartnerName()!=null){
+                    //只有当合作伙伴公司名称不为空才可以修改
+                    //更新修改时间
+                    ecooperation.setUpdateTime(new Date());
+                    //更新修改人
+                    ecooperation.setUpdater(userName);
+                    //需要赋值cid给partnerNo
+                    ecooperation.setPartnerNo(cid);
+                    int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
+                    if (num>0){
+                        arr[1]=1;
+                    }
                 }
-            }
 
-            //当文件等于或多于原文件数量时
-            if(file!=null){
-                for (MultipartFile multipartFile : file) {
-                    String name = multipartFile.getOriginalFilename();
-                    System.out.println("原始文件名：" + name);
-                    //如果文件被删除则查询出被删除的文件名修改其状态
-                    //根据当前文件名查询文件编号
-                    //根据公司合作伙伴编号和文件名查询附件是否未修改
+                if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
+                        && eccontacts.getPartnerName()!=null){
+                    //只有当姓名、电话、所属公司都不为空才可以修改
+                    //更新修改时间
+                    eccontacts.setUpdateTime(new Date());
+                    //更新修改人
+                    eccontacts.setUpdater(userName);
+                    //需要赋值cid给partnerNo
+                    eccontacts.setPartnerNo(cid);
+                    int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
+                    if (num>0){
+                        arr[2]=1;
+                    }
+                }
+
+                //当文件等于或多于原文件数量时
+                if(file!=null){
+                    for (MultipartFile multipartFile : file) {
+                        String name = multipartFile.getOriginalFilename();
+                        System.out.println("原始文件名：" + name);
+                        //如果文件被删除则查询出被删除的文件名修改其状态
+                        //根据当前文件名查询文件编号
+                        //根据公司合作伙伴编号和文件名查询附件是否未修改
                     /*int number = fileInfoService.judgeIfFileChanged(cid, name);
                     if (number > 0) {
                         //说明文件未修改 默认跳过修改返回修改成功
@@ -454,7 +530,7 @@ public class CompanyController {
                         //重复文件名判断
                         int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),cid);
                         //如果文件为删除状态则还可以上传
-                    List<Integer> count2=  fileInfoService.selectFileStatusByFileName(multipartFile.getOriginalFilename(),cid);
+                        List<Integer> count2=  fileInfoService.selectFileStatusByFileName(multipartFile.getOriginalFilename(),cid);
                         for (int i=0;i<=count2.size()-1;i++){
                             if (count > 0 && count2.get(i)==0) {
                                 return new ResultResponse(501, "文件已存在，请选择其他文件上传!");
@@ -506,16 +582,19 @@ public class CompanyController {
                         } else {
                             return new ResultResponse(506, "上传文件格式不符合需求");
                         }
-                    //}
+                        //}
+                    }
+                }
+
+                if (arr[0]==1 && arr[1]==1 && arr[2]==1){
+                    resultResponse = new ResultResponse(0,"提示信息：修改成功！");
+                    return resultResponse;
                 }
             }
-
-            if (arr[0]==1 && arr[1]==1 && arr[2]==1){
-                resultResponse = new ResultResponse(0,"提示信息：修改成功！");
-                return resultResponse;
-            }
+            resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
+            return resultResponse;
         }
-        resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
+        resultResponse = new ResultResponse(509, "提示信息：无此权限！");
         return resultResponse;
     }
 
@@ -554,82 +633,106 @@ public class CompanyController {
         //获取当前修改人
         String userName= userInfo.getUserName();
         String userCode = userInfo.getUserCode();
+        //此处做一个权限控制
+        if (userCode==null){
+            resultResponse = new ResultResponse(510, "提示信息：工号不能为空！");
+            return resultResponse;
+        }
         System.out.println("修改人："+userName);
         System.out.println("工号："+userCode);
-        if(cid!=null){
-            if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
-                    && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
-                //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
-                //更新修改时间
-                epartner.setUpdateTime(new Date());
-                //更新修改人
-                epartner.setUpdater(userName);
-                int num = epartnerService.updateByPrimaryKeySelective(epartner);
-                if (num>0){
-                    arr[0]=1;
-                }
-            }
-
-            if (ecooperation.getPartnerName()!=null){
-                //只有当合作伙伴公司名称不为空才可以修改
-                //更新修改时间
-                ecooperation.setUpdateTime(new Date());
-                //更新修改人
-                ecooperation.setUpdater(userName);
-                //需要赋值cid给partnerNo
-                ecooperation.setPartnerNo(cid);
-                int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
-                if (num>0){
-                    arr[1]=1;
-                }
-            }
-
-            if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
-                    && eccontacts.getPartnerName()!=null){
-                //只有当姓名、电话、所属公司都不为空才可以修改
-                //更新修改时间
-                eccontacts.setUpdateTime(new Date());
-                //更新修改人
-                eccontacts.setUpdater(userName);
-                //需要赋值cid给partnerNo
-                eccontacts.setPartnerNo(cid);
-                int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
-                if (num>0){
-                    arr[2]=1;
-                }
-            }
-
-            //当文件少于原文件数量时
-            if(fileName!=null){
-                //对应的文件编号
-                List<Integer> list2 = fileInfoService.selectFileNoByNo(cid);
-                for (Object file : fileName) {
-                    //如果文件被删除则查询出被删除的文件名修改其状态
-                    //根据当前文件名查询文件编号
-                    List<Integer> num2 = fileInfoService.selectFileIdByFileName(file.toString());
-                    for (int i=0;i<=num2.size()-1;i++){
-                        if (list2.contains(num2.get(i))){
-                            System.out.println("该文件被包含，文件名为："+file.toString());
-                            list2.remove(num2.get(i));
-                        }
+        //权限标识符
+        Boolean powerFlag = false;
+        //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有update权限
+        List<Integer> list= roleService.findRoleByUserCode2(userCode);
+        if (list!=null){
+            for (int i=0;i<=list.size()-1;i++){
+                List<String> pList = permissionService.findPermissionByRoleId2(list.get(i));
+                for (int j=0;j<=pList.size()-1;j++){
+                    if (pList.get(j).contains("update")){
+                        //权限标识符置为true
+                        powerFlag = true;
                     }
                 }
-                System.out.println("LIST2:"+list2.toString());
-                //根据剩余的编号修改状态
-                for (int i=0;i<=list2.size()-1;i++){
-                    //看看是否剩下的编号都被修改了
-                   fileInfoService.updateFileStatusByFileNo(list2.get(i));
-                }
-            }else{
-                //此处进行文件的删除:如果没有收到文件证明文件已被删除
-                epartnerService.deleteFileByParNo(cid);
-            }
-            if (arr[0]==1 && arr[1]==1 && arr[2]==1){
-                resultResponse = new ResultResponse(0,"提示信息：修改成功！");
-                return resultResponse;
             }
         }
-        resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
+        if (powerFlag.equals(true)) {
+            if(cid!=null){
+                if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
+                        && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
+                    //只有当合作伙伴公司名称、行业、业务主要区域、主营产品/业务/服务不为空的情况下才可以进行修改
+                    //更新修改时间
+                    epartner.setUpdateTime(new Date());
+                    //更新修改人
+                    epartner.setUpdater(userName);
+                    int num = epartnerService.updateByPrimaryKeySelective(epartner);
+                    if (num>0){
+                        arr[0]=1;
+                    }
+                }
+
+                if (ecooperation.getPartnerName()!=null){
+                    //只有当合作伙伴公司名称不为空才可以修改
+                    //更新修改时间
+                    ecooperation.setUpdateTime(new Date());
+                    //更新修改人
+                    ecooperation.setUpdater(userName);
+                    //需要赋值cid给partnerNo
+                    ecooperation.setPartnerNo(cid);
+                    int num = ecooperationService.updateByPartnerNoSelective(ecooperation);
+                    if (num>0){
+                        arr[1]=1;
+                    }
+                }
+
+                if (eccontacts.getName()!=null && eccontacts.getPhoneNumber()!=null
+                        && eccontacts.getPartnerName()!=null){
+                    //只有当姓名、电话、所属公司都不为空才可以修改
+                    //更新修改时间
+                    eccontacts.setUpdateTime(new Date());
+                    //更新修改人
+                    eccontacts.setUpdater(userName);
+                    //需要赋值cid给partnerNo
+                    eccontacts.setPartnerNo(cid);
+                    int num = eccontactsService.updateByPartnerNoSelective(eccontacts);
+                    if (num>0){
+                        arr[2]=1;
+                    }
+                }
+
+                //当文件少于原文件数量时
+                if(fileName!=null){
+                    //对应的文件编号
+                    List<Integer> list2 = fileInfoService.selectFileNoByNo(cid);
+                    for (Object file : fileName) {
+                        //如果文件被删除则查询出被删除的文件名修改其状态
+                        //根据当前文件名查询文件编号
+                        List<Integer> num2 = fileInfoService.selectFileIdByFileName(file.toString());
+                        for (int i=0;i<=num2.size()-1;i++){
+                            if (list2.contains(num2.get(i))){
+                                System.out.println("该文件被包含，文件名为："+file.toString());
+                                list2.remove(num2.get(i));
+                            }
+                        }
+                    }
+                    System.out.println("LIST2:"+list2.toString());
+                    //根据剩余的编号修改状态
+                    for (int i=0;i<=list2.size()-1;i++){
+                        //看看是否剩下的编号都被修改了
+                        fileInfoService.updateFileStatusByFileNo(list2.get(i));
+                    }
+                }else{
+                    //此处进行文件的删除:如果没有收到文件证明文件已被删除
+                    epartnerService.deleteFileByParNo(cid);
+                }
+                if (arr[0]==1 && arr[1]==1 && arr[2]==1){
+                    resultResponse = new ResultResponse(0,"提示信息：修改成功！");
+                    return resultResponse;
+                }
+            }
+            resultResponse = new ResultResponse(507,"提示信息：未查到对应公司合作伙伴编号！");
+            return resultResponse;
+        }
+        resultResponse = new ResultResponse(509, "提示信息：无此权限！");
         return resultResponse;
     }
 

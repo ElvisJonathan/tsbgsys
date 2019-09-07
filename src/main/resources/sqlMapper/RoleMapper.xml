@@ -120,4 +120,11 @@
         LEFT JOIN role ON user_role.role_id = role.roleid
         WHERE user_code=#{userCode};
     </select>
+    <select id="findRoleByUserCode2" resultType="java.lang.Integer" parameterType="String">
+        SELECT role.roleid
+        FROM user_info
+        RIGHT JOIN user_role ON user_info.user_id = user_role.user_id
+        LEFT JOIN role ON user_role.role_id = role.roleid
+        WHERE user_code=#{userCode}
+    </select>
 </mapper>

@@ -12,4 +12,7 @@ public interface PermissionService {
 
     //根据角色ID查询角色对应的权限信息
     List<Permission> findPermissionByRoleId(@Param("roleId") Integer roleId);
+
+    //根据角色ID查询角色对应的权限信息
+    List<String> findPermissionByRoleId2(@Param("roleId") Integer roleId);
 }
