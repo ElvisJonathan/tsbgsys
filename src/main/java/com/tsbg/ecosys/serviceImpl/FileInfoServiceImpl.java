@@ -21,8 +21,8 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     @Override
-    public int selectFileCountByFileName(String filename) {
-        return fileInfoMapper.selectFileCountByFileName(filename);
+    public int selectFileCountByFileName(String filename, Integer partnerNo) {
+        return fileInfoMapper.selectFileCountByFileName(filename,partnerNo);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     @Override
-    public String selectRealPathByName(String fileName) {
-        return fileInfoMapper.selectRealPathByName(fileName);
+    public String selectRealPathByName(String fileName, Integer partnerNo) {
+        return fileInfoMapper.selectRealPathByName(fileName,partnerNo);
     }
 
     @Override
@@ -61,12 +61,17 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     @Override
-    public Integer selectFileIdByFileName(String fileName) {
+    public List<Integer> selectFileIdByFileName(String fileName) {
         return fileInfoMapper.selectFileIdByFileName(fileName);
     }
 
     @Override
     public int updateFileStatusByFileNo(Integer fileNo) {
         return fileInfoMapper.updateFileStatusByFileNo(fileNo);
+    }
+
+    @Override
+    public List<Integer> selectFileStatusByFileName(String fileName, Integer partnerNo) {
+        return fileInfoMapper.selectFileStatusByFileName(fileName,partnerNo);
     }
 }

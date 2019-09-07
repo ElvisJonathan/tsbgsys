@@ -59,10 +59,10 @@ public class FileController {
             String oldName = file.getOriginalFilename();
             System.out.println("原始文件名：" + oldName);
             //进行重复文件名判断
-            int count = fileInfoService.selectFileCountByFileName(oldName);
+            /*int count = fileInfoService.selectFileCountByFileName(oldName);
             if (count > 0) {
                 return new ResultResponse(501, "该文件已存在，请选择其他文件上传!");
-            }
+            }*/
             String Suffix = oldName.substring(oldName.lastIndexOf("."));
             System.out.println("文件后缀：" + Suffix);
             if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
@@ -107,10 +107,10 @@ public class FileController {
         // int[] array = new int[file.length];
          for (MultipartFile multipartFile : file) {
              //重复文件名判断
-             int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
+             /*int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename());
              if (count > 0) {
                  return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
-             }
+             }*/
              buffer.append(multipartFile.getOriginalFilename());
              buffer.append(",");
              String all = buffer.substring(0, buffer.length() - 1);
@@ -173,12 +173,16 @@ public class FileController {
      */
     @RequestMapping(value = "/testdownload", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Object downloadFile(final HttpServletResponse response, final HttpServletRequest request){
+    public Object downloadFile(HttpServletResponse response, HttpServletRequest request){
         String fileName = request.getParameter("fileName");
+        if (fileName==null){
+            return "未收到文件名";
+        }
         System.out.println("文件名："+fileName);
+        Integer partnerNo=Integer.parseInt(request.getParameter("partnerNo"));
+        System.out.println("收到公司编号为："+partnerNo);
         //根据文件名去数据库查询URL
-        String name = fileInfoService.selectRealPathByName(fileName);
-        //String newUrl = request.getServletContext().getRealPath("/ecoUpload")+"\\" + fileName;
+        String name = fileInfoService.selectRealPathByName(fileName,partnerNo);
         System.out.println("真实URL："+name);
         if (name==null){
             System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
@@ -193,7 +197,6 @@ public class FileController {
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
             response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
-            //String rootPath = "C://Users/Administrator/AppData/Local/Temp/tomcat-docbase.5185449430869371222.80/ecoUpload/";
             //读取流
             File f = new File(name);
             is = new FileInputStream(f);

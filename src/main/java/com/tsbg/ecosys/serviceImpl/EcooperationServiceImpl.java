@@ -59,6 +59,4 @@ public class EcooperationServiceImpl implements EcooperationService {
     public List<Ecooperation> selectEcooperationByCidl(Integer cid) {
         return ecooperationMapper.selectEcooperationByCidl(cid);
     }
-
-
 }

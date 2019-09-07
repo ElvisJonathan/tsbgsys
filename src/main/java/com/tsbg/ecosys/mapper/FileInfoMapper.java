@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.mapper;
 
 import com.tsbg.ecosys.model.FileInfo;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +22,7 @@ public interface FileInfoMapper {
     int updateByPrimaryKey(FileInfo record);
 
     //重复文件名判断
-    int selectFileCountByFileName(String filename);
+    int selectFileCountByFileName(String filename,Integer partnerNo);
 
     //判断文件是否未修改
     int judgeIfFileChanged(@Param("partnerNo")Integer partnerNo,@Param("fileName")String fileName);
@@ -36,7 +37,7 @@ public interface FileInfoMapper {
     int updateRecord(@Param("partnerNo")int partnerNo,@Param("updater")String updater,@Param("fileId")int fileId);
 
     //通过文件名查询文件路径
-    String selectRealPathByName(String fileName);
+    String selectRealPathByName(String fileName,Integer partnerNo);
 
     //根据公司编号查询文件列表
     List<String> selectFileListByNo(Integer partnerNo);
@@ -45,8 +46,11 @@ public interface FileInfoMapper {
     List<Integer> selectFileNoByNo(Integer partnerNo);
 
     //根据文件名查询当前文件编号
-    Integer selectFileIdByFileName(String fileName);
+    List<Integer> selectFileIdByFileName(String fileName);
 
     //根据文件编号修改文件状态
     int updateFileStatusByFileNo(Integer fileNo);
+
+    //根据上传时的文件名查询文件状态
+    List<Integer> selectFileStatusByFileName(String fileName,Integer partnerNo);
 }

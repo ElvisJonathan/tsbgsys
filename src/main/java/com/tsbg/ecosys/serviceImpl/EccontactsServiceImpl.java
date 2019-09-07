@@ -61,6 +61,4 @@ public class EccontactsServiceImpl implements EccontactsService {
     public List<Eccontacts> selectEccontactsByCidl(Integer cid) {
         return eccontactsMapper.selectEccontactsByCidl(cid);
     }
-
-
 }
