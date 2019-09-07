@@ -158,4 +158,14 @@ public class LoginController {
         resultResponse = new ResultResponse(500,"工号或密码为空");
         return resultResponse;
     }
+
+    /**
+     * 登出
+     */
+    @RequestMapping(value = "/ecologout", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public ResultResponse Logout(HttpSession session){
+        session.invalidate();
+        return new ResultResponse(0,"用户成功登出！");
+    }
 }

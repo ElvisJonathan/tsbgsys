@@ -1,7 +1,5 @@
 package com.tsbg.ecosys.common;
 
-import com.sun.deploy.net.HttpResponse;
-import com.tsbg.ecosys.config.ResultResponse;
 import com.tsbg.ecosys.model.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
