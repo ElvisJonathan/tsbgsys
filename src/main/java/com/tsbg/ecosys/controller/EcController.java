@@ -76,7 +76,7 @@ public class EcController {
     //根据查询条件导出Excel
     @RequestMapping(value = "/totalo", method = { RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
-    /*@NeedLogin*/
+    @NeedLogin
     public void getEcooperationAll(HttpServletRequest req, HttpServletResponse response) throws IOException {
       /* //从前端获取添加的四个条件进行查询*/
         String json = req.getParameter("partnerName");
