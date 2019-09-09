@@ -9,10 +9,18 @@ import com.tsbg.ecosys.service.RoleService;
 import com.tsbg.ecosys.service.UserInfoService;
 import com.tsbg.ecosys.vo.LoginResultVo;
 import io.swagger.annotations.ApiOperation;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -30,13 +38,19 @@ public class LoginController {
     private PermissionService permissionService;
 
     @PostMapping("loginTest")
-    public UserInfo loginTest(@RequestParam("username")String username,
-                                    @RequestParam("password")String password,HttpSession session){
+    public UserInfo loginTest(@RequestParam("userName")String userName,
+                                    @RequestParam("userCode")String userCode,HttpSession session){
+        HttpServletRequest request = null;
         UserInfo userInfo = new UserInfo();
-        userInfo.setUserName(username);
+        userInfo.setUserName(userName);
         session.setAttribute("session_user",userInfo);
+        //获取用户的信息
+        userInfo = (UserInfo) request.getSession().getAttribute("session_user");
+        //输出当前的userInfo看下
+        System.out.println(userInfo);
         return userInfo;
     }
+
 
     @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody

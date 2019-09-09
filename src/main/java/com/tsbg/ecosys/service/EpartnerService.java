@@ -54,7 +54,7 @@ public interface EpartnerService {
 
     Epartner selectByPrimaryKey(Integer partnerNo);
     //根据查询条件导出Excel
-    Epartner  selectByPrimaryKeyl(Epartner epartner);
+    List<Epartner> selectByPrimaryKeyl(Epartner epartner);
     //查询全部导出Excel
     List<Epartner> selectepartnerExcellAll();
 

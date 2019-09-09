@@ -67,5 +67,5 @@ public interface EpartnerMapper {
     //查询全部导出Excel
     List<Epartner> selectepartnerExcellAll();
     //根据查询条件导出Excel
-    Epartner selectByPrimaryKeyl(Epartner epartner);
+    List<Epartner> selectByPrimaryKeyl(Epartner epartner);
 }

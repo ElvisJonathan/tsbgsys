@@ -286,6 +286,7 @@ public class CompanyController {
     @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultResponse findPage(@RequestBody SearchPackage searchPackage) {
+
         ResultResponse resultResponse = null;
         //需要前台传参pageQuery:包含pageIndex和pageSize 即起始页码和页面容量 记得容量小于总条数才会有分页效果
         //接受分页参数pageRequest

@@ -70,8 +70,6 @@ public class EuserController {
         resultResponse = new ResultResponse(502,"提示信息：未获取到工号！");
         return resultResponse;
     }
-
-
     /**
      * 查询个人信息
      */

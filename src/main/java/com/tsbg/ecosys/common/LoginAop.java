@@ -29,7 +29,6 @@ public class LoginAop {
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint pjd) throws Throwable {
-
         Object object = null;
         //获取request
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -39,7 +38,7 @@ public class LoginAop {
         }
         if (request != null) {
             // 获取用户信息
-           UserInfo userInfo = (UserInfo) request.getSession().getAttribute("session_user");
+            UserInfo userInfo = (UserInfo) request.getSession().getAttribute("session_user");
             System.out.println(userInfo);
             // 这里判断用户信息是否为空
             if (userInfo==null) {
@@ -50,9 +49,9 @@ public class LoginAop {
                 PrintWriter out = response.getWriter();
                 String msg = "{\"code\":401,\"message\":权限不足，请登录}";
                 out.print(msg);
-                return null;
+                 return null;
             }else{
-                System.out.println(userInfo.getUserName());
+                System.out.println(userInfo.getUserCode());
             }
         }
         object = pjd.proceed();

@@ -22,15 +22,4 @@ public class WebFilterregistration implements WebMvcConfigurer {
             registration.setOrder(1);
             return registration;
     }
-
-   /* @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // addPathPatterns 用于添加拦截规则
-        // excludePathPatterns 用户排除拦截
-        @Override
-        public void addInterceptors(InterceptorRegistry registry){
-            registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns();
-        }
-    }
-    */
 }

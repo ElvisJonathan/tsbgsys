@@ -19,7 +19,6 @@ public class EpartnerServiceImpl implements EpartnerService {
     @Autowired
     private EpartnerMapper epartnerMapper;
 
-
     @Override
     public int updateByCid(int status, int cid) {
         return epartnerMapper.updateByCid(status,cid);
@@ -82,9 +81,10 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
-    public Epartner selectByPrimaryKeyl(Epartner epartner) {
+    public List<Epartner> selectByPrimaryKeyl(Epartner epartner) {
         return epartnerMapper.selectByPrimaryKeyl(epartner);
     }
+
 
     @Override
     public List<Epartner> selectepartnerExcellAll() {
@@ -134,6 +134,7 @@ public class EpartnerServiceImpl implements EpartnerService {
      */
     @Override
     public PageResult findPage(PageRequest pageRequest, Epartner epartner) {
+
         return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest, epartner));
     }
 

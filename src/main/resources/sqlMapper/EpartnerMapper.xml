@@ -107,6 +107,7 @@
       </if>
     </where>
   </select>
+
   <!-- 分页查询公司信息+搜索：如果不用搜索则不需要加动态sql -->
   <select id="selectPage"  resultMap="BaseResultMap">
     select
@@ -134,12 +135,13 @@
     from epartner
     where partner_no = #{partnerNo,jdbcType=INTEGER} AND status = 0
   </select>
-  <!--根据查询条件导出Excel-->
-  <select id="selectByPrimaryKeyl" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKeyl"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from epartner
-    where status = 0 AND del_status=0
+    from epartner WHERE del_status=0
+    <if  test="createrIdentity==0">
+      and status=0
+    </if>
     <if test = "partnerName != null and partnerName != ''">
       and partner_name LIKE CONCAT('%', #{partnerName}, '%')
     </if>

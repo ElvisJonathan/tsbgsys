@@ -57,25 +57,10 @@ public class EcooperationService {
         return ecTotalDtoList;
     }
 
-    //根据查询条件导出
-    public List<EcTotalDtol> getEcooperationListall(Epartner epartner) {
-        int cid = epartner.getPartnerNo();
-        Epartner epartner1 = epartnerMapper.selectByPrimaryKeyl(epartner);
-        //根据cid查找eccontact  selectEccontactsByCidl();
-        List<Eccontacts> eccontacts = eccontactsMapper.selectEccontactsByCidl(cid);
-        //根据cid查在查询所有的Ecooperation
-        List<Ecooperation> ecooperations = ecooperationMapper.selectEcooperationByCidl(cid);
-        EcTotalDtol ecTotalDtol = new EcTotalDtol();
-        ecTotalDtol.setEpartner(epartner1);
-       if (eccontacts != null && eccontacts.size() > 0) {
-            ecTotalDtol.setEccontacts(eccontacts.get(0));
-        }
-        if (ecooperations != null && ecooperations.size() > 0) {
-            ecTotalDtol.setEcooperation(ecooperations.get(0));
-        }
-        List<EcTotalDtol> ecTotalDtoList = new ArrayList<>();
-        ecTotalDtoList.add(ecTotalDtol);
-        return ecTotalDtoList;
+    //根据查询条件导出(根据epartner表中的四个条件ep.partner_name,ep.partner_product,ep.partner_region,ep.partner_industry from eccontacts et,ecooperation ecp,epartner)
+    public List<Epartner> getEcooperationListall(Epartner epartner) {
+        List<Epartner> epartners = epartnerMapper.selectByPrimaryKeyl(epartner);
+        return epartners;
     }
 
     //全部导出Excel（只导出status=0 and del_status=0）
