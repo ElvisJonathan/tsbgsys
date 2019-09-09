@@ -38,7 +38,7 @@ public class SwaggerConfig {
        pars.add(tokenPar.build());
        Predicate<RequestHandler> swaggerSelector = RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class);
        return new Docket(DocumentationType.SWAGGER_2)
-               .host("localhost:80")
+               .host("10.124.131.79:80")
                .securitySchemes(newArrayList(new ApiKey[]{this.apiKey()}))
                //禁止使用开关
                .enable(true)

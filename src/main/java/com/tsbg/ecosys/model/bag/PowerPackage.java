@@ -17,6 +17,8 @@ public class PowerPackage {
 
     private Object sign;
 
+    private Object userCode;
+
     public UserInfo getUserInfo() {
         return userInfo;
     }
@@ -39,5 +41,13 @@ public class PowerPackage {
 
     public void setSign(Object sign) {
         this.sign = sign;
+    }
+
+    public Object getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(Object userCode) {
+        this.userCode = userCode;
     }
 }
