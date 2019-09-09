@@ -182,14 +182,8 @@ public class FileController {
         Integer partnerNo=Integer.parseInt(request.getParameter("partnerNo"));
         System.out.println("收到公司编号为："+partnerNo);
         //获取userCode用于记录最后下载者  让前端传
-        /*String userCode = request.getParameter("userCode");
+        String userCode = request.getParameter("userCode");
         System.out.println("获取到的userCode:"+userCode);
-        //通过公司编号和文件名定位文件编号
-        Integer fileNo = fileInfoService.selectFileNo(partnerNo,fileName);
-        if (fileNo!=null){
-            //根据公司编号和用户工号去修改最后下载者
-            fileInfoService.updateDownloader(userCode,fileNo);
-        }*/
         //根据文件名去数据库查询URL
         String name = fileInfoService.selectRealPathByName(fileName,partnerNo);
         System.out.println("真实URL："+name);
@@ -212,6 +206,12 @@ public class FileController {
             //复制
             IOUtils.copy(is, response.getOutputStream());
             response.getOutputStream().flush();
+            //通过公司编号和文件名定位文件编号
+            Integer fileNo = fileInfoService.selectFileNo(partnerNo,fileName);
+            if (fileNo!=null){
+                //根据公司编号和用户工号去修改最后下载者
+                fileInfoService.updateDownloader(userCode,fileNo);
+            }
         } catch (IOException e) {
             return "下载附件失败,error:"+e.getMessage();
         }

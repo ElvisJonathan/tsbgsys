@@ -86,7 +86,7 @@ public class SessionFilter extends BaseController implements Filter {
 
     private void initIgnoreUrl() {
         //login
-        ignoreUrlList.add("http://localhost:80/eco/tsbg/login/ecologin");
+        ignoreUrlList.add("http://10.124.131.79:80/tsbg/login/ecologin");
     }
 }
 

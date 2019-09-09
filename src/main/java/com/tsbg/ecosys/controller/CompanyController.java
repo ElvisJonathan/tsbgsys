@@ -209,7 +209,7 @@ public class CompanyController {
                         epartnerService.deleteByPrimaryKey(no);
                         ecooperationService.deleteByPrimaryKey2(no);
                         eccontactsService.deleteByPrimaryKey3(no);
-                        return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
+                        return new ResultResponse(501, multipartFile.getOriginalFilename()+"文件已存在，请选择其他文件上传!");
                     }
                     buffer.append(multipartFile.getOriginalFilename());
                     buffer.append(",");
@@ -250,7 +250,7 @@ public class CompanyController {
                         //本地存储
                         fileInfo.setFilePath(URL);
                         //服务器存储   打包上去前需要置换
-                        //fileInfo.setFilePath(URL2);
+                       // fileInfo.setFilePath(URL2);
                         fileInfo.setRelDocId(no);
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(userCode);
@@ -534,7 +534,7 @@ public class CompanyController {
                         List<Integer> count2=  fileInfoService.selectFileStatusByFileName(multipartFile.getOriginalFilename(),cid);
                         for (int i=0;i<=count2.size()-1;i++){
                             if (count > 0 && count2.get(i)==0) {
-                                return new ResultResponse(501, "文件已存在，请选择其他文件上传!");
+                                return new ResultResponse(501, multipartFile.getOriginalFilename()+"文件已存在，请选择其他文件上传!");
                             }
                         }
                         String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
@@ -571,7 +571,7 @@ public class CompanyController {
                             fileInfo.setFileName(multipartFile.getOriginalFilename());
                             fileInfo.setFilePath(URL);
                             //服务器存储   打包上去前需要置换
-                            //fileInfo.setFilePath(URL2);
+                            // fileInfo.setFilePath(URL2);
                             fileInfo.setRelDocId(cid);
                             fileInfo.setUpdatedTime(new Date());
                             fileInfo.setLastUpdateUser(userCode);

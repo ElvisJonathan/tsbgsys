@@ -96,7 +96,7 @@ public class EcController {
 
 
     //全部导出Excel（只导出status=0 and del_status=0）
-    @NeedLogin
+    //@NeedLogin
     @RequestMapping(value = "/exportall", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public void exportAll(HttpServletResponse response) throws IOException {

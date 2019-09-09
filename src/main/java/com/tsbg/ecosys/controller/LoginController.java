@@ -9,18 +9,11 @@ import com.tsbg.ecosys.service.RoleService;
 import com.tsbg.ecosys.service.UserInfoService;
 import com.tsbg.ecosys.vo.LoginResultVo;
 import io.swagger.annotations.ApiOperation;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -38,11 +31,10 @@ public class LoginController {
     private PermissionService permissionService;
 
     @PostMapping("loginTest")
-    public UserInfo loginTest(@RequestParam("userName")String userName,
-                                    @RequestParam("userCode")String userCode,HttpSession session){
+    public UserInfo loginTest(@RequestBody UserInfo userInfo,HttpSession session){
         HttpServletRequest request = null;
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserName(userName);
+        //UserInfo userInfo = new UserInfo();
+        //userInfo.setUserName(userName);
         session.setAttribute("session_user",userInfo);
         //获取用户的信息
         userInfo = (UserInfo) request.getSession().getAttribute("session_user");
@@ -54,7 +46,7 @@ public class LoginController {
 
     @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse login(@RequestBody UserInfo userInfo, HttpSession session){
+    public ResultResponse login(@RequestBody UserInfo userInfo, HttpSession session, HttpServletRequest request){
         //初始化构造器
         ResultResponse resultResponse = null;
         //获取用户在前台输入的用户名和密码
@@ -103,19 +95,22 @@ public class LoginController {
                         for (int i=0;i<=plist.size()-1;i++){
                             arr2[i]=plist.get(i).getName();
                         }
-                        resultResponse = new ResultResponse(0,"成功登录并且获取了权限！",userName,userCode,arr2);
                         //设置当前用户的登录session
-                        session.setAttribute("userName",userName);
-                        session.setAttribute("userCode",userCode);
-                        return resultResponse;
+                        userInfo.setUserName(userName);
+                        //session.setAttribute("userName",userName);
+                        //session.setAttribute("userCode",userCode);
+                        //session.setMaxInactiveInterval(1000);
+                        //session.setAttribute("session_user",userInfo);
+                        //request.getSession().setAttribute("users",userName);//用户名存入该用户的session 中
+                        return new ResultResponse(0,"成功登录并且获取了权限！",userName,userCode,arr2);
                     }
-                    session.setAttribute("userName",userName);
-                    session.setAttribute("userCode",userCode);
+                    //session.setAttribute("userName",userName);
+                    //session.setAttribute("userCode",userCode);
                     return new ResultResponse(0,"成功登录但未获取到对应权限信息！",userName,userCode);
                 }
                 //设置当前用户的登录session
-                session.setAttribute("userName",userName);
-                session.setAttribute("userCode",userCode);
+                //session.setAttribute("userName",userName);
+                //session.setAttribute("userCode",userCode);
                 return new ResultResponse(0,"成功登录但是未找到对应角色信息！",userName,userCode);
             }
         }

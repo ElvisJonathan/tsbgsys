@@ -96,10 +96,12 @@ public class JurisdictionController {
             resultResponse = new ResultResponse(510, "提示信息：工号不能为空！");
             return resultResponse;
         }
+        String beChangedUserCode = powerPackage.getUserCode().toString();
+        System.out.println(beChangedUserCode);
         //权限标识符
         Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有power权限
-        List<Integer> list= roleService.findRoleByUserCode2(userCode);
+        List<Integer> list= roleService.findRoleByUserCode2(beChangedUserCode);
         if (list!=null){
             for (int i=0;i<=list.size()-1;i++){
                 List<String> pList = permissionService.findPermissionByRoleId2(list.get(i));
