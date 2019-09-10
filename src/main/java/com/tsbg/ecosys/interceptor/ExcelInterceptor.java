@@ -1,4 +1,4 @@
-package com.tsbg.ecosys.filter;
+package com.tsbg.ecosys.interceptor;
 
 import com.tsbg.ecosys.controller.EcController;
 import com.tsbg.ecosys.model.UserInfo;

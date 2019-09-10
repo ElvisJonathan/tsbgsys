@@ -250,7 +250,7 @@ public class CompanyController {
                         //本地存储
                         fileInfo.setFilePath(URL);
                         //服务器存储   打包上去前需要置换
-                       // fileInfo.setFilePath(URL2);
+                        //fileInfo.setFilePath(URL2);
                         fileInfo.setRelDocId(no);
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(userCode);
@@ -571,7 +571,7 @@ public class CompanyController {
                             fileInfo.setFileName(multipartFile.getOriginalFilename());
                             fileInfo.setFilePath(URL);
                             //服务器存储   打包上去前需要置换
-                            // fileInfo.setFilePath(URL2);
+                            //fileInfo.setFilePath(URL2);
                             fileInfo.setRelDocId(cid);
                             fileInfo.setUpdatedTime(new Date());
                             fileInfo.setLastUpdateUser(userCode);

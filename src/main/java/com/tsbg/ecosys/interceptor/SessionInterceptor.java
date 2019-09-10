@@ -1,4 +1,4 @@
-package com.tsbg.ecosys.filter;
+package com.tsbg.ecosys.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

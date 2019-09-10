@@ -1,6 +1,6 @@
 package com.tsbg.ecosys.config;
 
-import com.tsbg.ecosys.filter.SessionInterceptor;
+import com.tsbg.ecosys.interceptor.SessionInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;

@@ -42,14 +42,14 @@ public class RegisterController {
             return resultResponse;
         }
         //如果存在该工号并且部门代码为生态部门代码则成功创建该用户
-        if (number>0 && (deptCode.equals("GE11000600") || deptCode.equals("GE110006000") || deptCode.equals("GE110006100") || deptCode.equals("GE1100S6000")
-        || deptCode.equals("GE1100S6100") || deptCode.equals("GE1100S6200") || deptCode.equals("GE110006110")
-        || deptCode.equals("GE110006111") || deptCode.equals("GE110006112") || deptCode.equals("GE1100T6000")
-        || deptCode.equals("GE1100T6100") || deptCode.equals("GE1100T6200") || deptCode.equals("GE1100T6300")
-        || deptCode.equals("GE110006200") || deptCode.equals("GE110006210") || deptCode.equals("GE110006211")
-        || deptCode.equals("GE1100H6000") || deptCode.equals("GE110006213") || deptCode.equals("GE110006220")
-        || deptCode.equals("GE110006221") || deptCode.equals("GE110006222") || deptCode.equals("GE11200800")
-        || deptCode.equals("BCDCJ81000"))){
+        if (number>0 && (deptCode.trim().equals("GE11000600") ||  deptCode.trim().equals("GE110006000") || deptCode.trim().equals("GE110006100") || deptCode.trim().equals("GE1100S6000")
+        || deptCode.trim().equals("GE1100S6100") || deptCode.trim().equals("GE1100S6200") || deptCode.trim().equals("GE110006110")
+        || deptCode.trim().equals("GE110006111") || deptCode.trim().equals("GE110006112") || deptCode.trim().equals("GE1100T6000")
+        || deptCode.trim().equals("GE1100T6100") || deptCode.trim().equals("GE1100T6200") || deptCode.trim().equals("GE1100T6300")
+        || deptCode.trim().equals("GE110006200") || deptCode.trim().equals("GE110006210") || deptCode.trim().equals("GE110006211")
+        || deptCode.trim().equals("GE1100H6000") || deptCode.trim().equals("GE110006213") || deptCode.trim().equals("GE110006220")
+        || deptCode.trim().equals("GE110006221") || deptCode.trim().equals("GE110006222") || deptCode.trim().equals("GE11200800")
+        || deptCode.trim().equals("BCDCJ81000"))){
             //可以注册
             //设置创建人和创建时间
             userInfo.setCreater(userInfo.getUserName());

@@ -33,8 +33,6 @@ public class LoginController {
     @PostMapping("loginTest")
     public UserInfo loginTest(@RequestBody UserInfo userInfo,HttpSession session){
         HttpServletRequest request = null;
-        //UserInfo userInfo = new UserInfo();
-        //userInfo.setUserName(userName);
         session.setAttribute("session_user",userInfo);
         //获取用户的信息
         userInfo = (UserInfo) request.getSession().getAttribute("session_user");
@@ -46,7 +44,7 @@ public class LoginController {
 
     @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse login(@RequestBody UserInfo userInfo, HttpSession session, HttpServletRequest request){
+    public ResultResponse login(@RequestBody UserInfo userInfo, HttpSession session){
         //初始化构造器
         ResultResponse resultResponse = null;
         //获取用户在前台输入的用户名和密码
@@ -96,21 +94,19 @@ public class LoginController {
                             arr2[i]=plist.get(i).getName();
                         }
                         //设置当前用户的登录session
-                        userInfo.setUserName(userName);
-                        //session.setAttribute("userName",userName);
-                        //session.setAttribute("userCode",userCode);
-                        //session.setMaxInactiveInterval(1000);
-                        //session.setAttribute("session_user",userInfo);
-                        //request.getSession().setAttribute("users",userName);//用户名存入该用户的session 中
+                        session.setAttribute("userCode", userCode);
+                        session.setAttribute("userName",userName);
+                        session.setMaxInactiveInterval(1800);
                         return new ResultResponse(0,"成功登录并且获取了权限！",userName,userCode,arr2);
                     }
-                    //session.setAttribute("userName",userName);
-                    //session.setAttribute("userCode",userCode);
+                    session.setAttribute("userCode", userCode);
+                    session.setAttribute("userName",userName);
+                    session.setMaxInactiveInterval(1800);
                     return new ResultResponse(0,"成功登录但未获取到对应权限信息！",userName,userCode);
                 }
-                //设置当前用户的登录session
-                //session.setAttribute("userName",userName);
-                //session.setAttribute("userCode",userCode);
+                session.setAttribute("userCode", userCode);
+                session.setAttribute("userName",userName);
+                session.setMaxInactiveInterval(1800);
                 return new ResultResponse(0,"成功登录但是未找到对应角色信息！",userName,userCode);
             }
         }
