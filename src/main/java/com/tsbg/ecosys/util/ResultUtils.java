@@ -1,9 +1,9 @@
-package com.tsbg.ecosys.config;
+package com.tsbg.ecosys.util;
 
 /**
  * 前后端分离信息返回类
  */
-public class ResultResponse {
+public class ResultUtils {
 
     private static final int SUCCESS = 0;
     private static final int FAILED = 500;
@@ -17,7 +17,7 @@ public class ResultResponse {
     /**
      * 构造注入
      */
-    public ResultResponse(int code, String message) {
+    public ResultUtils(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -25,7 +25,7 @@ public class ResultResponse {
     /**
      * 构造方法重载
      */
-    public ResultResponse(int code, String message, Object data) {
+    public ResultUtils(int code, String message, Object data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -35,7 +35,7 @@ public class ResultResponse {
      * 构造方法重载
      * 有两个对象传递时使用
      */
-    public ResultResponse(int code, String message, Object data,Object dataSecond) {
+    public ResultUtils(int code, String message, Object data, Object dataSecond) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -46,7 +46,7 @@ public class ResultResponse {
      * 构造方法重载
      * 有三个对象传递时使用
      */
-    public ResultResponse(int code, String message, Object data, Object dataSecond, Object dataThird) {
+    public ResultUtils(int code, String message, Object data, Object dataSecond, Object dataThird) {
         this.code = code;
         this.message = message;
         this.data = data;

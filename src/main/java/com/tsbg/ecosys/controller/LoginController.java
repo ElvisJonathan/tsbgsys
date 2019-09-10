@@ -1,6 +1,6 @@
 package com.tsbg.ecosys.controller;
 
-import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.Permission;
 import com.tsbg.ecosys.model.Role;
 import com.tsbg.ecosys.model.UserInfo;
@@ -44,9 +44,9 @@ public class LoginController {
 
     @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse login(@RequestBody UserInfo userInfo, HttpSession session){
+    public ResultUtils login(@RequestBody UserInfo userInfo, HttpSession session){
         //初始化构造器
-        ResultResponse resultResponse = null;
+        ResultUtils resultUtils = null;
         //获取用户在前台输入的用户名和密码
         String userCode = userInfo.getUserCode();
         String userPwd = userInfo.getUserPwd();
@@ -55,20 +55,20 @@ public class LoginController {
             //查询工号是否存在
             Integer count = userInfoService.selectCountByUserCode(userCode);
             if (count==0){
-                resultResponse = new ResultResponse(501,"该工号未注册或不存在！");
-                return resultResponse;
+                resultUtils = new ResultUtils(501,"该工号未注册或不存在！");
+                return resultUtils;
             }
             Integer status = userInfoService.selectStatusByUserCode(userCode);
             if (status==1){
-                resultResponse = new ResultResponse(502,"用户被管理员停用！");
-                return resultResponse;
+                resultUtils = new ResultUtils(502,"用户被管理员停用！");
+                return resultUtils;
             }
         }
         //登录时需要进行密码的判断：如果密码为工号+"123"的形式则提示用户修改密码
         if (userPwd!=null){
             if (userPwd.equals(userCode+"123")){
-                resultResponse = new ResultResponse(503,"用户密码被管理员重置需要修改密码！");
-                return resultResponse;
+                resultUtils = new ResultUtils(503,"用户密码被管理员重置需要修改密码！");
+                return resultUtils;
             }
         }
         //如果用户名和密码正确则成功登录
@@ -97,23 +97,23 @@ public class LoginController {
                         session.setAttribute("userCode", userCode);
                         session.setAttribute("userName",userName);
                         session.setMaxInactiveInterval(1800);
-                        return new ResultResponse(0,"成功登录并且获取了权限！",userName,userCode,arr2);
+                        return new ResultUtils(0,"成功登录并且获取了权限！",userName,userCode,arr2);
                     }
                     session.setAttribute("userCode", userCode);
                     session.setAttribute("userName",userName);
                     session.setMaxInactiveInterval(1800);
-                    return new ResultResponse(0,"成功登录但未获取到对应权限信息！",userName,userCode);
+                    return new ResultUtils(0,"成功登录但未获取到对应权限信息！",userName,userCode);
                 }
                 session.setAttribute("userCode", userCode);
                 session.setAttribute("userName",userName);
                 session.setMaxInactiveInterval(1800);
-                return new ResultResponse(0,"成功登录但是未找到对应角色信息！",userName,userCode);
+                return new ResultUtils(0,"成功登录但是未找到对应角色信息！",userName,userCode);
             }
         }
         //如果用户名或密码为空或是不存在此用户提示登录失败
         //返回错误状态码500和登录失败消息
-        resultResponse = new ResultResponse(500,"用户名或密码错误登录失败！");
-        return resultResponse;
+        resultUtils = new ResultUtils(500,"用户名或密码错误登录失败！");
+        return resultUtils;
     }
 
     /**
@@ -121,7 +121,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/premodifyPwd", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse preModifyPwd(@RequestBody UserInfo userInfo){
+    public ResultUtils preModifyPwd(@RequestBody UserInfo userInfo){
         //通过从前端接收的工号和密码来判断是否存在此用户
         String userCode = userInfo.getUserCode();
         String userPwd = userInfo.getUserPwd();
@@ -129,11 +129,11 @@ public class LoginController {
             //调用查询逻辑查找用户是否存在
             int num = userInfoService.judgeIfExistUserByUserPwd(userCode,userPwd);
             if (num==1){
-                return new ResultResponse(0,"此用户存在且可以修改密码");
+                return new ResultUtils(0,"此用户存在且可以修改密码");
             }
-            return new ResultResponse(501,"用户不存在或密码错误请重试");
+            return new ResultUtils(501,"用户不存在或密码错误请重试");
         }
-        return new ResultResponse(502,"工号或密码为空异常");
+        return new ResultUtils(502,"工号或密码为空异常");
     }
 
 
@@ -143,9 +143,9 @@ public class LoginController {
     @ApiOperation(value = "修改密码", notes = "修改密码")
     @RequestMapping(value = "/modifyPassword", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse modifyPassword(@RequestBody UserInfo userInfo) {
+    public ResultUtils modifyPassword(@RequestBody UserInfo userInfo) {
         //初始化构造器
-        ResultResponse resultResponse = null;
+        ResultUtils resultUtils = null;
         //获取输入的新密码和工号
         String userCode = userInfo.getUserCode();
         String userPwd = userInfo.getUserPwd();
@@ -154,14 +154,14 @@ public class LoginController {
             int num = userInfoService.modifyPasswordByUsername(userPwd, userCode);
             if (num>0){
                 UserInfo ei = userInfoService.selectByUserCode(userCode);
-                resultResponse = new ResultResponse(0, "修改成功！", new LoginResultVo(ei.getUserName(),ei.getUserCode(),ei.getUserPwd(), ei.getUserId()));
-                return  resultResponse;
+                resultUtils = new ResultUtils(0, "修改成功！", new LoginResultVo(ei.getUserName(),ei.getUserCode(),ei.getUserPwd(), ei.getUserId()));
+                return resultUtils;
             }
-            resultResponse = new ResultResponse(501,"修改失败！");
-            return resultResponse;
+            resultUtils = new ResultUtils(501,"修改失败！");
+            return resultUtils;
         }
-        resultResponse = new ResultResponse(500,"工号或密码为空");
-        return resultResponse;
+        resultUtils = new ResultUtils(500,"工号或密码为空");
+        return resultUtils;
     }
 
     /**
@@ -169,8 +169,8 @@ public class LoginController {
      */
     @RequestMapping(value = "/ecologout", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse Logout(HttpSession session){
+    public ResultUtils Logout(HttpSession session){
         session.invalidate();
-        return new ResultResponse(0,"用户成功登出！");
+        return new ResultUtils(0,"用户成功登出！");
     }
 }

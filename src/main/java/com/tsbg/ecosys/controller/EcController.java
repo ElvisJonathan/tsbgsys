@@ -1,9 +1,7 @@
 package com.tsbg.ecosys.controller;
 
-import com.tsbg.ecosys.common.NeedLogin;
-import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.dto.EcTotalDto;
-import com.tsbg.ecosys.dto.EcTotalDtol;
 import com.tsbg.ecosys.dto.EcTotal_Excel;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Ecooperation;
@@ -16,7 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,15 +40,15 @@ public class EcController {
     @ApiOperation(value = "查询合作伙伴信息", notes = "查询合作伙伴信息")
     @RequestMapping(value = "/total", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse getEcooperationList(@RequestBody Epartner epartner) {
+    public ResultUtils getEcooperationList(@RequestBody Epartner epartner) {
         //获取公司合作伙伴编号
         Integer cid = epartner.getPartnerNo();
         //根据合作伙伴编号同步查询合作情况与联系人
         if (cid != null) {
             List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList(cid);
-            return new ResultResponse(0, "根据PartnerNo查询", ecTotalDtoList);
+            return new ResultUtils(0, "根据PartnerNo查询", ecTotalDtoList);
         }
-        return new ResultResponse(500, "未收到PartnerNo");
+        return new ResultUtils(500, "未收到PartnerNo");
     }
 
     /**
@@ -59,18 +56,18 @@ public class EcController {
      */
     @RequestMapping(value = "/filedetail", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse getFileDetail(@RequestBody Epartner epartner) {
+    public ResultUtils getFileDetail(@RequestBody Epartner epartner) {
         Integer partnerNo = epartner.getPartnerNo();
         if (partnerNo != null) {
             //查询当前公司的文件详情
             List<String> filelist = epartnerService.selectFileByParNo(partnerNo);
             List<String> filelist2 = epartnerService.selectFileByParNo2(partnerNo);
             if (filelist != null) {
-                return new ResultResponse(0, "查询公司文件(公司隐藏情况下文件也隐藏)", filelist, filelist2);
+                return new ResultUtils(0, "查询公司文件(公司隐藏情况下文件也隐藏)", filelist, filelist2);
             }
-            return new ResultResponse(500, "未查到相关文件");
+            return new ResultUtils(500, "未查到相关文件");
         }
-        return new ResultResponse(501, "未收到PartnerNo");
+        return new ResultUtils(501, "未收到PartnerNo");
     }
 
     //根据查询条件导出Excel

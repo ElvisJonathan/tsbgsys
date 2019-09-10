@@ -1,6 +1,6 @@
 package com.tsbg.ecosys.controller;
 
-import com.tsbg.ecosys.config.ResultResponse;
+import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.FileInfo;
 import com.tsbg.ecosys.model.UserInfo;
@@ -47,13 +47,13 @@ public class FileController {
     //新增时的上传
     @RequestMapping(value = "/import", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse importData(HttpServletRequest req) throws IOException {
+    public ResultUtils importData(HttpServletRequest req) throws IOException {
         boolean isMultipart = ServletFileUpload.isMultipartContent(req);
         if (isMultipart) {
             MultipartHttpServletRequest multipartRequest = WebUtils.getNativeRequest(req, MultipartHttpServletRequest.class);
             MultipartFile file = multipartRequest.getFile("file");
             if (file.isEmpty()) {
-                return new ResultResponse(500, "上传文件为空！");
+                return new ResultUtils(500, "上传文件为空！");
             }
             //根据原始文件名的后缀进行文件类型判断
             String oldName = file.getOriginalFilename();
@@ -90,19 +90,19 @@ public class FileController {
                 int number = epartnerService.selectID();
                 System.out.println("刚刚增加成功的记录的编号为：" + number);
                 if (num > 0) {
-                    return new ResultResponse(0, "上传成功！");
+                    return new ResultUtils(0, "上传成功！");
                 }
-                return new ResultResponse(503, "上传失败！");
+                return new ResultUtils(503, "上传失败！");
             }
-            return new ResultResponse(505, "上传文件格式不符合需求");
+            return new ResultUtils(505, "上传文件格式不符合需求");
         }
-        return new ResultResponse(506, "没有文件");
+        return new ResultUtils(506, "没有文件");
     }
 
     //多文件的上传
     @RequestMapping(value = "/importmore", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public ResultResponse importMore(MultipartFile[] file,HttpServletRequest req) throws IOException {
+    public ResultUtils importMore(MultipartFile[] file, HttpServletRequest req) throws IOException {
          StringBuffer buffer = new StringBuffer();
         // int[] array = new int[file.length];
          for (MultipartFile multipartFile : file) {
@@ -144,7 +144,7 @@ public class FileController {
                  int number = epartnerService.selectID();
                  System.out.println("刚刚增加成功的记录的编号为：" + number);
              }else{
-                 return new ResultResponse(505, "上传文件格式不符合需求");
+                 return new ResultUtils(505, "上传文件格式不符合需求");
              }
          }
          return null;
@@ -152,7 +152,7 @@ public class FileController {
 
     @RequestMapping(value = "/download", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultResponse downloadFile(@RequestBody CompanyPackage companyPackage){
+    public ResultUtils downloadFile(@RequestBody CompanyPackage companyPackage){
         //通过接收公司的partnerNo和userCode来记录下载者 还需要获取文件名
         Epartner epartner = companyPackage.getEpartner();
         Integer partnerNo= epartner.getPartnerNo();
@@ -161,11 +161,11 @@ public class FileController {
         if (partnerNo!=null && userCode!=null){
            int num = epartnerService.logDownloader(userCode,partnerNo);
            if (num>0){
-               return new ResultResponse(0,"记录下载者成功!");
+               return new ResultUtils(0,"记录下载者成功!");
            }
-           return  new ResultResponse(500,"记录下载者失败！");
+           return  new ResultUtils(500,"记录下载者失败！");
         }
-        return new ResultResponse(501,"合作伙伴编号或工号为空异常！");
+        return new ResultUtils(501,"合作伙伴编号或工号为空异常！");
     }
 
     /**
