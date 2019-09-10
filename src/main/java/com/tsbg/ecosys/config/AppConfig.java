@@ -17,7 +17,6 @@ public class AppConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//须要拦截的url及请求
-		System.out.println("AppConfig==>");
 		//addInterceptor(new AuthorityInterceptor())拦截器类
 		//addPathPatterns("/user/**","/html/home/**") 要拦截的url 
 		//excludePathPatterns("/user/login"); 在要拦截的url里面去除不需要拦截的

@@ -16,7 +16,7 @@ public class SessionService {
     @Autowired
     private RedisService redisService;
 
-    @Value("${session.session-expires}")
+    @Value("${server.servlet.session.timeout}")
     private long sessionExpire;
 
     private static final Logger LOG = LoggerFactory.getLogger(SessionService.class);

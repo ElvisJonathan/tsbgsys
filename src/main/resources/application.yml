@@ -1,44 +1,41 @@
-spring:
-  datasource:
-#   url: jdbc:mysql://10.124.131.89:3306/fiitsbg?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
-#   username: sasa
-#   password: foxconn12#$
-    url: jdbc:mysql://localhost:3306/fiitsbg?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
-    username: root
-    password: root
-    #schema: database/import.sql
-    #sql-script-encoding: utf-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    database: 0
-    host: localhost
-    port: 6379
-    password:
-
-mybatis:
-  mapper-locations: classpath:sqlMapper/*.xml
-
-  thymeleaf:
-    cache: false
-    mode: HTML
-
-  servlet:
-    multipart:
-      max-file-size: 30Mb
-      max-request-size: 30Mb
-
-# pagehelper
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-
-#Session(5min)
-session:
-  session-expires: 300
-
-server:
-  port: 80
+#spring:
+#  datasource:
+#    url: jdbc:mysql://10.124.131.73:3306/fiitsbg?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+#    username: rootMingze      #sasa foxconn12#$  rootMingze elvis985.
+#    password: elvis985.
+#    #schema: database/import.sql
+#    #sql-script-encoding: utf-8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  redis:
+#    database: 0
+#    host: localhost
+#    port: 6379
+#    password:
+#
+#mybatis:
+#  mapper-locations: classpath:sqlMapper/*.xml
+#
+#  thymeleaf:
+#    cache: false
+#    mode: HTML
+#
 #  servlet:
-#    context-path: /eco
+#    multipart:
+#      max-file-size: 30Mb
+#      max-request-size: 30Mb
+#
+## pagehelper
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql
+#
+##Session(5min)
+#session:
+#  session-expires: 300
+#
+#server:
+#  port: 80
+##  servlet:
+##    context-path: /eco

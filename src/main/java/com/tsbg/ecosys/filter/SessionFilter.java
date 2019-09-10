@@ -24,7 +24,7 @@ public class SessionFilter extends BaseController implements Filter {
     private static final Logger log = LoggerFactory.getLogger(SessionFilter.class);
     @Autowired
     private RedisService redisService;
-    @Value("${session.session-expires}")
+    @Value("${server.servlet.session.timeout}")
     private long sessionExpire;
     private List<String> ignoreUrlList;
 
