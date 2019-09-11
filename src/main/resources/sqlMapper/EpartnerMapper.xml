@@ -114,7 +114,7 @@
     e.partner_no, e.partner_name, e.partner_date, e.partner_registcapital, e.partner_list, e.partner_scale,
     e.partner_addr, e.partner_webddr, e.partner_tech, e.partner_product, e.partner_channel, e.partner_turnover,
     e.partner_region, e.partner_industry, e.status, e.del_status, e.create_time, e.update_time, e.creater,e.creater_identity,
-    e.updater, e.remark,e.proj_id
+    e.updater, e.remark,e.proj_id,c.name
     from epartner AS e LEFT JOIN eccontacts AS c
     ON e.`partner_no`=c.`partner_no`
     WHERE e.`del_status`=0

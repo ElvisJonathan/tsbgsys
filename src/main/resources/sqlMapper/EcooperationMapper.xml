@@ -85,7 +85,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    coop_id, partner_no, partner_name, partner_callintime, partner_BD_owner, co_mode, partner_costage,
+    coop_id, partner_no, partner_name, partner_callintime, partner_BD_owner,co_mode,partner_costage,
     sign_contract, contract_date, entrust, entrust_name, partner_awarding, project_name,
     co_type, co_progress, fii_codepartment, create_time, update_time, creater, updater,
     status, del_status, remark
@@ -106,7 +106,7 @@
   </delete>
   <insert id="insert" parameterType="com.tsbg.ecosys.model.Ecooperation" >
     insert into ecooperation (coop_id, partner_no, partner_name,
-      partner_callintime, partner_BD_owner,co_mode, partner_costage,
+      partner_callintime, partner_BD_owner, co_mode, partner_costage,
       sign_contract, contract_date, entrust,
       entrust_name, partner_awarding, project_name,
       co_type, co_progress, fii_codepartment,
@@ -114,7 +114,7 @@
       updater, status, del_status,
       remark)
     values (#{coopId,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR},
-      #{partnerCallintime,jdbcType=VARCHAR}, #{partnerBdOwner,jdbcType=VARCHAR},#{coMode,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR},
+      #{partnerCallintime,jdbcType=VARCHAR}, #{partnerBdOwner,jdbcType=VARCHAR}, #{coMode,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR},
       #{signContract,jdbcType=INTEGER}, #{contractDate,jdbcType=VARCHAR}, #{entrust,jdbcType=INTEGER},
       #{entrustName,jdbcType=VARCHAR}, #{partnerAwarding,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR},
       #{coType,jdbcType=VARCHAR}, #{coProgress,jdbcType=VARCHAR}, #{fiiCodepartment,jdbcType=VARCHAR},
@@ -544,7 +544,7 @@
     partner_name = #{record.partnerName,jdbcType=VARCHAR},
     partner_callintime = #{record.partnerCallintime,jdbcType=VARCHAR},
     partner_BD_owner = #{record.partnerBdOwner,jdbcType=VARCHAR},
-    co_mode = #{record,coMode,jdbcType=VARCHAR},
+    co_mode = #{record.coMode,jdbcType=VARCHAR},
     partner_costage = #{record.partnerCostage,jdbcType=VARCHAR},
     sign_contract = #{record.signContract,jdbcType=INTEGER},
     contract_date = #{record.contractDate,jdbcType=VARCHAR},
