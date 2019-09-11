@@ -51,6 +51,20 @@ public class EcController {
         return new ResultUtils(500, "未收到PartnerNo");
     }
 
+    /*@ApiOperation(value = "按联系人查询", notes = "按联系人查询")
+    @RequestMapping(value = "/contacts", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public ResultUtils getEcooperationListll(@RequestBody Epartner epartner) {
+        //获取公司合作伙伴编号
+        Integer cid = epartner.getPartnerNo();
+        //根据合作伙伴编号同步查询合作情况与联系人
+        if (cid != null) {
+            List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList(cid);
+            return new ResultUtils(0, "根据PartnerNo查询", ecTotalDtoList);
+        }
+        return new ResultUtils(500, "未收到PartnerNo");
+    }
+*/
     /**
      * 查询公司文件
      */
@@ -177,23 +191,24 @@ public class EcController {
         row.createCell(35).setCellValue("合作夥伴公司名稱");//为第三个单元格设值
         row.createCell(36).setCellValue("Callin 時間");//为第四个单元格设值
         row.createCell(37).setCellValue("Callin BD Owner");//为第五个单元格设值
-        row.createCell(38).setCellValue("合作階段");//为第六个单元格设值
-        row.createCell(39).setCellValue("是否簽署合約：1是/0否");//为第七个单元格设值
-        row.createCell(40).setCellValue("合約起始日");//为第八个单元格设值
-        row.createCell(41).setCellValue("是否有委託簽署關係:1是/0否");//为第九个单元格设值
-        row.createCell(42).setCellValue("合約委託方");//为第十个单元格设值
-        row.createCell(43).setCellValue("是否有授牌:1是/0否");//为第十一个单元格设值
-        row.createCell(44).setCellValue("合作項目名稱");//为第十二个单元格设值
-        row.createCell(45).setCellValue("合作業務類型");//为第十三个单元格设值
-        row.createCell(46).setCellValue("合作項目進度");//为第十四个单元格设值
-        row.createCell(47).setCellValue("Fii合作部門");//为第十五个单元格设值
-        row.createCell(48).setCellValue("創建時間");//为第十五个单元格设值
-        row.createCell(49).setCellValue("修改時間");//为第十五个单元格设值
-        row.createCell(50).setCellValue("創建人");//为第十五个单元格设值
-        row.createCell(51).setCellValue("修改人");//为第十五个单元格设值
+        row.createCell(38).setCellValue("与Fii合作模式");//为第五个单元格设值
+        row.createCell(39).setCellValue("合作階段");//为第六个单元格设值
+        row.createCell(40).setCellValue("是否簽署合約：1是/0否");//为第七个单元格设值
+        row.createCell(41).setCellValue("合約起始日");//为第八个单元格设值
+        row.createCell(42).setCellValue("是否有委託簽署關係:1是/0否");//为第九个单元格设值
+        row.createCell(43).setCellValue("合約委託方");//为第十个单元格设值
+        row.createCell(44).setCellValue("是否有授牌:1是/0否");//为第十一个单元格设值
+        row.createCell(45).setCellValue("合作項目名稱");//为第十二个单元格设值
+        row.createCell(46).setCellValue("合作業務類型");//为第十三个单元格设值
+        row.createCell(47).setCellValue("合作項目進度");//为第十四个单元格设值
+        row.createCell(48).setCellValue("Fii合作部門");//为第十五个单元格设值
+        row.createCell(49).setCellValue("創建時間");//为第十五个单元格设值
+        row.createCell(50).setCellValue("修改時間");//为第十五个单元格设值
+        row.createCell(51).setCellValue("創建人");//为第十五个单元格设值
+        row.createCell(52).setCellValue("修改人");//为第十五个单元格设值
      /*   row.createCell(56).setCellValue("隐藏状态：0未隐藏/1隐藏");//为第十五个单元格设值
         row.createCell(57).setCellValue("删除状态：0未删除/1删除");//为第十五个单元格设值*/
-        row.createCell(52).setCellValue("備註");//为第十五个单元格设值
+        row.createCell(53).setCellValue("備註");//为第十五个单元格设值
 
         int totalRow = 2;
         for (int i = 0; eccontactss.size()>0 && i < eccontactss.size(); i++) {
@@ -271,28 +286,29 @@ public class EcController {
                // row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" : ExcelTimeUtils.getTimehhString(ecooperation.getPartnerCallintime()));
                 row.createCell(36).setCellValue(ecooperation.getPartnerCallintime() == null ? "" :ecooperation.getPartnerCallintime());
                 row.createCell(37).setCellValue(ecooperation.getPartnerBdOwner() == null ? "" : ecooperation.getPartnerBdOwner().toString());
-                row.createCell(38).setCellValue(ecooperation.getPartnerCostage() == null ? "" : ecooperation.getPartnerCostage().toString());
-                row.createCell(39).setCellValue(ecooperation.getSignContract() == null ? "" : ecooperation.getSignContract().toString());
-                row.createCell(40).setCellValue(ecooperation.getContractDate() == null ? "" : ecooperation.getContractDate().toString());
-                row.createCell(41).setCellValue(ecooperation.getEntrust() == null ? "" : ecooperation.getEntrust().toString());
-                row.createCell(42).setCellValue(ecooperation.getEntrustName() == null ? "" : ecooperation.getEntrustName().toString());
-                row.createCell(43).setCellValue(ecooperation.getPartnerAwarding() == null ? "" : ecooperation.getPartnerAwarding().toString());
-                row.createCell(44).setCellValue(ecooperation.getProjectName() == null ? "" : ecooperation.getProjectName().toString());
-                row.createCell(45).setCellValue(ecooperation.getCoType() == null ? "" : ecooperation.getCoType().toString());
-                row.createCell(46).setCellValue(ecooperation.getCoProgress() == null ? "" : ecooperation.getCoProgress().toString());
-                row.createCell(47).setCellValue(ecooperation.getFiiCodepartment() == null ? "" : ecooperation.getFiiCodepartment().toString());
-                row.createCell(48).setCellValue(ecooperation.getCreateTime() == null ? "" : ExcelTimeUtils.getTimehhString(ecooperation.getCreateTime()));
-                row.createCell(49).setCellValue(ecooperation.getUpdateTime() == null ? "" :ExcelTimeUtils.getTimehhString(ecooperation.getUpdateTime()));
-                row.createCell(50).setCellValue(ecooperation.getCreater() == null ? "" : ecooperation.getCreater().toString());
-                row.createCell(51).setCellValue(ecooperation.getUpdater() == null ? "" : ecooperation.getUpdater().toString());
+                row.createCell(38).setCellValue(ecooperation.getCoMode() == null ? "" : ecooperation.getCoMode().toString());
+                row.createCell(39).setCellValue(ecooperation.getPartnerCostage() == null ? "" : ecooperation.getPartnerCostage().toString());
+                row.createCell(40).setCellValue(ecooperation.getSignContract() == null ? "" : ecooperation.getSignContract().toString());
+                row.createCell(41).setCellValue(ecooperation.getContractDate() == null ? "" : ecooperation.getContractDate().toString());
+                row.createCell(42).setCellValue(ecooperation.getEntrust() == null ? "" : ecooperation.getEntrust().toString());
+                row.createCell(43).setCellValue(ecooperation.getEntrustName() == null ? "" : ecooperation.getEntrustName().toString());
+                row.createCell(44).setCellValue(ecooperation.getPartnerAwarding() == null ? "" : ecooperation.getPartnerAwarding().toString());
+                row.createCell(45).setCellValue(ecooperation.getProjectName() == null ? "" : ecooperation.getProjectName().toString());
+                row.createCell(46).setCellValue(ecooperation.getCoType() == null ? "" : ecooperation.getCoType().toString());
+                row.createCell(47).setCellValue(ecooperation.getCoProgress() == null ? "" : ecooperation.getCoProgress().toString());
+                row.createCell(48).setCellValue(ecooperation.getFiiCodepartment() == null ? "" : ecooperation.getFiiCodepartment().toString());
+                row.createCell(49).setCellValue(ecooperation.getCreateTime() == null ? "" : ExcelTimeUtils.getTimehhString(ecooperation.getCreateTime()));
+                row.createCell(50).setCellValue(ecooperation.getUpdateTime() == null ? "" :ExcelTimeUtils.getTimehhString(ecooperation.getUpdateTime()));
+                row.createCell(51).setCellValue(ecooperation.getCreater() == null ? "" : ecooperation.getCreater().toString());
+                row.createCell(52).setCellValue(ecooperation.getUpdater() == null ? "" : ecooperation.getUpdater().toString());
               /*  row.createCell(56).setCellValue(ecooperation.getStatus() == null ? "" : ecooperation.getStatus().toString());
                 row.createCell(57).setCellValue(ecooperation.getDelStatus() == null ? "" : ecooperation.getDelStatus().toString());*/
-                row.createCell(52).setCellValue(ecooperation.getRemark() == null ? "" : ecooperation.getRemark().toString());
+                row.createCell(53).setCellValue(ecooperation.getRemark() == null ? "" : ecooperation.getRemark().toString());
             }
         }
         sheet.setDefaultRowHeight((short) (30 * 30));
         //列宽自适应
-        for (int i = 0; i <= 52; i++) {
+        for (int i = 0; i <= 53; i++) {
             sheet.autoSizeColumn(i);
         }
         response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");

@@ -13,6 +13,8 @@ public class Ecooperation {
 
     private String partnerBdOwner;
 
+    private String coMode;
+
     private String partnerCostage;
 
     private Integer signContract;
@@ -68,7 +70,15 @@ public class Ecooperation {
     }
 
     public void setPartnerName(String partnerName) {
-        this.partnerName = partnerName == null ? null : partnerName.trim();
+        this.partnerName = partnerName;
+    }
+
+    public String getPartnerCallintime() {
+        return partnerCallintime;
+    }
+
+    public void setPartnerCallintime(String partnerCallintime) {
+        this.partnerCallintime = partnerCallintime;
     }
 
     public String getPartnerBdOwner() {
@@ -76,7 +86,15 @@ public class Ecooperation {
     }
 
     public void setPartnerBdOwner(String partnerBdOwner) {
-        this.partnerBdOwner = partnerBdOwner == null ? null : partnerBdOwner.trim();
+        this.partnerBdOwner = partnerBdOwner;
+    }
+
+    public String getCoMode() {
+        return coMode;
+    }
+
+    public void setCoMode(String coMode) {
+        this.coMode = coMode;
     }
 
     public String getPartnerCostage() {
@@ -84,7 +102,7 @@ public class Ecooperation {
     }
 
     public void setPartnerCostage(String partnerCostage) {
-        this.partnerCostage = partnerCostage == null ? null : partnerCostage.trim();
+        this.partnerCostage = partnerCostage;
     }
 
     public Integer getSignContract() {
@@ -100,7 +118,7 @@ public class Ecooperation {
     }
 
     public void setContractDate(String contractDate) {
-        this.contractDate = contractDate == null ? null : contractDate.trim();
+        this.contractDate = contractDate;
     }
 
     public Integer getEntrust() {
@@ -116,7 +134,7 @@ public class Ecooperation {
     }
 
     public void setEntrustName(String entrustName) {
-        this.entrustName = entrustName == null ? null : entrustName.trim();
+        this.entrustName = entrustName;
     }
 
     public Integer getPartnerAwarding() {
@@ -132,7 +150,7 @@ public class Ecooperation {
     }
 
     public void setProjectName(String projectName) {
-        this.projectName = projectName == null ? null : projectName.trim();
+        this.projectName = projectName;
     }
 
     public String getCoType() {
@@ -140,7 +158,7 @@ public class Ecooperation {
     }
 
     public void setCoType(String coType) {
-        this.coType = coType == null ? null : coType.trim();
+        this.coType = coType;
     }
 
     public String getCoProgress() {
@@ -148,7 +166,7 @@ public class Ecooperation {
     }
 
     public void setCoProgress(String coProgress) {
-        this.coProgress = coProgress == null ? null : coProgress.trim();
+        this.coProgress = coProgress;
     }
 
     public String getFiiCodepartment() {
@@ -156,7 +174,7 @@ public class Ecooperation {
     }
 
     public void setFiiCodepartment(String fiiCodepartment) {
-        this.fiiCodepartment = fiiCodepartment == null ? null : fiiCodepartment.trim();
+        this.fiiCodepartment = fiiCodepartment;
     }
 
     public Date getCreateTime() {
@@ -180,7 +198,7 @@ public class Ecooperation {
     }
 
     public void setCreater(String creater) {
-        this.creater = creater == null ? null : creater.trim();
+        this.creater = creater;
     }
 
     public String getUpdater() {
@@ -188,7 +206,7 @@ public class Ecooperation {
     }
 
     public void setUpdater(String updater) {
-        this.updater = updater == null ? null : updater.trim();
+        this.updater = updater;
     }
 
     public Integer getStatus() {
@@ -212,14 +230,6 @@ public class Ecooperation {
     }
 
     public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getPartnerCallintime() {
-        return partnerCallintime;
-    }
-
-    public void setPartnerCallintime(String partnerCallintime) {
-        this.partnerCallintime = partnerCallintime;
+        this.remark = remark;
     }
 }
