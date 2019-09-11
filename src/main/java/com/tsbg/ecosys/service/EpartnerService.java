@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.service;
 
+import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.util.PageRequest;
 import com.tsbg.ecosys.util.PageResult;
@@ -22,8 +23,8 @@ public interface EpartnerService {
      * 影响服务层以上的分页接口，起到了解耦的作用
      * 如果只需要单一的分页则不需要后面的实体类传参，只需要传pageRequest
      */
-    PageResult findPage(@Param("pageRequest") PageRequest pageRequest, @Param("ecInfo") Epartner epartner);
-
+    PageResult findPage(@Param("pageRequest") PageRequest pageRequest, @Param("epartner") Epartner epartner,
+                        @Param("eccontacts") Eccontacts eccontacts);
 
     List<Epartner> selectCinfoBypartnerCname(String partnerCname);
     List<Epartner> selectCinfoBypartnerCproduct(String partnerCproduct);

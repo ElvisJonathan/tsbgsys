@@ -3,6 +3,7 @@ package com.tsbg.ecosys.serviceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.tsbg.ecosys.mapper.EpartnerMapper;
+import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.util.PageRequest;
@@ -118,12 +119,12 @@ public class EpartnerServiceImpl implements EpartnerService {
     /**
      * 调用分页插件完成分页
      */
-    private PageInfo<Epartner> getPageInfo(PageRequest pageRequest, Epartner epartner) {
+    private PageInfo<Epartner> getPageInfo(PageRequest pageRequest, Epartner epartner,Eccontacts eccontacts) {
         int pageIndex = pageRequest.getPageIndex();
         int pageSize = pageRequest.getPageSize();
         PageHelper.startPage(pageIndex, pageSize);
         //此处实现了加搜索条件情况下的分页,如果不需要搜索则不需要加实体类传参
-        List<Epartner> sysMenus = epartnerMapper.selectPage(epartner);
+        List<Epartner> sysMenus = epartnerMapper.selectPage(epartner,eccontacts);
         return new PageInfo<Epartner>(sysMenus);
     }
 
@@ -133,10 +134,9 @@ public class EpartnerServiceImpl implements EpartnerService {
      * 如果无需搜索则去除实体类传参
      */
     @Override
-    public PageResult findPage(PageRequest pageRequest, Epartner epartner) {
+    public PageResult findPage(PageRequest pageRequest, Epartner epartner, Eccontacts eccontacts) {
 
-        return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest, epartner));
+        return PageUtils.getPageResult(pageRequest, getPageInfo(pageRequest,epartner,eccontacts));
     }
-
 
 }

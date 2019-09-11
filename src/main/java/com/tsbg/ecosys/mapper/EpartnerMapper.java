@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.mapper;
 
+import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.example.EcInfoExample;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,7 +30,7 @@ public interface EpartnerMapper {
     List<Epartner> selectAll();
 
     //分页查询公司列表 + 搜索(如果不用搜索则不需要加参数)
-    List<Epartner> selectPage(Epartner epartner);
+    List<Epartner> selectPage(@Param("epartner")Epartner epartner, @Param("eccontacts")Eccontacts eccontacts);
 
     //查询公司信息
     List<Epartner> selectCinfoBypartnerCname(String partnerCname);

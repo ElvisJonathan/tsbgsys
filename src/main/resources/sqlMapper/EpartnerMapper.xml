@@ -111,22 +111,30 @@
   <!-- 分页查询公司信息+搜索：如果不用搜索则不需要加动态sql -->
   <select id="selectPage"  resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from epartner WHERE del_status=0
-    <if  test="createrIdentity==0">
-      and status=0
+    e.partner_no, e.partner_name, e.partner_date, e.partner_registcapital, e.partner_list, e.partner_scale,
+    e.partner_addr, e.partner_webddr, e.partner_tech, e.partner_product, e.partner_channel, e.partner_turnover,
+    e.partner_region, e.partner_industry, e.status, e.del_status, e.create_time, e.update_time, e.creater,e.creater_identity,
+    e.updater, e.remark,e.proj_id
+    from epartner AS e LEFT JOIN eccontacts AS c
+    ON e.`partner_no`=c.`partner_no`
+    WHERE e.`del_status`=0
+    <if test="epartner.createrIdentity==0">
+      and e.`status`=0
     </if>
-    <if test = "partnerName != null and partnerName != ''">
-      and partner_name LIKE CONCAT('%', #{partnerName}, '%')
+    <if test="eccontacts.name != null and eccontacts.name != ''">
+      and c.`name` LIKE CONCAT('%', #{eccontacts.name}, '%')
     </if>
-    <if test="partnerProduct != null and partnerProduct != ''">
-      and partner_product LIKE CONCAT('%', #{partnerProduct}, '%')
+    <if test="epartner.partnerName != null and epartner.partnerName != ''">
+      and e.`partner_name` LIKE CONCAT('%', #{epartner.partnerName}, '%')
     </if>
-    <if test="partnerRegion != null and  partnerRegion != ''">
-      and  partner_region LIKE CONCAT('%', #{partnerRegion}, '%')
+    <if test="epartner.partnerProduct != null and epartner.partnerProduct != ''">
+      and e.`partner_product` LIKE CONCAT('%', #{epartner.partnerProduct}, '%')
     </if>
-    <if test="partnerIndustry != null  and partnerIndustry  != ''">
-      and Partner_industry LIKE CONCAT('%', #{partnerIndustry}, '%')
+    <if test="epartner.partnerRegion != null and  epartner.partnerRegion != ''">
+      and e.`partner_region` LIKE CONCAT('%', #{epartner.partnerRegion}, '%')
+    </if>
+    <if test="epartner.partnerIndustry != null  and epartner.partnerIndustry  != ''">
+      and e.`partner_industry` LIKE CONCAT('%', #{epartner.partnerIndustry}, '%')
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

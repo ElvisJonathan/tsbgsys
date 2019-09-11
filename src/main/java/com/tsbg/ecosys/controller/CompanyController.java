@@ -286,13 +286,14 @@ public class CompanyController {
     @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultUtils findPage(@RequestBody SearchPackage searchPackage) {
-
         ResultUtils resultUtils = null;
         //需要前台传参pageQuery:包含pageIndex和pageSize 即起始页码和页面容量 记得容量小于总条数才会有分页效果
         //接受分页参数pageRequest
         PageRequest pageRequest = searchPackage.getPageRequest();
         //接受搜索条件传参实体类epartner
         Epartner epartner = searchPackage.getEpartner();
+        //接受搜索条件传参实体类eccontacts
+        Eccontacts eccontacts = searchPackage.getEccontacts();
         //获取当前用户身份是否为管理员，通过工号查询是否为管理
         UserInfo userInfo = searchPackage.getUserInfo();
         String userCode = userInfo.getUserCode();
@@ -321,7 +322,7 @@ public class CompanyController {
             epartner.setCreaterIdentity(identity);
             if (pageRequest.getPageIndex() != 0 && pageRequest.getPageSize() != 0) {
                 //根据给到的分页条件查询公司信息
-                PageResult page = epartnerService.findPage(pageRequest, epartner);
+                PageResult page = epartnerService.findPage(pageRequest,epartner,eccontacts);
                 if (page != null) {
                     resultUtils = new ResultUtils(0, "提示信息：成功查询到公司信息", page);
                     return resultUtils;
