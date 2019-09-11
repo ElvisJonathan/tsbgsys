@@ -49,6 +49,9 @@ public class Epartner {
 
     private Integer projId;
 
+    //新增的联系人字段
+    private String name;
+
     public Integer getPartnerNo() {
         return partnerNo;
     }
@@ -230,5 +233,13 @@ public class Epartner {
 
     public void setPartnerDate(String partnerDate) {
         this.partnerDate = partnerDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

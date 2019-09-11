@@ -109,12 +109,15 @@
   </select>
 
   <!-- 分页查询公司信息+搜索：如果不用搜索则不需要加动态sql -->
-  <select id="selectPage"  resultMap="BaseResultMap">
+  <select id="selectPage"  resultType="com.tsbg.ecosys.model.Epartner">
     select
-    e.partner_no, e.partner_name, e.partner_date, e.partner_registcapital, e.partner_list, e.partner_scale,
-    e.partner_addr, e.partner_webddr, e.partner_tech, e.partner_product, e.partner_channel, e.partner_turnover,
-    e.partner_region, e.partner_industry, e.status, e.del_status, e.create_time, e.update_time, e.creater,e.creater_identity,
-    e.updater, e.remark,e.proj_id,c.name
+    e.partner_no as partnerNo, e.partner_name as partnerName, e.partner_date as partnerDate, e.partner_registcapital
+    as partnerRegistcapital, e.partner_list as partnerList, e.partner_scale as partnerScale,
+    e.partner_addr as partnerAddr, e.partner_webddr as partnerWebddr, e.partner_tech as partnerTech, e.partner_product
+    as partnerProduct, e.partner_channel as partnerChannel, e.partner_turnover as partnerTurnover,
+    e.partner_region as partnerRegion, e.partner_industry as partnerIndustry, e.status as status, e.del_status
+    as delStatus, e.create_time as createTime, e.update_time as updateTime, e.creater as creater,e.creater_identity as createrIdentity,
+    e.updater as updater, e.remark as remark,e.proj_id as projId,c.name as name
     from epartner AS e LEFT JOIN eccontacts AS c
     ON e.`partner_no`=c.`partner_no`
     WHERE e.`del_status`=0
