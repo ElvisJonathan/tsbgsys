@@ -13,7 +13,7 @@ public class Ecooperation {
 
     private String partnerBdOwner;
 
-    private String coMmode;
+    private String coMode;
 
     private String partnerCostage;
 
@@ -89,12 +89,12 @@ public class Ecooperation {
         this.partnerBdOwner = partnerBdOwner;
     }
 
-    public String getCoMmode() {
-        return coMmode;
+    public String getCoMode() {
+        return coMode;
     }
 
-    public void setCoMmode(String coMmode) {
-        this.coMmode = coMmode;
+    public void setCoMode(String coMode) {
+        this.coMode = coMode;
     }
 
     public String getPartnerCostage() {

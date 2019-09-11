@@ -7,7 +7,7 @@
     <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
     <result column="partner_callintime" property="partnerCallintime" jdbcType="VARCHAR" />
     <result column="partner_BD_owner" property="partnerBdOwner" jdbcType="VARCHAR" />
-    <result column="co_mode" property="coMmode" jdbcType="VARCHAR" />
+    <result column="co_mode" property="coMode" jdbcType="VARCHAR" />
     <result column="partner_costage" property="partnerCostage" jdbcType="VARCHAR" />
     <result column="sign_contract" property="signContract" jdbcType="INTEGER" />
     <result column="contract_date" property="contractDate" jdbcType="VARCHAR" />
@@ -114,7 +114,7 @@
       updater, status, del_status,
       remark)
     values (#{coopId,jdbcType=INTEGER}, #{partnerNo,jdbcType=INTEGER}, #{partnerName,jdbcType=VARCHAR},
-      #{partnerCallintime,jdbcType=VARCHAR}, #{partnerBdOwner,jdbcType=VARCHAR},#{coMmode,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR},
+      #{partnerCallintime,jdbcType=VARCHAR}, #{partnerBdOwner,jdbcType=VARCHAR},#{coMode,jdbcType=VARCHAR}, #{partnerCostage,jdbcType=VARCHAR},
       #{signContract,jdbcType=INTEGER}, #{contractDate,jdbcType=VARCHAR}, #{entrust,jdbcType=INTEGER},
       #{entrustName,jdbcType=VARCHAR}, #{partnerAwarding,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR},
       #{coType,jdbcType=VARCHAR}, #{coProgress,jdbcType=VARCHAR}, #{fiiCodepartment,jdbcType=VARCHAR},
@@ -140,7 +140,7 @@
       <if test="partnerBdOwner != null" >
         partner_BD_owner,
       </if>
-      <if test="coMmode != null" >
+      <if test="coMode != null" >
         co_mode,
       </if>
       <if test="partnerCostage != null" >
@@ -211,8 +211,8 @@
       <if test="partnerBdOwner != null" >
         #{partnerBdOwner,jdbcType=VARCHAR},
       </if>
-      <if test="coMmode != null" >
-        #{coMmode,jdbcType=VARCHAR},
+      <if test="coMode != null" >
+        #{coMode,jdbcType=VARCHAR},
       </if>
       <if test="partnerCostage != null" >
         #{partnerCostage,jdbcType=VARCHAR},
@@ -282,8 +282,8 @@
       <if test="partnerBdOwner != null" >
         partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
       </if>
-      <if test="coMmode != null" >
-        co_mode = #{coMmode,jdbcType=VARCHAR},
+      <if test="coMode != null" >
+        co_mode = #{coMode,jdbcType=VARCHAR},
       </if>
       <if test="partnerCostage != null" >
         partner_costage = #{partnerCostage,jdbcType=VARCHAR},
@@ -354,8 +354,8 @@
       <if test="partnerBdOwner != null" >
         partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
       </if>
-      <if test="coMmode != null" >
-        co_mode = #{coMmode,jdbcType=VARCHAR},
+      <if test="coMode != null" >
+        co_mode = #{coMode,jdbcType=VARCHAR},
       </if>
       <if test="partnerCostage != null" >
         partner_costage = #{partnerCostage,jdbcType=VARCHAR},
@@ -417,7 +417,7 @@
       partner_name = #{partnerName,jdbcType=VARCHAR},
       partner_callintime = #{partnerCallintime,jdbcType=VARCHAR},
       partner_BD_owner = #{partnerBdOwner,jdbcType=VARCHAR},
-      co_mode = #{coMmode,jdbcType=VARCHAR},
+      co_mode = #{coMode,jdbcType=VARCHAR},
       partner_costage = #{partnerCostage,jdbcType=VARCHAR},
       sign_contract = #{signContract,jdbcType=INTEGER},
       contract_date = #{contractDate,jdbcType=VARCHAR},
@@ -481,8 +481,8 @@
       <if test="record.partnerBdOwner != null">
         partner_BD_owner = #{record.partnerBdOwner,jdbcType=VARCHAR},
       </if>
-      <if test="record.coMmode != null">
-        co_mode = #{record.coMmode,jdbcType=VARCHAR},
+      <if test="record.coMode != null">
+        co_mode = #{record.coMode,jdbcType=VARCHAR},
       </if>
       <if test="record.partnerCostage != null">
         partner_costage = #{record.partnerCostage,jdbcType=VARCHAR},
@@ -544,7 +544,7 @@
     partner_name = #{record.partnerName,jdbcType=VARCHAR},
     partner_callintime = #{record.partnerCallintime,jdbcType=VARCHAR},
     partner_BD_owner = #{record.partnerBdOwner,jdbcType=VARCHAR},
-    co_mode = #{record,coMmode,jdbcType=VARCHAR},
+    co_mode = #{record,coMode,jdbcType=VARCHAR},
     partner_costage = #{record.partnerCostage,jdbcType=VARCHAR},
     sign_contract = #{record.signContract,jdbcType=INTEGER},
     contract_date = #{record.contractDate,jdbcType=VARCHAR},
