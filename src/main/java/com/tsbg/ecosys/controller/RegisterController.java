@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.service.EareaService;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.UserInfoService;
@@ -20,6 +21,8 @@ public class RegisterController {
     private UserInfoService userInfoService;
     @Autowired
     private StaffInfoService staffInfoService;
+    @Autowired
+    private EareaService eareaService;
 
     /**
      *生态员工注册成为用户
@@ -62,8 +65,16 @@ public class RegisterController {
                 //将user_info表的user_id查询出来
                 int uid = userInfoService.selectuidbyuserCode(userCode);
                 String name = userInfo.getUserName()+"是生态员工";
-                //将此user_id增加至euser_area
-                //userInfoService.insertDatatoEuserArea(uid,name);
+                //根据工号查询对应厂区
+                String location = staffInfoService.selectlocationByUserCode(userCode);
+                if (location!=null){
+                    //根据厂区去查找对应的area_id
+                    Integer id = eareaService.selectAreaNoByAreaName(location);
+                    if (id!=null){
+                        //将此user_id增加至euser_area
+                        userInfoService.insertDatatoEuserArea(uid,id,name);
+                    }
+                }
                 //将此uid和rid增加至user_role
                 userInfoService.insertDatatoEuserRole(uid,2,name);
                 //返回成功码0并且提示成功注册

@@ -34,7 +34,7 @@ public interface UserInfoMapper {
     Integer selectuidbyuserCode(String userCode);
 
     //更新euser_area表的数据
-    int insertDatatoEuserArea(@Param("uid") int uid,@Param("remark") String remark);
+    int insertDatatoEuserArea(@Param("uid") int uid,@Param("aid") int aid,@Param("remark") String remark);
 
     //更新user_role表的数据
     int insertDatatoEuserRole(@Param("uid") int uid,@Param("rid") int rid,@Param("remark") String remark);

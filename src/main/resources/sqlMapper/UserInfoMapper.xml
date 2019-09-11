@@ -244,7 +244,7 @@
     SELECT e.user_id FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
   <insert id="insertDatatoEuserArea"  >
-    INSERT INTO euser_area (user_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
+    INSERT INTO euser_area (user_id,area_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{aid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
   </insert>
   <insert id="insertDatatoEuserRole"  >
     INSERT INTO user_role (user_id,role_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{rid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});

@@ -248,4 +248,7 @@
   <select id="selectDepartCodeByuserCode"  parameterType="String" resultType="String">
     SELECT s.`depart_code` FROM staff_info AS s WHERE s.`staff_code`=#{userCode,jdbcType=VARCHAR};
   </select>
+  <select id="selectlocationByUserCode"  parameterType="String" resultType="String">
+    SELECT s.`factory_location` FROM staff_info AS s WHERE s.`staff_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
 </mapper>

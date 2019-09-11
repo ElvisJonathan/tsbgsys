@@ -19,4 +19,9 @@ public class StaffInfoServiceImpl implements StaffInfoService {
     public String selectDepartCodeByuserCode(String userCode) {
         return staffInfoMapper.selectDepartCodeByuserCode(userCode);
     }
+
+    @Override
+    public String selectlocationByUserCode(String userCode) {
+        return staffInfoMapper.selectlocationByUserCode(userCode);
+    }
 }

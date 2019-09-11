@@ -23,4 +23,7 @@ public interface StaffInfoMapper {
 
     //根据用户输入的工号查询部门代码
     String selectDepartCodeByuserCode(String userCode);
+
+    //根据工号查询当前员工的厂区
+    String selectlocationByUserCode(String userCode);
 }

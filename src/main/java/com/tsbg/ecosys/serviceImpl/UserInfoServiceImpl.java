@@ -41,8 +41,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public int insertDatatoEuserArea(int uid, String remark) {
-        return userInfoMapper.insertDatatoEuserArea(uid,remark);
+    public int insertDatatoEuserArea(int uid,int aid, String remark) {
+        return userInfoMapper.insertDatatoEuserArea(uid,aid,remark);
     }
 
     @Override
