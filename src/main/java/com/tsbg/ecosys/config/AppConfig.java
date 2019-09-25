@@ -1,6 +1,5 @@
 package com.tsbg.ecosys.config;
 
-
 import com.tsbg.ecosys.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,7 +23,7 @@ public class AppConfig implements WebMvcConfigurer {
         /*.excludePathPatterns("/admin/login.do").excludePathPatterns("/admin")*/
 		//LoginInterceptor loginInterceptor = new LoginInterceptor();
         // addPathPatterns 添加拦截url，     excludePathPatterns 排除拦截url
-		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/tsbg/ec/exportall");
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/excel");
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}
 }

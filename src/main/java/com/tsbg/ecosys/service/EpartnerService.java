@@ -60,4 +60,10 @@ public interface EpartnerService {
     List<Epartner> selectepartnerExcellAll();
 
     int deleteByPrimaryKey(Integer partnerNo);
+
+    List<String> selectColumnName();
+
+    List<String> selectColumnName2();
+
+    List<String> selectColumnName3();
 }

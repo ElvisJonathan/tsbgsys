@@ -23,7 +23,7 @@ public class LoginInterceptor  implements HandlerInterceptor{
 			return true;
 		}else{
 			System.out.println("非常规方式进入管理员后台！请登录后再试");
-			response.sendRedirect("../../index.html");	//未登录，跳转到登录页
+			response.sendRedirect("index.html");	//未登录，跳转到登录页
 			return false;
 		}
 	}

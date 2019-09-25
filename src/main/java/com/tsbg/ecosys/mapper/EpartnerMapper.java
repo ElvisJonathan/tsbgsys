@@ -69,4 +69,10 @@ public interface EpartnerMapper {
     List<Epartner> selectepartnerExcellAll();
     //根据查询条件导出Excel
     List<Epartner> selectByPrimaryKeyl(Epartner epartner);
+
+    List<String> selectColumnName();
+
+    List<String> selectColumnName2();
+
+    List<String> selectColumnName3();
 }

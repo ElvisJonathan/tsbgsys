@@ -592,4 +592,19 @@
     <include refid="Base_Column_List"/>
     FROM epartner where status=0 AND del_status=0
   </select>
+  <select id="selectColumnName" resultType="String">
+    SELECT column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='epartner'
+    AND table_schema='fiitsbg';
+  </select>
+  <select id="selectColumnName2" resultType="String">
+    SELECT column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='ecooperation'
+    AND table_schema='fiitsbg';
+  </select>
+  <select id="selectColumnName3" resultType="String">
+    SELECT column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='eccontacts'
+    AND table_schema='fiitsbg';
+  </select>
 </mapper>

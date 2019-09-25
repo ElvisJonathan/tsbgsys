@@ -98,6 +98,21 @@ public class EpartnerServiceImpl implements EpartnerService {
     }
 
     @Override
+    public List<String> selectColumnName() {
+        return epartnerMapper.selectColumnName();
+    }
+
+    @Override
+    public List<String> selectColumnName2() {
+        return epartnerMapper.selectColumnName2();
+    }
+
+    @Override
+    public List<String> selectColumnName3() {
+        return epartnerMapper.selectColumnName3();
+    }
+
+    @Override
     public List<Epartner> selectCinfoBypartnerCindustry(String partnerCindustry) {
 
         return epartnerMapper.selectCinfoBypartnerCindustry(partnerCindustry);
