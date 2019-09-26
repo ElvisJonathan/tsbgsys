@@ -73,4 +73,7 @@ public interface UserInfoMapper {
 
     //根据工号查询是否存在该用户
     Integer selectCountByUserCode(String userCode);
+
+    //根据工号查询密码盐
+    String selectSaltByUserCode(String userCode);
 }

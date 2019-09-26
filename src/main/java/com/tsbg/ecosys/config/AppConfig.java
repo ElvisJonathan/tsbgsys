@@ -23,7 +23,7 @@ public class AppConfig implements WebMvcConfigurer {
         /*.excludePathPatterns("/admin/login.do").excludePathPatterns("/admin")*/
 		//LoginInterceptor loginInterceptor = new LoginInterceptor();
         // addPathPatterns 添加拦截url，     excludePathPatterns 排除拦截url
-		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/excel");
+		//registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/excel");
 		WebMvcConfigurer.super.addInterceptors(registry);
 	}
 }

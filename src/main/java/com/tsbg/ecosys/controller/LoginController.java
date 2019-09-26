@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.Permission;
 import com.tsbg.ecosys.model.Role;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 登录
@@ -50,6 +53,9 @@ public class LoginController {
         //获取用户在前台输入的用户名和密码
         String userCode = userInfo.getUserCode();
         String userPwd = userInfo.getUserPwd();
+        //根据用户工号查询对应密码盐
+        String salt = userInfoService.selectSaltByUserCode(userCode);
+        String newPwd = MD5Util2.encode(userInfo.getUserPwd()+salt);
         //如果用户被停用则阻止其登录
         if (userCode!=null){
             //查询工号是否存在
@@ -74,9 +80,11 @@ public class LoginController {
         //如果用户名和密码正确则成功登录
         if (userCode !=null && userPwd !=null){
             //如果用户名和密码存在会返回一条数据
-            int num = userInfoService.selectUserByPwd(userCode,userPwd);
+            int num = userInfoService.selectUserByPwd(userCode,newPwd);
+            //适配之前的明文登录方式
+            int num2 = userInfoService.selectUserByPwd(userCode,userPwd);
             //存在且只有一条数据意味着登录成功
-            if (num==1){
+            if (num==1 || num2==1){
                 //成功登录返回用户名给前端
                 String userName = userInfoService.selectUserNameByUserCode(userCode);
                 //成功登录返回成功码0并且提示成功
@@ -172,5 +180,31 @@ public class LoginController {
     public ResultUtils Logout(HttpSession session){
         session.invalidate();
         return new ResultUtils(0,"用户成功登出！");
+    }
+
+    /**
+     * 登录成功后校验密码规范
+     */
+    @RequestMapping(value = "/checkpwd", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public ResultUtils check(@RequestBody UserInfo userInfo){
+        String pwd = userInfo.getUserPwd();
+        Pattern pattern = Pattern.compile("[a-zA-Z]*");
+        Matcher isNum = pattern.matcher(pwd);
+        Pattern patternSe = Pattern.compile("[0-9]*");
+        Matcher isNum2 = patternSe.matcher(pwd);
+        //判斷密碼是否符合規範
+        if (isNum.matches()){
+            return new ResultUtils(500,"不符合密碼規範（不能全是字母）");
+        }
+        if (isNum2.matches()){
+            return new ResultUtils(501,"不符合密碼規範（不能全是數字）");
+        }
+        //boolean isNum = pwd.matches("[0-9]+");
+        //boolean isWord = pwd.matches("[a-zA-Z]+");
+        if (pwd.length()<8 || pwd.length()>20){
+            return new ResultUtils(503,"不符合密碼規範（8-20位）");
+        }
+        return new ResultUtils(0,"密碼符合規範無需提示");
     }
 }

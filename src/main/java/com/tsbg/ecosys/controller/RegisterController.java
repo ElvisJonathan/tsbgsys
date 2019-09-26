@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.service.EareaService;
+import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.UserInfoService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Random;
 
 /**
  * 注册
@@ -57,6 +59,18 @@ public class RegisterController {
             //设置创建人和创建时间
             userInfo.setCreater(userInfo.getUserName());
             userInfo.setCreateTime(new Date());
+            //生成salt
+            String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Random random=new Random();
+            StringBuffer sb=new StringBuffer();
+            for(int i=0;i<str.length();i++){
+                int nu=random.nextInt(6);
+                sb.append(str.charAt(nu));
+            }
+            userInfo.setSalt(sb.toString());
+            //加密密码
+            String newPwd = userInfo.getUserPwd()+sb.toString();
+            userInfo.setUserPwd(MD5Util2.encode(newPwd));
             //调用业务逻辑存储注册信息
             int num = userInfoService.insertSelective(userInfo);
             //成功注册则会增加一条记录

@@ -5,6 +5,7 @@ import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.bag.MixPackage;
 import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.MixPackageService;
+import com.tsbg.ecosys.util.ResultUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,12 @@ public class ExcelController {
     private MixPackageService mixPackageService;
 
     @RequestMapping(value = "/excel", method = { RequestMethod.GET, RequestMethod.POST })
-    public void excel(HttpServletRequest req, HttpServletResponse response) throws Exception {
+    public ResultUtils excel(HttpServletRequest req, HttpServletResponse response) throws Exception {
+        String userCode = req.getHeader("userCode");
+        System.out.println("Header:"+userCode);
+        if(userCode == null || userCode.equals("")){
+            return new ResultUtils(501,"非常规方式进入管理员后台！请登录后再试");
+        }
         //获取五个搜索条件，没有则为空
         String partnerName = req.getParameter("partnerName");
         String partnerProduct = req.getParameter("partnerProduct");
@@ -174,6 +180,7 @@ public class ExcelController {
         wb.write(os);
         os.flush();
         os.close();
+        return null;
         //获取配置文件中保存对应excel文件的路径，本地也可以直接写成F：excel/stuInfoExcel路径
         //String folderPath = ResourceBundle.getBundle("systemconfig").getString("downloadFolder") + File.separator + "stuInfoExcel";
         //String folderPath = "D:\\66" + File.separator +"excel"+ File.separator + "stuInfoExcel";
