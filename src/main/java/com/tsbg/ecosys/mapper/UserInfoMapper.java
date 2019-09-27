@@ -76,4 +76,7 @@ public interface UserInfoMapper {
 
     //根据工号查询密码盐
     String selectSaltByUserCode(String userCode);
+
+    //重置用户密码盐
+    int resetUserSalt(@Param("salt")String salt,@Param("userCode")String userCode);
 }

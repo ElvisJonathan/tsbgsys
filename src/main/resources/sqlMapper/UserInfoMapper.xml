@@ -362,4 +362,8 @@
   <select id="selectSaltByUserCode"  parameterType="String" resultType="String">
    SELECT salt FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
   </select>
+
+  <update id="resetUserSalt" parameterType="String">
+    UPDATE user_info AS u SET u.`salt`=#{salt,jdbcType=VARCHAR} WHERE u.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.bag.PowerPackage;
 import com.tsbg.ecosys.model.UserInfo;
@@ -97,7 +98,6 @@ public class JurisdictionController {
             return resultUtils;
         }
         String beChangedUserCode = powerPackage.getUserCode().toString();
-        System.out.println(beChangedUserCode);
         //权限标识符
         Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有power权限
@@ -123,7 +123,16 @@ public class JurisdictionController {
                 //需要接收前端是否重置密码的提示：否0，是1
                 Object sign = powerPackage.getSign();
                 if (sign.equals("1")){
-                    String userPwd = userCode+"123";//用于重置用户密码
+                    //重新生成salt
+                    String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    Random random=new Random();
+                    StringBuffer sb=new StringBuffer();
+                    for(int i=0;i<str.length();i++){
+                        int nu=random.nextInt(6);
+                        sb.append(str.charAt(nu));
+                    }
+                    userInfoService.resetUserSalt(sb.toString(),userCode);
+                    String userPwd = MD5Util2.encode(userCode+"123"+sb.toString());//用于重置用户密码
                     int num = userInfoService.reSetPwdByUserCode(userPwd,userCode);
                     if (num>0){
                         arr[1]=1;

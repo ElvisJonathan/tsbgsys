@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -133,17 +134,20 @@ public class LoginController {
         //通过从前端接收的工号和密码来判断是否存在此用户
         String userCode = userInfo.getUserCode();
         String userPwd = userInfo.getUserPwd();
+        //根据用户工号查询对应密码盐
+        String salt = userInfoService.selectSaltByUserCode(userCode);
+        String newPwd = MD5Util2.encode(userPwd+salt);
         if(userCode!=null && userPwd!=null){
             //调用查询逻辑查找用户是否存在
             int num = userInfoService.judgeIfExistUserByUserPwd(userCode,userPwd);
-            if (num==1){
+            int num2 = userInfoService.judgeIfExistUserByUserPwd(userCode,newPwd);
+            if (num==1 || num2==1){
                 return new ResultUtils(0,"此用户存在且可以修改密码");
             }
             return new ResultUtils(501,"用户不存在或密码错误请重试");
         }
         return new ResultUtils(502,"工号或密码为空异常");
     }
-
 
     /**
      * 修改密码
@@ -157,12 +161,23 @@ public class LoginController {
         //获取输入的新密码和工号
         String userCode = userInfo.getUserCode();
         String userPwd = userInfo.getUserPwd();
+        //重新生成salt
+        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random=new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<str.length();i++){
+            int nu=random.nextInt(6);
+            sb.append(str.charAt(nu));
+        }
+        userInfoService.resetUserSalt(sb.toString(),userCode);
+        //加密密码
+        String newPwd = MD5Util2.encode(userPwd+sb.toString());
         if (userCode != null && userPwd != null) {
             //修改成功将uid传给页面
-            int num = userInfoService.modifyPasswordByUsername(userPwd, userCode);
+            int num = userInfoService.modifyPasswordByUsername(newPwd, userCode);
             if (num>0){
                 UserInfo ei = userInfoService.selectByUserCode(userCode);
-                resultUtils = new ResultUtils(0, "修改成功！", new LoginResultVo(ei.getUserName(),ei.getUserCode(),ei.getUserPwd(), ei.getUserId()));
+                resultUtils = new ResultUtils(0, "修改成功！", new LoginResultVo(ei.getUserName(),ei.getUserCode(),userPwd, ei.getUserId()));
                 return resultUtils;
             }
             resultUtils = new ResultUtils(501,"修改失败！");

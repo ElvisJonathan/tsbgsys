@@ -114,4 +114,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public String selectSaltByUserCode(String userCode) {
         return userInfoMapper.selectSaltByUserCode(userCode);
     }
+
+    @Override
+    public int resetUserSalt(String salt, String userCode) {
+        return userInfoMapper.resetUserSalt(salt,userCode);
+    }
 }
