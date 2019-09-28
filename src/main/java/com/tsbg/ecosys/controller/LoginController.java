@@ -2,15 +2,20 @@ package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
+import com.tsbg.ecosys.common.SnowflakeIdWorker;
 import com.tsbg.ecosys.model.Permission;
 import com.tsbg.ecosys.model.Role;
+import com.tsbg.ecosys.service.base.RedisService;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.PermissionService;
 import com.tsbg.ecosys.service.RoleService;
 import com.tsbg.ecosys.service.UserInfoService;
 import com.tsbg.ecosys.vo.LoginResultVo;
+import com.tsbg.ecosys.vo.LoginResultVone;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +31,10 @@ import java.util.regex.Pattern;
 @RestController
 @RequestMapping("/tsbg/login")
 public class LoginController {
-
+    @Autowired
+    private RedisService redisService;
+    @Value("${server.servlet.session.timeout}")
+    private long sessionExpire;
     @Autowired
     private UserInfoService userInfoService;
     @Autowired
@@ -44,11 +52,46 @@ public class LoginController {
         System.out.println(userInfo);
         return userInfo;
     }
+    //单点登录
+    @ApiOperation(value = "用户登录", notes = "用户登录")
+    @PostMapping("/loginsso")
+    public ResultUtils login(
+            @ApiParam(name = "userInfo", value = "userInfo", required = true)
+            @RequestBody UserInfo userInfo, HttpSession session) {
+        //初始化构造器
+        ResultUtils resultUtils = null;
+        //获取用户在前台输入的用户名和密码
+        String userCode = userInfo.getUserCode();
+        String userPwd = userInfo.getUserPwd();
+        //如果用户名和密码正确则成功登录
+        if (userCode != null && userPwd != null) {
+            //如果用户名和密码存在会返回一条数据
+            int num = userInfoService.selectUserByPwd(userCode, userPwd);
+            //存在且只有一条数据意味着登录成功
+            if (num == 1) {
+                //获取toke
+                String token = String.valueOf(SnowflakeIdWorker.getSnowflakeId());
+                //注册token到redis设置超时时间为5分钟
+                redisService.setCacheObject(token,"1", sessionExpire);
+                //成功登录返回用户名给前端
+                String userName = userInfoService.selectUserNameByUserCode(userCode);
+                //成功登录返回成功码0并且提示成功
+                resultUtils = new ResultUtils(0, "用户名和密码存在成功登录！", new LoginResultVone(userName, token));
+                //设置当前用户的登录session
+                session.setAttribute("User", userName);
+                return resultUtils;
+            }
+        }
+        //如果用户名或密码为空或是不存在此用户提示登录失败
+        //返回错误状态码500和登录失败消息
+        resultUtils = new ResultUtils(500, "用户名或密码错误登录失败！");
+        return resultUtils;
+    }
 
 
-    @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
+   @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public ResultUtils login(@RequestBody UserInfo userInfo, HttpSession session){
+    public ResultUtils login(@RequestBody UserInfo userInfo){
         //初始化构造器
         ResultUtils resultUtils = null;
         //获取用户在前台输入的用户名和密码
@@ -102,20 +145,20 @@ public class LoginController {
                         for (int i=0;i<=plist.size()-1;i++){
                             arr2[i]=plist.get(i).getName();
                         }
-                        //设置当前用户的登录session
+                      /*  //设置当前用户的登录session
                         session.setAttribute("userCode", userCode);
                         session.setAttribute("userName",userName);
-                        session.setMaxInactiveInterval(1800);
+                        session.setMaxInactiveInterval(1800);*/
                         return new ResultUtils(0,"成功登录并且获取了权限！",userName,userCode,arr2);
                     }
-                    session.setAttribute("userCode", userCode);
+                    /*session.setAttribute("userCode", userCode);
                     session.setAttribute("userName",userName);
-                    session.setMaxInactiveInterval(1800);
+                    session.setMaxInactiveInterval(1800);*/
                     return new ResultUtils(0,"成功登录但未获取到对应权限信息！",userName,userCode);
                 }
-                session.setAttribute("userCode", userCode);
+                /*session.setAttribute("userCode", userCode);
                 session.setAttribute("userName",userName);
-                session.setMaxInactiveInterval(1800);
+                session.setMaxInactiveInterval(1800);*/
                 return new ResultUtils(0,"成功登录但是未找到对应角色信息！",userName,userCode);
             }
         }
@@ -124,6 +167,7 @@ public class LoginController {
         resultUtils = new ResultUtils(500,"用户名或密码错误登录失败！");
         return resultUtils;
     }
+
 
     /**
      *判断原密码是否正确

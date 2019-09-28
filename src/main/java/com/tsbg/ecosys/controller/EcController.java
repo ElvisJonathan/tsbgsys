@@ -105,7 +105,6 @@ public class EcController {
         export(response, epartner1);
     }
 
-
     //全部导出Excel（只导出status=0 and del_status=0）
     //@NeedLogin
     @RequestMapping(value = "/exportall", method = {RequestMethod.GET, RequestMethod.POST })
@@ -239,7 +238,6 @@ public class EcController {
         for(int i = 0;epartners.size()>0 && i<epartners.size();i++){
             if(i< totalRow-2){
                 row = sheet.getRow(i+2);
-
             }else {
                 row = sheet.createRow(totalRow++);
             }

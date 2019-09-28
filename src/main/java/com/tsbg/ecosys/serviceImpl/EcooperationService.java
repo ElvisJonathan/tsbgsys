@@ -1,7 +1,6 @@
 package com.tsbg.ecosys.serviceImpl;
 
 import com.tsbg.ecosys.dto.EcTotalDto;
-import com.tsbg.ecosys.dto.EcTotalDtol;
 import com.tsbg.ecosys.dto.EcTotal_Excel;
 import com.tsbg.ecosys.dto.condition.EcooperationConditionDto;
 import com.tsbg.ecosys.mapper.EccontactsMapper;
