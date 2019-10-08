@@ -5,6 +5,7 @@ import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.bag.PowerPackage;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.*;
+import com.tsbg.ecosys.vo.powerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,6 +85,7 @@ public class JurisdictionController {
     /**
      * 修改权限
      * 整合管理员重置密码和停启用用户
+     * 此方法用于修改某个角色的权限，后续无需再获取工号
      */
     @RequestMapping(value = "/updatepower", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
@@ -97,11 +99,11 @@ public class JurisdictionController {
             resultUtils = new ResultUtils(510, "提示信息：工号不能为空！");
             return resultUtils;
         }
-        String beChangedUserCode = powerPackage.getUserCode().toString();
+        String ChangedUserCode = powerPackage.getUserCode().toString();
         //权限标识符
         Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有power权限
-        List<Integer> list= roleService.findRoleByUserCode2(beChangedUserCode);
+        List<Integer> list= roleService.findRoleByUserCode2(ChangedUserCode);
         if (list!=null){
             for (int i=0;i<=list.size()-1;i++){
                 List<String> pList = permissionService.findPermissionByRoleId2(list.get(i));
@@ -118,8 +120,6 @@ public class JurisdictionController {
             int status = powerPackage.getUserInfo().getStatus();
             //创建数组保存成功值
             int[]arr = new int[3];
-            //在工号存在的情况下才可成功调用方法
-            //if (userCode!=null){
                 //需要接收前端是否重置密码的提示：否0，是1
                 Object sign = powerPackage.getSign();
                 if (sign.equals("1")){
@@ -133,10 +133,7 @@ public class JurisdictionController {
                     }
                     userInfoService.resetUserSalt(sb.toString(),userCode);
                     String userPwd = MD5Util2.encode(userCode+"123"+sb.toString());//用于重置用户密码
-                    int num = userInfoService.reSetPwdByUserCode(userPwd,userCode);
-                    if (num>0){
-                        arr[1]=1;
-                    }
+                    userInfoService.reSetPwdByUserCode(userPwd,userCode);
                 }
                 //调用方法修改用户状态：状态0为启用用户，1为停用用户
                 int num2 = userInfoService.setEcoUserByUserCode(status,userCode);
@@ -144,7 +141,6 @@ public class JurisdictionController {
                 if (num2>0){
                     arr[0]=1;
                 }
-            //}
             //成功获取了data数组
             Object[] data = powerPackage.getData();//data的长度为前端传来的字符个数
             //由于只能从前端获取OBJ类型的数组所以要转为String类型的做字符串截取
@@ -200,5 +196,143 @@ public class JurisdictionController {
           }
         resultUtils = new ResultUtils(509, "提示信息：无此权限！");
         return resultUtils;
+    }
+
+    /**
+     * 查询用户个人权限
+     */
+    @RequestMapping(value = "/powerdetail", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultUtils getUserPower(@RequestBody UserInfo userInfo) {
+        //获取前端传来的工号
+        String userCode = userInfo.getUserCode();
+        //根据工号查询用户状态
+        Integer status = userInfoService.selectStatusByUserCode(userCode);
+        //通过userCode查询当前用户的userName
+        String uName = userInfoService.selectUserNameByUserCode(userCode);
+        //返回权限列表
+        String power = userInfoService.selectPowerByUserCode(userCode);
+        String newPower = power.substring(1,power.length()-1);
+        String s = newPower.replaceAll(", ",",").trim();
+        String[]arr = s.split(",");
+        //返回对应的权限编号
+        List<Integer> list = permissionService.selectPermIdByPerm(arr);
+        //返回对应的中文名
+        String[]arr2 = new String[arr.length];
+        for (int i=0;i<=arr.length-1;i++){
+            arr2[i]=permissionService.selectPermission(arr[i]);
+        }
+        return new ResultUtils(0,"查询权限成功",new powerVo(list,arr2),uName,status);
+    }
+
+    /**
+     * 修改用户权限
+     */
+    @RequestMapping(value = "/powerModify", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public ResultUtils updateUserPower(@RequestBody PowerPackage powerPackage){
+        //需要返回工号、修改后的权限数组[add,view]等、用户状态和重置密码标识
+        //成功获取了工号
+        String userCode = powerPackage.getUserInfo().getUserCode();
+        if (userCode==null){
+            return new ResultUtils(510, "提示信息：工号不能为空！");
+        }
+        String ChangedUserCode = powerPackage.getUserCode().toString();
+        //这个版本可以简化为当前修改人是否有power权限
+        //权限标识符
+        Boolean powerFlag = false;
+        //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有power权限
+        /*List<Integer> list= roleService.findRoleByUserCode2(ChangedUserCode);
+        if (list!=null){
+            for (int i=0;i<=list.size()-1;i++){
+                List<String> pList = permissionService.findPermissionByRoleId2(list.get(i));
+                for (int j=0;j<=pList.size()-1;j++){
+                    if (pList.get(j).contains("power")){
+                        //权限标识符置为true
+                        powerFlag = true;
+                    }
+                }
+            }
+        }*/
+        //此处为验证个人权限 集成shiro后就可以不用写 可以用注解
+        String powerFirst = userInfoService.selectPowerByUserCode(ChangedUserCode);
+        String newPowerFirst = powerFirst.substring(1,powerFirst.length()-1);
+        String sFirst = newPowerFirst.replaceAll(", ",",").trim();
+        String[]arr1 = sFirst.split(",");
+        for (int i=0;i<arr1.length;i++){
+            if (arr1[i].trim().equals("power")){
+                //权限标识符置为true
+                powerFlag = true;
+            }
+        }
+        if (powerFlag.equals(true)){
+            //后续增加的用户状态
+            int status = powerPackage.getUserInfo().getStatus();
+            //需要接收前端是否重置密码的提示：否0，是1
+            Object sign = powerPackage.getSign();
+            if (sign.equals("1")){
+                //重新生成salt
+                String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                Random random=new Random();
+                StringBuffer sb=new StringBuffer();
+                for(int i=0;i<str.length();i++){
+                    int nu=random.nextInt(6);
+                    sb.append(str.charAt(nu));
+                }
+                userInfoService.resetUserSalt(sb.toString(),userCode);
+                String userPwd = MD5Util2.encode(userCode+"123"+sb.toString());//用于重置用户密码
+                userInfoService.reSetPwdByUserCode(userPwd,userCode);
+            }
+            //调用方法修改用户状态：状态0为启用用户，1为停用用户
+            userInfoService.setEcoUserByUserCode(status,userCode);
+            //成功获取了data数组
+            Object[] data = powerPackage.getData();//data的长度为前端传来的字符个数
+            for (int i=0;i<=data.length-1;i++){
+                System.out.println(data[i]);//输出接收到的数组查看，判断怎么截取
+            }
+            //由于只能从前端获取OBJ类型的数组所以要转为String类型的做字符串截取
+            String[] data2 = new String[data.length];
+            for (int i=0;i<=data2.length-1;i++){
+                if (data[i]!=null){
+                    data2[i]=data[i].toString();
+                }
+            }
+            //创建aList用于存data值
+            List<String> aList = new ArrayList<String>();
+            //循环遍历加元素
+            for (int i=0;i<=data2.length-1;i++){
+                //不为空的情况下加
+                if (data2[i]!=null){
+                    //aList.add(data2[i].substring(6,7));//根据现有数据做截取，特定条件改数字
+                    //但是如果前端传的是数字1,2,3,4那么需要判断后加
+                    if (data2[i].substring(6,7).equals("1")){
+                        aList.add("add");
+                    }
+                    if (data2[i].substring(6,7).equals("2")){
+                        aList.add("del");
+                    }
+                    if (data2[i].substring(6,7).equals("3")){
+                        aList.add("update");
+                    }
+                    if (data2[i].substring(6,7).equals("4")){
+                        aList.add("view");
+                    }
+                    if (data2[i].substring(6,7).equals("5")){
+                        aList.add("power");
+                    }
+                }
+            }
+            //根据传过来的userCode查询对应的uid
+            Integer uid = userInfoService.selectuidbyuserCode(userCode);
+            //此时可以修改用户权限数组
+            userInfoService.modifyPermListByuserId(aList.toString(),uid);
+            //返回权限列表
+            String power = userInfoService.selectPowerByUserCode(userCode);
+            String newPower = power.substring(1,power.length()-1);
+            String s = newPower.replaceAll(", ",",").trim();
+            String[]arr3 = s.split(",");
+            return new ResultUtils(0,"修改权限成功",arr3);
+        }
+        return new ResultUtils(509, "提示信息：无此权限！");
     }
 }

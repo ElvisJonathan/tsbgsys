@@ -1,13 +1,9 @@
 package com.tsbg.ecosys.util;
 
-
-/**
- */
 import java.security.MessageDigest;
 
 /**
  * MD5加密工具
- *
  */
 public class MD5Util2 {
 

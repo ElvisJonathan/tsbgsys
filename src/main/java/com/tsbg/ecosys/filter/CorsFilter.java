@@ -24,6 +24,8 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        //为向前端传递重定向地址时新增
+        response.addHeader("Access-Control-Expose-Headers", "REDIRECT,CONTEXTPATH");
         chain.doFilter(req, res);
     }
 

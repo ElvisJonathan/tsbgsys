@@ -146,6 +146,12 @@
     </foreach>
     AND e.`perm_id`!=6
   </select>
+  <select id="selectPermIdByPerm" resultType="java.lang.Integer" >
+    SELECT p.`perm_id`  FROM permission AS p WHERE p.`name`IN
+    <foreach item="perm" index="index" collection="array"   open="(" separator="," close=")">
+      #{perm}
+    </foreach>
+  </select>
   <select id="findPermissionByRoleId" resultType="com.tsbg.ecosys.model.Permission">
         SELECT
             role.roleid,
@@ -169,5 +175,9 @@
         RIGHT JOIN perm_role ON permission.perm_id = perm_role.perm_id
         AND perm_role.role_id = role.roleid
         WHERE role.roleid=#{roleId} AND permission.`perm_id`!=6 ;
+    </select>
+
+  <select id="selectPermission" resultType="String" parameterType="String">
+        SELECT p.`permission` FROM permission AS p WHERE p.`name`=#{name,jdbcType=VARCHAR}
     </select>
 </mapper>

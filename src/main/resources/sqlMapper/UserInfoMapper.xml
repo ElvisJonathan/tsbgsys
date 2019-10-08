@@ -13,6 +13,7 @@
     <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
     <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
     <result column="role_list" property="roleList" jdbcType="VARCHAR" />
+    <result column="perm_list" property="permList" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="DATE" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -22,7 +23,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     user_id, user_code, user_name, user_pwd, salt, is_manager, locked, gender, phone_number,
-    email_address, role_list, status, create_time, update_time, creater, updater, proj_id
+    email_address, role_list, perm_list, status, create_time, update_time, creater, updater, proj_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -38,13 +39,13 @@
     insert into user_info (user_id, user_code, user_name,
       user_pwd, salt, is_manager,
       locked, gender, phone_number,
-      email_address, role_list, status,
+      email_address, role_list, perm_list, status,
       create_time, update_time, creater,
       updater, proj_id)
     values (#{userId,jdbcType=INTEGER}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
       #{userPwd,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{isManager,jdbcType=INTEGER},
       #{locked,jdbcType=TINYINT}, #{gender,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR},
-      #{emailAddress,jdbcType=VARCHAR}, #{roleList,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{emailAddress,jdbcType=VARCHAR}, #{roleList,jdbcType=VARCHAR}, #{permList,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
       #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR},
       #{updater,jdbcType=VARCHAR}, #{projId,jdbcType=VARCHAR})
   </insert>
@@ -83,6 +84,9 @@
       </if>
       <if test="roleList != null" >
         role_list,
+      </if>
+      <if test="permList != null" >
+        perm_list,
       </if>
       <if test="status != null" >
         status,
@@ -137,6 +141,9 @@
       <if test="roleList != null" >
         #{roleList,jdbcType=VARCHAR},
       </if>
+      <if test="permList != null" >
+        #{permList,jdbcType=VARCHAR},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
@@ -190,6 +197,9 @@
       <if test="roleList != null" >
         role_list = #{roleList,jdbcType=VARCHAR},
       </if>
+      <if test="permList != null" >
+        perm_list = #{permList,jdbcType=VARCHAR},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -223,6 +233,7 @@
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
       email_address = #{emailAddress,jdbcType=VARCHAR},
       role_list = #{roleList,jdbcType=VARCHAR},
+      perm_list = #{permList,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=DATE},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -295,6 +306,9 @@
       <if test="roleList != null" >
         role_list = #{roleList,jdbcType=VARCHAR},
       </if>
+      <if test="permList != null" >
+        perm_list = #{permList,jdbcType=VARCHAR},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -366,4 +380,16 @@
   <update id="resetUserSalt" parameterType="String">
     UPDATE user_info AS u SET u.`salt`=#{salt,jdbcType=VARCHAR} WHERE u.`user_code`=#{userCode,jdbcType=VARCHAR};
   </update>
+
+  <update id="modifyRoleListByuserId" >
+    UPDATE user_info AS u SET u.`role_list`=#{rolelist,jdbcType=VARCHAR} WHERE u.`user_id`= #{uid,jdbcType=INTEGER}
+  </update>
+
+  <update id="modifyPermListByuserId" >
+    UPDATE user_info AS u SET u.`perm_list`=#{permlist,jdbcType=VARCHAR} WHERE u.`user_id`= #{uid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectPowerByUserCode"  parameterType="String" resultType="String">
+   SELECT u.`perm_list` FROM user_info AS u WHERE u.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
 </mapper>

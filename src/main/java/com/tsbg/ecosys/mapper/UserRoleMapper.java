@@ -1,8 +1,9 @@
 package com.tsbg.ecosys.mapper;
 
-
 import com.tsbg.ecosys.model.UserRole;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserRoleMapper {
@@ -24,4 +25,7 @@ public interface UserRoleMapper {
 
     //通过uid查询用户对应的角色rid
     Integer selectRidByUid(Integer uid);
+
+    //根据用户的userId查询出其所拥有的角色插入到字段role_list
+    List<Integer> getRole(Integer uid);
 }
