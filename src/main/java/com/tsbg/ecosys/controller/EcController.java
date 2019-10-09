@@ -420,7 +420,6 @@ public class EcController {
     @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
     public ResultUtils exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
         List<DerivediPackage> derivediPackages = questionService.selectquestion();
-        System.out.println(derivediPackages);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Workbook wb = new XSSFWorkbook();
         Font titleFont = wb.createFont();
@@ -540,7 +539,7 @@ public class EcController {
         response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         OutputStream os = response.getOutputStream();
-        String fileName = sdf.format(new Date()) + sheetName + ".xlsx";
+        String fileName = /*sdf.format(new Date()) +*/ sheetName + ".xlsx";
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(fileName, "utf-8"));
         wb.write(os);
         os.flush();
