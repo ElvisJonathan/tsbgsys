@@ -27,6 +27,13 @@ public class FileInfo {
 
     private String remark;
 
+
+
+
+    private Integer questionFeedbackId;
+
+    private Integer questionHandleId;
+
     public Integer getFileId() {
         return fileId;
     }
@@ -124,4 +131,24 @@ public class FileInfo {
     }
 
 
+
+
+
+
+
+    public Integer getQuestionFeedbackId() {
+        return questionFeedbackId;
+    }
+
+    public void setQuestionFeedbackId(Integer questionFeedbackId) {
+        this.questionFeedbackId = questionFeedbackId;
+    }
+
+    public Integer getQuestionHandleId() {
+        return questionHandleId;
+    }
+
+    public void setQuestionHandleId(Integer questionHandleId) {
+        this.questionHandleId = questionHandleId;
+    }
 }

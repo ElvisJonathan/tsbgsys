@@ -134,4 +134,13 @@ public class UserInfoServiceImpl implements UserInfoService {
     public String selectPowerByUserCode(String userCode) {
         return userInfoMapper.selectPowerByUserCode(userCode);
     }
+
+
+
+
+
+    @Override
+    public String selectEmailByUserCode(String userCode) {
+        return userInfoMapper.selectEmailByUserCode(userCode);
+    }
 }

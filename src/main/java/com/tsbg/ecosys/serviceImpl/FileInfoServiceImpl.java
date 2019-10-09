@@ -84,4 +84,79 @@ public class FileInfoServiceImpl implements FileInfoService {
     public int updateDownloader(String userCode, Integer fileNo) {
         return fileInfoMapper.updateDownloader(userCode,fileNo);
     }
+
+    @Override
+    public List<FileInfo> selectFilePathByQuestionFeedBackId(Integer questionFeedbackId) {
+        return null;
+    }
+
+
+    @Override
+    //根据處理反饋编号查询当前文件列表对应的编号
+    public List<Integer> selectFileNoByQuestionHandleId(Integer questionHandleId){
+        return fileInfoMapper.selectFileNoByQuestionHandleId(questionHandleId);
+    }
+
+
+    //根據處理反饋編號修改文件狀態
+    @Override
+    public int updateAllFileStatusByQuestionHandleId(Integer questionHandleId){
+        return fileInfoMapper.updateAllFileStatusByQuestionHandleId(questionHandleId);
+    }
+
+
+    //通過QuestionHandleId和文件名定位文件ID
+    @Override
+    public Integer selectFileNoByQuestionHandleIdAdnFileName(Integer questionHandleId,String fileName){
+        return fileInfoMapper.selectFileNoByQuestionHandleIdAdnFileName(questionHandleId,fileName);
+    }
+
+
+    //通過QuestionFeedbackId和文件名定位文件ID
+    @Override
+    public Integer selectFileNoByQuestionFeedbackIdAdnFileName(Integer questionFeedbackId,String fileName){
+        return fileInfoMapper.selectFileNoByQuestionFeedbackIdAdnFileName(questionFeedbackId,fileName);
+    }
+
+
+
+
+    //根據問題反饋id查詢文件名
+    public List<FileInfo> selectFileNameByQuestionFeedBackId(Integer questionFeedbackId){
+        return fileInfoMapper.selectFileNameByQuestionFeedBackId(questionFeedbackId);
+    }
+
+
+    //根據QuestionHandleId查詢文件名
+    public List<FileInfo> selectFileNameByQuestionHandleId(Integer questionHandleId){
+        return fileInfoMapper.selectFileNameByQuestionHandleId(questionHandleId);
+    }
+
+
+    //通過處理反饋id更新文件的狀態為刪除（實際未刪除）
+    @Override
+    public int UpdateFileByFileNameAndQuestionHandleId(String fileName,Integer questionHandleId){
+        return fileInfoMapper.UpdateFileByFileNameAndQuestionHandleId(fileName,questionHandleId);
+    }
+
+
+
+    //通過問題反饋id更新文件的狀態為刪除（實際未刪除）
+    @Override
+    public int UpdateFileByFileNameAndQuestionFeedBackId(String fileName,Integer questionFeedbackId){
+        return fileInfoMapper.UpdateFileByFileNameAndQuestionFeedBackId(fileName,questionFeedbackId);
+    }
+
+
+    @Override
+    //通過文件名、反饋附件編號查詢文件附件
+    public String selectRealPathByNameAndQuestionFeedBackId(String fileName,Integer questionFeedbackId){
+        return fileInfoMapper.selectRealPathByNameAndQuestionFeedBackId(fileName,questionFeedbackId);
+    }
+
+    @Override
+    //通過文件名、處理反饋附件編號查詢文件附件
+    public String selectRealPathByNameAndQuestionHandleId(String fileName,Integer questionHandleId){
+        return fileInfoMapper.selectRealPathByNameAndQuestionHandleId(fileName,questionHandleId);
+    }
 }

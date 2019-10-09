@@ -235,4 +235,122 @@ public class FileController {
         }
         return "下载成功！";
     }
+
+    /**
+     * 下载
+     */
+    @RequestMapping(value = "/testdownload2", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public Object downloadQuestionFeedBackFile(HttpServletResponse response, HttpServletRequest request){
+        String fileName = request.getParameter("fileName");
+        if (fileName==null){
+            return "文件名為空！";
+        }
+        System.out.println("文件名："+fileName);
+        Integer questionFeedbackId=Integer.parseInt(request.getParameter("questionFeedbackId"));
+        System.out.println("收到處理反饋附件編號為："+questionFeedbackId);
+        //獲取userCode用於記錄最后下载者  让前端传
+        String userCode = request.getParameter("userCode");
+        System.out.println("獲取到的userCode:"+userCode);
+        //根據文件名去數據庫查詢URL
+        String name = fileInfoService.selectRealPathByNameAndQuestionFeedBackId(fileName,questionFeedbackId);
+        System.out.println("真实URL："+name);
+        if (name==null){
+            System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
+            return "下载附件失败，请检查文件“" + fileName + "”是否存在";
+        }
+        OutputStream os = null;
+        InputStream is= null;
+        try {
+            // 取得输出流
+            os = response.getOutputStream();
+            // 清空输出流
+            response.reset();
+            response.setContentType("application/x-download;charset=GBK");
+            response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
+            //读取流
+            File f = new File(name);
+            is = new FileInputStream(f);
+            //复制
+            IOUtils.copy(is, response.getOutputStream());
+            response.getOutputStream().flush();
+            //通过公司编号和文件名定位文件编号
+            Integer fileNo = fileInfoService.selectFileNoByQuestionFeedbackIdAdnFileName(questionFeedbackId,fileName);
+            if (fileNo!=null){
+                //根据公司编号和用户工号去修改最后下载者
+                fileInfoService.updateDownloader(userCode,fileNo);
+            }
+        } catch (IOException e) {
+            return "下载附件失败,error:"+e.getMessage();
+        }
+        //文件的关闭放在finally中
+        finally
+        {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                System.out.println(ExceptionUtils.getFullStackTrace(e));
+            }
+            try {
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                System.out.println(ExceptionUtils.getFullStackTrace(e));
+            }
+        }
+        return "下载成功！";
+    }
+
+
+    /**
+     *  頁面點擊刪除文件
+     */
+    @RequestMapping(value = "/deleteFileByFileNameAndQuestionFeedBackId", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public String deleteFileByFileNameAndQuestionFeedBackId(@RequestBody FileInfo fileInfo){
+
+        String message="文件刪除失敗！";
+        String fileName = fileInfo.getFileName();
+        if (fileName==null){
+            return "文件名為空！";
+        }
+        System.out.println("文件名："+fileName);
+        Integer questionFeedbackId=fileInfo.getQuestionFeedbackId();
+        int i = fileInfoService.UpdateFileByFileNameAndQuestionFeedBackId(fileName, questionFeedbackId);
+        System.out.println("i:"+i);
+        if(i>0){
+            message="文件刪除成功！";
+            System.out.println("刪除成功！："+questionFeedbackId);
+        }
+        return message;
+    }
+
+
+
+
+
+    /**
+     *  頁面點擊刪除文件
+     */
+    @RequestMapping(value = "/deleteFileByFileNameAndQuestionHandleId", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public String deleteFileByFileNameAndQuestionHandleId(@RequestBody FileInfo fileInfo){
+        String message="文件刪除失敗！";
+        String fileName = fileInfo.getFileName();
+        if (fileName==null){
+            return "文件名為空！";
+        }
+        System.out.println("文件名："+fileName);
+        Integer questionHandleId=fileInfo.getQuestionHandleId();
+        System.out.println("test:"+fileInfoService.UpdateFileByFileNameAndQuestionHandleId(fileName,questionHandleId));
+        if(fileInfoService.UpdateFileByFileNameAndQuestionHandleId(fileName,questionHandleId)>0){
+            message="文件刪除成功！";
+            System.out.println("刪除成功！："+questionHandleId);
+        }
+
+        return message;
+    }
 }

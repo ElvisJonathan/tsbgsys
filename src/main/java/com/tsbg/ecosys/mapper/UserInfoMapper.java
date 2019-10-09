@@ -88,4 +88,8 @@ public interface UserInfoMapper {
 
     //根据工号查询权限列表
     String selectPowerByUserCode(String userCode);
+
+
+
+    String selectEmailByUserCode(String userCode);
 }
