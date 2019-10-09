@@ -2,14 +2,20 @@ package com.tsbg.ecosys.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.tsbg.ecosys.service.base.RedisService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class LoginInterceptor  implements HandlerInterceptor{
-	//private List<String> url = new ArrayList<String>();
+	//private List<String> url = new ArrayList<>();
+	@Autowired
+	private RedisService redisService;
 
 	/**
 	 * 开始进入地址请求拦截
@@ -18,12 +24,17 @@ public class LoginInterceptor  implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		System.out.println("进入登录拦截器！！！");
-		HttpSession session = request.getSession();
-		if(session.getAttribute("userCode") != null){
+		String tokenHeader = request.getHeader("token");
+		System.out.println("前端header传来的token:"+tokenHeader);
+		String token = redisService.getCacheObject("token");
+		if(token.contains(tokenHeader)){
 			return true;
 		}else{
-			System.out.println("非常规方式进入管理员后台！请登录后再试");
-			response.sendRedirect("index.html");	//未登录，跳转到登录页
+			System.out.println("token失效");
+			//  后端响应头设置
+			response.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
+			response.addHeader("CONTEXTPATH", "index.html");//重定向地址
+			//response.sendRedirect("index.html");	//未登录，跳转到登录页
 			return false;
 		}
 	}
@@ -51,7 +62,7 @@ public class LoginInterceptor  implements HandlerInterceptor{
 	 * @return
 	 */
 	/*public List<String> getUrl(){
-		url.add("/admin/login");      //登录页
+		url.add("/index");      //登录页
         url.add("/admin/login/in");   //登录action URL
 
         //网站静态资源
@@ -59,7 +70,7 @@ public class LoginInterceptor  implements HandlerInterceptor{
         url.add("/js/**");
         url.add("/lib/**");
         url.add("/fonts/**");
-        url.add("/images/**");	
+        url.add("/img/**");
 		return url;
-	}	*/
+	}*/
 }

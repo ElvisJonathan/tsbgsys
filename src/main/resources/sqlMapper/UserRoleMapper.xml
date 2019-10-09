@@ -85,4 +85,7 @@
   <select id="selectRidByUid"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
     SELECT r.`role_id` FROM user_role AS r WHERE r.`user_id`=#{uid,jdbcType=INTEGER};
   </select>
+  <select id="getRole"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT u.`role_id` FROM user_role AS u WHERE u.`user_id`=#{uid,jdbcType=INTEGER};
+  </select>
 </mapper>

@@ -3,8 +3,6 @@ package com.tsbg.ecosys.controller;
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.common.SnowflakeIdWorker;
-import com.tsbg.ecosys.model.Permission;
-import com.tsbg.ecosys.model.Role;
 import com.tsbg.ecosys.service.base.RedisService;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.PermissionService;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,10 +34,10 @@ public class LoginController {
     private long sessionExpire;
     @Autowired
     private UserInfoService userInfoService;
-    @Autowired
+    /*@Autowired
     private RoleService roleService;
     @Autowired
-    private PermissionService permissionService;
+    private PermissionService permissionService;*/
 
     @PostMapping("loginTest")
     public UserInfo loginTest(@RequestBody UserInfo userInfo,HttpSession session){
@@ -69,7 +66,7 @@ public class LoginController {
             int num = userInfoService.selectUserByPwd(userCode, userPwd);
             //存在且只有一条数据意味着登录成功
             if (num == 1) {
-                //获取toke
+                //获取token
                 String token = String.valueOf(SnowflakeIdWorker.getSnowflakeId());
                 //注册token到redis设置超时时间为5分钟
                 redisService.setCacheObject(token,"1", sessionExpire);
@@ -88,8 +85,7 @@ public class LoginController {
         return resultUtils;
     }
 
-
-   @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultUtils login(@RequestBody UserInfo userInfo){
         //初始化构造器
@@ -99,7 +95,7 @@ public class LoginController {
         String userPwd = userInfo.getUserPwd();
         //根据用户工号查询对应密码盐
         String salt = userInfoService.selectSaltByUserCode(userCode);
-        String newPwd = MD5Util2.encode(userInfo.getUserPwd()+salt);
+        String newPwd = MD5Util2.encode(userPwd+salt);
         //如果用户被停用则阻止其登录
         if (userCode!=null){
             //查询工号是否存在
@@ -131,35 +127,30 @@ public class LoginController {
             if (num==1 || num2==1){
                 //成功登录返回用户名给前端
                 String userName = userInfoService.selectUserNameByUserCode(userCode);
+                //获取token
+                String token = String.valueOf(SnowflakeIdWorker.getSnowflakeId());
+                //注册token到redis设置超时时间为5分钟
+                redisService.setCacheObject(token,"1", sessionExpire);
                 //成功登录返回成功码0并且提示成功
                 //返回权限列表
-                List<Role> roleList = roleService.findRoleByUserCode(userCode);
-                if (roleList.size()!=0){
-                    int arr[] = new int[1];//当前用户为单角色只给一个长度
-                    for (int i=0;i<=arr.length-1;i++){
-                        arr[i]=roleList.get(i).getRoleid();
+                String power = userInfoService.selectPowerByUserCode(userCode);
+                if (power.contains(";")){
+                    System.out.println("多权限");//有待于完善
+                    String []newPower2 = power.split(";");
+                    String []newList = new String[newPower2.length];
+                    String []real = new String[newList.length];
+                    for (int i=0;i<=newPower2.length-1;i++){
+                        newList[i] = newPower2[i].substring(1,newPower2[i].length()-1);
                     }
-                    List<Permission> plist = permissionService.findPermissionByRoleId(arr[0]);
-                    if (plist!=null){
-                        String arr2[] = new String[plist.size()];
-                        for (int i=0;i<=plist.size()-1;i++){
-                            arr2[i]=plist.get(i).getName();
-                        }
-                      /*  //设置当前用户的登录session
-                        session.setAttribute("userCode", userCode);
-                        session.setAttribute("userName",userName);
-                        session.setMaxInactiveInterval(1800);*/
-                        return new ResultUtils(0,"成功登录并且获取了权限！",userName,userCode,arr2);
+                    for (int i=0;i<=newList.length-1;i++){
+                        real[i] = newList[i].replaceAll(", ",",").trim();
                     }
-                    /*session.setAttribute("userCode", userCode);
-                    session.setAttribute("userName",userName);
-                    session.setMaxInactiveInterval(1800);*/
-                    return new ResultUtils(0,"成功登录但未获取到对应权限信息！",userName,userCode);
+                    return new ResultUtils(0,"成功登录并且获取了权限！",new LoginResultVone(userName, token),userCode,real);
                 }
-                /*session.setAttribute("userCode", userCode);
-                session.setAttribute("userName",userName);
-                session.setMaxInactiveInterval(1800);*/
-                return new ResultUtils(0,"成功登录但是未找到对应角色信息！",userName,userCode);
+                String newPower = power.substring(1,power.length()-1);
+                String s = newPower.replaceAll(", ",",").trim();
+                String[]arr = s.split(",");
+                return new ResultUtils(0,"成功登录并且获取了权限！",new LoginResultVone(userName, token),userCode,arr);
             }
         }
         //如果用户名或密码为空或是不存在此用户提示登录失败
@@ -167,7 +158,6 @@ public class LoginController {
         resultUtils = new ResultUtils(500,"用户名或密码错误登录失败！");
         return resultUtils;
     }
-
 
     /**
      *判断原密码是否正确

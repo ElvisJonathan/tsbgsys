@@ -7,17 +7,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Configuration
-//@WebFilter(filterName = "sessionFilter", urlPatterns = "/*", asyncSupported = true)
+@Configuration
+@WebFilter(filterName = "sessionFilter", urlPatterns = "/*", asyncSupported = true)
 public class SessionFilter extends BaseController implements Filter {
     private static final Logger log = LoggerFactory.getLogger(SessionFilter.class);
     @Autowired
@@ -37,7 +39,6 @@ public class SessionFilter extends BaseController implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -56,17 +57,24 @@ public class SessionFilter extends BaseController implements Filter {
             return;
         }
 
-        String liteToken = httpServletRequest.getHeader("Token");
+        String liteToken = httpServletRequest.getHeader("token");
 
         LOG.info("liteToken = [{}]", liteToken);
 
         //检查sessionKey是否有效，true有效、false无效
         if (!Strings.isNullOrEmpty(liteToken)) {
             String tValue = redisService.getCacheObject(liteToken);
+            System.out.println("redis中的："+tValue);
             if ("1".equals(tValue)){
                 super.setCorsHeader();
                 filterChain.doFilter(servletRequest, servletResponse);
                 redisService.updateExpire(liteToken, sessionExpire);
+                return;
+            }else {
+                System.out.println("token失效");
+                //  后端响应头设置
+                response.addHeader("REDIRECT", "REDIRECT");//告诉ajax这是重定向
+                response.addHeader("CONTEXTPATH", "index.html");//重定向地址
                 return;
             }
         }
@@ -83,8 +91,7 @@ public class SessionFilter extends BaseController implements Filter {
     }
 
     private void initIgnoreUrl() {
-        //login
-        ignoreUrlList.add("http://localhost:8080/tsbg/login/ecologin");
+        ignoreUrlList.add("/login/auth");
+        ignoreUrlList.add("/tsbg/register/ecosign");
     }
 }
-

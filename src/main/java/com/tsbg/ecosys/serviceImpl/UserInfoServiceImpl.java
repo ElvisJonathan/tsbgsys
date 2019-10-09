@@ -119,4 +119,19 @@ public class UserInfoServiceImpl implements UserInfoService {
     public int resetUserSalt(String salt, String userCode) {
         return userInfoMapper.resetUserSalt(salt,userCode);
     }
+
+    @Override
+    public int modifyRoleListByuserId(String rolelist, Integer userId) {
+        return userInfoMapper.modifyRoleListByuserId(rolelist,userId);
+    }
+
+    @Override
+    public int modifyPermListByuserId(String permlist, Integer userId) {
+        return userInfoMapper.modifyPermListByuserId(permlist,userId);
+    }
+
+    @Override
+    public String selectPowerByUserCode(String userCode) {
+        return userInfoMapper.selectPowerByUserCode(userCode);
+    }
 }

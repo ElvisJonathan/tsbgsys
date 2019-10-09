@@ -70,4 +70,13 @@ public interface UserInfoService {
 
     //重置用户密码盐
     int resetUserSalt(@Param("salt")String salt,@Param("userCode")String userCode);
+
+    //根据user_id修改用户的role_list
+    int modifyRoleListByuserId(@Param("rolelist")String rolelist,@Param("uid")Integer userId);
+
+    //根据user_id修改用户的perm_list
+    int modifyPermListByuserId(@Param("permlist")String permlist,@Param("uid")Integer userId);
+
+    //根据工号查询权限列表
+    String selectPowerByUserCode(String userCode);
 }

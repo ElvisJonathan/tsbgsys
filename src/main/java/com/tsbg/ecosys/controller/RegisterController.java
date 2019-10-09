@@ -1,16 +1,14 @@
 package com.tsbg.ecosys.controller;
 
-import com.tsbg.ecosys.service.EareaService;
+import com.tsbg.ecosys.service.*;
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.UserInfo;
-import com.tsbg.ecosys.service.UserInfoService;
-import com.tsbg.ecosys.service.StaffInfoService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 注册
@@ -25,12 +23,16 @@ public class RegisterController {
     private StaffInfoService staffInfoService;
     @Autowired
     private EareaService eareaService;
+    @Autowired
+    private UserRoleService userRoleService;
+    @Autowired
+    private PermissionService permissionService;
 
     /**
      *生态员工注册成为用户
      */
     @RequestMapping(value = "/ecosign", method = { RequestMethod.GET, RequestMethod.POST })
-    @ResponseBody
+    //@ResponseBody
     public ResultUtils register(@RequestBody UserInfo userInfo) {
         //初始化构造器
         ResultUtils resultUtils = null;
@@ -91,6 +93,22 @@ public class RegisterController {
                 }
                 //将此uid和rid增加至user_role
                 userInfoService.insertDatatoEuserRole(uid,2,name);
+                //查询出该用户所拥有的角色信息
+                List<Integer> roleList = userRoleService.getRole(uid);
+                String result = StringUtils.join(roleList, ",");
+                userInfoService.modifyRoleListByuserId(result, uid);
+                //设置用户权限
+                List<String> pList = new ArrayList<>();
+                for (int i=0;i<=roleList.size()-1;i++){
+                    if (permissionService.findPermissionByRoleId2(roleList.get(i)).toString()!=null
+                    && !permissionService.findPermissionByRoleId2(roleList.get(i)).toString().equals("[]")){
+                        pList.add(permissionService.findPermissionByRoleId2(roleList.get(i)).toString());
+                    }else{
+                        pList.add("[null]");
+                    }
+                }
+                String result2 = StringUtils.join(pList, ";");
+                userInfoService.modifyPermListByuserId(result2.trim(),uid);
                 //返回成功码0并且提示成功注册
                 resultUtils = new ResultUtils(0,"提示信息：成功注册！");
                 return resultUtils;

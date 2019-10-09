@@ -28,4 +28,14 @@ public class PermissionServiceImpl implements PermissionService {
     public List<String> findPermissionByRoleId2(Integer roleId) {
         return permissionMapper.findPermissionByRoleId2(roleId);
     }
+
+    @Override
+    public String selectPermission(String name) {
+        return permissionMapper.selectPermission(name);
+    }
+
+    @Override
+    public List<Integer> selectPermIdByPerm(String[] perm) {
+        return permissionMapper.selectPermIdByPerm(perm);
+    }
 }
