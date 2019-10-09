@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-@WebFilter(filterName = "sessionFilter", urlPatterns = "/*", asyncSupported = true)
+//@Configuration
+//@WebFilter(filterName = "sessionFilter", urlPatterns = "/*", asyncSupported = true)
 public class SessionFilter extends BaseController implements Filter {
     private static final Logger log = LoggerFactory.getLogger(SessionFilter.class);
     @Autowired
@@ -52,7 +52,7 @@ public class SessionFilter extends BaseController implements Filter {
         //swagger放行swagger请求
         if (ignoreUrlList.contains(requestURI) || "/v2/api-docs".equals(requestURI)||requestURI.indexOf("swagger") != -1) {
             LOG.info("Ignore url:{}", requestURI);
-            super.setCorsHeader();
+            //super.setCorsHeader();
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
