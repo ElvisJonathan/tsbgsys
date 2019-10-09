@@ -64,21 +64,6 @@ public class EcController {
         return new ResultUtils(500, "未收到PartnerNo");
     }
 
-    /*@ApiOperation(value = "按联系人查询", notes = "按联系人查询")
-    @RequestMapping(value = "/contacts", method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
-    public ResultUtils getEcooperationListll(@RequestBody Epartner epartner) {
-        //获取公司合作伙伴编号
-        Integer cid = epartner.getPartnerNo();
-        //根据合作伙伴编号同步查询合作情况与联系人
-        if (cid != null) {
-            List<EcTotalDto> ecTotalDtoList = ecooperationService.getEcooperationList(cid);
-            return new ResultUtils(0, "根据PartnerNo查询", ecTotalDtoList);
-        }
-        return new ResultUtils(500, "未收到PartnerNo");
-    }
-*/
-
     /**
      * 查询公司文件
      */
@@ -103,7 +88,7 @@ public class EcController {
     @ResponseBody
     //@NeedLogin
     public void getEcooperationAll(HttpServletRequest req, HttpServletResponse response) throws IOException {
-      /* //从前端获取添加的四个条件进行查询*/
+        /* //从前端获取添加的四个条件进行查询*/
         String json = req.getParameter("partnerName");
         String json2 = req.getParameter("partnerProduct");
         String json3 = req.getParameter("partnerRegion");
@@ -342,10 +327,10 @@ public class EcController {
         row = sheet.createRow(0);//创建第一个单元格
         row.setHeight((short) (40 * 20));
         row.createCell(0).setCellValue("合作情況信息表");//为第一行单元格设值
-		/*
-		* 第一个table_name 表名字
-		* 第二个table_name 数据库名称
-		* */
+        /*
+         * 第一个table_name 表名字
+         * 第二个table_name 数据库名称
+         * */
         //epartner表头
         row = sheet.createRow(1);
         row.setHeight((short) (22.50 * 20));//设置行高
@@ -418,9 +403,9 @@ public class EcController {
 
     //导出系统名称、反馈人、处理人信息
     @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
-    public ResultUtils exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
+    public void exportAllQues(/*HttpServletRequest req,*/ HttpServletResponse response) throws Exception {
         List<DerivediPackage> derivediPackages = questionService.selectquestion();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Workbook wb = new XSSFWorkbook();
         Font titleFont = wb.createFont();
         titleFont.setBold(true);
@@ -511,7 +496,7 @@ public class EcController {
         }
         //填写表头
         for(int i=0;i<titles.size();i++){
-            titleRow.createCell(i).setCellValue(titles.get(i).toString());//为第一个单元格设值
+            titleRow.createCell(i).setCellValue(titles.get(i));//为第一个单元格设值
         }
         Row row = null;
         for (int i = 0; i < derivediPackages.size(); i++) {
@@ -544,6 +529,5 @@ public class EcController {
         wb.write(os);
         os.flush();
         os.close();
-        return null;
     }
 }

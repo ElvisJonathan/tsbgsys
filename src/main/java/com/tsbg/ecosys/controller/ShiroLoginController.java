@@ -23,6 +23,7 @@ public class ShiroLoginController {
      * 登录
      */
     @PostMapping("/auth")
+    @ResponseBody
     public JSONObject authLogin(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "userCode,userPwd");
         return loginService.authLogin(requestJson);
@@ -40,6 +41,7 @@ public class ShiroLoginController {
      * 查询当前登录用户的信息
      */
     @RequestMapping(value = "/getMyInfo", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
     public JSONObject getMyInfo() {
         return loginService.getMyInfo();
     }

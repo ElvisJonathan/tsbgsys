@@ -15,9 +15,6 @@ import javax.servlet.MultipartConfigElement;
 @MapperScan("com.tsbg.ecosys.mapper")
 public class EcosysApplication extends SpringBootServletInitializer {
 
-    /*public static void main(String[] args) {
-        SpringApplication.run(EcosysApplication.class, args);
-    }*/
     public static void main(String[] args) {
         SpringApplication application = new SpringApplication(EcosysApplication.class);
         application.setBannerMode(Banner.Mode.OFF);
@@ -43,5 +40,4 @@ public class EcosysApplication extends SpringBootServletInitializer {
         factory.setMaxRequestSize("30MB");
         return factory.createMultipartConfig();
     }
-
 }
