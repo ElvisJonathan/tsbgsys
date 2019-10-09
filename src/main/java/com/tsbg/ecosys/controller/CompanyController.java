@@ -9,7 +9,6 @@ import com.tsbg.ecosys.model.bag.SearchPackage;
 import com.tsbg.ecosys.service.*;
 import com.tsbg.ecosys.util.PageRequest;
 import com.tsbg.ecosys.util.PageResult;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,7 +45,7 @@ public class CompanyController {
      * 管理员隐藏/取消隐藏公司
      */
     @RequestMapping(value = "/hideCompany", method = { RequestMethod.GET, RequestMethod.POST })
-    //@RequiresPermissions("power")
+    @ResponseBody
     public ResultUtils hideCom(@RequestBody Epartner epartner){
         //初始化构造器
         ResultUtils resultUtils = null;
@@ -60,7 +59,6 @@ public class CompanyController {
             data2[i]=(int)data[i];
         }*/
         Integer cid = epartner.getPartnerNo();
-        System.out.println("公司编号："+cid);
         //获取STATUS
         Integer status = epartner.getStatus();
         System.out.println("修改的状态："+status);
@@ -102,7 +100,7 @@ public class CompanyController {
      * 集成文件上传、权限控制
      */
     @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
-    //@RequiresPermissions("add")
+    @ResponseBody
     public ResultUtils addCom(HttpServletRequest req, MultipartFile[] file)throws Exception {
         //初始化传参构造器
         ResultUtils resultUtils = null;
@@ -125,7 +123,7 @@ public class CompanyController {
             return resultUtils;
         }
         //权限标识符
-        /*Boolean powerFlag = false;
+        Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有add权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -138,8 +136,8 @@ public class CompanyController {
                     }
                 }
             }
-        }*/
-       // if (powerFlag.equals(true)){
+        }
+        if (powerFlag.equals(true)){
             //初始化公司id为0
             int no = 0;
             //需要从前台获取合作伙伴信息、合作情况信息、公司联系人信息
@@ -276,9 +274,9 @@ public class CompanyController {
             }
             resultUtils = new ResultUtils(501, "提示信息：新增失败！");
             return resultUtils;
-        //}
-        /*resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        }
+        resultUtils = new ResultUtils(509, "提示信息：无此权限！");
+        return resultUtils;
     }
 
     /**
@@ -286,7 +284,7 @@ public class CompanyController {
      * 集成权限控制
      */
     @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
-    //@RequiresPermissions("view")
+    @ResponseBody
     public ResultUtils findPage(@RequestBody SearchPackage searchPackage) {
         ResultUtils resultUtils = null;
         //需要前台传参pageQuery:包含pageIndex和pageSize 即起始页码和页面容量 记得容量小于总条数才会有分页效果
@@ -305,7 +303,7 @@ public class CompanyController {
             return resultUtils;
         }
         //权限标识符
-        /*Boolean powerFlag = false;
+        Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有view权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -319,7 +317,7 @@ public class CompanyController {
                 }
             }
         }
-        if (powerFlag.equals(true)) {*/
+        if (powerFlag.equals(true)) {
             int identity = userInfoService.selectIdentityByUserCode(userCode);
             epartner.setCreaterIdentity(identity);
             if (pageRequest.getPageIndex() != 0 && pageRequest.getPageSize() != 0) {
@@ -334,9 +332,9 @@ public class CompanyController {
             }
             resultUtils = new ResultUtils(502, "提示信息：分页条件不明确异常");
             return resultUtils;
-       /* }
+        }
         resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        return resultUtils;
     }
 
     //查询公司信息
@@ -422,7 +420,7 @@ public class CompanyController {
      * 集成文件上传和删除(当文件数量等于或多于当前文件数量时调用)
      */
     @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
-    //@RequiresPermissions("update")
+    @ResponseBody
     public ResultUtils modifyCom(MultipartFile[] file, HttpServletRequest req)throws IOException{
         ResultUtils resultUtils = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
@@ -459,7 +457,7 @@ public class CompanyController {
         System.out.println("修改者："+userName);
         System.out.println("获取的工号："+userCode);
         //权限标识符
-        /*Boolean powerFlag = false;
+        Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有update权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -473,7 +471,7 @@ public class CompanyController {
                 }
             }
         }
-        if (powerFlag.equals(true)) {*/
+        if (powerFlag.equals(true)) {
             if(cid!=null){
                 if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
                         && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
@@ -597,9 +595,9 @@ public class CompanyController {
             }
             resultUtils = new ResultUtils(507,"提示信息：未查到对应公司合作伙伴编号！");
             return resultUtils;
-        /*}
+        }
         resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        return resultUtils;
     }
 
     /**
@@ -608,7 +606,7 @@ public class CompanyController {
      * 接收的参数是文件名
      */
     @RequestMapping(value = "/updateCompany2", method = { RequestMethod.GET, RequestMethod.POST })
-    //@RequiresPermissions("update")
+    @ResponseBody
     public ResultUtils modifyCom2(@RequestBody CompanyPackage filePackage, HttpServletRequest req){
         ResultUtils resultUtils = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
@@ -645,7 +643,7 @@ public class CompanyController {
         System.out.println("修改人："+userName);
         System.out.println("工号："+userCode);
         //权限标识符
-        /*Boolean powerFlag = false;
+        Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有update权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -659,7 +657,7 @@ public class CompanyController {
                 }
             }
         }
-        if (powerFlag.equals(true)) {*/
+        if (powerFlag.equals(true)) {
             if(cid!=null){
                 if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
                         && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
@@ -735,16 +733,16 @@ public class CompanyController {
             }
             resultUtils = new ResultUtils(507,"提示信息：未查到对应公司合作伙伴编号！");
             return resultUtils;
-       /* }
+        }
         resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        return resultUtils;
     }
 
     /**
      * 管理员删除公司（软删除）
      */
     @RequestMapping(value = "/del", method = { RequestMethod.GET, RequestMethod.POST })
-    //@RequiresPermissions("del")
+    @ResponseBody
     public ResultUtils delCom(@RequestBody HidePackage hidePackage){
         //通过接受partnerNo进行删除（隐藏） 需要对其合作伙伴以及联系人同时删除（隐藏）
         //需要同时修改三张表的状态

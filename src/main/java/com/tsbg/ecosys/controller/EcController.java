@@ -418,9 +418,9 @@ public class EcController {
 
     //导出系统名称、反馈人、处理人信息
     @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
-    public void exportAllQues(/*HttpServletRequest req,*/ HttpServletResponse response) throws Exception {
+    public ResultUtils exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
         List<DerivediPackage> derivediPackages = questionService.selectquestion();
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Workbook wb = new XSSFWorkbook();
         Font titleFont = wb.createFont();
         titleFont.setBold(true);
@@ -511,7 +511,7 @@ public class EcController {
         }
         //填写表头
         for(int i=0;i<titles.size();i++){
-            titleRow.createCell(i).setCellValue(titles.get(i));//为第一个单元格设值
+            titleRow.createCell(i).setCellValue(titles.get(i).toString());//为第一个单元格设值
         }
         Row row = null;
         for (int i = 0; i < derivediPackages.size(); i++) {
@@ -544,5 +544,6 @@ public class EcController {
         wb.write(os);
         os.flush();
         os.close();
+        return null;
     }
 }

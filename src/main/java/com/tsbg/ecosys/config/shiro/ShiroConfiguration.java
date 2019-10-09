@@ -48,7 +48,6 @@ public class ShiroConfiguration {
 		filterChainDefinitionMap.put("/tsbg/login/ecologin", "anon");
 		filterChainDefinitionMap.put("/login/auth", "anon");
 		filterChainDefinitionMap.put("/login/getMyInfo","anon");
-		filterChainDefinitionMap.put("/tsbg/company/findPage", "anon");
 		filterChainDefinitionMap.put("/login/logout", "anon");
 		filterChainDefinitionMap.put("/error", "anon");
 		filterChainDefinitionMap.put("/tsbg/power/powerdetail", "anon");
