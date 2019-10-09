@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.mapper.QuestionMapper" >
+    <!--导出系统名称、反馈人、处理人信息 - 关联查询-->
+    <select id="selectquestion" resultType="com.tsbg.ecosys.model.bag.DerivediPackage">
+      select pt.proj_id AS projIda,pt.pro_name AS proNamea,qt.type_name AS typeNameb,
+      qt.status AS statusb,fi.file_name AS fileNamec,qf.user_code AS userCoded,
+      qf.user_name AS userNamed,qf.user_ext AS userExtd,qf.user_email_address AS userEmailAddressd,
+      qh.handle_code AS handleCodee,qh.handle_name AS handleNamee,qh.start_date AS startDatee,
+      qh.handle_time AS handleTimee ,qh.is_complete AS isCompletee,fi.file_name AS fileNamec,
+      qh.remark AS remarke from project AS pt LEFT JOIN question_type AS qt ON
+      pt.proj_id=qt.proj_id LEFT JOIN file_info AS fi ON pt.proj_id=fi.proj_id LEFT JOIN
+      question_feedback AS qf ON pt.proj_id=qf.proj_id LEFT JOIN question_handle AS qh ON pt.proj_id=qh.proj_id
+   </select>
+
+</mapper>
