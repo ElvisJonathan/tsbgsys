@@ -21,4 +21,4 @@ public class CorsConfig2 extends WebMvcConfigurerAdapter {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
-}
+}      
