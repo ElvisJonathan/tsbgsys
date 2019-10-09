@@ -1,4 +1,3 @@
-/*
 package com.tsbg.ecosys.config;
 
 import org.springframework.context.annotation.Bean;
@@ -22,5 +21,4 @@ public class CorsConfig2 extends WebMvcConfigurerAdapter {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
-}
-*/
+}      
