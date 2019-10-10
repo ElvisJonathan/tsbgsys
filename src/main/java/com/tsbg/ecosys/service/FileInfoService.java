@@ -11,10 +11,10 @@ public interface FileInfoService {
     int insertSelective(FileInfo record);
 
     //重复文件名判断
-    int selectFileCountByFileName(String filename,Integer partnerNo);
+    int selectFileCountByFileName(String filename, Integer partnerNo);
 
     //判断文件是否未修改
-    int judgeIfFileChanged(@Param("partnerNo")Integer partnerNo, @Param("fileName")String fileName);
+    int judgeIfFileChanged(@Param("partnerNo") Integer partnerNo, @Param("fileName") String fileName);
 
     //查找当前文件的ID和更新时间
     FileInfo selectIDandDate();
@@ -23,10 +23,10 @@ public interface FileInfoService {
     int selectIfExistId(int fileId);
 
     //更新最新的文件记录
-    int updateRecord(@Param("partnerNo")int partnerNo,@Param("updater")String updater,@Param("fileId")int fileId);
+    int updateRecord(@Param("partnerNo") int partnerNo, @Param("updater") String updater, @Param("fileId") int fileId);
 
     //通过文件名查询文件路径
-    String selectRealPathByName(String fileName,Integer partnerNo);
+    String selectRealPathByName(String fileName, Integer partnerNo);
 
     //根据公司编号查询文件列表
     List<String> selectFileListByNo(Integer partnerNo);
@@ -53,22 +53,22 @@ public interface FileInfoService {
 
 
     //根据上传时的文件名查询文件状态
-    List<Integer> selectFileStatusByFileName(String fileName,Integer partnerNo);
+    List<Integer> selectFileStatusByFileName(String fileName, Integer partnerNo);
 
     //通过公司编号和文件名定位文件ID
-    Integer selectFileNo(Integer partnerNo,String fileName);
+    Integer selectFileNo(Integer partnerNo, String fileName);
 
 
 
     //通過QuestionHandleId和文件名定位文件ID
-    Integer selectFileNoByQuestionHandleIdAdnFileName(Integer questionHandleId,String fileName);
+    Integer selectFileNoByQuestionHandleIdAdnFileName(Integer questionHandleId, String fileName);
 
     //通過QuestionFeedbackId和文件名定位文件ID
-    Integer selectFileNoByQuestionFeedbackIdAdnFileName(Integer questionFeedbackId,String fileName);
+    Integer selectFileNoByQuestionFeedbackIdAdnFileName(Integer questionFeedbackId, String fileName);
 
 
     //根据公司编号和用户工号去修改最后下载者
-    int updateDownloader(String userCode,Integer fileNo);
+    int updateDownloader(String userCode, Integer fileNo);
 
     //根據問題反饋id查詢文件的路徑
     List<FileInfo> selectFilePathByQuestionFeedBackId(Integer questionFeedbackId);
@@ -81,20 +81,20 @@ public interface FileInfoService {
 
 
     //通過處理反饋id更新文件的狀態為刪除（實際未刪除）
-    int UpdateFileByFileNameAndQuestionHandleId(String fileName,Integer questionHandleId);
+    int UpdateFileByFileNameAndQuestionHandleId(String fileName, Integer questionHandleId);
 
 
     //通過問題反饋id更新文件的狀態為刪除（實際未刪除）
-    int UpdateFileByFileNameAndQuestionFeedBackId(String fileName,Integer questionFeedbackId);
+    int UpdateFileByFileNameAndQuestionFeedBackId(String fileName, Integer questionFeedbackId);
 
 
     //通過文件名、處理反饋附件編號查詢文件附件
-    String selectRealPathByNameAndQuestionHandleId(String fileName,Integer questionHandleId);
+    String selectRealPathByNameAndQuestionHandleId(String fileName, Integer questionHandleId);
 
 
 
     //通過文件名、反饋附件編號查詢文件附件
-    String selectRealPathByNameAndQuestionFeedBackId(String fileName,Integer questionFeedbackId);
+    String selectRealPathByNameAndQuestionFeedBackId(String fileName, Integer questionFeedbackId);
 
 
 }

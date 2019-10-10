@@ -446,7 +446,6 @@ public class QuestionFeedBackController {
                     //fileInfo.setFilePath(URL);
                     //服务器存储   打包上去前需要置换
                     fileInfo.setFilePath(URL2);
-
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
                     fileInfo.setKeyword(multipartFile.getOriginalFilename());
