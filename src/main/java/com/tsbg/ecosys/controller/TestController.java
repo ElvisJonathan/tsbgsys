@@ -1,3 +1,4 @@
+/*
 package com.tsbg.ecosys.controller;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -15,3 +16,4 @@ public class TestController {
         return "success";
     }
 }
+*/
