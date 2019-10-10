@@ -1,29 +1,10 @@
 package com.tsbg.ecosys.serviceImpl;
 
-import com.alibaba.fastjson.JSONObject;
-
-import com.tsbg.ecosys.common.SnowflakeIdWorker;
-import com.tsbg.ecosys.mapper.LoginDao;
-import com.tsbg.ecosys.service.LoginService;
-import com.tsbg.ecosys.service.UserInfoService;
-import com.tsbg.ecosys.service.base.PermissionService;
-import com.tsbg.ecosys.service.base.RedisService;
-import com.tsbg.ecosys.util.CommonUtil;
-import com.tsbg.ecosys.util.constants.Constants;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *  登录service实现类
- */
+ *//*
+
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -38,9 +19,11 @@ public class LoginServiceImpl implements LoginService {
 	@Value("${server.servlet.session.timeout}")
 	private long sessionExpire;
 
-	/**
+	*/
+/**
 	 * 登录表单提交
-	 */
+	 *//*
+
 	@Override
 	public JSONObject authLogin(JSONObject jsonObject) {
 		String userCode = jsonObject.getString("userCode");
@@ -84,25 +67,31 @@ public class LoginServiceImpl implements LoginService {
 		return CommonUtil.successJson(info);
 	}
 
-	/**
+	*/
+/**
 	 * 根据用户名和密码查询对应的用户
-	 */
+	 *//*
+
 	@Override
 	public JSONObject getUser(String username, String password) {
 		return loginDao.getUser(username, password);
 	}
 
-	/**
+	*/
+/**
 	 * 根据工号和密码查询对应的用户
-	 */
+	 *//*
+
 	@Override
 	public JSONObject getMyUser(String userCode, String userPwd) {
 		return loginDao.getMyUser(userCode,userPwd);
 	}
 
-	/**
+	*/
+/**
 	 * 查询当前登录用户的权限等信息
-	 */
+	 *//*
+
 	@Override
 	public JSONObject getInfo() {
 		//从session获取用户信息
@@ -143,9 +132,11 @@ public class LoginServiceImpl implements LoginService {
 		return CommonUtil.failJson(info);
 	}
 
-	/**
+	*/
+/**
 	 * 退出登录
-	 */
+	 *//*
+
 	@Override
 	public JSONObject logout(HttpServletRequest req) {
 		try {
@@ -159,3 +150,4 @@ public class LoginServiceImpl implements LoginService {
 		return CommonUtil.successJson();
 	}
 }
+*/

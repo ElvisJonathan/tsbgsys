@@ -1,12 +1,7 @@
 package com.tsbg.ecosys.controller;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-
-@RestController
+/*@RestController
 public class TestController {
 
     @RequiresPermissions("add")
@@ -15,3 +10,4 @@ public class TestController {
         return "success";
     }
 }
+*/

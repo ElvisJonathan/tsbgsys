@@ -403,7 +403,11 @@ public class EcController {
 
     //导出系统名称、反馈人、处理人信息
     @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
+<<<<<<< Updated upstream
     public void exportAllQues(/*HttpServletRequest req,*/ HttpServletResponse response) throws Exception {
+=======
+    public void exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
+>>>>>>> Stashed changes
         List<DerivediPackage> derivediPackages = questionService.selectquestion();
         //SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Workbook wb = new XSSFWorkbook();

@@ -1,7 +1,6 @@
 package com.tsbg.ecosys.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tsbg.ecosys.config.exception.CommonJsonException;
 import com.tsbg.ecosys.util.constants.Constants;
 import com.tsbg.ecosys.util.constants.ErrorEnum;
 
@@ -128,17 +127,17 @@ public class CommonUtil {
 	 * 将request转JSON
 	 * 并且验证非空字段
 	 */
-	public static JSONObject convert2JsonAndCheckRequiredColumns(HttpServletRequest request, String requiredColumns) {
+	/*public static JSONObject convert2JsonAndCheckRequiredColumns(HttpServletRequest request, String requiredColumns) {
 		JSONObject jsonObject = request2Json(request);
 		hasAllRequired(jsonObject, requiredColumns);
 		return jsonObject;
 	}
-
+*/
 	/**
 	 * 验证是否含有全部必填字段
 	 *
 	 * @param requiredColumns 必填的参数字段名称 逗号隔开 比如"userId,name,telephone"
-	 */
+	 *//*
 	public static void hasAllRequired(final JSONObject jsonObject, String requiredColumns) {
 		if (!StringTools.isNullOrEmpty(requiredColumns)) {
 			//验证字段非空
@@ -158,7 +157,7 @@ public class CommonUtil {
 				throw new CommonJsonException(jsonObject);
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * 在分页查询之前,为查询条件里加上分页参数

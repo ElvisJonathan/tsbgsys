@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tsbg.ecosys.mapper.QuestionMapper" >
-    <!--导出系统名称、反馈人、处理人信息 - 关联查询-->
+    <!--导出系统名称、反馈人、处理人信息，文件信息等-->
     <select id="selectquestion" resultType="com.tsbg.ecosys.model.bag.DerivediPackage">
       select pt.proj_id AS projIda,pt.pro_name AS proNamea,qt.type_name AS typeNameb,
       qt.status AS statusb,fi.file_name AS fileNamec,qf.user_code AS userCoded,

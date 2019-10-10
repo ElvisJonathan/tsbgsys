@@ -48,7 +48,7 @@ public class DerivediPackage {
     private Integer questionFeedbackIde;
     private String handleCodee;
     private String handleNamee;
-    private Integer questionTypee;
+    private Integer questionTypeIde;
     private Integer isHandlee;
     private Date handleTimee;
     private Date deadlineDatee;
@@ -377,12 +377,12 @@ public class DerivediPackage {
         this.handleNamee = handleNamee;
     }
 
-    public Integer getQuestionTypee() {
-        return questionTypee;
+    public Integer getQuestionTypeIde() {
+        return questionTypeIde;
     }
 
-    public void setQuestionTypee(Integer questionTypee) {
-        this.questionTypee = questionTypee;
+    public void setQuestionTypeIde(Integer questionTypeIde) {
+        this.questionTypeIde = questionTypeIde;
     }
 
     public Integer getIsHandlee() {
