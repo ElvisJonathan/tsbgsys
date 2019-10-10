@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.JwtUsedOnceService;
 import com.tsbg.ecosys.service.UserInfoService;
+import com.tsbg.ecosys.util.InitPwdUtils;
 import com.tsbg.ecosys.util.JWTUtils;
+import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.SendMailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 @RestController
 public class FindPwdController {
@@ -61,16 +64,41 @@ public class FindPwdController {
                 //String token = JWTUtils.sign(jsonInfo, 30L * 24L * 3600L * 1000L);//一個月
                 String token = JWTUtils.sign(u, 1L * 1L * 1L * 60000L);//60秒的時間
                 if (token != null) {
-                    Message.put("Toekn",token);
-                    String subject="系統密碼修改";
-                    String url="http://localhost:8080/testToken?token="+token;
-                    String mailContent="<p>Dear "+username+",您好:      </p><p>点此链接通过验证前往修改密码！Url:"+url+"</p>";
 
-                    JSONObject jsonObject=SendMailUtils.send(username, email_address, subject, mailContent);
-                    if(jsonObject.get("status").equals("success")){
-                        return "<script> alert('鏈接已發送至您的SuperNotes郵箱，請及時修改密碼！');</script>";
+                    String initPwd=InitPwdUtils.createInitPwd();
+                    UserInfo userInfo=new UserInfo();
+                    userInfo.setUserCode(user_code);
+                    //設置信息更新時間（重置密碼）
+                    userInfo.setUpdateTime(new Date());
+                    //生成salt
+                    String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    Random random=new Random();
+                    StringBuffer sb=new StringBuffer();
+                    for(int i=0;i<str.length();i++){
+                        int nu=random.nextInt(6);
+                        sb.append(str.charAt(nu));
+                    }
+                    userInfo.setSalt(sb.toString());
+                    //加密密码
+                    String newPwd = initPwd + sb.toString();
+                    userInfo.setUserPwd(MD5Util2.encode(newPwd));
+                    int num = userInfoService.updateByUserCodeSelective(userInfo);
+                    if(num>0){//修改成功
+                        Message.put("Toekn",token);
+                        String subject="系統密碼重置";
+                        String url="http://localhost:8080/testToken?token="+token;
+                        String mailContent="<p>Dear "+username+",您好:      </p>" +
+                                "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您此次初始密碼為：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + initPwd+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;請及時登錄修改密碼。</p>"+
+                                "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点此链接通过验证前往修改密码！Url:"+url+"</p>";
+                        JSONObject jsonObject=SendMailUtils.send(username, email_address, subject, mailContent);
+                        if(jsonObject.get("status").equals("success")){
+                            return "<script> alert('鏈接已發送至您的SuperNotes郵箱，請及時修改密碼！');</script>";
+                        }else{
+                            return "<script> alert('郵件發送失敗，請稍後重試！');</script>";
+                        }
                     }else{
-                        return "<script> alert('郵件發送失敗，請稍後重試！');</script>";
+                        Message.put("Token","Token生成成功，重置初始密碼失敗！");
+                        return "<script> alert('重置密碼失敗，請稍後重試！');</script>";
                     }
                 }else{
                     Message.put("Token","Token生成失敗，請稍後重試！");
