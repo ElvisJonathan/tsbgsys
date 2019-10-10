@@ -16,14 +16,15 @@ public class JWTUtils {
 
     private static final String PAYLOAD = "payload";//负荷
 
-    /**
+     /**
      * get jwt String of object
      * @param object
      *            the POJO object
      * @param maxAge
      *            the milliseconds of life time
-     * @return the jwt token
-     */
+     * @return the jwt token*/
+
+
     public static <T> String sign(T object, long maxAge) {
         try {
             final JWTSigner signer = new JWTSigner(SECRET);
@@ -39,11 +40,12 @@ public class JWTUtils {
     }
 
 
-    /**
+    /* *
      * get the object of jwt if not expired
      * @param jwt
-     * @return POJO object
-     */
+     * @return POJO object*/
+
+
     public static<T> T unsign(String jwt, Class<T> classT) {
         final JWTVerifier verifier = new JWTVerifier(SECRET);
         try {

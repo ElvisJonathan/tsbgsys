@@ -343,12 +343,12 @@ public class FileController {
             //复制
             IOUtils.copy(is, response.getOutputStream());
             response.getOutputStream().flush();
-            //通过公司编号和文件名定位文件编号
-            Integer fileNo = fileInfoService.selectFileNoByQuestionFeedbackIdAdnFileName(questionFeedbackId,fileName);
-            if (fileNo!=null){
-                //根据公司编号和用户工号去修改最后下载者
+            //通过问题反馈编号和文件名定位文件编号
+            //Integer fileNo = fileInfoService.selectFileNoByQuestionFeedbackIdAdnFileName(questionFeedbackId,fileName);
+            /*if (fileNo!=null){
+                //根据问题反馈编号和用户工号去修改最后下载者
                 fileInfoService.updateDownloader(userCode,fileNo);
-            }
+            }*/
         } catch (IOException e) {
             return "下载附件失败,error:"+e.getMessage();
         }
