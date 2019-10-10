@@ -41,7 +41,7 @@ public class QuestionFeedBackController {
     private UserInfoService userInfoService;
 
 
-    private final String Kefu_UserCode="F1336602";
+    private final String Kefu_UserCode="F1321189";
 
 
 
@@ -120,7 +120,7 @@ public class QuestionFeedBackController {
                     String Path = "D:/66/testUpload/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date;
                     System.out.println("本地實際路徑：" + Path);
                     //服务器路径测试文件上传
-                    String Path2 = "/tmp/ecoUpload/"+questionFeedback.getUserCode()+"/"+date;
+                    String Path2 = "/tmp/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date;
                     System.out.println("服務器實際路徑：" + Path2);
                     File folder = new File(Path);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
@@ -136,15 +136,15 @@ public class QuestionFeedBackController {
                     String URL = "D:/66/testUpload/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date+"/"+multipartFile.getOriginalFilename();
                     System.out.println("本地存儲URL:"+URL);
                     //服务器路径测试文件上传
-                    String URL2 = "/tmp/ecoUpload/"+questionFeedback.getUserCode()+"/"+date +"/"+ multipartFile.getOriginalFilename();
+                    String URL2 = "/tmp/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date +"/"+ multipartFile.getOriginalFilename();
                     System.out.println("服務器存儲URL:"+URL2);
                     //进行文件上传记录的存储
                     FileInfo fileInfo = new FileInfo();
                     fileInfo.setFileName(multipartFile.getOriginalFilename());
                     //本地存储
-                    fileInfo.setFilePath(URL);
+                    //fileInfo.setFilePath(URL);
                     //服务器存储   打包上去前需要置换
-                    //fileInfo.setFilePath(URL2);
+                    fileInfo.setFilePath(URL2);
 
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
@@ -395,6 +395,17 @@ public class QuestionFeedBackController {
         if (questionHandleService.updateByFeedBackIdSelective(questionHandle)>0) {
             resultUtils = new ResultUtils(100, "提示信息：處理狀態更新成功！");
             System.out.println(questionHandle.getQuestionFeedbackId());
+            if(questionHandle.getIsComplete()==4){
+                if(feedBackService.selectByPrimaryKey(questionHandle.getQuestionFeedbackId()).getApplyStatusId()==4){
+                    resultUtils = new ResultUtils(100, "提示信息：處理狀態更新成功！問題已經關閉，無需再關閉！");
+                }else{
+                    if(feedBackService.updateCloseByPrimaryKey(questionHandle.getQuestionFeedbackId())>0){
+                        resultUtils = new ResultUtils(100, "提示信息：問題關閉成功！");
+                    }else{
+                        resultUtils = new ResultUtils(501, "提示信息：問題關閉失敗！");
+                    }
+                }
+            }
 
 
         }else{
@@ -428,7 +439,7 @@ public class QuestionFeedBackController {
                     String Path = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date;
                     System.out.println("本地實際路徑：" + Path);
                     //服务器路径测试文件上传
-                    String Path2 = "/tmp/ecoUpload/" + questionHandle.getHandleCode() + "/" + date;
+                    String Path2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date;
                     System.out.println("服務器實際路徑：" + Path2);
                     File folder = new File(Path);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
@@ -444,15 +455,15 @@ public class QuestionFeedBackController {
                     String URL = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
                     System.out.println("本地存儲URL:" + URL);
                     //服务器路径测试文件上传
-                    String URL2 = "/tmp/ecoUpload/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
+                    String URL2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
                     System.out.println("服務器存儲URL:" + URL2);
                     //进行文件上传记录的存储
                     FileInfo fileInfo = new FileInfo();
                     fileInfo.setFileName(multipartFile.getOriginalFilename());
                     //本地存储
-                    fileInfo.setFilePath(URL);
+                    //fileInfo.setFilePath(URL);
                     //服务器存储   打包上去前需要置换
-                    //fileInfo.setFilePath(URL2);
+                    fileInfo.setFilePath(URL2);
 
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
