@@ -122,7 +122,7 @@ public class QuestionFeedBackController {
                     //服务器路径测试文件上传
                     String Path2 = "/tmp/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date;
                     System.out.println("服務器實際路徑：" + Path2);
-                    File folder = new File(Path);//此处打包上去之前需要置换路径
+                    File folder = new File(Path2);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
@@ -441,7 +441,7 @@ public class QuestionFeedBackController {
                     //服务器路径测试文件上传
                     String Path2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date;
                     System.out.println("服務器實際路徑：" + Path2);
-                    File folder = new File(Path);//此处打包上去之前需要置换路径
+                    File folder = new File(Path2);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
