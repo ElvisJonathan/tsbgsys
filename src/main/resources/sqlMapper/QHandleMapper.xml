@@ -6,17 +6,17 @@
     <result column="question_feedback_id" property="questionFeedbackId" jdbcType="INTEGER" />
     <result column="handle_code" property="handleCode" jdbcType="VARCHAR" />
     <result column="handle_name" property="handleName" jdbcType="VARCHAR" />
-    <result column="question_type" property="questionType" jdbcType="INTEGER" />
+    <result column="question_type_id" property="questionTypeId" jdbcType="INTEGER" />
     <result column="is_handle" property="isHandle" jdbcType="INTEGER" />
     <result column="handle_time" property="handleTime" jdbcType="TIMESTAMP" />
     <result column="deadline_date" property="deadlineDate" jdbcType="TIMESTAMP" />
     <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
     <result column="is_complete" property="isComplete" jdbcType="INTEGER" />
-    <result column="proj_id" property="proj_id" jdbcType="INTEGER" />
+    <result column="proj_id" property="projId" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    question_handle_id, question_feedback_id, handle_code, handle_name, question_type, is_handle, handle_time,
+    question_handle_id, question_feedback_id, handle_code, handle_name, question_type_id, is_handle, handle_time,
     deadline_date, start_date, is_complete, proj_id, remark
   </sql>
   <select id="selectqHandleall" resultMap="BaseResultMap">

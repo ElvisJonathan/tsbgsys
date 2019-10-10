@@ -7,14 +7,30 @@ public class QHandle {
     private Integer questionFeedbackId;
     private String handleCode;
     private String handleName;
-    private Integer questionType;
+    private Integer questionTypeId;
     private Integer isHandle;
     private Date handleTime;
     private Date deadlineDate;
     private Date startDate;
     private Integer isComplete;
-    private Integer proj_id;
+    private Integer projId;
     private String remark;
+
+    public Integer getQuestionTypeId() {
+        return questionTypeId;
+    }
+
+    public void setQuestionTypeId(Integer questionTypeId) {
+        this.questionTypeId = questionTypeId;
+    }
+
+    public Integer getProjId() {
+        return projId;
+    }
+
+    public void setProjId(Integer projId) {
+        this.projId = projId;
+    }
 
     public Integer getQuestionHandleId() {
         return questionHandleId;
@@ -46,14 +62,6 @@ public class QHandle {
 
     public void setHandleName(String handleName) {
         this.handleName = handleName;
-    }
-
-    public Integer getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(Integer questionType) {
-        this.questionType = questionType;
     }
 
     public Integer getIsHandle() {
@@ -94,14 +102,6 @@ public class QHandle {
 
     public void setIsComplete(Integer isComplete) {
         this.isComplete = isComplete;
-    }
-
-    public Integer getProj_id() {
-        return proj_id;
-    }
-
-    public void setProj_id(Integer proj_id) {
-        this.proj_id = proj_id;
     }
 
     public String getRemark() {

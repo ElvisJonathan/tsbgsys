@@ -16,7 +16,8 @@ public class QuestionController {
 
     //分开查询反馈用户信息
     @RequestMapping(value = "/getquestionall", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResultUtils getquestionall(){
+    @ResponseBody
+    public ResultUtils getQuestionAll(){
         //初始化构造器
         ResultUtils resultUtils = null;
         QuestionDto questionDtos = questionsservice.getQuestionList();

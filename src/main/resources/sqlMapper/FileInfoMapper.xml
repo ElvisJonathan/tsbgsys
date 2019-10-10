@@ -230,105 +230,56 @@
     UPDATE file_info AS a SET a.`last_download_user`=#{userCode,jdbcType=VARCHAR} WHERE a.`file_id`=#{fileNo,jdbcType=INTEGER};
   </update>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <select id="selectRealPathByNameAndQuestionHandleId" resultType="String">
     SELECT a.`file_path` FROM file_info AS a WHERE a.`file_name` = #{fileName,jdbcType=VARCHAR} AND a.`status`=0
     AND a.`question_handleid`= #{questionHandleId,jdbcType=INTEGER};
   </select>
-
-
-
 
   <select id="selectRealPathByNameAndQuestionFeedBackId" resultType="String">
     SELECT a.`file_path` FROM file_info AS a WHERE a.`file_name` = #{fileName,jdbcType=VARCHAR} AND a.`status`=0
     AND a.`question_feedbackid`= #{questionFeedbackId,jdbcType=INTEGER} AND a.`question_handleid` IS NULL;
   </select>
 
-
   <update id="updateAllFileStatusByQuestionHandleId" parameterType="java.lang.Integer">
     UPDATE file_info AS a SET a.`status`=1
      WHERE a.`question_handleid`=#{questionHandleId,jdbcType=INTEGER};
   </update>
-
-
-
-
-  <select id="selectFileNoByQuestionFeedBackIdAdnFileName" resultType="java.lang.Integer">
-        SELECT a.`file_id` FROM file_info AS a WHERE a.`question_feedbackid`=#{questionFeedbackId,jdbcType=INTEGER} AND a.`file_name`=#{fileName,jdbcType=VARCHAR}
-        AND a.`status`=0
-  </select>
-
-
 
   <select id="selectFileNoByQuestionHandleIdAdnFileName" resultType="java.lang.Integer">
         SELECT a.`file_id` FROM file_info AS a WHERE a.`question_handleid`=#{questionHandleId,jdbcType=INTEGER} AND a.`file_name`=#{fileName,jdbcType=VARCHAR}
         AND a.`status`=0
   </select>
 
-
   <select id="selectFileNoByQuestionHandleId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
     SELECT a.`file_id` FROM file_info AS a WHERE a.`question_handleid`=#{questionHandleId,jdbcType=INTEGER} AND STATUS=0;
   </select>
-
-
-
 
   <select id="selectFilePathByQuestionFeedBackId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT a.`file_path` FROM file_info AS a WHERE a.`question_feedbackid`=#{questionFeedbackId,jdbcType=INTEGER}
         AND a.`status`=0
   </select>
 
-
-
   <select id="selectFileNameByQuestionFeedBackId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT a.`file_name` FROM file_info AS a WHERE a.`question_feedbackid`=#{questionFeedbackId,jdbcType=INTEGER}
         AND a.`status`=0 AND a.`question_handleid` IS NULL
   </select>
-
-
-
 
   <select id="selectFileNameByQuestionHandleId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT a.`file_name` FROM file_info AS a WHERE a.`question_handleid`=#{questionHandleId,jdbcType=INTEGER}
         AND a.`status`=0
   </select>
 
-
   <update id="UpdateFileByFileNameAndQuestionHandleId">
     UPDATE file_info AS a SET a.`status`=1 WHERE a.`file_name`=#{fileName,jdbcType=VARCHAR} AND a.`question_handleid`=#{questionHandleId,jdbcType=INTEGER};
   </update>
-
-
-
 
   <update id="UpdateFileByFileNameAndQuestionFeedBackId">
     UPDATE file_info AS a SET a.`status`=1 WHERE a.`file_name`=#{fileName,jdbcType=VARCHAR} AND a.`question_feedbackid`=#{questionFeedbackId,jdbcType=INTEGER};
   </update>
 
-
-
-
-
-
+  <select id="selectFileNoByQuestionFeedBackIdAdnFileName" resultType="java.lang.Integer">
+      SELECT a.`file_id` FROM file_info AS a WHERE a.`question_feedbackid`=#{questionFeedbackId,jdbcType=INTEGER} AND a.`file_name`=#{fileName,jdbcType=VARCHAR}
+      AND a.`status`=0
+</select>
 
 </mapper>
