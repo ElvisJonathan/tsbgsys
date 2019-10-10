@@ -72,26 +72,20 @@ public interface FileInfoMapper {
     //通過QuestionHandleId和文件名定位文件ID
     Integer selectFileNoByQuestionHandleIdAdnFileName(Integer questionHandleId,String fileName);
 
-
     //通過QuestionFeedbackId和文件名定位文件ID
     Integer selectFileNoByQuestionFeedbackIdAdnFileName(Integer questionFeedbackId,String fileName);
-
-
 
     //根據問題反饋id查詢文件的路徑
     List<FileInfo> selectFilePathByQuestionFeedBackId(Integer questionFeedbackId);
 
-
     //根據問題反饋id查詢文件名
     List<FileInfo> selectFileNameByQuestionFeedBackId(Integer questionFeedbackId);
-
 
     //根據QuestionHandleId查詢文件名
     List<FileInfo> selectFileNameByQuestionHandleId(Integer questionHandleId);
 
     //通過處理反饋id更新文件的狀態為刪除（實際未刪除）
     int UpdateFileByFileNameAndQuestionHandleId(String fileName,Integer questionHandleId);
-
 
     //通過問題反饋id更新文件的狀態為刪除（實際未刪除）
     int UpdateFileByFileNameAndQuestionFeedBackId(String fileName,Integer questionFeedbackId);

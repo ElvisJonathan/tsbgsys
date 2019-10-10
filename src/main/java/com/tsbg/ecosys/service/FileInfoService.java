@@ -34,15 +34,6 @@ public interface FileInfoService {
     //根据公司编号查询当前文件列表对应的编号
     List<Integer> selectFileNoByNo(Integer partnerNo);
 
-
-
-
-
-
-
-
-
-
     //根据處理反饋编号查询当前文件列表对应的编号
     List<Integer> selectFileNoByQuestionHandleId(Integer questionHandleId);
 
