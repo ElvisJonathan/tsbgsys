@@ -2,7 +2,7 @@ package com.tsbg.ecosys.controller;
 
 import com.tsbg.ecosys.dto.Comment;
 import com.tsbg.ecosys.model.bag.DerivediPackage;
-import com.tsbg.ecosys.service.QfeedbackService;
+import com.tsbg.ecosys.service.QuestionFeedBackService;
 import com.tsbg.ecosys.service.QuestionService;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.dto.EcTotalDto;
@@ -32,7 +32,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 合作伙伴
@@ -46,7 +45,7 @@ public class EcController {
     @Autowired
     private EpartnerService epartnerService;
     @Autowired
-    private QfeedbackService qfeedbackService;
+    private QuestionFeedBackService questionFeedBackService;
     @Autowired
     private QuestionService questionService;
 
@@ -403,24 +402,20 @@ public class EcController {
 
     //导出系统名称、反馈人、处理人信息
     @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
-<<<<<<< Updated upstream
-    public void exportAllQues(/*HttpServletRequest req,*/ HttpServletResponse response) throws Exception {
-=======
     public void exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
->>>>>>> Stashed changes
         List<DerivediPackage> derivediPackages = questionService.selectquestion();
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Workbook wb = new XSSFWorkbook();
         Font titleFont = wb.createFont();
         titleFont.setBold(true);
         titleFont.setColor(IndexedColors.BLACK.index);
         //查询数据库中的备注
         List<String> titles = new ArrayList<>();
-        List<Comment> selectColumnNamea = qfeedbackService.selectColumnNamea();
-        List<Comment> selectColumnNameb = qfeedbackService.selectColumnNameb();
-        List<Comment> selectColumnNamec = qfeedbackService.selectColumnNamec();
-        List<Comment> selectColumnNamed = qfeedbackService.selectColumnNamed();
-        List<Comment> selectColumnNamee = qfeedbackService.selectColumnNamee();
+        List<Comment> selectColumnNamea = questionFeedBackService.selectColumnNamea();
+        List<Comment> selectColumnNameb = questionFeedBackService.selectColumnNameb();
+        List<Comment> selectColumnNamec = questionFeedBackService.selectColumnNamec();
+        List<Comment> selectColumnNamed = questionFeedBackService.selectColumnNamed();
+        List<Comment> selectColumnNamee = questionFeedBackService.selectColumnNamee();
         for (int i = 0; i <= selectColumnNamea.size() - 1; i++) {
             if("proj_id".equals(selectColumnNamea.get(i).getColumn_name())){
                 titles.add(selectColumnNamea.get(i).getColumn_comment());
@@ -528,7 +523,7 @@ public class EcController {
         response.setHeader("Content-Type", "application/vnd.ms-excel;charset=utf-8");
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         OutputStream os = response.getOutputStream();
-        String fileName = /*sdf.format(new Date()) +*/ sheetName + ".xlsx";
+        String fileName = sdf.format(new Date()) + sheetName + ".xlsx";
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode(fileName, "utf-8"));
         wb.write(os);
         os.flush();

@@ -13,4 +13,15 @@
       question_feedback AS qf ON pt.proj_id=qf.proj_id LEFT JOIN question_handle AS qh ON pt.proj_id=qh.proj_id
    </select>
 
+    <!--分页查询系统名称、反馈人、处理人信息，文件信息等-->
+    <select id="selectbasePage" resultType="com.tsbg.ecosys.model.bag.ProjectqfPackage">
+      select qf.question_feedback_id AS questionFeedbackId,qf.question_name AS questionName,
+      qf.question_describe AS questionDescribe,qf.user_code AS userCode,qf.user_name AS userName,
+      qf.user_ext AS userExt,qf.user_email_address AS userEmailAddress,qf.user_department AS userDepartment,
+      qf.remark AS remarka,qf.application_date AS applicationDate,qf.apply_status_id AS applyStatusId,
+      qf.proj_id AS projIda,pt.pro_name AS proName from question_feedback AS qf
+      LEFT JOIN project AS pt ON qf.proj_id=pt.proj_id ORDER BY applicationDate DESC
+    </select>
+
+
 </mapper>

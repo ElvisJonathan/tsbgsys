@@ -186,4 +186,33 @@
       apply_status_id = #{applyStatusId,jdbcType=INTEGER}
     where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
   </update>
+  <select id="selectColumnNamec" resultType="com.tsbg.ecosys.dto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='file_info'
+    AND table_schema='fiitsbg';
+  </select>
+
+  <select id="selectColumnNamea" resultType="com.tsbg.ecosys.dto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='project'
+    AND table_schema='fiitsbg';
+  </select>
+
+  <select id="selectColumnNamed" resultType="com.tsbg.ecosys.dto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='question_feedback'
+    AND table_schema='fiitsbg';
+  </select>
+
+  <select id="selectColumnNamee" resultType="com.tsbg.ecosys.dto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='question_handle'
+    AND table_schema='fiitsbg';
+  </select>
+
+  <select id="selectColumnNameb" resultType="com.tsbg.ecosys.dto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='question_type'
+    AND table_schema='fiitsbg';
+  </select>
 </mapper>

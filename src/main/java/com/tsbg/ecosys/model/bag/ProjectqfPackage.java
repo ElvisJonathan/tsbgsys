@@ -2,7 +2,7 @@ package com.tsbg.ecosys.model.bag;
 
 import java.util.Date;
 
-//查询反馈、处理、文件等信息
+//分页查询反馈、处理、文件等信息
 public class ProjectqfPackage {
     //question_feedback表
     private Integer questionFeedbackId;
