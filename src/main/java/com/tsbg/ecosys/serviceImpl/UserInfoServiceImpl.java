@@ -135,12 +135,13 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoMapper.selectPowerByUserCode(userCode);
     }
 
-
-
-
-
     @Override
     public String selectEmailByUserCode(String userCode) {
         return userInfoMapper.selectEmailByUserCode(userCode);
+    }
+
+    //根據工號查詢郵箱，用於忘記密碼，驗證
+    public byte selectLockedByUserCode(String userCode){
+        return userInfoMapper.selectLockedByUserCode(userCode);
     }
 }

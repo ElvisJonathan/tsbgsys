@@ -369,6 +369,12 @@
      WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
 
+  <!-- 根據Locked字段查詢是否重置過密碼-->
+  <select id="selectLockedByUserCode"  parameterType="String" resultType="byte">
+    SELECT e.`locked` FROM user_info AS e
+     WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+
   <select id="selectCountByUserCode"  parameterType="String" resultType="java.lang.Integer">
    SELECT COUNT(0) FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
   </select>

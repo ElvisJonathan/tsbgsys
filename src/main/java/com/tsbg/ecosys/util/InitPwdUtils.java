@@ -1,47 +1,14 @@
-package com.tsbg.ecosys;
+package com.tsbg.ecosys.util;
 
 import com.alibaba.fastjson.JSONObject;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class EcosysApplicationTests {
-
-    @Test
-    public void contextLoads() {
-//        //生成salt
-//        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-//        Random random=new Random();
-//        StringBuffer sb=new StringBuffer();
-//        for(int i=0;i<8;i++){
-//            int nu=random.nextInt(6);
-//            sb.append(str.charAt(nu));
-//        }
-//        System.out.println(sb);
-    }
-
-    @Test
-    public void Test2() throws ParseException {
-        String dateStr = "Mon Sep 02 16:47:52 CST 2019";
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-        //java.util.Date对象
-        Date date = (Date) sdf.parse(dateStr);
-        //String formatStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-        //System.out.println(formatStr);
-        String formatStr2 = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        System.out.println(formatStr2);
-    }
-
-
-    @Test
-    public void createInitPwd(){
+public class InitPwdUtils {
+    public static String createInitPwd(){
         List<String> lst=new ArrayList<>();
         lst.add("abcdefghijklmnopqrstuvwxyz");
         lst.add("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -79,8 +46,6 @@ public class EcosysApplicationTests {
             strPwd+=templist.get(i);
         }
         System.out.println(strPwd);
-        //return strPwd;
+        return strPwd;
     }
 }
-
-

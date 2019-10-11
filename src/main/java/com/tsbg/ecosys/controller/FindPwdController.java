@@ -1,3 +1,4 @@
+/*
 package com.tsbg.ecosys.controller;
 
 import com.alibaba.fastjson.JSONObject;
@@ -15,7 +16,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/*
 @RestController
 public class FindPwdController {
     @Autowired

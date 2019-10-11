@@ -161,28 +161,18 @@
             <artifactId>shiro-spring</artifactId>
             <version>1.4.0</version>
         </dependency>
-
-
-
-
         <!-- mail的使用 xuxin-->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.5.0-b01</version>
         </dependency>
-
-
-
         <!-- jwt token的使用 xuxin-->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>2.2.0</version>
         </dependency>
-
-
-
     </dependencies>
 
     <build>

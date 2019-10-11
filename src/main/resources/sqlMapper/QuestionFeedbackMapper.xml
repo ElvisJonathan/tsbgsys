@@ -179,11 +179,11 @@
       proj_id = #{projId,jdbcType=INTEGER}
     where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
   </update>
-
-  <update id="updateCloseByPrimaryKey" parameterType="java.lang.Integer" >
+  <!-- 更新問題反饋的狀態：1：待接單、2：待作業、3：作業完成、4：申請單關閉、5：被駁回-->
+  <update id="updateApplyStatusIdByPrimaryKey" parameterType="java.lang.Integer" >
     update question_feedback
     set
-      apply_status_id = 4
+      apply_status_id = #{applyStatusId,jdbcType=INTEGER}
     where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
   </update>
 </mapper>
