@@ -116,6 +116,12 @@ public class LoginController {
                 resultUtils = new ResultUtils(503,"用户密码被管理员重置需要修改密码！");
                 return resultUtils;
             }
+            //暫時對郵件重置的密碼不做强制修改密碼的提示
+//            byte initLocked=userInfoService.selectLockedByUserCode(userCode);
+//            if (initLocked==2){
+//                resultUtils = new ResultUtils(503,"用户密码被管理员重置需要修改密码！");
+//                return resultUtils;
+//            }
         }
         //如果用户名和密码正确则成功登录
         if (userCode !=null && userPwd !=null){

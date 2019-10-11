@@ -82,6 +82,8 @@ public class FindPwdController {
                     //加密密码
                     String newPwd = initPwd + sb.toString();
                     userInfo.setUserPwd(MD5Util2.encode(newPwd));
+                    byte initLock=2;
+                    userInfo.setLocked(initLock);
                     int num = userInfoService.updateByUserCodeSelective(userInfo);
                     if(num>0){//修改成功
                         Message.put("Toekn",token);

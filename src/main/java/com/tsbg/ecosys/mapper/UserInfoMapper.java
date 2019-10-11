@@ -89,7 +89,9 @@ public interface UserInfoMapper {
     //根据工号查询权限列表
     String selectPowerByUserCode(String userCode);
 
-
-
+    //根據工號查詢郵箱，用於忘記密碼，驗證
     String selectEmailByUserCode(String userCode);
+
+    //根據工號查詢locked字段是否重置過密碼
+    byte selectLockedByUserCode(String userCode);
 }
