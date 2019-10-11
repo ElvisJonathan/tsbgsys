@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Configuration
-@WebFilter(filterName = "sessionFilter", urlPatterns = "/*", asyncSupported = true)
+/*@Configuration
+@WebFilter(filterName = "sessionFilter", urlPatterns = "/*", asyncSupported = true)*/
 public class SessionFilter extends BaseController implements Filter {
     private static final Logger log = LoggerFactory.getLogger(SessionFilter.class);
     @Autowired

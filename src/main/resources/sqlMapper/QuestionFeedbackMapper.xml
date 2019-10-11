@@ -183,7 +183,7 @@
   <update id="updateCloseByPrimaryKey" parameterType="java.lang.Integer" >
     update question_feedback
     set
-      apply_status_id = 1
+      apply_status_id = 4
     where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
   </update>
 </mapper>

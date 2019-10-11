@@ -1,29 +1,7 @@
 package com.tsbg.ecosys.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.tsbg.ecosys.model.*;
-import com.tsbg.ecosys.service.*;
-import com.tsbg.ecosys.util.JWTUtils;
-import com.tsbg.ecosys.util.ResultUtils;
-import com.tsbg.ecosys.util.SendMailUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.tsbg.ecosys.service.QuestionTypeService;
-import com.tsbg.ecosys.service.UserInfoService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
-
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+/*
 @RestController
 @RequestMapping("/tsbg/questionFeedBack")
 public class QuestionFeedBackController {
@@ -47,10 +25,12 @@ public class QuestionFeedBackController {
 
 
 
-    /**
+    */
+/**
      * 新增問題反饋
      * 集成文件上传(当文件数量等于或多于当前文件数量时调用)
-     */
+     *//*
+
     @RequestMapping(value = "/createFeedBack", method = RequestMethod.POST )
     @ResponseBody
     public ResultUtils addFeedBack(HttpServletRequest req, MultipartFile[] file)throws Exception {//
@@ -232,10 +212,12 @@ public class QuestionFeedBackController {
         return resultUtils;
     }
 
-    /**
+    */
+/**
      * 根據proj_id查詢系統（項目）名稱
      *
-     */
+     *//*
+
     @RequestMapping(value = "/getProjectName", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public String getProjectName(@RequestBody QuestionFeedback questionFeedback){
@@ -244,10 +226,12 @@ public class QuestionFeedBackController {
     }
 
 
-    /**
+    */
+/**
      * 查詢所有問題反饋
      *
-     */
+     *//*
+
     @RequestMapping(value = "/getAllQuestionFeedBack", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public List<QuestionFeedback> getAllQuestionFeedBack(){
@@ -258,10 +242,12 @@ public class QuestionFeedBackController {
         return feedBackService.selectAll();
     }
 
-    /**
+    */
+/**
      * 查詢某一個問題反饋
      *
-     */
+     *//*
+
     @RequestMapping(value = "/getQuestionFeedBackById", method =RequestMethod.POST)
     @ResponseBody
     public List getQuestionFeedBackById(@RequestBody QuestionFeedback questionFeedback){
@@ -314,10 +300,12 @@ public class QuestionFeedBackController {
         return lst;
     }
 
-    /**
+    */
+/**
      * 關閉某一個問題反饋
      *
-     */
+     *//*
+
     @RequestMapping(value = "/closeQuestionFeedBackById", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public ResultUtils closeQuestionFeedBackById(@RequestBody QuestionFeedback questionFeedback){
@@ -342,10 +330,12 @@ public class QuestionFeedBackController {
         return resultUtils;
     }
 
-    /**
+    */
+/**
      * 查詢某一個問題反饋處理信息
      *
-     */
+     *//*
+
     @RequestMapping(value = "/getQuestionHandleId", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public QuestionHandle getQuestionHandleId(@RequestBody QuestionFeedback questionFeedback)throws Exception {
@@ -357,10 +347,12 @@ public class QuestionFeedBackController {
         return questionHandleService.selectByPrimaryKey(questionFeedbackId);
     }
 
-    /**
+    */
+/**
      * 處理問題反饋
      *
-     */
+     *//*
+
     @RequestMapping(value = "/questionHandle", method = RequestMethod.POST )
     @ResponseBody
     public ResultUtils questionHandle(HttpServletRequest req, MultipartFile[] file)throws Exception {//
@@ -486,3 +478,4 @@ public class QuestionFeedBackController {
 
 
 }
+*/

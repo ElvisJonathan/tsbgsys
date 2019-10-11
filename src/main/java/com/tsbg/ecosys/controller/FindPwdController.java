@@ -4,8 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.JwtUsedOnceService;
 import com.tsbg.ecosys.service.UserInfoService;
-import com.tsbg.ecosys.util.JWTUtils;
-import com.tsbg.ecosys.util.SendMailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/*
 @RestController
 public class FindPwdController {
     @Autowired
@@ -163,3 +162,4 @@ public class FindPwdController {
         }
     }
 }
+*/
