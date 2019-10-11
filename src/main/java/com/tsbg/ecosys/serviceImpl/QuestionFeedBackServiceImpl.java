@@ -43,8 +43,8 @@ public class QuestionFeedBackServiceImpl implements QuestionFeedBackService {
     }
 
     @Override
-    public int updateCloseByPrimaryKey(Integer questionFeedbackId) {
-        return questionFeedbackMapper.updateCloseByPrimaryKey(questionFeedbackId);
+    public int updateApplyStatusIdByPrimaryKey(Integer questionFeedbackId,Integer applyStatusId) {
+        return questionFeedbackMapper.updateApplyStatusIdByPrimaryKey(questionFeedbackId,applyStatusId);
     }
 
     @Override

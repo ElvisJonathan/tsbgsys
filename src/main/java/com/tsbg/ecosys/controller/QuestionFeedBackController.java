@@ -302,29 +302,29 @@ public class QuestionFeedBackController {
      * 關閉某一個問題反饋
      *
      */
-    @RequestMapping(value = "/closeQuestionFeedBackById", method = { RequestMethod.GET, RequestMethod.POST })
-    @ResponseBody
-    public ResultUtils closeQuestionFeedBackById(@RequestBody QuestionFeedback questionFeedback){
-        //初始化參數構造器
-        ResultUtils resultUtils = null;
-        //判斷是否登錄且具有權限
-
-
-        int questionFeedbackId=questionFeedback.getQuestionFeedbackId();
-        if(feedBackService.selectByPrimaryKey(questionFeedbackId).getApplyStatusId()==0){
-            resultUtils = new ResultUtils(100, "提示信息：問題已經關閉，無需再關閉！");
-        }else{
-            if(feedBackService.updateCloseByPrimaryKey(questionFeedbackId)>0){
-                resultUtils = new ResultUtils(100, "提示信息：問題關閉成功！");
-            }else{
-                resultUtils = new ResultUtils(501, "提示信息：問題關閉失敗！");
-            }
-        }
-
-
-
-        return resultUtils;
-    }
+//    @RequestMapping(value = "/closeQuestionFeedBackById", method = { RequestMethod.GET, RequestMethod.POST })
+//    @ResponseBody
+//    public ResultUtils closeQuestionFeedBackById(@RequestBody QuestionFeedback questionFeedback){
+//        //初始化參數構造器
+//        ResultUtils resultUtils = null;
+//        //判斷是否登錄且具有權限
+//
+//
+//        int questionFeedbackId=questionFeedback.getQuestionFeedbackId();
+//        if(feedBackService.selectByPrimaryKey(questionFeedbackId).getApplyStatusId()==0){
+//            resultUtils = new ResultUtils(100, "提示信息：問題已經關閉，無需再關閉！");
+//        }else{
+//            if(feedBackService.updateApplyStatusIdByPrimaryKey(questionFeedbackId)>0){
+//                resultUtils = new ResultUtils(100, "提示信息：問題關閉成功！");
+//            }else{
+//                resultUtils = new ResultUtils(501, "提示信息：問題關閉失敗！");
+//            }
+//        }
+//
+//
+//
+//        return resultUtils;
+//    }
 
     /**
      * 查詢某一個問題反饋處理信息
@@ -356,7 +356,7 @@ public class QuestionFeedBackController {
 
         String json = req.getParameter("questionHandle");
         System.out.println(json);
-
+        JSONObject jsonob=JSONObject.parseObject(json);
         QuestionHandle questionHandle = JSONObject.parseObject(json, QuestionHandle.class);
         System.out.println("questionHandle"+questionHandle.getHandleName());
         System.out.println("HandleCode"+questionHandle.getHandleCode());
@@ -373,26 +373,25 @@ public class QuestionFeedBackController {
         }
 
 
+        int applyStatusId=Integer.parseInt(jsonob.get("applyStatusId").toString());
 
-        if (questionHandleService.updateByFeedBackIdSelective(questionHandle)>0) {
-            resultUtils = new ResultUtils(100, "提示信息：處理狀態更新成功！");
-            System.out.println(questionHandle.getQuestionFeedbackId());
-            if(questionHandle.getIsComplete()==4){
-                if(feedBackService.selectByPrimaryKey(questionHandle.getQuestionFeedbackId()).getApplyStatusId()==4){
-                    resultUtils = new ResultUtils(100, "提示信息：處理狀態更新成功！問題已經關閉，無需再關閉！");
-                }else{
-                    if(feedBackService.updateCloseByPrimaryKey(questionHandle.getQuestionFeedbackId())>0){
-                        resultUtils = new ResultUtils(100, "提示信息：問題關閉成功！");
+        if(feedBackService.updateApplyStatusIdByPrimaryKey(questionHandle.getQuestionFeedbackId(),Integer.parseInt(jsonob.get("applyStatusId").toString()))>0){
+            resultUtils = new ResultUtils(100, "提示信息：問題狀態更新成功！");
+            if(applyStatusId>=3) {//大於3説明，問題狀態需要改成isComplete:1 已完成
+                int handleComplete = questionHandleService.selectByQuestionFeedBackId(questionHandle.getQuestionFeedbackId()).getIsComplete();
+                if (handleComplete == 1) {//問題本身已經是已完成狀態
+                    resultUtils = new ResultUtils(100, "提示信息：問題已經關閉，無需再關閉！");
+                } else {//修改處理問題questionHandle表狀態isComplete爲1：已完成
+                    questionHandle.setIsComplete(1);
+                    if (questionHandleService.updateByFeedBackIdSelective(questionHandle)>0) {
+                        resultUtils = new ResultUtils(100, "提示信息：處理反饋更新成功！");
                     }else{
-                        resultUtils = new ResultUtils(501, "提示信息：問題關閉失敗！");
+                        resultUtils = new ResultUtils(501, "提示信息：新增處理反饋失敗！");
                     }
                 }
             }
-
-
         }else{
-            resultUtils = new ResultUtils(501, "提示信息：新增失敗！");
-
+            resultUtils = new ResultUtils(501, "提示信息：處理問題失敗！");
         }
 
         //此处增加文件上传

@@ -20,5 +20,5 @@ public interface QuestionFeedBackService {
 
     int updateByPrimaryKey(QuestionFeedback record);
 
-    int updateCloseByPrimaryKey(Integer questionFeedbackId);
+    int updateApplyStatusIdByPrimaryKey(Integer questionFeedbackId,Integer applyStatusId);
 }
