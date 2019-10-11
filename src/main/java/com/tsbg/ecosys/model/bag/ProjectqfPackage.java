@@ -1,8 +1,10 @@
-package com.tsbg.ecosys.model;
+package com.tsbg.ecosys.model.bag;
 
 import java.util.Date;
 
-public class Qfeedback {
+//分页查询反馈、处理、文件等信息
+public class ProjectqfPackage {
+    //question_feedback表
     private Integer questionFeedbackId;
     private String questionName;
     private String questionDescribe;
@@ -11,10 +13,12 @@ public class Qfeedback {
     private String userExt;
     private String userEmailAddress;
     private String userDepartment;
-    private String remark;
+    private String remarka;
     private Date applicationDate;
     private Integer applyStatusId;
-    private Integer projId;
+    private Integer projIda;
+    //project表中的proName
+    private String proName;
 
     public Integer getQuestionFeedbackId() {
         return questionFeedbackId;
@@ -80,12 +84,12 @@ public class Qfeedback {
         this.userDepartment = userDepartment;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getRemarka() {
+        return remarka;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setRemarka(String remarka) {
+        this.remarka = remarka;
     }
 
     public Date getApplicationDate() {
@@ -104,12 +108,19 @@ public class Qfeedback {
         this.applyStatusId = applyStatusId;
     }
 
-    public Integer getProjId() {
-        return projId;
+    public Integer getProjIda() {
+        return projIda;
     }
 
-    public void setProjId(Integer projId) {
-        this.projId = projId;
+    public void setProjIda(Integer projIda) {
+        this.projIda = projIda;
     }
 
+    public String getProName() {
+        return proName;
+    }
+
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
 }

@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.serviceImpl;
 
+import com.tsbg.ecosys.dto.Comment;
 import com.tsbg.ecosys.mapper.QuestionFeedbackMapper;
 import com.tsbg.ecosys.model.QuestionFeedback;
 import com.tsbg.ecosys.service.QuestionFeedBackService;
@@ -50,6 +51,31 @@ public class QuestionFeedBackServiceImpl implements QuestionFeedBackService {
     @Override
     public int updateByPrimaryKey(QuestionFeedback record) {
         return questionFeedbackMapper.updateByPrimaryKey(record);
+    }
+
+
+    @Override
+    public List<Comment> selectColumnNamea() {
+        return questionFeedbackMapper.selectColumnNamea();
+    }
+    @Override
+    public List<Comment> selectColumnNameb() {
+        return questionFeedbackMapper.selectColumnNameb();
+    }
+
+    @Override
+    public List<Comment> selectColumnNamec() {
+        return questionFeedbackMapper.selectColumnNamec();
+    }
+
+    @Override
+    public List<Comment> selectColumnNamed() {
+        return questionFeedbackMapper.selectColumnNamed();
+    }
+
+    @Override
+    public List<Comment> selectColumnNamee() {
+        return questionFeedbackMapper.selectColumnNamee();
     }
 
 

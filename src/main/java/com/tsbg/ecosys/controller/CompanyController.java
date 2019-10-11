@@ -1,35 +1,14 @@
 package com.tsbg.ecosys.controller;
 
-import com.alibaba.fastjson.JSONObject;
-
-import com.tsbg.ecosys.model.bag.SearchPackage;
-import com.tsbg.ecosys.util.ResultUtils;
-import com.tsbg.ecosys.model.*;
-import com.tsbg.ecosys.model.bag.CompanyPackage;
-import com.tsbg.ecosys.model.bag.HidePackage;
-
-import com.tsbg.ecosys.service.*;
-import com.tsbg.ecosys.util.PageRequest;
-import com.tsbg.ecosys.util.PageResult;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 /**
  * 公司相关
  */
-@RestController
+/*@RestController
 @RequestMapping("/tsbg/company")
 public class CompanyController {
 
-    @Autowired
+    /*@Autowired
     private EpartnerService epartnerService;
     @Autowired
     private EcooperationService ecooperationService;
@@ -44,23 +23,23 @@ public class CompanyController {
     @Autowired
     private PermissionService permissionService;
 
-    /**
+    *//**
      * 管理员隐藏/取消隐藏公司
-     */
+     *//*
     @RequestMapping(value = "/hideCompany", method = { RequestMethod.GET, RequestMethod.POST })
     //@RequiresPermissions("power")
     public ResultUtils hideCom(@RequestBody Epartner epartner){
         //初始化构造器
         ResultUtils resultUtils = null;
         //获取cid 此处需要改为获取数组
-        /*Object[] data = hidePackage.getData();
+        *//*Object[] data = hidePackage.getData();
         for (int i =0;i<=data.length-1;i++){
             System.out.println("公司数组："+data[i]);
         }
         int[] data2 = new int[data.length];
         for (int i =0;i<=data.length-1;i++){
             data2[i]=(int)data[i];
-        }*/
+        }*//*
         Integer cid = epartner.getPartnerNo();
         System.out.println("公司编号："+cid);
         //获取STATUS
@@ -76,11 +55,11 @@ public class CompanyController {
             int num = epartnerService.updateByCid(status,cid);
             ecooperationService.updateByCid(status,cid);
             eccontactsService.updateByCid(status,cid);
-            /*for (int i=0;i<=data.length-1;i++){
+            *//*for (int i=0;i<=data.length-1;i++){
                  num =  epartnerService.updateByCid(status,data2[i]);
                 ecooperationService.updateByCid(status,data2[i]);
                 eccontactsService.updateByCid(status,data2[i]);
-            }*/
+            }*//*
             //根据前端传过来的cid作为参数修改公司的状态
             //同步更新合作关系和联系人状态
             if (num>0 && status==1){
@@ -99,10 +78,10 @@ public class CompanyController {
         return new ResultUtils(503,"partnerNo为空异常！");
     }
 
-    /**
+    *//**
      * 合作伙伴信息、合作情况信息、公司联系人信息新增
      * 集成文件上传、权限控制
-     */
+     *//*
     @RequestMapping(value = "/addCompany", method = { RequestMethod.GET, RequestMethod.POST })
     //@RequiresPermissions("add")
     public ResultUtils addCom(HttpServletRequest req, MultipartFile[] file)throws Exception {
@@ -127,7 +106,7 @@ public class CompanyController {
             return resultUtils;
         }
         //权限标识符
-        /*Boolean powerFlag = false;
+        *//*Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有add权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -140,7 +119,7 @@ public class CompanyController {
                     }
                 }
             }
-        }*/
+        }*//*
         // if (powerFlag.equals(true)){
         //初始化公司id为0
         int no = 0;
@@ -279,14 +258,14 @@ public class CompanyController {
         resultUtils = new ResultUtils(501, "提示信息：新增失败！");
         return resultUtils;
         //}
-        /*resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        *//*resultUtils = new ResultUtils(509, "提示信息：无此权限！");
+        return resultUtils;*//*
     }
 
-    /**
+    *//**
      * 分页查询公司信息+搜索
      * 集成权限控制
-     */
+     *//*
     @RequestMapping(value = "/findPage", method = { RequestMethod.GET, RequestMethod.POST })
     //@RequiresPermissions("view")
     public ResultUtils findPage(@RequestBody SearchPackage searchPackage) {
@@ -307,7 +286,7 @@ public class CompanyController {
             return resultUtils;
         }
         //权限标识符
-        /*Boolean powerFlag = false;
+        *//*Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有view权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -321,7 +300,7 @@ public class CompanyController {
                 }
             }
         }
-        if (powerFlag.equals(true)) {*/
+        if (powerFlag.equals(true)) {*//*
         int identity = userInfoService.selectIdentityByUserCode(userCode);
         epartner.setCreaterIdentity(identity);
         if (pageRequest.getPageIndex() != 0 && pageRequest.getPageSize() != 0) {
@@ -336,9 +315,9 @@ public class CompanyController {
         }
         resultUtils = new ResultUtils(502, "提示信息：分页条件不明确异常");
         return resultUtils;
-       /* }
+       *//* }
         resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        return resultUtils;*//*
     }
 
     //查询公司信息
@@ -419,10 +398,10 @@ public class CompanyController {
         return resultUtils;
     }
 
-    /**
+    *//**
      * 合作伙伴信息、合作情况信息、公司联系人信息修改
      * 集成文件上传和删除(当文件数量等于或多于当前文件数量时调用)
-     */
+     *//*
     @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
     //@RequiresPermissions("update")
     public ResultUtils modifyCom(MultipartFile[] file, HttpServletRequest req)throws IOException{
@@ -461,7 +440,7 @@ public class CompanyController {
         System.out.println("修改者："+userName);
         System.out.println("获取的工号："+userCode);
         //权限标识符
-        /*Boolean powerFlag = false;
+        *//*Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有update权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -475,7 +454,7 @@ public class CompanyController {
                 }
             }
         }
-        if (powerFlag.equals(true)) {*/
+        if (powerFlag.equals(true)) {*//*
         if(cid!=null){
             if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
                     && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
@@ -527,11 +506,11 @@ public class CompanyController {
                     //如果文件被删除则查询出被删除的文件名修改其状态
                     //根据当前文件名查询文件编号
                     //根据公司合作伙伴编号和文件名查询附件是否未修改
-                    /*int number = fileInfoService.judgeIfFileChanged(cid, name);
+                    *//*int number = fileInfoService.judgeIfFileChanged(cid, name);
                     if (number > 0) {
                         //说明文件未修改 默认跳过修改返回修改成功
                         arr[3] = 1;
-                    }else{*/
+                    }else{*//*
                     //说明有多的文件需要上传
                     //重复文件名判断
                     int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),cid);
@@ -563,8 +542,8 @@ public class CompanyController {
                         multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                         String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                         System.out.println(url);//真实存储的url
-                           /* String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"/"+epartner.getPartnerName() + "/" + multipartFile.getOriginalFilename();
-                            System.out.println("真实URL：" + newUrl);*/
+                           *//* String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"/"+epartner.getPartnerName() + "/" + multipartFile.getOriginalFilename();
+                            System.out.println("真实URL：" + newUrl);*//*
                         //本地路径测试文件上传
                         String URL = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
                         System.out.println("本地存储URL:"+URL);
@@ -599,16 +578,16 @@ public class CompanyController {
         }
         resultUtils = new ResultUtils(507,"提示信息：未查到对应公司合作伙伴编号！");
         return resultUtils;
-        /*}
+        *//*}
         resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        return resultUtils;*//*
     }
 
-    /**
+    *//**
      * 合作伙伴信息、合作情况信息、公司联系人信息修改
      * 集成删除文件(当文件数量少于当前文件数量时调用)
      * 接收的参数是文件名
-     */
+     *//*
     @RequestMapping(value = "/updateCompany2", method = { RequestMethod.GET, RequestMethod.POST })
     //@RequiresPermissions("update")
     public ResultUtils modifyCom2(@RequestBody CompanyPackage filePackage, HttpServletRequest req){
@@ -647,7 +626,7 @@ public class CompanyController {
         System.out.println("修改人："+userName);
         System.out.println("工号："+userCode);
         //权限标识符
-        /*Boolean powerFlag = false;
+        *//*Boolean powerFlag = false;
         //通过用户工号来查询相应权限进行权限判断  执行此功能必须要有update权限
         List<Integer> list= roleService.findRoleByUserCode2(userCode);
         if (list!=null){
@@ -661,7 +640,7 @@ public class CompanyController {
                 }
             }
         }
-        if (powerFlag.equals(true)) {*/
+        if (powerFlag.equals(true)) {*//*
         if(cid!=null){
             if (epartner.getPartnerName()!=null && epartner.getPartnerIndustry()!=null
                     && epartner.getPartnerRegion()!=null && epartner.getPartnerProduct()!=null){
@@ -737,14 +716,14 @@ public class CompanyController {
         }
         resultUtils = new ResultUtils(507,"提示信息：未查到对应公司合作伙伴编号！");
         return resultUtils;
-       /* }
+       *//* }
         resultUtils = new ResultUtils(509, "提示信息：无此权限！");
-        return resultUtils;*/
+        return resultUtils;*//*
     }
 
-    /**
+    *//**
      * 管理员删除公司（软删除）
-     */
+     *//*
     @RequestMapping(value = "/del", method = { RequestMethod.GET, RequestMethod.POST })
     //@RequiresPermissions("del")
     public ResultUtils delCom(@RequestBody HidePackage hidePackage){
@@ -778,6 +757,6 @@ public class CompanyController {
             }
         }
         resultUtils = new ResultUtils(501,"提示信息：删除失败！");
-        return resultUtils;
-    }
-}
+        return resultUtils;*/
+/*    }
+}*/

@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *  登录相关Controller
- */
+ *//*
+
 @RestController
 @RequestMapping("/login")
 public class ShiroLoginController {
@@ -19,9 +20,11 @@ public class ShiroLoginController {
     @Autowired
     private LoginService loginService;
 
-    /**
+    */
+/**
      * 登录
-     */
+     *//*
+
     @PostMapping("/auth")
     @ResponseBody
     public JSONObject authLogin(@RequestBody JSONObject requestJson) {
@@ -29,28 +32,35 @@ public class ShiroLoginController {
         return loginService.authLogin(requestJson);
     }
 
-    /**
+    */
+/**
      * 查询当前登录用户的信息
-     */
+     *//*
+
     @PostMapping("/getInfo")
     public JSONObject getInfo() {
         return loginService.getInfo();
     }
 
-    /**
+    */
+/**
      * 查询当前登录用户的信息
-     */
+     *//*
+
     @RequestMapping(value = "/getMyInfo", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public JSONObject getMyInfo() {
         return loginService.getMyInfo();
     }
 
-    /**
+    */
+/**
      * 登出
-     */
+     *//*
+
     @PostMapping("/logout")
     public JSONObject logout(HttpServletRequest req) {
         return loginService.logout(req);
     }
 }
+*/

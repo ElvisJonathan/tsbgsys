@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.service;
 
+import com.tsbg.ecosys.dto.Comment;
 import com.tsbg.ecosys.model.QuestionFeedback;
 
 import java.util.List;
@@ -21,4 +22,14 @@ public interface QuestionFeedBackService {
     int updateByPrimaryKey(QuestionFeedback record);
 
     int updateApplyStatusIdByPrimaryKey(Integer questionFeedbackId,Integer applyStatusId);
+
+    List<Comment> selectColumnNamea();
+
+    List<Comment> selectColumnNameb();
+
+    List<Comment> selectColumnNamec();
+
+    List<Comment> selectColumnNamed();
+
+    List<Comment> selectColumnNamee();
 }

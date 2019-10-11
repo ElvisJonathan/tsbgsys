@@ -35,11 +35,11 @@ public class ExcelController {
 
     @RequestMapping(value = "/excel", method = { RequestMethod.GET, RequestMethod.POST })
     public ResultUtils excel(HttpServletRequest req, HttpServletResponse response) throws Exception {
-        String userCode = req.getHeader("userCode");
+        /*String userCode = req.getHeader("userCode");
         System.out.println("Header:"+userCode);
         if(userCode == null || userCode.equals("")){
             return new ResultUtils(501,"非常规方式进入管理员后台！请登录后再试");
-        }
+        }*/
         //获取五个搜索条件，没有则为空
         String partnerName = req.getParameter("partnerName");
         String partnerProduct = req.getParameter("partnerProduct");
