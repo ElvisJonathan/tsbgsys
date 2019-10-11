@@ -3,6 +3,7 @@ package com.tsbg.ecosys.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.tsbg.ecosys.model.*;
 import com.tsbg.ecosys.service.*;
+import com.tsbg.ecosys.util.GetBrowserNameUtils;
 import com.tsbg.ecosys.util.JWTUtils;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.util.SendMailUtils;
@@ -100,6 +101,7 @@ public class QuestionFeedBackController {
                 System.out.println(questionHandle.getQuestionFeedbackId());
 
 
+
                 //此处增加文件上传
                 if (file!=null) {
 
@@ -112,6 +114,21 @@ public class QuestionFeedBackController {
                         System.out.println("所有文件：" + all);
                         String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                         System.out.println("文件後綴：" + Suffix);
+
+
+
+                        String agent=req.getHeader("User-Agent").toLowerCase();
+                        System.out.println(agent);
+                        String browserName=GetBrowserNameUtils.getBrowserName(agent);
+                        System.out.println("浏览器版本："+ browserName);
+                        String prefixName=null;
+                        if(browserName.contains("ie")||browserName.contains("edge")){ //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
+                            prefixName = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("\\")+1,multipartFile.getOriginalFilename().lastIndexOf("."));
+                            System.out.println("文件前綴：" + prefixName);
+                        }
+
+
+
                         //根據原始文件的文件名進行文件類型判斷
                         if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
                                 || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
@@ -132,36 +149,77 @@ public class QuestionFeedBackController {
                                 folder.mkdirs();
                             }//无报错则上传成功
                             //获取上传者
-                            multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
-                            String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
-                            System.out.println(url);//真实存储的url
-                            //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                            //System.out.println("真实URL：" + newUrl);
-                            //本地路径测试文件上传
-                            String URL = "D:/66/testUpload/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date+"/"+multipartFile.getOriginalFilename();
-                            System.out.println("本地存儲URL:"+URL);
-                            //服务器路径测试文件上传
-                            String URL2 = "/tmp/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date +"/"+ multipartFile.getOriginalFilename();
-                            System.out.println("服務器存儲URL:"+URL2);
-                            //进行文件上传记录的存储
-                            FileInfo fileInfo = new FileInfo();
-                            fileInfo.setFileName(multipartFile.getOriginalFilename());
-                            //本地存储
-                            //fileInfo.setFilePath(URL);
-                            //服务器存储   打包上去前需要置换
-                            fileInfo.setFilePath(URL2);
 
-                            fileInfo.setUpdatedTime(new Date());
-                            fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
-                            fileInfo.setKeyword(multipartFile.getOriginalFilename());
-                            fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
-                            fileInfo.setRelDocId(2);
-                            String timeFormat = sdf.format(new Date());
 
-                            fileInfo.setUpdatedTime(sdf.parse(timeFormat));
-                            fileInfo.setStatus(0);
-                            fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
-                            fileInfoService.insertSelective(fileInfo);
+                            if(prefixName==null) {
+
+                                multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
+                                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
+                                System.out.println(url);//真实存储的url
+                                //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                                //System.out.println("真实URL：" + newUrl);
+                                //本地路径测试文件上传
+                                String URL = "D:/66/testUpload/ecoUpload/questionFeedBack/file/" + questionFeedback.getUserCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
+                                System.out.println("本地存儲URL:" + URL);
+                                //服务器路径测试文件上传
+                                String URL2 = "/tmp/ecoUpload/questionFeedBack/file/" + questionFeedback.getUserCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
+                                System.out.println("服務器存儲URL:" + URL2);
+                                //进行文件上传记录的存储
+                                FileInfo fileInfo = new FileInfo();
+                                fileInfo.setFileName(multipartFile.getOriginalFilename());
+                                //本地存储
+                                //fileInfo.setFilePath(URL);
+                                //服务器存储   打包上去前需要置换
+                                fileInfo.setFilePath(URL2);
+
+
+                                fileInfo.setUpdatedTime(new Date());
+                                fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
+                                fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                                fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
+                                fileInfo.setRelDocId(2);
+                                String timeFormat = sdf.format(new Date());
+
+                                fileInfo.setUpdatedTime(sdf.parse(timeFormat));
+                                fileInfo.setStatus(0);
+                                fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
+                                fileInfoService.insertSelective(fileInfo);
+
+                            }else{
+                                multipartFile.transferTo(new File(folder, prefixName + date +Suffix));
+                                String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + prefixName + date +Suffix;
+                                System.out.println(url);//真实存储的url
+                                //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                                //System.out.println("真实URL：" + newUrl);
+                                //本地路径测试文件上传
+                                String URL = "D:/66/testUpload/ecoUpload/questionFeedBack/file/" + questionFeedback.getUserCode() + "/" + date + "/" + prefixName + date +Suffix;
+                                System.out.println("本地存儲URL:" + URL);
+                                //服务器路径测试文件上传
+                                String URL2 = "/tmp/ecoUpload/questionFeedBack/file/" + questionFeedback.getUserCode() + "/" + date + "/" + prefixName + date +Suffix;
+                                System.out.println("服務器存儲URL:" + URL2);
+                                //进行文件上传记录的存储
+                                FileInfo fileInfo = new FileInfo();
+                                fileInfo.setFileName(prefixName + date +Suffix);
+                                //本地存储
+                                //fileInfo.setFilePath(URL);
+                                //服务器存储   打包上去前需要置换
+                                fileInfo.setFilePath(URL2);
+
+
+                                fileInfo.setUpdatedTime(new Date());
+                                fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
+                                fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                                fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
+                                fileInfo.setRelDocId(2);
+                                String timeFormat = sdf.format(new Date());
+
+                                fileInfo.setUpdatedTime(sdf.parse(timeFormat));
+                                fileInfo.setStatus(0);
+                                fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
+                                fileInfoService.insertSelective(fileInfo);
+                            }
+
+
                         } else {
                             //上傳的附件格式不符合要求
                             return new ResultUtils(505, "上傳的附件格式不符合要求");
@@ -407,6 +465,21 @@ public class QuestionFeedBackController {
                 System.out.println("所有文件：" + all);
                 String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                 System.out.println("文件後綴：" + Suffix);
+
+
+                String agent=req.getHeader("User-Agent").toLowerCase();
+                System.out.println(agent);
+                String browserName=GetBrowserNameUtils.getBrowserName(agent);
+                System.out.println("浏览器版本："+ browserName);
+                String prefixName=null;
+                if(browserName.contains("ie")||browserName.contains("edge")){ //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
+                    prefixName = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("\\")+1,multipartFile.getOriginalFilename().lastIndexOf("."));
+                    System.out.println("文件前綴：" + prefixName);
+                }
+
+
+
+
                 //根據原始文件的文件名進行文件類型判斷
                 if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
                         || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
@@ -421,41 +494,75 @@ public class QuestionFeedBackController {
                     System.out.println("本地實際路徑：" + Path);
                     //服务器路径测试文件上传
                     String Path2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date;
-                    System.out.println("服務器實際路徑：" + Path2);
+                    System.out.println("服務器實際路徑：" + Path);
                     File folder = new File(Path2);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
                     //获取上传者
-                    multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
-                    String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
-                    System.out.println(url);//真实存储的url
-                    //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                    //System.out.println("真实URL：" + newUrl);
-                    //本地路径测试文件上传
-                    String URL = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
-                    System.out.println("本地存儲URL:" + URL);
-                    //服务器路径测试文件上传
-                    String URL2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
-                    System.out.println("服務器存儲URL:" + URL2);
-                    //进行文件上传记录的存储
-                    FileInfo fileInfo = new FileInfo();
-                    fileInfo.setFileName(multipartFile.getOriginalFilename());
-                    //本地存储
-                    //fileInfo.setFilePath(URL);
-                    //服务器存储   打包上去前需要置换
-                    fileInfo.setFilePath(URL2);
-                    fileInfo.setUpdatedTime(new Date());
-                    fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
-                    fileInfo.setKeyword(multipartFile.getOriginalFilename());
-                    fileInfo.setQuestionFeedbackId(questionHandle.getQuestionFeedbackId());
-                    fileInfo.setRelDocId(2);
-                    String timeFormat = sdf.format(new Date());
 
-                    fileInfo.setUpdatedTime(sdf.parse(timeFormat));
-                    fileInfo.setStatus(0);
-                    fileInfo.setQuestionHandleId(questionHandle.getQuestionHandleId());
-                    fileInfoService.insertSelective(fileInfo);
+                    if(prefixName==null) {
+
+                        multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
+                        String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
+                        System.out.println(url);//真实存储的url
+                        //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                        //System.out.println("真实URL：" + newUrl);
+                        //本地路径测试文件上传
+                        String URL = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
+                        System.out.println("本地存儲URL:" + URL);
+                        //服务器路径测试文件上传
+                        String URL2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
+                        System.out.println("服務器存儲URL:" + URL2);
+                        //进行文件上传记录的存储
+                        FileInfo fileInfo = new FileInfo();
+                        fileInfo.setFileName(multipartFile.getOriginalFilename());
+                        //本地存储
+                        //fileInfo.setFilePath(URL);
+                        //服务器存储   打包上去前需要置换
+                        fileInfo.setFilePath(URL2);
+                        fileInfo.setUpdatedTime(new Date());
+                        fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
+                        fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                        fileInfo.setQuestionFeedbackId(questionHandle.getQuestionFeedbackId());
+                        fileInfo.setRelDocId(2);
+                        String timeFormat = sdf.format(new Date());
+
+                        fileInfo.setUpdatedTime(sdf.parse(timeFormat));
+                        fileInfo.setStatus(0);
+                        fileInfo.setQuestionHandleId(questionHandle.getQuestionHandleId());
+                        fileInfoService.insertSelective(fileInfo);
+                    }else{
+                        multipartFile.transferTo(new File(folder, prefixName + date +Suffix));
+                        String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + prefixName + date +Suffix;
+                        System.out.println(url);//真实存储的url
+                        //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
+                        //System.out.println("真实URL：" + newUrl);
+                        //本地路径测试文件上传
+                        String URL = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + prefixName + date +Suffix;
+                        System.out.println("本地存儲URL:" + URL);
+                        //服务器路径测试文件上传
+                        String URL2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + prefixName + date +Suffix;
+                        System.out.println("服務器存儲URL:" + URL2);
+                        //进行文件上传记录的存储
+                        FileInfo fileInfo = new FileInfo();
+                        fileInfo.setFileName(prefixName + date +Suffix);
+                        //本地存储
+                        //fileInfo.setFilePath(URL);
+                        //服务器存储   打包上去前需要置换
+                        fileInfo.setFilePath(URL2);
+                        fileInfo.setUpdatedTime(new Date());
+                        fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
+                        fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                        fileInfo.setQuestionFeedbackId(questionHandle.getQuestionFeedbackId());
+                        fileInfo.setRelDocId(2);
+                        String timeFormat = sdf.format(new Date());
+
+                        fileInfo.setUpdatedTime(sdf.parse(timeFormat));
+                        fileInfo.setStatus(0);
+                        fileInfo.setQuestionHandleId(questionHandle.getQuestionHandleId());
+                        fileInfoService.insertSelective(fileInfo);
+                    }
                 } else {
                     //上傳的附件格式不符合要求
                     return new ResultUtils(505, "上傳的附件格式不符合要求");

@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.util.GetBrowserNameUtils;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.FileInfo;
@@ -20,6 +21,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -267,7 +269,17 @@ public class FileController {
             // 清空输出流
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
-            response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
+            String agent=request.getHeader("User-Agent").toLowerCase();
+            System.out.println(agent);
+            String browserName= GetBrowserNameUtils.getBrowserName(agent);
+            System.out.println("浏览器版本："+browserName);
+            String prefixName=null;
+            if(browserName.contains("ie")||browserName.contains("edge")||browserName.contains("webkit")) { //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
+                fileName = URLEncoder.encode(fileName, "UTF-8");
+                response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+            }else {
+                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("utf-8"), "iso-8859-1"));
+            }
             //读取流
             File f = new File(name);
             is = new FileInputStream(f);
@@ -309,12 +321,14 @@ public class FileController {
      */
     @RequestMapping(value = "/testdownload2", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Object downloadQuestionFeedBackFile(HttpServletResponse response, HttpServletRequest request){
+    public Object downloadQuestionFeedBackFile(HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
         String fileName = request.getParameter("fileName");
+
         if (fileName==null){
             return "文件名為空！";
         }
         System.out.println("文件名："+fileName);
+        System.out.println(request.getParameter("questionFeedbackId"));
         Integer questionFeedbackId=Integer.parseInt(request.getParameter("questionFeedbackId"));
         System.out.println("收到處理反饋附件編號為："+questionFeedbackId);
         //獲取userCode用於記錄最后下载者  让前端传
@@ -335,8 +349,19 @@ public class FileController {
             // 清空输出流
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
-            response.setHeader("Content-Disposition", "attachment;filename="+ new String(fileName.getBytes("utf-8"), "iso-8859-1"));
-            //读取流
+
+            String agent=request.getHeader("User-Agent").toLowerCase();
+            System.out.println(agent);
+            String browserName= GetBrowserNameUtils.getBrowserName(agent);
+            System.out.println("浏览器版本："+browserName);
+            String prefixName=null;
+            if(browserName.contains("ie")||browserName.contains("edge")||browserName.contains("webkit")) { //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
+                fileName = URLEncoder.encode(fileName, "UTF-8");
+                response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+            }else {
+                response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("utf-8"), "iso-8859-1"));
+            }
+                //读取流
             File f = new File(name);
             is = new FileInputStream(f);
             //复制
