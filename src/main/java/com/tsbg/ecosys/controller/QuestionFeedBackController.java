@@ -126,7 +126,10 @@ public class QuestionFeedBackController {
                         //根據原始文件的文件名進行文件類型判斷
                         if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
                                 || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
-                                || Suffix.equals(".png") || Suffix.equals(".jpg")|| Suffix.equals(".jpeg")) {
+                                || Suffix.equals(".png") || Suffix.equals(".jpg") || Suffix.equals(".jpeg") || Suffix.equals(".txt")
+                                ||Suffix.equals(".XLS") || Suffix.equals(".XLSX") || Suffix.equals(".XLSM") || Suffix.equals(".DOC")
+                                || Suffix.equals(".DOCX") || Suffix.equals(".PDF") || Suffix.equals(".PPT") || Suffix.equals(".PPTX")
+                                || Suffix.equals(".PNG") || Suffix.equals(".JPG") || Suffix.equals(".JPEG") || Suffix.equals(".TXT")) {
                             Date time =new Date();
                             SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss" );
                             String date = sdf.format(time);
@@ -466,7 +469,10 @@ public class QuestionFeedBackController {
                 //根據原始文件的文件名進行文件類型判斷
                 if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
                         || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
-                        || Suffix.equals(".png") || Suffix.equals(".jpg") || Suffix.equals(".jpeg") || Suffix.equals(".txt")) {
+                        || Suffix.equals(".png") || Suffix.equals(".jpg") || Suffix.equals(".jpeg") || Suffix.equals(".txt")
+                        ||Suffix.equals(".XLS") || Suffix.equals(".XLSX") || Suffix.equals(".XLSM") || Suffix.equals(".DOC")
+                        || Suffix.equals(".DOCX") || Suffix.equals(".PDF") || Suffix.equals(".PPT") || Suffix.equals(".PPTX")
+                        || Suffix.equals(".PNG") || Suffix.equals(".JPG") || Suffix.equals(".JPEG") || Suffix.equals(".TXT")) {
                     Date time = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     String date = sdf.format(time);
