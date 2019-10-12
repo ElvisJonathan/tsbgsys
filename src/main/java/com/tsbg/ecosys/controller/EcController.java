@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.dto.Comment;
 import com.tsbg.ecosys.model.bag.DerivediPackage;
 import com.tsbg.ecosys.service.QuestionFeedBackService;
@@ -51,6 +52,7 @@ public class EcController {
 
     @ApiOperation(value = "查询合作伙伴信息", notes = "查询合作伙伴信息")
     @RequestMapping(value = "/total", method = {RequestMethod.GET, RequestMethod.POST})
+    @UserLoginToken
     @ResponseBody
     public ResultUtils getEcooperationList(@RequestBody Epartner epartner) {
         //获取公司合作伙伴编号
@@ -67,6 +69,7 @@ public class EcController {
      * 查询公司文件
      */
     @RequestMapping(value = "/filedetail", method = {RequestMethod.GET, RequestMethod.POST})
+    @UserLoginToken
     @ResponseBody
     public ResultUtils getFileDetail(@RequestBody Epartner epartner) {
         Integer partnerNo = epartner.getPartnerNo();
@@ -402,6 +405,7 @@ public class EcController {
 
     //导出系统名称、反馈人、处理人信息
     @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     public void exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
         List<DerivediPackage> derivediPackages = questionService.selectquestion();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

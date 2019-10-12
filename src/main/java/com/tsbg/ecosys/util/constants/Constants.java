@@ -6,10 +6,10 @@ package com.tsbg.ecosys.util.constants;
 public class Constants {
 
 	public static final String SUCCESS_CODE = "100";
-	public static final String SUCCESS_MSG = "请求成功";
+	public static final String SUCCESS_MESSAGE = "请求成功";
 
 	public static final String FAIL_CODE = "500";
-	public static final String FAIL_MSG = "请求失败";
+	public static final String FAIL_MESSAGE = "请求失败";
 
 	/**
 	 * session中存放用户信息的key值

@@ -54,7 +54,6 @@ public class JWTUtils {
 //     * @param jwt
 //     * @return POJO object
 //     *//*
-//=======
 //    /* *
 //     * get the object of jwt if not expired
 //     * @param jwt
@@ -80,8 +79,6 @@ public class JWTUtils {
 //            return null;
 //        }
 //    }
-//<<<<<<< HEAD
 //}*/
-//=======
 //}
-//>>>>>>> origin/master
+

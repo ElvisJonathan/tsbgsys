@@ -1,10 +1,33 @@
 package com.tsbg.ecosys.serviceImpl;
 
+import com.alibaba.fastjson.JSONObject;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.tsbg.ecosys.mapper.LoginDao;
+import com.tsbg.ecosys.model.UserInfo;
+import com.tsbg.ecosys.service.LoginService;
+import com.tsbg.ecosys.service.UserInfoService;
+import com.tsbg.ecosys.service.base.PermissionService;
+import com.tsbg.ecosys.service.base.RedisService;
+import com.tsbg.ecosys.service.base.TokenService;
+import com.tsbg.ecosys.service.tokenBlacklistService;
+import com.tsbg.ecosys.util.CommonUtil;
+import com.tsbg.ecosys.util.constants.Constants;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *  登录service实现类
- *//*
-
+ */
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -16,19 +39,31 @@ public class LoginServiceImpl implements LoginService {
 	private UserInfoService userInfoService;
 	@Autowired
 	private RedisService redisService;
+	@Autowired
+	private TokenService tokenService;
+	@Autowired
+	private tokenBlacklistService tokenBlacklistService;
 	@Value("${server.servlet.session.timeout}")
 	private long sessionExpire;
 
-	*/
-/**
+	/**
 	 * 登录表单提交
-	 *//*
-
+	 */
 	@Override
 	public JSONObject authLogin(JSONObject jsonObject) {
 		String userCode = jsonObject.getString("userCode");
 		String userPwd = jsonObject.getString("userPwd");
 		JSONObject info = new JSONObject();
+		//根据UserCode查询对应的userId
+		Integer userId = userInfoService.selectuidbyuserCode(userCode);
+		if (userId==null){
+			jsonObject.put("result","未查询到该用户");
+			return jsonObject;
+		}
+		UserInfo userForBase = new UserInfo();
+		userForBase.setUserId(userId);
+		userForBase.setUserPwd(userPwd);
+		userForBase.setUserCode(userCode);
 		//添加其他所需业务逻辑
 		if (userCode!=null){
 			//查询工号是否存在
@@ -55,9 +90,12 @@ public class LoginServiceImpl implements LoginService {
 		try {
 			currentUser.login(token);
 			//获取token
-			String token2 = String.valueOf(SnowflakeIdWorker.getSnowflakeId());
+			/*String token2 = String.valueOf(SnowflakeIdWorker.getSnowflakeId());
 			//注册token到redis设置超时时间为5分钟
-			redisService.setCacheObject(token2,"1", sessionExpire);
+			redisService.setCacheObject(token2,"1", sessionExpire);*/
+			String token2 = tokenService.getToken(userForBase);
+			//将密码存到redis
+			redisService.setCacheObject("pwd"+userId,userPwd,7200);
 			info.put("token",token2);
 			info.put("userCode",userCode);
 			info.put("result", "成功登录并且获取了权限");
@@ -67,31 +105,25 @@ public class LoginServiceImpl implements LoginService {
 		return CommonUtil.successJson(info);
 	}
 
-	*/
-/**
+	/**
 	 * 根据用户名和密码查询对应的用户
-	 *//*
-
+	 */
 	@Override
 	public JSONObject getUser(String username, String password) {
 		return loginDao.getUser(username, password);
 	}
 
-	*/
-/**
+	/**
 	 * 根据工号和密码查询对应的用户
-	 *//*
-
+	 */
 	@Override
 	public JSONObject getMyUser(String userCode, String userPwd) {
 		return loginDao.getMyUser(userCode,userPwd);
 	}
 
-	*/
-/**
+	/**
 	 * 查询当前登录用户的权限等信息
-	 *//*
-
+	 */
 	@Override
 	public JSONObject getInfo() {
 		//从session获取用户信息
@@ -132,22 +164,23 @@ public class LoginServiceImpl implements LoginService {
 		return CommonUtil.failJson(info);
 	}
 
-	*/
-/**
+	/**
 	 * 退出登录
-	 *//*
-
+	 */
 	@Override
 	public JSONObject logout(HttpServletRequest req) {
 		try {
 			Subject currentUser = SecurityUtils.getSubject();
 			String token = req.getHeader("token");
 			System.out.println("token:"+token);
-			redisService.delete(token);
+			//在token黑名单中更改token状态
+			tokenBlacklistService.updateStatusByTokenCode(token);
 			currentUser.logout();
+			JSONObject info = new JSONObject();
+			info.put("message","注销成功");
+			return CommonUtil.successJson(info);
 		} catch (Exception e) {
+			return CommonUtil.failJson("注销失败");
 		}
-		return CommonUtil.successJson();
 	}
 }
-*/

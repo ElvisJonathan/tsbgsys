@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.model.bag.ProjectPackage;
 import com.tsbg.ecosys.service.QuestionService;
 import com.tsbg.ecosys.util.PageRequest;
@@ -37,6 +38,7 @@ public class QuestionController {
 
      //分页查询反馈、处理、文件等信息
     @RequestMapping(value = "/getquestionsybase", method = {RequestMethod.GET, RequestMethod.POST})
+    @UserLoginToken
     public ResultUtils getquestionsybase(@RequestBody ProjectPackage projectPackage){
         ResultUtils resultUtils = null;
         //需要前台传参pageQuery:包含pageIndex和pageSize 即起始页码和页面容量 记得容量小于总条数才会有分页效果

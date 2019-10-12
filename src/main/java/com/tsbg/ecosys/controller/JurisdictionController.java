@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.bag.PowerPackage;
@@ -33,6 +34,7 @@ public class JurisdictionController {
      * 权限详情
      */
     @RequestMapping(value = "/ecodetail", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils getPower(@RequestBody UserInfo userInfo) {
         //初始化构造器
@@ -88,6 +90,7 @@ public class JurisdictionController {
      * 此方法用于修改某个角色的权限，后续无需再获取工号
      */
     @RequestMapping(value = "/updatepower", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils updatePower(@RequestBody PowerPackage powerPackage){
         //初始化构造器
@@ -202,6 +205,7 @@ public class JurisdictionController {
      * 查询用户个人权限
      */
     @RequestMapping(value = "/powerdetail", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils getUserPower(@RequestBody UserInfo userInfo) {
         //获取前端传来的工号
@@ -229,6 +233,7 @@ public class JurisdictionController {
      * 修改用户权限
      */
     @RequestMapping(value = "/powerModify", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils updateUserPower(@RequestBody PowerPackage powerPackage){
         //需要返回工号、修改后的权限数组[add,view]等、用户状态和重置密码标识

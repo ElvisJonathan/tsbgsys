@@ -20,19 +20,19 @@ public enum ErrorEnum {
 
 	private String errorCode;
 
-	private String errorMsg;
+	private String errorMessage;
 
-	ErrorEnum(String errorCode, String errorMsg) {
+	ErrorEnum(String errorCode, String errorMessage) {
 		this.errorCode = errorCode;
-		this.errorMsg = errorMsg;
+		this.errorMessage = errorMessage;
 	}
 
 	public String getErrorCode() {
 		return errorCode;
 	}
 
-	public String getErrorMsg() {
-		return errorMsg;
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 }

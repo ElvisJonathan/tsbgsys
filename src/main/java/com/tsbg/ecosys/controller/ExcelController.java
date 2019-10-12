@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.model.Eccontacts;
 import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.bag.MixPackage;
@@ -34,6 +35,7 @@ public class ExcelController {
     private MixPackageService mixPackageService;
 
     @RequestMapping(value = "/excel", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     public ResultUtils excel(HttpServletRequest req, HttpServletResponse response) throws Exception {
         /*String userCode = req.getHeader("userCode");
         System.out.println("Header:"+userCode);

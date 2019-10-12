@@ -1,10 +1,15 @@
-/*
 package com.tsbg.ecosys.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tsbg.ecosys.annotation.PassToken;
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.JwtUsedOnceService;
 import com.tsbg.ecosys.service.UserInfoService;
+import com.tsbg.ecosys.util.InitPwdUtils;
+//import com.tsbg.ecosys.util.JWTUtils;
+import com.tsbg.ecosys.util.MD5Util2;
+import com.tsbg.ecosys.util.SendMailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 @RestController
 public class FindPwdController {
@@ -33,11 +39,13 @@ public class FindPwdController {
 
 
     @RequestMapping("/findPwdPage")
+    @PassToken
     public String FindPwdPage(){
         return "<div align='center'></br></br></br></br></br></br></br></br></br></br></br></br><table><form action='/verifyAndgetToken' method='post'><tr><td><input name='user_code' id='user_code' type='text' /></td></tr><tr><td><input name='email_address' id='email_address' type='text'/> </td></tr><tr><td><input type='submit' value='确定'/></td></tr></table></form></div>";
     }
 
     @RequestMapping(value="/verifyAndgetToken",method= RequestMethod.POST)
+    @PassToken
     @ResponseBody
     public String VerifyAndgetToken(HttpServletRequest request) throws Exception {
 
@@ -58,23 +66,50 @@ public class FindPwdController {
                 Message.put("姓名",username);
                 Message.put("郵箱",email_address);
                 //String token = JWTUtils.sign(jsonInfo, 30L * 24L * 3600L * 1000L);//一個月
-                String token = JWTUtils.sign(u, 1L * 1L * 1L * 60000L);//60秒的時間
-                if (token != null) {
-                    Message.put("Toekn",token);
-                    String subject="系統密碼修改";
-                    String url="http://localhost:8080/testToken?token="+token;
-                    String mailContent="<p>Dear "+username+",您好:      </p><p>点此链接通过验证前往修改密码！Url:"+url+"</p>";
+                //String token = JWTUtils.sign(u, 1L * 1L * 1L * 60000L);//60秒的時間
+               // if (token != null) {
 
-                    JSONObject jsonObject=SendMailUtils.send(username, email_address, subject, mailContent);
-                    if(jsonObject.get("status").equals("success")){
-                        return "<script> alert('鏈接已發送至您的SuperNotes郵箱，請及時修改密碼！');</script>";
-                    }else{
-                        return "<script> alert('郵件發送失敗，請稍後重試！');</script>";
+                    String initPwd=InitPwdUtils.createInitPwd();
+                    UserInfo userInfo=new UserInfo();
+                    userInfo.setUserCode(user_code);
+                    //設置信息更新時間（重置密碼）
+                    userInfo.setUpdateTime(new Date());
+                    //生成salt
+                    String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                    Random random=new Random();
+                    StringBuffer sb=new StringBuffer();
+                    for(int i=0;i<str.length();i++){
+                        int nu=random.nextInt(6);
+                        sb.append(str.charAt(nu));
                     }
-                }else{
+                    userInfo.setSalt(sb.toString());
+                    //加密密码
+                    String newPwd = initPwd + sb.toString();
+                    userInfo.setUserPwd(MD5Util2.encode(newPwd));
+                    byte initLock=2;
+                    userInfo.setLocked(initLock);
+                    int num = userInfoService.updateByUserCodeSelective(userInfo);
+                    if(num>0){//修改成功
+                       // Message.put("Toekn",token);
+                        String subject="系統密碼重置";
+                     //   String url="http://localhost:8080/testToken?token="+token;
+                        String mailContent="<p>Dear "+username+",您好:      </p>" +
+                                "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您此次初始密碼為：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + initPwd+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;請及時登錄修改密碼。</p>"+
+                                "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点此链接通过验证前往修改密码！Url:</p>";
+                        JSONObject jsonObject=SendMailUtils.send(username, email_address, subject, mailContent);
+                        if(jsonObject.get("status").equals("success")){
+                            return "<script> alert('初始密碼為：" + initPwd+"請及時修改密碼！');</script>";
+                        }else{
+                            return "<script> alert('郵件發送失敗，請稍後重試！');</script>";
+                        }
+                    }else{
+                        Message.put("Token","Token生成成功，重置初始密碼失敗！");
+                        return "<script> alert('重置密碼失敗，請稍後重試！');</script>";
+                    }
+               /* }else{
                     Message.put("Token","Token生成失敗，請稍後重試！");
                     return "<script> alert('驗證失敗，請稍後重試！');</script>";
-                }
+                }*/
             }else{
                 return "<script> alert('工號對應的郵箱不一致，請重新輸入！');window.location.href='http://localhost:8080/findPwdPage';</script>";
             }
@@ -91,6 +126,7 @@ public class FindPwdController {
 
 
     @RequestMapping("/get_info")
+    @PassToken
     @ResponseBody
     //public String getInfo(@RequestParam String token) {
     public String getInfo() {
@@ -100,7 +136,7 @@ public class FindPwdController {
         return "工號或郵箱錯誤！";
     }
 
-    @RequestMapping(value="/testToken",method= RequestMethod.GET)
+    /*@RequestMapping(value="/testToken",method= RequestMethod.GET)
     @ResponseBody
     public String getInfo(HttpServletRequest request) {
 //        JSONObject jsonInfo=new JSONObject();
@@ -135,11 +171,12 @@ public class FindPwdController {
         }
 
 
-    }
+    }*/
 
 
 
     @RequestMapping(value = "/modifyPwd",method = RequestMethod.POST)
+    @UserLoginToken
     @ResponseBody
     public String ModifyPwd(HttpServletRequest request) throws ParseException {
         String user_code= request.getParameter("user_code");
@@ -162,4 +199,3 @@ public class FindPwdController {
         }
     }
 }
-*/

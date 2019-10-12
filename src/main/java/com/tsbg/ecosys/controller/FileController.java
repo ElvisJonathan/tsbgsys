@@ -1,5 +1,7 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.PassToken;
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.util.GetBrowserNameUtils;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.Epartner;
@@ -174,6 +176,7 @@ public class FileController {
      * 下载
      */
     @RequestMapping(value = "/testdownload", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public Object downloadFile(HttpServletResponse response, HttpServletRequest request){
         String fileName = request.getParameter("fileName");
@@ -242,6 +245,8 @@ public class FileController {
      * 下载
      */
     @RequestMapping(value = "/testdownload1", method = { RequestMethod.GET, RequestMethod.POST })
+    //@UserLoginToken
+    @PassToken
     @ResponseBody
     public Object downloadQuestionHandleFile(HttpServletResponse response, HttpServletRequest request){
         String fileName = request.getParameter("fileName");
@@ -252,8 +257,8 @@ public class FileController {
         Integer questionHandleId=Integer.parseInt(request.getParameter("questionHandleId"));
         System.out.println("收到處理反饋附件編號為："+questionHandleId);
         //獲取userCode用於記錄最后下载者  让前端传
-        String userCode = request.getParameter("userCode");
-        System.out.println("獲取到的userCode:"+userCode);
+        /*String userCode = request.getParameter("userCode");
+        System.out.println("獲取到的userCode:"+userCode);*/
         //根據文件名去數據庫查詢URL
         String name = fileInfoService.selectRealPathByNameAndQuestionHandleId(fileName,questionHandleId);
         System.out.println("真实URL："+name);
@@ -320,6 +325,8 @@ public class FileController {
      * 下载
      */
     @RequestMapping(value = "/testdownload2", method = { RequestMethod.GET, RequestMethod.POST })
+    //@UserLoginToken
+    @PassToken
     @ResponseBody
     public Object downloadQuestionFeedBackFile(HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
         String fileName = request.getParameter("fileName");
@@ -399,9 +406,10 @@ public class FileController {
 
 
     /**
-     *  頁面點擊刪除文件
+     *  问题反馈頁面點擊刪除文件
      */
     @RequestMapping(value = "/deleteFileByFileNameAndQuestionFeedBackId", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public String deleteFileByFileNameAndQuestionFeedBackId(@RequestBody FileInfo fileInfo){
 
@@ -426,9 +434,10 @@ public class FileController {
 
 
     /**
-     *  頁面點擊刪除文件
+     *  问题处理頁面點擊刪除文件
      */
     @RequestMapping(value = "/deleteFileByFileNameAndQuestionHandleId", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public String deleteFileByFileNameAndQuestionHandleId(@RequestBody FileInfo fileInfo){
         String message="文件刪除失敗！";

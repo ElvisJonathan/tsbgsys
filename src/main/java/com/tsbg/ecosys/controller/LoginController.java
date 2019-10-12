@@ -1,5 +1,7 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.PassToken;
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.common.SnowflakeIdWorker;
@@ -86,6 +88,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/ecologin", method = { RequestMethod.GET, RequestMethod.POST })
+    @PassToken
     @ResponseBody
     public ResultUtils login(@RequestBody UserInfo userInfo){
         //初始化构造器
@@ -169,6 +172,7 @@ public class LoginController {
      *判断原密码是否正确
      */
     @RequestMapping(value = "/premodifyPwd", method = {RequestMethod.GET, RequestMethod.POST})
+    @UserLoginToken
     @ResponseBody
     public ResultUtils preModifyPwd(@RequestBody UserInfo userInfo){
         //通过从前端接收的工号和密码来判断是否存在此用户
@@ -194,6 +198,7 @@ public class LoginController {
      */
     @ApiOperation(value = "修改密码", notes = "修改密码")
     @RequestMapping(value = "/modifyPassword", method = {RequestMethod.GET, RequestMethod.POST})
+    @UserLoginToken
     @ResponseBody
     public ResultUtils modifyPassword(@RequestBody UserInfo userInfo) {
         //初始化构造器
@@ -241,6 +246,7 @@ public class LoginController {
      * 登录成功后校验密码规范
      */
     @RequestMapping(value = "/checkpwd", method = {RequestMethod.GET, RequestMethod.POST})
+    @UserLoginToken
     @ResponseBody
     public ResultUtils check(@RequestBody UserInfo userInfo){
         String pwd = userInfo.getUserPwd();

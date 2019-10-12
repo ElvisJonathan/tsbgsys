@@ -94,4 +94,10 @@ public interface UserInfoMapper {
 
     //根據工號查詢locked字段是否重置過密碼
     byte selectLockedByUserCode(String userCode);
+
+    //根据userId查询是否存在该用户
+    int selectIfExistThisUser(Integer userId);
+
+    //根据工号查询密码
+    String selectPwdByUserCode(String userCode);
 }

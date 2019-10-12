@@ -144,4 +144,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     public byte selectLockedByUserCode(String userCode){
         return userInfoMapper.selectLockedByUserCode(userCode);
     }
+
+    @Override
+    public int selectIfExistThisUser(Integer userId) {
+        return userInfoMapper.selectIfExistThisUser(userId);
+    }
+
+    @Override
+    public String selectPwdByUserCode(String userCode) {
+        return userInfoMapper.selectPwdByUserCode(userCode);
+    }
 }

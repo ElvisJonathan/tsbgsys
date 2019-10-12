@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.PassToken;
 import com.tsbg.ecosys.service.*;
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
@@ -32,6 +33,7 @@ public class RegisterController {
      *生态员工注册成为用户
      */
     @RequestMapping(value = "/ecosign", method = { RequestMethod.GET, RequestMethod.POST })
+    @PassToken
     //@ResponseBody
     public ResultUtils register(@RequestBody UserInfo userInfo) {
         //初始化构造器

@@ -1,6 +1,8 @@
 package com.tsbg.ecosys.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tsbg.ecosys.annotation.PassToken;
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.model.*;
 import com.tsbg.ecosys.service.*;
 import com.tsbg.ecosys.util.GetBrowserNameUtils;
@@ -45,12 +47,12 @@ public class QuestionFeedBackController {
      * 集成文件上传(当文件数量等于或多于当前文件数量时调用)
      */
     @RequestMapping(value = "/createFeedBack", method = RequestMethod.POST )
+    @UserLoginToken
     @ResponseBody
     public ResultUtils addFeedBack(HttpServletRequest req, MultipartFile[] file)throws Exception {//
         //初始化參數構造器
         ResultUtils resultUtils = null;
         //獲取數據
-
 
         String json = req.getParameter("questionFeedback");
         System.out.println(json);
@@ -141,7 +143,7 @@ public class QuestionFeedBackController {
                             //服务器路径测试文件上传
                             String Path2 = "/tmp/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date;
                             System.out.println("服務器實際路徑：" + Path2);
-                            File folder = new File(Path2);//此处打包上去之前需要置换路径
+                            File folder = new File(Path);//此处打包上去之前需要置换路径
                             if (!folder.exists()) {
                                 folder.mkdirs();
                             }//无报错则上传成功
@@ -163,9 +165,9 @@ public class QuestionFeedBackController {
                                 FileInfo fileInfo = new FileInfo();
                                 fileInfo.setFileName(multipartFile.getOriginalFilename());
                                 //本地存储
-                                //fileInfo.setFilePath(URL);
+                                fileInfo.setFilePath(URL);
                                 //服务器存储   打包上去前需要置换
-                                fileInfo.setFilePath(URL2);
+                                //fileInfo.setFilePath(URL2);
 
                                 fileInfo.setUpdatedTime(new Date());
                                 fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
@@ -194,9 +196,9 @@ public class QuestionFeedBackController {
                                 FileInfo fileInfo = new FileInfo();
                                 fileInfo.setFileName(prefixName + date +Suffix);
                                 //本地存储
-                                //fileInfo.setFilePath(URL);
+                                fileInfo.setFilePath(URL);
                                 //服务器存储   打包上去前需要置换
-                                fileInfo.setFilePath(URL2);
+                                //fileInfo.setFilePath(URL2);
 
                                 fileInfo.setUpdatedTime(new Date());
                                 fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
@@ -269,6 +271,7 @@ public class QuestionFeedBackController {
      *
      */
     @RequestMapping(value = "/getProjectName", method = { RequestMethod.GET, RequestMethod.POST })
+    @PassToken
     @ResponseBody
     public String getProjectName(@RequestBody QuestionFeedback questionFeedback){
         int projId=questionFeedback.getProjId();
@@ -281,6 +284,7 @@ public class QuestionFeedBackController {
      *
      */
     @RequestMapping(value = "/getAllQuestionFeedBack", method = { RequestMethod.GET, RequestMethod.POST })
+    @PassToken
     @ResponseBody
     public List<QuestionFeedback> getAllQuestionFeedBack(){
         //初始化參數構造器
@@ -295,6 +299,7 @@ public class QuestionFeedBackController {
      *
      */
     @RequestMapping(value = "/getQuestionFeedBackById", method =RequestMethod.POST)
+    @PassToken
     @ResponseBody
     public List getQuestionFeedBackById(@RequestBody QuestionFeedback questionFeedback){
         //初始化參數構造器
@@ -379,6 +384,7 @@ public class QuestionFeedBackController {
      *
      */
     @RequestMapping(value = "/getQuestionHandleId", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public QuestionHandle getQuestionHandleId(@RequestBody QuestionFeedback questionFeedback)throws Exception {
         //初始化參數構造器
@@ -394,6 +400,7 @@ public class QuestionFeedBackController {
      *
      */
     @RequestMapping(value = "/questionHandle", method = RequestMethod.POST )
+    @UserLoginToken
     @ResponseBody
     public ResultUtils questionHandle(HttpServletRequest req, MultipartFile[] file)throws Exception {
 
@@ -484,7 +491,7 @@ public class QuestionFeedBackController {
                     //服务器路径测试文件上传
                     String Path2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date;
                     System.out.println("服務器實際路徑：" + Path2);
-                    File folder = new File(Path2);//此处打包上去之前需要置换路径
+                    File folder = new File(Path);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
@@ -508,9 +515,9 @@ public class QuestionFeedBackController {
                         FileInfo fileInfo = new FileInfo();
                         fileInfo.setFileName(multipartFile.getOriginalFilename());
                         //本地存储
-                        //fileInfo.setFilePath(URL);
+                        fileInfo.setFilePath(URL);
                         //服务器存储   打包上去前需要置换
-                        fileInfo.setFilePath(URL2);
+                        //fileInfo.setFilePath(URL2);
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
                         fileInfo.setKeyword(multipartFile.getOriginalFilename());
@@ -538,9 +545,9 @@ public class QuestionFeedBackController {
                         FileInfo fileInfo = new FileInfo();
                         fileInfo.setFileName(prefixName + date +Suffix);
                         //本地存储
-                        //fileInfo.setFilePath(URL);
+                        fileInfo.setFilePath(URL);
                         //服务器存储   打包上去前需要置换
-                        fileInfo.setFilePath(URL2);
+                        //fileInfo.setFilePath(URL2);
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
                         fileInfo.setKeyword(prefixName + date +Suffix);

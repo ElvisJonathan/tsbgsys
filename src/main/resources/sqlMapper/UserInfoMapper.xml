@@ -399,12 +399,17 @@
    SELECT u.`perm_list` FROM user_info AS u WHERE u.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
 
-
-
-
-
+  <select id="selectIfExistThisUser"  parameterType="java.lang.Integer" resultType="int">
+   SELECT COUNT(0) FROM user_info
+      WHERE
+      user_id=#{userId,jdbcType=INTEGER};
+  </select>
 
   <select id="selectEmailByUserCode"  parameterType="String" resultType="String">
     SELECT e.email_address FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+
+  <select id="selectPwdByUserCode"  parameterType="String" resultType="String">
+    SELECT user_pwd FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
   </select>
 </mapper>

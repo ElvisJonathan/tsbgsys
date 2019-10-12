@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tsbg.ecosys.config.exception.CommonJsonException;
 import com.tsbg.ecosys.util.constants.Constants;
 import com.tsbg.ecosys.util.constants.ErrorEnum;
 
@@ -26,7 +27,7 @@ public class CommonUtil {
 	public static JSONObject successJson(Object info) {
 		JSONObject resultJson = new JSONObject();
 		resultJson.put("code", Constants.SUCCESS_CODE);
-		resultJson.put("msg", Constants.SUCCESS_MSG);
+		resultJson.put("message", Constants.SUCCESS_MESSAGE);
 		resultJson.put("info", info);
 		return resultJson;
 	}
@@ -37,7 +38,7 @@ public class CommonUtil {
 	public static JSONObject failJson(Object info) {
 		JSONObject resultJson = new JSONObject();
 		resultJson.put("code", Constants.FAIL_CODE);
-		resultJson.put("msg", Constants.FAIL_MSG);
+		resultJson.put("message", Constants.FAIL_MESSAGE);
 		resultJson.put("info", info);
 		return resultJson;
 	}
@@ -48,7 +49,7 @@ public class CommonUtil {
 	public static JSONObject errorJson(ErrorEnum errorEnum) {
 		JSONObject resultJson = new JSONObject();
 		resultJson.put("code", errorEnum.getErrorCode());
-		resultJson.put("msg", errorEnum.getErrorMsg());
+		resultJson.put("message", errorEnum.getErrorMessage());
 		resultJson.put("info", new JSONObject());
 		return resultJson;
 	}
@@ -127,17 +128,16 @@ public class CommonUtil {
 	 * 将request转JSON
 	 * 并且验证非空字段
 	 */
-	/*public static JSONObject convert2JsonAndCheckRequiredColumns(HttpServletRequest request, String requiredColumns) {
+	public static JSONObject convert2JsonAndCheckRequiredColumns(HttpServletRequest request, String requiredColumns) {
 		JSONObject jsonObject = request2Json(request);
 		hasAllRequired(jsonObject, requiredColumns);
 		return jsonObject;
 	}
-*/
 	/**
 	 * 验证是否含有全部必填字段
 	 *
 	 * @param requiredColumns 必填的参数字段名称 逗号隔开 比如"userId,name,telephone"
-	 *//*
+	 */
 	public static void hasAllRequired(final JSONObject jsonObject, String requiredColumns) {
 		if (!StringTools.isNullOrEmpty(requiredColumns)) {
 			//验证字段非空
@@ -152,12 +152,12 @@ public class CommonUtil {
 			if (!StringTools.isNullOrEmpty(missCol)) {
 				jsonObject.clear();
 				jsonObject.put("code", ErrorEnum.E_90003.getErrorCode());
-				jsonObject.put("msg", "缺少必填参数:" + missCol.trim());
+				jsonObject.put("message", "缺少必填参数:" + missCol.trim());
 				jsonObject.put("info", new JSONObject());
 				throw new CommonJsonException(jsonObject);
 			}
 		}
-	}*/
+	}
 
 	/**
 	 * 在分页查询之前,为查询条件里加上分页参数

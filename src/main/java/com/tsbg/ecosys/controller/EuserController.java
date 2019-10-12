@@ -1,5 +1,6 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.UserInfoService;
@@ -41,6 +42,7 @@ public class EuserController {
      * 停用/启用用户
      */
     @RequestMapping(value = "/setecoUser", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils setUser(@RequestBody UserInfo userInfo){
         //初始化传参构造器
@@ -74,6 +76,7 @@ public class EuserController {
      * 查询个人信息
      */
     @RequestMapping(value = "/searchUserMsg", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils lookUser(@RequestBody UserInfo userInfo) {
         ResultUtils resultUtils = null;
@@ -96,6 +99,7 @@ public class EuserController {
      * 修改个人信息
      */
     @RequestMapping(value = "/modifyUserMsg", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils modifyUser(@RequestBody UserInfo userInfo){
         ResultUtils resultUtils = null;
@@ -122,6 +126,7 @@ public class EuserController {
      * 管理员重置用户密码
      */
     @RequestMapping(value = "/reSetUserPwd", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
     @ResponseBody
     public ResultUtils reSetUserPwd(@RequestBody UserInfo userInfo){
         //重置用户的密码为：工号+"123",用户需要在被重置密码后进行密码的修改

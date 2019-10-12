@@ -1,10 +1,27 @@
 package com.tsbg.ecosys.config.shiro;
 
+import com.alibaba.fastjson.JSONObject;
+
+import com.tsbg.ecosys.service.LoginService;
+import com.tsbg.ecosys.service.UserInfoService;
+import com.tsbg.ecosys.service.base.RedisService;
+import com.tsbg.ecosys.util.MD5Util2;
+import com.tsbg.ecosys.util.constants.Constants;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 自定义Realm
  */
-/*
 public class UserRealm extends AuthorizingRealm {
 	private Logger logger = LoggerFactory.getLogger(UserRealm.class);
 
@@ -40,11 +57,10 @@ public class UserRealm extends AuthorizingRealm {
 		return authorizationInfo;
 	}
 
-*
+	/**
 	 * 验证当前登录的Subject
 	 * LoginController.login()方法中执行Subject.login()时 执行此方法
-
-
+	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		String loginName = (String) authcToken.getPrincipal();
@@ -73,4 +89,3 @@ public class UserRealm extends AuthorizingRealm {
 		return authenticationInfo;
 	}
 }
-*/
