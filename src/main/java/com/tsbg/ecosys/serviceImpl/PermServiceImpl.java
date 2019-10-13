@@ -1,9 +1,9 @@
-package com.tsbg.ecosys.serviceImpl.test;
+package com.tsbg.ecosys.serviceImpl;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.tsbg.ecosys.mapper.PermissionDao;
-import com.tsbg.ecosys.service.base.PermissionService;
+import com.tsbg.ecosys.mapper.PermMapper;
+import com.tsbg.ecosys.service.PermService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +13,10 @@ import java.util.Set;
  *   权限实现类
  */
 @Service
-public class PermServiceImpl implements PermissionService {
+public class PermServiceImpl implements PermService {
 
 	@Autowired
-	private PermissionDao permissionDao;
+	private PermMapper permMapper;
 
 	/**
 	 * 查询某用户的 角色  菜单列表   权限列表
@@ -32,7 +32,7 @@ public class PermServiceImpl implements PermissionService {
 	 */
 	@Override
 	public JSONObject getMyUserPermission(String userCode) {
-		JSONObject userPermission = permissionDao.getMyUserPermission(userCode);
+		JSONObject userPermission = permMapper.getMyUserPermission(userCode);
 		return userPermission;
 	}
 
@@ -41,7 +41,7 @@ public class PermServiceImpl implements PermissionService {
 	 */
 	@Override
 	public JSONObject getMyUserPermission2(String userCode) {
-		JSONObject userPermission = permissionDao.getMyUserPermission2(userCode);
+		JSONObject userPermission = permMapper.getMyUserPermission2(userCode);
 		return userPermission;
 	}
 
@@ -49,15 +49,15 @@ public class PermServiceImpl implements PermissionService {
 	 * 从数据库查询用户权限信息
 	 */
 	private JSONObject getUserPermissionFromDB(String username) {
-		JSONObject userPermission = permissionDao.getUserPermission(username);
+		JSONObject userPermission = permMapper.getUserPermission(username);
 		//管理员角色ID为1
 		int adminRoleId = 1;
 		//如果是管理员
 		String roleIdKey = "roleId";
 		if (adminRoleId == userPermission.getIntValue(roleIdKey)) {
 			//查询所有菜单  所有权限
-			Set<String> menuList = permissionDao.getAllMenu();
-			Set<String> permissionList = permissionDao.getAllPermission();
+			Set<String> menuList = permMapper.getAllMenu();
+			Set<String> permissionList = permMapper.getAllPermission();
 			userPermission.put("menuList", menuList);
 			userPermission.put("permissionList", permissionList);
 		}

@@ -1,20 +1,20 @@
 package com.tsbg.ecosys.serviceImpl;
 
-import com.tsbg.ecosys.mapper.tokenBlacklistMapper;
-import com.tsbg.ecosys.model.tokenBlacklist;
-import com.tsbg.ecosys.service.tokenBlacklistService;
+import com.tsbg.ecosys.mapper.TokenBlacklistMapper;
+import com.tsbg.ecosys.model.TokenBlacklist;
+import com.tsbg.ecosys.service.TokenBlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class tokenBlacklistServiceImpl implements tokenBlacklistService {
+public class TokenBlacklistServiceImpl implements TokenBlacklistService {
 
     @Autowired
-    private tokenBlacklistMapper tokenBlacklistMapper;
+    private TokenBlacklistMapper tokenBlacklistMapper;
 
 
     @Override
-    public int insertSelective(tokenBlacklist record) {
+    public int insertSelective(TokenBlacklist record) {
         return tokenBlacklistMapper.insertSelective(record);
     }
 

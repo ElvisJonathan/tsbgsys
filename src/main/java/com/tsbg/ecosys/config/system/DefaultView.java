@@ -1,4 +1,4 @@
-package com.tsbg.ecosys.config;
+package com.tsbg.ecosys.config.system;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

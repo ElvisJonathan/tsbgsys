@@ -1,10 +1,10 @@
 package com.tsbg.ecosys.service;
 
-import com.tsbg.ecosys.model.tokenBlacklist;
+import com.tsbg.ecosys.model.TokenBlacklist;
 
-public interface tokenBlacklistService {
+public interface TokenBlacklistService {
 
-    int insertSelective(tokenBlacklist record);
+    int insertSelective(TokenBlacklist record);
 
     int updateStatusByTokenCode(String token);
 

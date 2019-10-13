@@ -2,7 +2,7 @@ package com.tsbg.ecosys.model;
 
 import java.util.Date;
 
-public class tokenBlacklist {
+public class TokenBlacklist {
     private Long tokenId;
 
     private String tokenCode;

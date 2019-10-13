@@ -2,15 +2,15 @@ package com.tsbg.ecosys.vo;
 
 import java.util.List;
 
-public class powerVo {
+public class PowerVo {
     private List<Integer> arr;
 
     private String[] arr2;
 
-    public powerVo() {
+    public PowerVo() {
     }
 
-    public powerVo(List<Integer> arr, String[] arr2) {
+    public PowerVo(List<Integer> arr, String[] arr2) {
         this.arr = arr;
         this.arr2 = arr2;
     }

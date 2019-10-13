@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * 获取权限相关dao
  */
-public interface PermissionDao {
+public interface PermMapper {
 	/**
 	 * 查询用户的角色 菜单 权限
 	 */

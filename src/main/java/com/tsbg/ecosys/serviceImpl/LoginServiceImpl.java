@@ -2,16 +2,14 @@ package com.tsbg.ecosys.serviceImpl;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.tsbg.ecosys.mapper.LoginDao;
+import com.tsbg.ecosys.mapper.LoginMapper;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.LoginService;
 import com.tsbg.ecosys.service.UserInfoService;
-import com.tsbg.ecosys.service.base.PermissionService;
+import com.tsbg.ecosys.service.PermService;
 import com.tsbg.ecosys.service.base.RedisService;
 import com.tsbg.ecosys.service.base.TokenService;
-import com.tsbg.ecosys.service.tokenBlacklistService;
+import com.tsbg.ecosys.service.TokenBlacklistService;
 import com.tsbg.ecosys.util.CommonUtil;
 import com.tsbg.ecosys.util.constants.Constants;
 import org.apache.shiro.SecurityUtils;
@@ -32,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired
-	private LoginDao loginDao;
+	private LoginMapper loginMapper;
 	@Autowired
-	private PermissionService permissionService;
+	private PermService permService;
 	@Autowired
 	private UserInfoService userInfoService;
 	@Autowired
@@ -42,7 +40,7 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private TokenService tokenService;
 	@Autowired
-	private tokenBlacklistService tokenBlacklistService;
+	private TokenBlacklistService tokenBlacklistService;
 	@Value("${server.servlet.session.timeout}")
 	private long sessionExpire;
 
@@ -95,7 +93,7 @@ public class LoginServiceImpl implements LoginService {
 			redisService.setCacheObject(token2,"1", sessionExpire);*/
 			String token2 = tokenService.getToken(userForBase);
 			//将密码存到redis
-			redisService.setCacheObject("pwd"+userId,userPwd,7200);
+			redisService.setCacheObject("pwd"+userId,userPwd,3600);
 			info.put("token",token2);
 			info.put("userCode",userCode);
 			info.put("result", "成功登录并且获取了权限");
@@ -110,7 +108,7 @@ public class LoginServiceImpl implements LoginService {
 	 */
 	@Override
 	public JSONObject getUser(String username, String password) {
-		return loginDao.getUser(username, password);
+		return loginMapper.getUser(username, password);
 	}
 
 	/**
@@ -118,7 +116,7 @@ public class LoginServiceImpl implements LoginService {
 	 */
 	@Override
 	public JSONObject getMyUser(String userCode, String userPwd) {
-		return loginDao.getMyUser(userCode,userPwd);
+		return loginMapper.getMyUser(userCode,userPwd);
 	}
 
 	/**
@@ -131,7 +129,7 @@ public class LoginServiceImpl implements LoginService {
 		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 		String username = userInfo.getString("username");
 		JSONObject info = new JSONObject();
-		JSONObject userPermission = permissionService.getUserPermission(username);
+		JSONObject userPermission = permService.getUserPermission(username);
 		session.setAttribute(Constants.SESSION_USER_PERMISSION, userPermission);
 		info.put("userPermission", userPermission);
 		return CommonUtil.successJson(info);
@@ -147,7 +145,7 @@ public class LoginServiceImpl implements LoginService {
 		String userCode2 = userInfo2.getString("userCode");
 		JSONObject info = new JSONObject();
 		//JSONObject userPermission = permissionService.getMyUserPermission2(userCode);//此处暂时改成个人的权限
-		JSONObject userPermission2 = permissionService.getMyUserPermission2(userCode2);//此处暂时改成个人的权限
+		JSONObject userPermission2 = permService.getMyUserPermission2(userCode2);//此处暂时改成个人的权限
 		//session.setAttribute(Constants.SESSION_USER_PERMISSION, userPermission);//先将查询结果注入Session
 		redisService.setCacheObject(Constants.SESSION_USER_PERMISSION, userPermission2);
 		//此处多加一步 将String转为array返回

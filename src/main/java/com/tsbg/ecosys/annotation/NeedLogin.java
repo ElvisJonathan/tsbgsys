@@ -1,4 +1,4 @@
-package com.tsbg.ecosys.common;
+package com.tsbg.ecosys.annotation;
 
 import java.lang.annotation.*;
 

@@ -1,13 +1,10 @@
 /*
 package com.tsbg.ecosys.util;
 
-
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class JWTUtils {
 
@@ -17,18 +14,15 @@ public class JWTUtils {
 
     private static final String PAYLOAD = "payload";//负荷
 
-<<<<<<< HEAD
     */
 /**
-=======
      /**
->>>>>>> origin/master
      * get jwt String of object
      * @param object
      *            the POJO object
      * @param maxAge
      *            the milliseconds of life time
-<<<<<<< HEAD
+      HEAD
      * @return the jwt token
      *//*
 //     * @return the jwt token*/
@@ -59,7 +53,6 @@ public class JWTUtils {
 //     * @param jwt
 //     * @return POJO object*/
 //
-//>>>>>>> origin/master
 //
 //    public static<T> T unsign(String jwt, Class<T> classT) {
 //        final JWTVerifier verifier = new JWTVerifier(SECRET);
@@ -81,4 +74,3 @@ public class JWTUtils {
 //    }
 //}*/
 //}
-

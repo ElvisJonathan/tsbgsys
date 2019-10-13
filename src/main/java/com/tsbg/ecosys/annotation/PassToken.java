@@ -7,8 +7,6 @@ import java.lang.annotation.Target;
 
 /***
  * 用来跳过验证的 PassToken
- * @author MRC
- * @date 2019年4月4日 下午7:01:25
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

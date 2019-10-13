@@ -1,11 +1,11 @@
-package com.tsbg.ecosys.service.base;
+package com.tsbg.ecosys.service;
 
 import com.alibaba.fastjson.JSONObject;
 
 /**
  * 权限相关service
  */
-public interface PermissionService {
+public interface PermService {
 	/**
 	 * 查询某用户的 角色  菜单列表   权限列表
 	 */

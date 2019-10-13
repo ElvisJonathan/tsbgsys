@@ -6,7 +6,7 @@ import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.bag.PowerPackage;
 import com.tsbg.ecosys.model.UserInfo;
 import com.tsbg.ecosys.service.*;
-import com.tsbg.ecosys.vo.powerVo;
+import com.tsbg.ecosys.vo.PowerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -226,7 +226,7 @@ public class JurisdictionController {
         for (int i=0;i<=arr.length-1;i++){
             arr2[i]=permissionService.selectPermission(arr[i]);
         }
-        return new ResultUtils(0,"查询权限成功",new powerVo(list,arr2),uName,status);
+        return new ResultUtils(0,"查询权限成功",new PowerVo(list,arr2),uName,status);
     }
 
     /**

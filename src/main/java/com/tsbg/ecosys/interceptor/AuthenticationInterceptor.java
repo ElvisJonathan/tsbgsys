@@ -10,7 +10,7 @@ import com.tsbg.ecosys.annotation.PassToken;
 import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.service.UserInfoService;
 import com.tsbg.ecosys.service.base.RedisService;
-import com.tsbg.ecosys.service.tokenBlacklistService;
+import com.tsbg.ecosys.service.TokenBlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -29,7 +29,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
     private RedisService redisService;
     @Autowired
-    private tokenBlacklistService tokenBlacklistService;
+    private TokenBlacklistService tokenBlacklistService;
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
         String token = httpServletRequest.getHeader("token");// 从 http 请求头中取出 token
@@ -40,7 +40,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
         HandlerMethod handlerMethod=(HandlerMethod)object;
         Method method=handlerMethod.getMethod();
-        //检查是否有passtoken注释，有则跳过认证
+        //检查是否有PassToken注释，有则跳过认证
         if (method.isAnnotationPresent(PassToken.class)) {
             PassToken passToken = method.getAnnotation(PassToken.class);
             if (passToken.required()) {
@@ -65,7 +65,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     userId = JWT.decode(token).getAudience().get(0);
                     System.out.println("userId:"+userId);
                 } catch (JWTDecodeException j) {
-                    throw new RuntimeException("401");
+                    throw new RuntimeException("token中的用户信息已失效");
                 }
                 int i = userInfoService.selectIfExistThisUser(Integer.parseInt(userId));
                 if (i == 0) {
@@ -76,7 +76,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(redisService.getCacheObject("pwd"+userId).toString())).build();
                     jwtVerifier.verify(token);
                 }  catch (JWTVerificationException e) {
-                    throw new RuntimeException("401");
+                    throw new RuntimeException("token验证失效请重新登录");
                 }  catch(Exception e){
                     throw new RuntimeException("密码失效请重新登录");
                 }

@@ -22,7 +22,7 @@ public class LoginAop {
     public LoginAop() {
     }
 
-    @Pointcut("@annotation(com.tsbg.ecosys.common.NeedLogin)")
+    @Pointcut("@annotation(com.tsbg.ecosys.annotation.NeedLogin)")
     public void pointCut() {
 
     }

@@ -85,7 +85,7 @@ public class UserRealm extends AuthorizingRealm {
 		user.remove("userPwd");
 		//将用户信息放入session中
 		//SecurityUtils.getSubject().getSession().setAttribute(Constants.SESSION_USER_INFO, user);
-		redisService.setCacheObject(Constants.SESSION_USER_INFO,user,300);
+		redisService.setCacheObject(Constants.SESSION_USER_INFO,user,3600);
 		return authenticationInfo;
 	}
 }

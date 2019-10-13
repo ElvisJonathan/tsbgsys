@@ -4,10 +4,7 @@ import com.tsbg.ecosys.annotation.PassToken;
 import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.util.GetBrowserNameUtils;
 import com.tsbg.ecosys.util.ResultUtils;
-import com.tsbg.ecosys.model.Epartner;
 import com.tsbg.ecosys.model.FileInfo;
-import com.tsbg.ecosys.model.UserInfo;
-import com.tsbg.ecosys.model.bag.CompanyPackage;
 import com.tsbg.ecosys.service.EpartnerService;
 import com.tsbg.ecosys.service.FileInfoService;
 import org.apache.commons.io.IOUtils;
@@ -39,16 +36,9 @@ public class FileController {
     @Autowired
     private EpartnerService epartnerService;
 
-    //跳转到上传文件的页面
-    @RequestMapping(value = "/gouploadimg", method = RequestMethod.GET)
-    public String goUploadImg() {
-        //跳转到 templates 目录下的 uploadimg.html
-        return "uploadimg";
-    }
-
     SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
 
-    //新增时的上传
+    //单文件上传 只做参考
     @RequestMapping(value = "/import", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public ResultUtils importData(HttpServletRequest req) throws IOException {
@@ -103,11 +93,10 @@ public class FileController {
         return new ResultUtils(506, "没有文件");
     }
 
-    //多文件的上传
+    //多文件的上传  只做参考
     @RequestMapping(value = "/importmore", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public ResultUtils importMore(MultipartFile[] file, HttpServletRequest req) throws IOException {
-         StringBuffer buffer = new StringBuffer();
         // int[] array = new int[file.length];
          for (MultipartFile multipartFile : file) {
              //重复文件名判断
@@ -115,10 +104,6 @@ public class FileController {
              if (count > 0) {
                  return new ResultResponse(501, "有文件已存在，请选择其他文件上传!");
              }*/
-             buffer.append(multipartFile.getOriginalFilename());
-             buffer.append(",");
-             String all = buffer.substring(0, buffer.length() - 1);
-             System.out.println("所有文件："+all);
              String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
              System.out.println("文件后缀：" + Suffix);
              //根据原始文件名的后缀进行文件类型判断
@@ -152,24 +137,6 @@ public class FileController {
              }
          }
          return null;
-    }
-
-    @RequestMapping(value = "/download", method = { RequestMethod.GET, RequestMethod.POST })
-    @ResponseBody
-    public ResultUtils downloadFile(@RequestBody CompanyPackage companyPackage){
-        //通过接收公司的partnerNo和userCode来记录下载者 还需要获取文件名
-        Epartner epartner = companyPackage.getEpartner();
-        Integer partnerNo= epartner.getPartnerNo();
-        UserInfo userInfo = companyPackage.getUserInfo();
-        String userCode = userInfo.getUserCode();
-        if (partnerNo!=null && userCode!=null){
-           int num = epartnerService.logDownloader(userCode,partnerNo);
-           if (num>0){
-               return new ResultUtils(0,"记录下载者成功!");
-           }
-           return  new ResultUtils(500,"记录下载者失败！");
-        }
-        return new ResultUtils(501,"合作伙伴编号或工号为空异常！");
     }
 
     /**
@@ -242,11 +209,10 @@ public class FileController {
     }
 
     /**
-     * 下载
+     * 下载问题处理的文件
      */
     @RequestMapping(value = "/testdownload1", method = { RequestMethod.GET, RequestMethod.POST })
-    //@UserLoginToken
-    @PassToken
+    @UserLoginToken
     @ResponseBody
     public Object downloadQuestionHandleFile(HttpServletResponse response, HttpServletRequest request){
         String fileName = request.getParameter("fileName");
@@ -256,12 +222,9 @@ public class FileController {
         System.out.println("文件名："+fileName);
         Integer questionHandleId=Integer.parseInt(request.getParameter("questionHandleId"));
         System.out.println("收到處理反饋附件編號為："+questionHandleId);
-        //獲取userCode用於記錄最后下载者  让前端传
-        /*String userCode = request.getParameter("userCode");
-        System.out.println("獲取到的userCode:"+userCode);*/
         //根據文件名去數據庫查詢URL
         String name = fileInfoService.selectRealPathByNameAndQuestionHandleId(fileName,questionHandleId);
-        System.out.println("真实URL："+name);
+        System.out.println("下载问题处理的文件--真实URL："+name);
         if (name==null){
             System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
             return "下载附件失败，请检查文件“" + fileName + "”是否存在";
@@ -274,12 +237,12 @@ public class FileController {
             // 清空输出流
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
-            String agent=request.getHeader("User-Agent").toLowerCase();
+            String agent=request.getHeader("User-Agent").toLowerCase();//这边的获取header有没有问题
             System.out.println(agent);
             String browserName= GetBrowserNameUtils.getBrowserName(agent);
             System.out.println("浏览器版本："+browserName);
-            String prefixName=null;
-            if(browserName.contains("ie")||browserName.contains("edge")||browserName.contains("webkit")) { //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
+            //String prefixName=null;
+            if(browserName.contains("ie") || browserName.contains("edge") || browserName.contains("webkit")) { //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
                 fileName = URLEncoder.encode(fileName, "UTF-8");
                 response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
             }else {
@@ -291,12 +254,6 @@ public class FileController {
             //复制
             IOUtils.copy(is, response.getOutputStream());
             response.getOutputStream().flush();
-            //通过公司编号和文件名定位文件编号
-            /*Integer fileNo = fileInfoService.selectFileNoByQuestionHandleIdAdnFileName(questionHandleId,fileName);
-            if (fileNo!=null){
-                //根据公司编号和用户工号去修改最后下载者
-                fileInfoService.updateDownloader(userCode,fileNo);
-            }*/
         } catch (IOException e) {
             return "下载附件失败,error:"+e.getMessage();
         }
@@ -322,28 +279,22 @@ public class FileController {
     }
 
     /**
-     * 下载
+     * 下载问题反馈的文件
      */
     @RequestMapping(value = "/testdownload2", method = { RequestMethod.GET, RequestMethod.POST })
-    //@UserLoginToken
-    @PassToken
+    @UserLoginToken
     @ResponseBody
     public Object downloadQuestionFeedBackFile(HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
         String fileName = request.getParameter("fileName");
-
         if (fileName==null){
             return "文件名為空！";
         }
         System.out.println("文件名："+fileName);
-        System.out.println(request.getParameter("questionFeedbackId"));
         Integer questionFeedbackId=Integer.parseInt(request.getParameter("questionFeedbackId"));
         System.out.println("收到處理反饋附件編號為："+questionFeedbackId);
-        //獲取userCode用於記錄最后下载者  让前端传
-        String userCode = request.getParameter("userCode");
-        System.out.println("獲取到的userCode:"+userCode);
         //根據文件名去數據庫查詢URL
         String name = fileInfoService.selectRealPathByNameAndQuestionFeedBackId(fileName,questionFeedbackId);
-        System.out.println("真实URL："+name);
+        System.out.println("下载问题反馈的文件---真实URL："+name);
         if (name==null){
             System.out.println("下载附件失败，请检查文件“" + fileName + "”是否存在");
             return "下载附件失败，请检查文件“" + fileName + "”是否存在";
@@ -356,13 +307,12 @@ public class FileController {
             // 清空输出流
             response.reset();
             response.setContentType("application/x-download;charset=GBK");
-
             String agent=request.getHeader("User-Agent").toLowerCase();
             System.out.println(agent);
             String browserName= GetBrowserNameUtils.getBrowserName(agent);
             System.out.println("浏览器版本："+browserName);
-            String prefixName=null;
-            if(browserName.contains("ie")||browserName.contains("edge")||browserName.contains("webkit")) { //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
+            //String prefixName=null;
+            if(browserName.contains("ie") || browserName.contains("edge") || browserName.contains("webkit")) { //若爲IE或者Edge瀏覽器，則對上傳的文件名做處理
                 fileName = URLEncoder.encode(fileName, "UTF-8");
                 response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
             }else {
@@ -374,12 +324,6 @@ public class FileController {
             //复制
             IOUtils.copy(is, response.getOutputStream());
             response.getOutputStream().flush();
-            //通过问题反馈编号和文件名定位文件编号
-            //Integer fileNo = fileInfoService.selectFileNoByQuestionFeedbackIdAdnFileName(questionFeedbackId,fileName);
-            /*if (fileNo!=null){
-                //根据问题反馈编号和用户工号去修改最后下载者
-                fileInfoService.updateDownloader(userCode,fileNo);
-            }*/
         } catch (IOException e) {
             return "下载附件失败,error:"+e.getMessage();
         }

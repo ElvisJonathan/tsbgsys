@@ -3,14 +3,13 @@ package com.tsbg.ecosys.common;
 import com.tsbg.ecosys.filter.RewriterFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 注册rewrite过滤器
  */
 //@Configuration
-public class WebFilterregistration implements WebMvcConfigurer {
+public class WebFilterRegistration implements WebMvcConfigurer {
 
     @Bean
     public FilterRegistrationBean registerFilter() {

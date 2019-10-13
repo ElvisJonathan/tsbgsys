@@ -4,8 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import com.tsbg.ecosys.model.UserInfo;
-import com.tsbg.ecosys.model.tokenBlacklist;
-import com.tsbg.ecosys.service.tokenBlacklistService;
+import com.tsbg.ecosys.model.TokenBlacklist;
+import com.tsbg.ecosys.service.TokenBlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.Date;
 public class TokenService {
 
 	@Autowired
-	private tokenBlacklistService tokenBlackService;
+	private TokenBlacklistService tokenBlackService;
 
 	public String getToken(UserInfo userInfo) {
 		Date start = new Date();
@@ -29,7 +29,7 @@ public class TokenService {
 		token = JWT.create().withAudience(userInfo.getUserId().toString()).withIssuedAt(start).withExpiresAt(end)
 				.sign(Algorithm.HMAC256(userInfo.getUserPwd()));
 		//在数据库插入token
-		tokenBlacklist tokenBlacklist = new tokenBlacklist();
+		TokenBlacklist tokenBlacklist = new TokenBlacklist();
 		tokenBlacklist.setTokenCode(token);
 		tokenBlackService.insertSelective(tokenBlacklist);
 		return token;

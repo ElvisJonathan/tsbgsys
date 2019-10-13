@@ -235,7 +235,7 @@ public class CompanyController {
                     //服务器路径测试文件上传
                     String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
                     System.out.println("服务器实际路径：" + Path2);
-                    File folder = new File(Path);//此处打包上去之前需要置换路径
+                    File folder = new File(Path2);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
@@ -255,9 +255,9 @@ public class CompanyController {
                     FileInfo fileInfo = new FileInfo();
                     fileInfo.setFileName(multipartFile.getOriginalFilename());
                     //本地存储
-                    fileInfo.setFilePath(URL);
+                    //fileInfo.setFilePath(URL);
                     //服务器存储   打包上去前需要置换
-                    //fileInfo.setFilePath(URL2);
+                    fileInfo.setFilePath(URL2);
                     fileInfo.setRelDocId(no);
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setLastUpdateUser(userCode);
@@ -560,7 +560,7 @@ public class CompanyController {
                         //服务器路径测试文件上传
                         String Path2 = "/tmp/ecoUpload/"+epartner.getPartnerName();
                         System.out.println("服务器实际路径：" + Path2);
-                        File folder = new File(Path);
+                        File folder = new File(Path2);
                         if (!folder.exists()) {
                             folder.mkdirs();
                         }//无报错则上传成功
@@ -579,9 +579,9 @@ public class CompanyController {
                         //进行文件上传记录的存储
                         FileInfo fileInfo = new FileInfo();
                         fileInfo.setFileName(multipartFile.getOriginalFilename());
-                        fileInfo.setFilePath(URL);
+                        //fileInfo.setFilePath(URL);
                         //服务器存储   打包上去前需要置换
-                        //fileInfo.setFilePath(URL2);
+                        fileInfo.setFilePath(URL2);
                         fileInfo.setRelDocId(cid);
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(userCode);
