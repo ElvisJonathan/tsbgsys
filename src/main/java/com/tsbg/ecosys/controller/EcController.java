@@ -416,7 +416,6 @@ public class EcController {
         //查询数据库中的备注
         List<String> titles = new ArrayList<>();
         List<Comment> selectColumnNamea = questionFeedBackService.selectColumnNamea();
-        List<Comment> selectColumnNameb = questionFeedBackService.selectColumnNameb();
         List<Comment> selectColumnNamec = questionFeedBackService.selectColumnNamec();
         List<Comment> selectColumnNamed = questionFeedBackService.selectColumnNamed();
         List<Comment> selectColumnNamee = questionFeedBackService.selectColumnNamee();
@@ -428,12 +427,12 @@ public class EcController {
                 titles.add(selectColumnNamea.get(i).getColumn_comment());
             }
         }
-        for (int i = 0; i <= selectColumnNameb.size() - 1; i++) {
-            if("type_id".equals(selectColumnNameb.get(i).getColumn_name())){
-                titles.add(selectColumnNameb.get(i).getColumn_comment());
+        for (int i = 0; i <= selectColumnNamed.size() - 1; i++) {
+            if("question_name".equals(selectColumnNamed.get(i).getColumn_name())){
+                titles.add(selectColumnNamed.get(i).getColumn_comment());
             }
-            if("type_name".equals(selectColumnNameb.get(i).getColumn_name())){
-                titles.add(selectColumnNameb.get(i).getColumn_comment());
+            if("question_describe".equals(selectColumnNamed.get(i).getColumn_name())){
+                titles.add(selectColumnNamed.get(i).getColumn_comment());
             }
         }
         for (int i = 0; i <= selectColumnNamec.size() - 1; i++) {
@@ -485,6 +484,12 @@ public class EcController {
                 break;
             }
         }
+        for (int i = 0; i <= selectColumnNamec.size() - 1; i++) {
+            if("file_path".equals(selectColumnNamec.get(i).getColumn_name())){
+                titles.add(selectColumnNamec.get(i).getColumn_comment());
+                break;
+            }
+        }
         String sheetName = "問題反饋信息處理文檔";
         Sheet companySheet = wb.createSheet(sheetName);
         Row titleRow = companySheet.createRow(0);
@@ -506,8 +511,8 @@ public class EcController {
             row = companySheet.createRow(i + 1);
             row.createCell(0).setCellValue(derivediPackages.get(i).getProjIda() == null ? "" : derivediPackages.get(i).getProjIda().toString());
             row.createCell(1).setCellValue(derivediPackages.get(i).getProNamea() == null ? "" :derivediPackages.get(i).getProNamea().toString());
-            row.createCell(2).setCellValue(derivediPackages.get(i).getTypeNameb() == null ? "" : derivediPackages.get(i).getTypeNameb().toString());
-            row.createCell(3).setCellValue(derivediPackages.get(i).getStatusb() == null ? "" : derivediPackages.get(i).getStatusb().toString());
+            row.createCell(2).setCellValue(derivediPackages.get(i).getQuestionNamed() == null ? "" : derivediPackages.get(i).getQuestionNamed().toString());
+            row.createCell(3).setCellValue(derivediPackages.get(i).getQuestionDescribed() == null ? "" : derivediPackages.get(i).getQuestionDescribed().toString());
             row.createCell(4).setCellValue(derivediPackages.get(i).getFileNamec() == null ? "" : derivediPackages.get(i).getFileNamec().toString());
             row.createCell(5).setCellValue(derivediPackages.get(i).getUserCoded() == null ? "" :derivediPackages.get(i).getUserCoded().toString());
             row.createCell(6).setCellValue(derivediPackages.get(i).getUserNamed() == null ? "" : derivediPackages.get(i).getUserNamed().toString());
@@ -520,6 +525,7 @@ public class EcController {
             row.createCell(13).setCellValue(derivediPackages.get(i).getIsCompletee() == null ? "" : derivediPackages.get(i).getIsCompletee().toString());
             row.createCell(14).setCellValue(derivediPackages.get(i).getFileNamec() == null ? "" : derivediPackages.get(i).getFileNamec().toString());
             row.createCell(15).setCellValue(derivediPackages.get(i).getRemarke() == null ? "" : derivediPackages.get(i).getRemarke().toString());
+            row.createCell(16).setCellValue(derivediPackages.get(i).getFilePathc() == null ? "" : derivediPackages.get(i).getFilePathc().toString());
         }
         for (int i = 0; i < derivediPackages.size(); i++) {
             companySheet.autoSizeColumn(i, true);

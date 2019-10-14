@@ -12,11 +12,6 @@ public class DerivediPackage {
     private String proName;
     private String remarka;
     private Integer statusa;
-    //question_type
-    private Integer typeidb;
-    private String typeNameb;
-    private Integer statusb;
-    private Integer projIdb;
     //file_info
     private Integer fileIdc;
     private String dispNamec;
@@ -119,38 +114,6 @@ public class DerivediPackage {
 
     public void setStatusa(Integer statusa) {
         this.statusa = statusa;
-    }
-
-    public Integer getTypeidb() {
-        return typeidb;
-    }
-
-    public void setTypeidb(Integer typeidb) {
-        this.typeidb = typeidb;
-    }
-
-    public String getTypeNameb() {
-        return typeNameb;
-    }
-
-    public void setTypeNameb(String typeNameb) {
-        this.typeNameb = typeNameb;
-    }
-
-    public Integer getStatusb() {
-        return statusb;
-    }
-
-    public void setStatusb(Integer statusb) {
-        this.statusb = statusb;
-    }
-
-    public Integer getProjIdb() {
-        return projIdb;
-    }
-
-    public void setProjIdb(Integer projIdb) {
-        this.projIdb = projIdb;
     }
 
     public Integer getFileIdc() {
