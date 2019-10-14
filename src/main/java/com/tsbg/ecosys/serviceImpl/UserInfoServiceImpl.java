@@ -154,4 +154,28 @@ public class UserInfoServiceImpl implements UserInfoService {
     public String selectPwdByUserCode(String userCode) {
         return userInfoMapper.selectPwdByUserCode(userCode);
     }
+
+    //問題反饋根據工號查詢反饋者的相關信息
+    @Override
+    public UserInfo selectFeedbackUserByUserCode(String userCode) {
+        return userInfoMapper.selectFeedbackUserByUserCode(userCode);
+    }
+
+    //處理問題反饋根據工號查詢處理者的相關信息
+    @Override
+    public UserInfo selectHandleUserByUserCode(String userCode) {
+        return userInfoMapper.selectHandleUserByUserCode(userCode);
+    }
+
+    //問題反饋根據工號修改反饋者的相關信息
+    @Override
+    public int updateFeedbackUserByUserCode(UserInfo userInfo) {
+        return userInfoMapper.updateFeedbackUserByUserCode(userInfo);
+    }
+
+    //處理問題反饋根據工號修改處理者的相關信息
+    @Override
+    public int updateHandleUserByUserCode(UserInfo userInfo) {
+        return userInfoMapper.updateHandleUserByUserCode(userInfo);
+    }
 }

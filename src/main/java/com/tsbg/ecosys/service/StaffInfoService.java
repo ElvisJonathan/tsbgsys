@@ -10,4 +10,7 @@ public interface StaffInfoService {
 
     //根据工号查询当前员工的厂区
     String selectlocationByUserCode(String userCode);
+
+    //根據工號查詢員工的部門
+    String selectDepartmentByUserCode(String userCode);
 }

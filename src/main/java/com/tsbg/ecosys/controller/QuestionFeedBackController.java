@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,8 @@ public class QuestionFeedBackController {
     private ProjectService projectService;
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private StaffInfoService staffInfoService;
 
 
     private final String Kefu_UserCode="F1321189";
@@ -143,7 +146,7 @@ public class QuestionFeedBackController {
                             //服务器路径测试文件上传
                             String Path2 = "/tmp/ecoUpload/questionFeedBack/file/"+questionFeedback.getUserCode()+"/"+date;
                             System.out.println("服務器實際路徑：" + Path2);
-                            File folder = new File(Path);//此处打包上去之前需要置换路径
+                            File folder = new File(Path2);//此处打包上去之前需要置换路径
                             if (!folder.exists()) {
                                 folder.mkdirs();
                             }//无报错则上传成功
@@ -165,9 +168,9 @@ public class QuestionFeedBackController {
                                 FileInfo fileInfo = new FileInfo();
                                 fileInfo.setFileName(multipartFile.getOriginalFilename());
                                 //本地存储
-                                fileInfo.setFilePath(URL);
+                                //fileInfo.setFilePath(URL);
                                 //服务器存储   打包上去前需要置换
-                                //fileInfo.setFilePath(URL2);
+                                fileInfo.setFilePath(URL2);
 
                                 fileInfo.setUpdatedTime(new Date());
                                 fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
@@ -196,9 +199,9 @@ public class QuestionFeedBackController {
                                 FileInfo fileInfo = new FileInfo();
                                 fileInfo.setFileName(prefixName + date +Suffix);
                                 //本地存储
-                                fileInfo.setFilePath(URL);
+                                //fileInfo.setFilePath(URL);
                                 //服务器存储   打包上去前需要置换
-                                //fileInfo.setFilePath(URL2);
+                                fileInfo.setFilePath(URL2);
 
                                 fileInfo.setUpdatedTime(new Date());
                                 fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
@@ -431,7 +434,7 @@ public class QuestionFeedBackController {
         int applyStatusId=Integer.parseInt(jsonob.get("applyStatusId").toString());
 
         if(feedBackService.updateApplyStatusIdByPrimaryKey(questionHandle.getQuestionFeedbackId(),Integer.parseInt(jsonob.get("applyStatusId").toString()))>0){
-            resultUtils = new ResultUtils(100, "提示信息：問題狀態更新成功！");
+            resultUtils = new ResultUtils(100, "提示信息：處理狀態更新成功！");
             if(applyStatusId>=3) {//大於3説明，問題狀態需要改成isComplete:1 已完成
                 int handleComplete = questionHandleService.selectByQuestionFeedBackId(questionHandle.getQuestionFeedbackId()).getIsComplete();
                 if (handleComplete == 1) {//問題本身已經是已完成狀態
@@ -491,7 +494,7 @@ public class QuestionFeedBackController {
                     //服务器路径测试文件上传
                     String Path2 = "/tmp/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date;
                     System.out.println("服務器實際路徑：" + Path2);
-                    File folder = new File(Path);//此处打包上去之前需要置换路径
+                    File folder = new File(Path2);//此处打包上去之前需要置换路径
                     if (!folder.exists()) {
                         folder.mkdirs();
                     }//无报错则上传成功
@@ -515,9 +518,9 @@ public class QuestionFeedBackController {
                         FileInfo fileInfo = new FileInfo();
                         fileInfo.setFileName(multipartFile.getOriginalFilename());
                         //本地存储
-                        fileInfo.setFilePath(URL);
+                        //fileInfo.setFilePath(URL);
                         //服务器存储   打包上去前需要置换
-                        //fileInfo.setFilePath(URL2);
+                        fileInfo.setFilePath(URL2);
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
                         fileInfo.setKeyword(multipartFile.getOriginalFilename());
@@ -545,9 +548,9 @@ public class QuestionFeedBackController {
                         FileInfo fileInfo = new FileInfo();
                         fileInfo.setFileName(prefixName + date +Suffix);
                         //本地存储
-                        fileInfo.setFilePath(URL);
+                        //fileInfo.setFilePath(URL);
                         //服务器存储   打包上去前需要置换
-                        //fileInfo.setFilePath(URL2);
+                        fileInfo.setFilePath(URL2);
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
                         fileInfo.setKeyword(prefixName + date +Suffix);
@@ -570,6 +573,120 @@ public class QuestionFeedBackController {
 
 /*---------------------------------------------------------------------------------------------------------------*/
 
+    }
+
+    /**
+     * 根據工號獲得問題反饋者的相關信息
+     *
+     */
+    @RequestMapping(value = "/selectFeedbackUserByUserCode", method = RequestMethod.POST )
+    @UserLoginToken
+    @PassToken
+    @ResponseBody
+    public ResultUtils selectFeedbackUserByUserCode(@RequestBody UserInfo userInfo) throws Exception{
+        ResultUtils resultUtils=null;
+        JSONObject u= JSONObject.parseObject(JSONObject.toJSONString(userInfoService.selectFeedbackUserByUserCode(userInfo.getUserCode())));
+        String dept=staffInfoService.selectDepartmentByUserCode(userInfo.getUserCode());
+        if(u==null){
+            if(dept==null){
+                resultUtils = new ResultUtils(505, "提示信息：獲取用戶部門信息失敗！");
+            }else{
+                resultUtils = new ResultUtils(505, "提示信息：獲取用戶信息失敗！");
+            }
+        }else{
+            if(dept==null){
+                resultUtils = new ResultUtils(505, "提示信息：獲取用戶部門信息失敗！");
+            }else{
+                u.put("department",dept);
+                resultUtils = new ResultUtils(100, "提示信息：獲取用戶信息成功！",u);
+            }
+        }
+        return resultUtils;
+    }
+
+
+    /**
+     * 根據工號獲得處理問題反饋者的姓名
+     *
+     */
+    @RequestMapping(value = "/selectHandleUserByUserCode", method = RequestMethod.POST )
+    @UserLoginToken
+    @PassToken
+    @ResponseBody
+    public ResultUtils selectHandleUserByUserCode(@RequestBody UserInfo userInfo) throws Exception{
+        ResultUtils resultUtils=null;
+        UserInfo u=new UserInfo();
+        try {
+            u=userInfoService.selectHandleUserByUserCode(userInfo.getUserCode());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(u==null){
+            resultUtils = new ResultUtils(505, "提示信息：獲取用戶信息失敗！");
+        }else{
+            resultUtils = new ResultUtils(100, "提示信息：獲取用戶信息成功！",u);
+        }
+        return resultUtils;
+    }
+
+    /**
+     * 根據工號更新問題反饋者的相關信息
+     *
+     */
+    @RequestMapping(value = "/updateFeedbackUserByUserCode", method = RequestMethod.POST )
+    @UserLoginToken
+    //@PassToken
+    @ResponseBody
+    public ResultUtils updateFeedbackUserByUserCode(@RequestBody UserInfo userInfo) throws Exception{
+        ResultUtils resultUtils=null;
+        Date time =new Date();
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss" );
+        String timeFormat = sdf.format(time);
+        //System.out.println(timeFormat);
+        userInfo.setUpdateTime(sdf.parse(timeFormat));
+        int isSuccess=0;
+        try{
+            isSuccess=userInfoService.updateFeedbackUserByUserCode(userInfo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(isSuccess>0){
+            resultUtils = new ResultUtils(100, "提示信息：更新用戶信息成功！");
+        } else{
+        resultUtils = new ResultUtils(505, "提示信息：更新用戶信息失敗！");
+        }
+        return resultUtils;
+    }
+
+
+    /**
+     * 根據工號更新處理問題反饋者的姓名
+     *
+     */
+    @RequestMapping(value = "/updateHandleUserByUserCode", method = RequestMethod.POST )
+    @UserLoginToken
+    //@PassToken
+    @ResponseBody
+    public ResultUtils updateHandleUserByUserCode(@RequestBody UserInfo userInfo) throws Exception{
+        ResultUtils resultUtils=null;
+        Date time =new Date();
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss" );
+        String timeFormat = sdf.format(time);
+        //System.out.println(timeFormat);
+        userInfo.setUpdateTime(sdf.parse(timeFormat));
+        int isSuccess=0;
+        try {
+            isSuccess=userInfoService.updateHandleUserByUserCode(userInfo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if(isSuccess>0){
+            resultUtils = new ResultUtils(100, "提示信息：更新用戶信息成功！");
+        }else{
+            resultUtils = new ResultUtils(505, "提示信息：更新用戶信息失敗！");
+        }
+        return resultUtils;
     }
 
 }
