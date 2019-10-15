@@ -262,6 +262,7 @@ public class CompanyController {
                     fileInfo.setUpdatedTime(new Date());
                     fileInfo.setLastUpdateUser(userCode);
                     fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                    fileInfo.setProjId(1);
                     int num = fileInfoService.insertSelective(fileInfo);
                     //查询出当前成功文件的编号
                     int number = epartnerService.selectID();
@@ -586,6 +587,7 @@ public class CompanyController {
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(userCode);
                         fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                        fileInfo.setProjId(1);
                         fileInfoService.insertSelective(fileInfo);
                         //查询出当前成功文件的编号
                         int count3 = epartnerService.selectID();

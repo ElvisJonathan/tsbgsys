@@ -24,4 +24,10 @@ public class StaffInfoServiceImpl implements StaffInfoService {
     public String selectlocationByUserCode(String userCode) {
         return staffInfoMapper.selectlocationByUserCode(userCode);
     }
+
+    //根據工號查詢員工的部門
+    @Override
+    public String selectDepartmentByUserCode(String userCode) {
+        return staffInfoMapper.selectDepartmentByUserCode(userCode);
+    }
 }

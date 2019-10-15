@@ -90,4 +90,16 @@ public interface UserInfoService {
 
     //根据工号查询密码
     String selectPwdByUserCode(String userCode);
+
+    //問題反饋根據工號查詢反饋者的相關信息
+    UserInfo selectFeedbackUserByUserCode(String userCode);
+
+    //處理問題反饋根據工號查詢處理者的相關信息
+    UserInfo selectHandleUserByUserCode(String userCode);
+
+    //問題反饋根據工號修改反饋者的相關信息
+    int updateFeedbackUserByUserCode(UserInfo userInfo);
+
+    //處理問題反饋根據工號修改處理者的相關信息
+    int updateHandleUserByUserCode(UserInfo userInfo);
 }

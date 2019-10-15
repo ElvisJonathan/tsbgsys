@@ -412,4 +412,23 @@
   <select id="selectPwdByUserCode"  parameterType="String" resultType="String">
     SELECT user_pwd FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
   </select>
+
+  <select id="selectFeedbackUserByUserCode"  resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT e.user_name,e.phone_number,e.email_address,e.role_list FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+
+  <select id="selectHandleUserByUserCode"  parameterType="String" resultMap="BaseResultMap">
+    SELECT user_code,user_name FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
+  </select>
+
+  <update id="updateFeedbackUserByUserCode" >
+    UPDATE user_info AS u SET u.`user_name`=#{userName,jdbcType=VARCHAR},u.`phone_number`=#{phoneNumber,jdbcType=VARCHAR},
+    u.`email_address`=#{emailAddress,jdbcType=VARCHAR},u.`update_time`=#{updateTime,jdbcType=TIMESTAMP}
+    WHERE u.`user_code`= #{userCode,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateHandleUserByUserCode" >
+    UPDATE user_info AS u SET u.`user_name`=#{userName,jdbcType=VARCHAR},u.`update_time`=#{updateTime,jdbcType=TIMESTAMP}
+    WHERE u.`user_code`= #{userCode,jdbcType=VARCHAR}
+  </update>
 </mapper>

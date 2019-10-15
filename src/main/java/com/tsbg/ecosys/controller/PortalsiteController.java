@@ -20,8 +20,8 @@ public class PortalsiteController {
      * 返回门户网站链接信息
      */
     @RequestMapping(value = "/getdata", method = { RequestMethod.GET, RequestMethod.POST })
-    //@UserLoginToken
-    @PassToken
+    @UserLoginToken
+    //@PassToken
     @ResponseBody
     public List<FriendlyLink> getSiteURL() {
         List<FriendlyLink> friendlyLinks = friendlyLinkService.selectPortalsiteUrl();
