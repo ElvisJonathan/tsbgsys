@@ -143,9 +143,10 @@ public class FileController {
      * 下载
      */
     @RequestMapping(value = "/testdownload", method = { RequestMethod.GET, RequestMethod.POST })
-    @UserLoginToken
+    @PassToken
     @ResponseBody
     public Object downloadFile(HttpServletResponse response, HttpServletRequest request){
+        response.addHeader("Access-Control-Allow-Origin","*");
         String fileName = request.getParameter("fileName");
         if (fileName==null){
             return "未收到文件名";
@@ -212,7 +213,7 @@ public class FileController {
      * 下载问题处理的文件
      */
     @RequestMapping(value = "/testdownload1", method = { RequestMethod.GET, RequestMethod.POST })
-    @UserLoginToken
+    @PassToken
     @ResponseBody
     public Object downloadQuestionHandleFile(HttpServletResponse response, HttpServletRequest request){
         String fileName = request.getParameter("fileName");
@@ -282,7 +283,7 @@ public class FileController {
      * 下载问题反馈的文件
      */
     @RequestMapping(value = "/testdownload2", method = { RequestMethod.GET, RequestMethod.POST })
-    @UserLoginToken
+    @PassToken
     @ResponseBody
     public Object downloadQuestionFeedBackFile(HttpServletResponse response, HttpServletRequest request) throws UnsupportedEncodingException {
         String fileName = request.getParameter("fileName");

@@ -207,7 +207,6 @@ public class CompanyController {
 
         //此处增加文件上传
         if (file!=null) {
-            StringBuffer buffer = new StringBuffer();
             for (MultipartFile multipartFile : file) {
                 //重复文件名判断
                 int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),no);
@@ -218,17 +217,12 @@ public class CompanyController {
                     eccontactsService.deleteByPrimaryKey3(no);
                     return new ResultUtils(501, multipartFile.getOriginalFilename()+"文件已存在，请选择其他文件上传!");
                 }
-                buffer.append(multipartFile.getOriginalFilename());
-                buffer.append(",");
-                String all = buffer.substring(0, buffer.length() - 1);
-                System.out.println("所有文件：" + all);
                 String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                 System.out.println("文件后缀：" + Suffix);
                 //根据原始文件名的后缀进行文件类型判断
                 if (Suffix.equals(".xls") || Suffix.equals(".xlsx") || Suffix.equals(".xlsm") || Suffix.equals(".doc")
                         || Suffix.equals(".docx") || Suffix.equals(".pdf") || Suffix.equals(".ppt") || Suffix.equals(".pptx")
                         || Suffix.equals(".txt")) {
-                    String realPath = req.getServletContext().getRealPath("/ecoUpload"+"/"+epartner.getPartnerName());//此方法用于获取上传路径
                     //本地路径测试文件上传
                     String Path = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName();
                     System.out.println("本地实际路径：" + Path);
@@ -243,8 +237,6 @@ public class CompanyController {
                     multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                     String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                     System.out.println(url);//真实存储的url
-                    //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                    //System.out.println("真实URL：" + newUrl);
                     //本地路径测试文件上传
                     String URL = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
                     System.out.println("本地存储URL:"+URL);
@@ -263,10 +255,7 @@ public class CompanyController {
                     fileInfo.setLastUpdateUser(userCode);
                     fileInfo.setKeyword(multipartFile.getOriginalFilename());
                     fileInfo.setProjId(1);
-                    int num = fileInfoService.insertSelective(fileInfo);
-                    //查询出当前成功文件的编号
-                    int number = epartnerService.selectID();
-                    System.out.println("刚刚增加成功的记录的编号为：" + number);
+                    fileInfoService.insertSelective(fileInfo);
                 } else {
                     //如果文件存在则将之前新增的记录删除
                     epartnerService.deleteByPrimaryKey(no);
@@ -347,7 +336,7 @@ public class CompanyController {
     }
 
     //查询公司信息
-    @RequestMapping("/selectCinfo")
+   /* @RequestMapping("/selectCinfo")
     @ResponseBody
     public ResultUtils searchCinfo(@RequestBody Epartner epartner) {
         ResultUtils resultUtils = null;
@@ -422,7 +411,7 @@ public class CompanyController {
         }
         resultUtils = new ResultUtils(502,"提示信息：未收到id信息");
         return resultUtils;
-    }
+    }*/
 
     /**
      * 合作伙伴信息、合作情况信息、公司联系人信息修改
@@ -532,12 +521,6 @@ public class CompanyController {
                     System.out.println("原始文件名：" + name);
                     //如果文件被删除则查询出被删除的文件名修改其状态
                     //根据当前文件名查询文件编号
-                    //根据公司合作伙伴编号和文件名查询附件是否未修改
-                    /*int number = fileInfoService.judgeIfFileChanged(cid, name);
-                    if (number > 0) {
-                        //说明文件未修改 默认跳过修改返回修改成功
-                        arr[3] = 1;
-                    }else{*/
                     //说明有多的文件需要上传
                     //重复文件名判断
                     int count = fileInfoService.selectFileCountByFileName(multipartFile.getOriginalFilename(),cid);
@@ -569,8 +552,6 @@ public class CompanyController {
                         multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                         String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                         System.out.println(url);//真实存储的url
-                           /* String newUrl = req.getServletContext().getRealPath("/ecoUpload")+"/"+epartner.getPartnerName() + "/" + multipartFile.getOriginalFilename();
-                            System.out.println("真实URL：" + newUrl);*/
                         //本地路径测试文件上传
                         String URL = "D:/66/testUpload/ecoUpload/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
                         System.out.println("本地存储URL:"+URL);
@@ -595,7 +576,6 @@ public class CompanyController {
                     } else {
                         return new ResultUtils(506, "上传文件格式不符合需求");
                     }
-                    //}
                 }
             }
 

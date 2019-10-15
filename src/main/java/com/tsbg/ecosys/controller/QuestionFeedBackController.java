@@ -108,16 +108,10 @@ public class QuestionFeedBackController {
                 //此处增加文件上传
                 if (file!=null) {
 
-                    StringBuffer buffer = new StringBuffer();
                     for (MultipartFile multipartFile : file) {
 
-                        buffer.append(multipartFile.getOriginalFilename());
-                        buffer.append(",");
-                        String all = buffer.substring(0, buffer.length() - 1);
-                        System.out.println("所有文件：" + all);
                         String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                         System.out.println("文件後綴：" + Suffix);
-
 
                         String agent=req.getHeader("User-Agent").toLowerCase();
                         System.out.println(agent);
@@ -151,13 +145,10 @@ public class QuestionFeedBackController {
                                 folder.mkdirs();
                             }//无报错则上传成功
                             //获取上传者
-
                             if(prefixName==null) {
                                 multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                                 String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                                 System.out.println(url);//真实存储的url
-                                //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                                //System.out.println("真实URL：" + newUrl);
                                 //本地路径测试文件上传
                                 String URL = "D:/66/testUpload/ecoUpload/questionFeedBack/file/" + questionFeedback.getUserCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
                                 System.out.println("本地存儲URL:" + URL);
@@ -176,9 +167,7 @@ public class QuestionFeedBackController {
                                 fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
                                 fileInfo.setKeyword(multipartFile.getOriginalFilename());
                                 fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
-                                fileInfo.setRelDocId(2);
                                 String timeFormat = sdf.format(new Date());
-
                                 fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                                 fileInfo.setStatus(0);
                                 fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
@@ -188,8 +177,6 @@ public class QuestionFeedBackController {
                                 multipartFile.transferTo(new File(folder, prefixName + date +Suffix));
                                 String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + prefixName + date +Suffix;
                                 System.out.println(url);//真实存储的url
-                                //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                                //System.out.println("真实URL：" + newUrl);
                                 //本地路径测试文件上传
                                 String URL = "D:/66/testUpload/ecoUpload/questionFeedBack/file/" + questionFeedback.getUserCode() + "/" + date + "/" + prefixName + date +Suffix;
                                 System.out.println("本地存儲URL:" + URL);
@@ -208,9 +195,7 @@ public class QuestionFeedBackController {
                                 fileInfo.setLastUpdateUser(questionFeedback.getUserCode());
                                 fileInfo.setKeyword(prefixName + date +Suffix);
                                 fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
-                                fileInfo.setRelDocId(2);
                                 String timeFormat = sdf.format(new Date());
-
                                 fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                                 fileInfo.setStatus(0);
                                 fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
@@ -457,14 +442,9 @@ public class QuestionFeedBackController {
         //此处增加文件上传
         if (file!=null&&file.length>0) {
 
-            StringBuffer buffer = new StringBuffer();
             System.out.println("上傳的文件個數為：" + file.length);
             for (MultipartFile multipartFile : file) {
 
-                buffer.append(multipartFile.getOriginalFilename());
-                buffer.append(",");
-                String all = buffer.substring(0, buffer.length() - 1);
-                System.out.println("所有文件：" + all);
                 String Suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
                 System.out.println("文件後綴：" + Suffix);
 
@@ -489,7 +469,6 @@ public class QuestionFeedBackController {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     String date = sdf.format(time);
                     date = date.replaceAll(":", "");
-                    //String realPath = req.getServletContext().getRealPath("/ecoUpload/"+questionFeedBack.getUserCode()+"/"+date;//此方法用于获取上传路径
                     //本地路径测试文件上传
                     String Path = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date;
                     System.out.println("本地實際路徑：" + Path);
@@ -502,14 +481,10 @@ public class QuestionFeedBackController {
                     }//无报错则上传成功
                     //获取上传者
 
-
-
                     if(prefixName==null) {
                         multipartFile.transferTo(new File(folder, multipartFile.getOriginalFilename()));
                         String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + multipartFile.getOriginalFilename();
                         System.out.println(url);//真实存储的url
-                        //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                        //System.out.println("真实URL：" + newUrl);
                         //本地路径测试文件上传
                         String URL = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + multipartFile.getOriginalFilename();
                         System.out.println("本地存儲URL:" + URL);
@@ -527,9 +502,7 @@ public class QuestionFeedBackController {
                         fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
                         fileInfo.setKeyword(multipartFile.getOriginalFilename());
                         fileInfo.setQuestionFeedbackId(questionHandle.getQuestionFeedbackId());
-                        fileInfo.setRelDocId(2);
                         String timeFormat = sdf.format(new Date());
-
                         fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                         fileInfo.setStatus(0);
                         fileInfo.setQuestionHandleId(questionHandle.getQuestionHandleId());
@@ -539,8 +512,6 @@ public class QuestionFeedBackController {
                         multipartFile.transferTo(new File(folder, prefixName + date +Suffix));
                         String url = req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/ecoUpload" + "/" + prefixName + date +Suffix;
                         System.out.println(url);//真实存储的url
-                        //String newUrl = req.getServletContext().getRealPath("/ecoUpload") +"/"+epartner.getPartnerName()+"/" + multipartFile.getOriginalFilename();
-                        //System.out.println("真实URL：" + newUrl);
                         //本地路径测试文件上传
                         String URL = "D:/66/testUpload/ecoUpload/questionHandle/file/" + questionHandle.getHandleCode() + "/" + date + "/" + prefixName + date +Suffix;
                         System.out.println("本地存儲URL:" + URL);
@@ -558,9 +529,7 @@ public class QuestionFeedBackController {
                         fileInfo.setLastUpdateUser(questionHandle.getHandleCode());
                         fileInfo.setKeyword(prefixName + date +Suffix);
                         fileInfo.setQuestionFeedbackId(questionHandle.getQuestionFeedbackId());
-                        fileInfo.setRelDocId(2);
                         String timeFormat = sdf.format(new Date());
-
                         fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                         fileInfo.setStatus(0);
                         fileInfo.setQuestionHandleId(questionHandle.getQuestionHandleId());
@@ -614,7 +583,6 @@ public class QuestionFeedBackController {
      *
      */
     @RequestMapping(value = "/selectHandleUserByUserCode", method = RequestMethod.POST )
-    @UserLoginToken
     @PassToken
     @ResponseBody
     public ResultUtils selectHandleUserByUserCode(@RequestBody UserInfo userInfo) throws Exception{
@@ -639,7 +607,6 @@ public class QuestionFeedBackController {
      */
     @RequestMapping(value = "/updateFeedbackUserByUserCode", method = RequestMethod.POST )
     @UserLoginToken
-    //@PassToken
     @ResponseBody
     public ResultUtils updateFeedbackUserByUserCode(@RequestBody UserInfo userInfo) throws Exception{
         ResultUtils resultUtils=null;
@@ -670,7 +637,6 @@ public class QuestionFeedBackController {
      */
     @RequestMapping(value = "/updateHandleUserByUserCode", method = RequestMethod.POST )
     @UserLoginToken
-    //@PassToken
     @ResponseBody
     public ResultUtils updateHandleUserByUserCode(@RequestBody UserInfo userInfo) throws Exception{
         ResultUtils resultUtils=null;
