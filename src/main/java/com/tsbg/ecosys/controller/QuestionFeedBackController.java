@@ -182,6 +182,7 @@ public class QuestionFeedBackController {
                                 fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                                 fileInfo.setStatus(0);
                                 fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
+                                fileInfo.setProjId(2);
                                 fileInfoService.insertSelective(fileInfo);
                             }else{
                                 multipartFile.transferTo(new File(folder, prefixName + date +Suffix));
@@ -213,6 +214,7 @@ public class QuestionFeedBackController {
                                 fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                                 fileInfo.setStatus(0);
                                 fileInfo.setQuestionFeedbackId(questionFeedback.getQuestionFeedbackId());
+                                fileInfo.setProjId(2);
                                 fileInfoService.insertSelective(fileInfo);
                             }
                         } else {
@@ -531,6 +533,7 @@ public class QuestionFeedBackController {
                         fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                         fileInfo.setStatus(0);
                         fileInfo.setQuestionHandleId(questionHandle.getQuestionHandleId());
+                        fileInfo.setProjId(2);
                         fileInfoService.insertSelective(fileInfo);
                     }else{
                         multipartFile.transferTo(new File(folder, prefixName + date +Suffix));
@@ -561,6 +564,7 @@ public class QuestionFeedBackController {
                         fileInfo.setUpdatedTime(sdf.parse(timeFormat));
                         fileInfo.setStatus(0);
                         fileInfo.setQuestionHandleId(questionHandle.getQuestionHandleId());
+                        fileInfo.setProjId(2);
                         fileInfoService.insertSelective(fileInfo);
                     }
                 } else {
