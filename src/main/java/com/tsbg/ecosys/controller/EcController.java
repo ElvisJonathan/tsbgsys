@@ -416,6 +416,7 @@ public class EcController {
         //查询数据库中的备注
         List<String> titles = new ArrayList<>();
         List<Comment> selectColumnNamea = questionFeedBackService.selectColumnNamea();
+        List<Comment> selectColumnNameb = questionFeedBackService.selectColumnNamea();
         List<Comment> selectColumnNamec = questionFeedBackService.selectColumnNamec();
         List<Comment> selectColumnNamed = questionFeedBackService.selectColumnNamed();
         List<Comment> selectColumnNamee = questionFeedBackService.selectColumnNamee();
@@ -426,6 +427,12 @@ public class EcController {
             if("pro_name".equals(selectColumnNamea.get(i).getColumn_name())){
                 titles.add(selectColumnNamea.get(i).getColumn_comment());
             }
+        }
+        for (int i = 0; i <= selectColumnNameb.size() - 1; i++) {
+            if("type_name".equals(selectColumnNameb.get(i).getColumn_name())){
+                titles.add(selectColumnNameb.get(i).getColumn_comment());
+            }
+
         }
         for (int i = 0; i <= selectColumnNamed.size() - 1; i++) {
             if("question_name".equals(selectColumnNamed.get(i).getColumn_name())){
@@ -454,6 +461,15 @@ public class EcController {
             if("user_email_address".equals(selectColumnNamed.get(i).getColumn_name())){
                 titles.add(selectColumnNamed.get(i).getColumn_comment());
             }
+            if("application_date".equals(selectColumnNamed.get(i).getColumn_name())){
+                titles.add(selectColumnNamed.get(i).getColumn_comment());
+            }
+        }
+        for (int i = 0; i <= selectColumnNameb.size() - 1; i++) {
+            if("type_name".equals(selectColumnNameb.get(i).getColumn_name())){
+                titles.add(selectColumnNameb.get(i).getColumn_comment());
+                break;
+            }
         }
         for (int i = 0; i <= selectColumnNamee.size() - 1; i++) {
             if("handle_code".equals(selectColumnNamee.get(i).getColumn_name())){
@@ -465,10 +481,10 @@ public class EcController {
             if("start_date".equals(selectColumnNamee.get(i).getColumn_name())){
                 titles.add(selectColumnNamee.get(i).getColumn_comment());
             }
-            if("handle_time".equals(selectColumnNamee.get(i).getColumn_name())){
+            if("is_handle".equals(selectColumnNamee.get(i).getColumn_name())){
                 titles.add(selectColumnNamee.get(i).getColumn_comment());
             }
-            if("is_complete".equals(selectColumnNamee.get(i).getColumn_name())){
+            if("handle_time".equals(selectColumnNamee.get(i).getColumn_name())){
                 titles.add(selectColumnNamee.get(i).getColumn_comment());
             }
         }
@@ -518,14 +534,14 @@ public class EcController {
             row.createCell(6).setCellValue(derivediPackages.get(i).getUserNamed() == null ? "" : derivediPackages.get(i).getUserNamed().toString());
             row.createCell(7).setCellValue(derivediPackages.get(i).getUserExtd() == null ? "" : derivediPackages.get(i).getUserExtd().toString());
             row.createCell(8).setCellValue(derivediPackages.get(i).getUserEmailAddressd() == null ? "" : derivediPackages.get(i).getUserEmailAddressd().toString());
-            row.createCell(9).setCellValue(derivediPackages.get(i).getHandleCodee() == null ? "" : derivediPackages.get(i).getHandleCodee().toString());
-            row.createCell(10).setCellValue(derivediPackages.get(i).getHandleNamee()== null ? "" : derivediPackages.get(i).getHandleNamee().toString());
-            row.createCell(11).setCellValue(derivediPackages.get(i).getStartDatee() == null ? "" : ExcelTimeUtils.getTimehhString(derivediPackages.get(i).getStartDatee()));
+            row.createCell(9).setCellValue(derivediPackages.get(i).getApplicationDated() == null ? "" : derivediPackages.get(i).getApplicationDated().toString());
+            row.createCell(10).setCellValue(derivediPackages.get(i).getTypeName() == null ? "" : derivediPackages.get(i).getTypeName().toString());
+            row.createCell(11).setCellValue(derivediPackages.get(i).getIsHandlee() == null ? "" : derivediPackages.get(i).getIsHandlee().toString());
             row.createCell(12).setCellValue(derivediPackages.get(i).getHandleTimee() == null ? "" : ExcelTimeUtils.getTimehhString(derivediPackages.get(i).getHandleTimee()));
             row.createCell(13).setCellValue(derivediPackages.get(i).getIsCompletee() == null ? "" : derivediPackages.get(i).getIsCompletee().toString());
             row.createCell(14).setCellValue(derivediPackages.get(i).getFileNamec() == null ? "" : derivediPackages.get(i).getFileNamec().toString());
             row.createCell(15).setCellValue(derivediPackages.get(i).getRemarke() == null ? "" : derivediPackages.get(i).getRemarke().toString());
-            row.createCell(16).setCellValue(derivediPackages.get(i).getFilePathc() == null ? "" : derivediPackages.get(i).getFilePathc().toString());
+            row.createCell(16).setCellValue(derivediPackages.get(i).getFilePathc() == null ? "" : "http://localhost:8080/tsbg/upload/testdownload2?fileName="+derivediPackages.get(i).getFileNamec().toString()+"&questionFeedbackId="+derivediPackages.get(i).getQuestionFeedbackIde());
         }
         for (int i = 0; i < derivediPackages.size(); i++) {
             companySheet.autoSizeColumn(i, true);
@@ -540,3 +556,5 @@ public class EcController {
         os.close();
     }
 }
+
+

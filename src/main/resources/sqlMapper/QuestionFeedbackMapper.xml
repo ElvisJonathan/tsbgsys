@@ -198,6 +198,12 @@
     AND table_schema='fiitsbg';
   </select>
 
+  <select id="selectColumnNameb" resultType="com.tsbg.ecosys.dto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='question_type'
+    AND table_schema='fiitsbg';
+  </select>
+
   <select id="selectColumnNamed" resultType="com.tsbg.ecosys.dto.Comment">
     SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
     WHERE table_name='question_feedback'

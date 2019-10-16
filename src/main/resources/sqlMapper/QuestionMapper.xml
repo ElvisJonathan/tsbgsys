@@ -3,14 +3,16 @@
 <mapper namespace="com.tsbg.ecosys.mapper.QuestionMapper" >
     <!--导出系统名称、反馈人、处理人信息，文件信息等-->
     <select id="selectquestion" resultType="com.tsbg.ecosys.model.bag.DerivediPackage">
-      select pt.proj_id AS projIda,pt.pro_name AS proNamea,qf.question_name AS questionNamed,
-      qf.question_describe AS questionDescribed,fi.file_name AS fileNamec,qf.user_code AS userCoded,
-      qf.user_name AS userNamed,qf.user_ext AS userExtd,qf.user_email_address AS userEmailAddressd,
-      qh.handle_code AS handleCodee,qh.handle_name AS handleNamee,qh.start_date AS startDatee,
-      qh.handle_time AS handleTimee ,qh.is_complete AS isCompletee,fi.file_name AS fileNamec,
-      qh.remark AS remarke,fi.file_path AS filePathc from question_feedback AS qf LEFT JOIN
-	  project AS pt ON qf.proj_id=pt.proj_id LEFT JOIN file_info AS fi ON qf.proj_id=fi.proj_id
-      LEFT JOIN question_handle AS qh ON qf.proj_id=qh.proj_id
+       SELECT c.proj_id AS projIda,c.pro_name AS proNamea,a.question_name AS questionNamed,
+       a.question_describe AS questionDescribed,d.file_name AS fileNamec,a.user_code AS
+       userCoded,a.user_name AS userNamed,a.user_ext AS userExtd,a.user_email_address AS
+       userEmailAddressd,a.application_date AS applicationDated,e.type_name AS typeName,
+       b.handle_code AS handleCodee,b.handle_name AS handleNamee,b.start_date AS startDatee,
+       b.is_handle AS isHandlee,b.handle_time AS handleTimee,d.file_name AS fileNamec,b.remark AS remarke,
+       d.file_path AS filePathc FROM question_feedback AS a LEFT JOIN project AS c ON a.proj_id=c.proj_id
+       LEFT JOIN file_info AS d ON a.question_feedback_id = d.question_feedbackid LEFT JOIN question_handle AS b
+       ON d.question_handleid=b.question_handle_id LEFT JOIN question_type AS e
+       ON b.question_type_id=e.type_id WHERE d.status=0 AND c.status=0
    </select>
 
     <!--分页查询系统名称、反馈人、处理人信息，文件信息等-->
@@ -22,6 +24,4 @@
       qf.proj_id AS projIda,pt.pro_name AS proName from question_feedback AS qf
       LEFT JOIN project AS pt ON qf.proj_id=pt.proj_id ORDER BY applicationDate DESC
     </select>
-
-
 </mapper>

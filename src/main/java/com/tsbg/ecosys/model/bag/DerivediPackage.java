@@ -6,12 +6,6 @@ public class DerivediPackage {
     //project
     private Integer projIda;
     private String proNamea;
-    private Date proStarta;
-    private Date proEnda;
-    private String proDirectora;
-    private String proName;
-    private String remarka;
-    private Integer statusa;
     //file_info
     private Integer fileIdc;
     private String dispNamec;
@@ -51,6 +45,8 @@ public class DerivediPackage {
     private Integer isCompletee;
     private Integer proj_ide;
     private String remarke;
+    //question_type
+    private String typeName;
 
     public Integer getProjIda() {
         return projIda;
@@ -66,54 +62,6 @@ public class DerivediPackage {
 
     public void setProNamea(String proNamea) {
         this.proNamea = proNamea;
-    }
-
-    public Date getProStarta() {
-        return proStarta;
-    }
-
-    public void setProStarta(Date proStarta) {
-        this.proStarta = proStarta;
-    }
-
-    public Date getProEnda() {
-        return proEnda;
-    }
-
-    public void setProEnda(Date proEnda) {
-        this.proEnda = proEnda;
-    }
-
-    public String getProDirectora() {
-        return proDirectora;
-    }
-
-    public void setProDirectora(String proDirectora) {
-        this.proDirectora = proDirectora;
-    }
-
-    public String getProName() {
-        return proName;
-    }
-
-    public void setProName(String proName) {
-        this.proName = proName;
-    }
-
-    public String getRemarka() {
-        return remarka;
-    }
-
-    public void setRemarka(String remarka) {
-        this.remarka = remarka;
-    }
-
-    public Integer getStatusa() {
-        return statusa;
-    }
-
-    public void setStatusa(Integer statusa) {
-        this.statusa = statusa;
     }
 
     public Integer getFileIdc() {
@@ -402,5 +350,13 @@ public class DerivediPackage {
 
     public void setRemarke(String remarke) {
         this.remarke = remarke;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }
