@@ -8,9 +8,9 @@
       qf.user_name AS userNamed,qf.user_ext AS userExtd,qf.user_email_address AS userEmailAddressd,
       qh.handle_code AS handleCodee,qh.handle_name AS handleNamee,qh.start_date AS startDatee,
       qh.handle_time AS handleTimee ,qh.is_complete AS isCompletee,fi.file_name AS fileNamec,
-      qh.remark AS remarke,fi.file_path AS filePathc from project AS pt LEFT JOIN file_info AS
-      fi ON pt.proj_id=fi.proj_id LEFT JOIN question_feedback AS qf ON pt.proj_id=qf.proj_id LEFT JOIN
-      question_handle AS qh ON pt.proj_id=qh.proj_id
+      qh.remark AS remarke,fi.file_path AS filePathc from question_feedback AS qf LEFT JOIN
+	  project AS pt ON qf.proj_id=pt.proj_id LEFT JOIN file_info AS fi ON qf.proj_id=fi.proj_id
+      LEFT JOIN question_handle AS qh ON qf.proj_id=qh.proj_id
    </select>
 
     <!--分页查询系统名称、反馈人、处理人信息，文件信息等-->

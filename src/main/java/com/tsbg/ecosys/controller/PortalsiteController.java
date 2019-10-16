@@ -1,6 +1,5 @@
 package com.tsbg.ecosys.controller;
 
-import com.tsbg.ecosys.annotation.PassToken;
 import com.tsbg.ecosys.annotation.UserLoginToken;
 import com.tsbg.ecosys.model.FriendlyLink;
 import com.tsbg.ecosys.service.FriendlyLinkService;
@@ -21,7 +20,6 @@ public class PortalsiteController {
      */
     @RequestMapping(value = "/getdata", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
-    //@PassToken
     @ResponseBody
     public List<FriendlyLink> getSiteURL() {
         List<FriendlyLink> friendlyLinks = friendlyLinkService.selectPortalsiteUrl();

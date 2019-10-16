@@ -404,7 +404,7 @@ public class EcController {
     }
 
     //导出系统名称、反馈人、处理人信息
-    @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
+    /*@RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
     public void exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
         List<DerivediPackage> derivediPackages = questionService.selectquestion();
@@ -538,5 +538,5 @@ public class EcController {
         wb.write(os);
         os.flush();
         os.close();
-    }
+    }*/
 }
