@@ -9,12 +9,10 @@ import com.tsbg.ecosys.service.UserInfoService;
 import com.tsbg.ecosys.util.InitPwdUtils;
 //import com.tsbg.ecosys.util.JWTUtils;
 import com.tsbg.ecosys.util.MD5Util2;
+import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.util.SendMailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
@@ -38,21 +36,22 @@ public class FindPwdController {
     }
 
 
-    @RequestMapping("/findPwdPage")
-    @PassToken
-    public String FindPwdPage(){
-        return "<div align='center'></br></br></br></br></br></br></br></br></br></br></br></br><table><form action='/verifyAndgetToken' method='post'><tr><td><input name='user_code' id='user_code' type='text' /></td></tr><tr><td><input name='email_address' id='email_address' type='text'/> </td></tr><tr><td><input type='submit' value='确定'/></td></tr></table></form></div>";
-    }
+//    @RequestMapping("/findPwdPage")
+//    @PassToken
+//    public String FindPwdPage(){
+//        return "<div align='center'></br></br></br></br></br></br></br></br></br></br></br></br><table><form action='/verifyAndgetToken' method='post'><tr><td><input name='user_code' id='user_code' type='text' /></td></tr><tr><td><input name='email_address' id='email_address' type='text'/> </td></tr><tr><td><input type='submit' value='确定'/></td></tr></table></form></div>";
+//    }
 
     @RequestMapping(value="/verifyAndgetToken",method= RequestMethod.POST)
     @PassToken
     @ResponseBody
-    public String VerifyAndgetToken(HttpServletRequest request) throws Exception {
+    public ResultUtils VerifyAndgetToken(@RequestBody UserInfo userInfo) throws Exception {
 
+        ResultUtils resultUtils=null;
         String email="";
         JSONObject Message=new JSONObject();
-        String user_code=request.getParameter("user_code");
-        String email_address=request.getParameter("email_address");
+        String user_code=userInfo.getUserCode();
+        String email_address=userInfo.getEmailAddress();
         if(!user_code.isEmpty() && !email_address.isEmpty()){//提交的Form表單數據user_code、email_address均不爲空
             email=userInfoService.selectEmailByUserCode(user_code);
             System.out.println(email);
@@ -70,10 +69,8 @@ public class FindPwdController {
                // if (token != null) {
 
                     String initPwd=InitPwdUtils.createInitPwd();
-                    UserInfo userInfo=new UserInfo();
-                    userInfo.setUserCode(user_code);
                     //設置信息更新時間（重置密碼）
-                    userInfo.setUpdateTime(new Date());
+                    u.setUpdateTime(new Date());
                     //生成salt
                     String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                     Random random=new Random();
@@ -82,40 +79,49 @@ public class FindPwdController {
                         int nu=random.nextInt(6);
                         sb.append(str.charAt(nu));
                     }
-                    userInfo.setSalt(sb.toString());
+                    u.setSalt(sb.toString());
                     //加密密码
                     String newPwd = initPwd + sb.toString();
-                    userInfo.setUserPwd(MD5Util2.encode(newPwd));
+                    u.setUserPwd(MD5Util2.encode(newPwd));
                     byte initLock=2;
-                    userInfo.setLocked(initLock);
-                    int num = userInfoService.updateByUserCodeSelective(userInfo);
+                    u.setLocked(initLock);
+                    int num = userInfoService.updateByUserCodeSelective(u);
                     if(num>0){//修改成功
-                       // Message.put("Toekn",token);
-                        String subject="系統密碼重置";
-                     //   String url="http://localhost:8080/testToken?token="+token;
-                        String mailContent="<p>Dear "+username+",您好:      </p>" +
-                                "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您此次初始密碼為：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + initPwd+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;請及時登錄修改密碼。</p>"+
-                                "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点此链接通过验证前往修改密码！Url:</p>";
-                        JSONObject jsonObject=SendMailUtils.send(username, email_address, subject, mailContent);
-                        if(jsonObject.get("status").equals("success")){
-                            return "<script> alert('初始密碼為：" + initPwd+"請及時修改密碼！');</script>";
-                        }else{
-                            return "<script> alert('郵件發送失敗，請稍後重試！');</script>";
+                        JSONObject jsonObject=new JSONObject();
+                        try {
+                            // Message.put("Toekn",token);
+                            String subject = "系統密碼重置";
+                            //   String url="http://localhost:8080/testToken?token="+token;
+                            String mailContent = "<p>Dear " + username + ",您好:      </p>" +
+                                    "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您此次初始密碼為：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + initPwd + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;請及時登錄修改密碼。</p>" +
+                                    "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点此链接通过验证前往修改密码！Url:</p>";
+                            jsonObject = SendMailUtils.send(username, email_address, subject, mailContent);
+                            if(jsonObject.get("status").equals("success")){
+                                resultUtils = new ResultUtils(100, "提示信息：初始密碼為：" + initPwd+"請及時修改密碼！");
+                                return resultUtils;
+                            }else{
+                                resultUtils = new ResultUtils(505, "提示信息：郵件發送失敗，請稍後重試！");
+                                return resultUtils;
+                            }
+                        }catch (Exception e){
+                            System.out.println("發送郵件失敗");
                         }
                     }else{
-                        Message.put("Token","Token生成成功，重置初始密碼失敗！");
-                        return "<script> alert('重置密碼失敗，請稍後重試！');</script>";
+                        //Message.put("Token","Token生成成功，重置初始密碼失敗！");
+                        resultUtils = new ResultUtils(505, "提示信息：重置密碼失敗，請稍後重試！");
+                        return resultUtils;
                     }
                /* }else{
                     Message.put("Token","Token生成失敗，請稍後重試！");
                     return "<script> alert('驗證失敗，請稍後重試！');</script>";
                 }*/
             }else{
-                return "<script> alert('工號對應的郵箱不一致，請重新輸入！');window.location.href='http://localhost:8080/findPwdPage';</script>";
+                resultUtils = new ResultUtils(505, "提示信息：工號對應的郵箱不一致，請重新輸入！");
+                return resultUtils;
             }
-        }else{
-            return "<script> alert('工號或郵箱爲空，請重新填寫！');</script>";
         }
+        resultUtils = new ResultUtils(505, "提示信息：工號或郵箱爲空，請重新填寫！");
+        return resultUtils;
     }
 
 
