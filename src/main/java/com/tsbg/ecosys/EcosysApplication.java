@@ -1,6 +1,5 @@
 package com.tsbg.ecosys;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
-@MapperScan("com.tsbg.ecosys.mapper")
 public class EcosysApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

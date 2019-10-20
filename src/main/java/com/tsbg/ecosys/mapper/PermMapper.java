@@ -1,12 +1,14 @@
 package com.tsbg.ecosys.mapper;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Set;
 
 /**
  * 获取权限相关dao
  */
+@Mapper
 public interface PermMapper {
 	/**
 	 * 查询用户的角色 菜单 权限
