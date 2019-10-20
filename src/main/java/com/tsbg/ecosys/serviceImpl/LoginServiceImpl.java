@@ -4,12 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.tsbg.ecosys.mapper.LoginMapper;
 import com.tsbg.ecosys.model.UserInfo;
-import com.tsbg.ecosys.service.LoginService;
-import com.tsbg.ecosys.service.UserInfoService;
-import com.tsbg.ecosys.service.PermService;
+import com.tsbg.ecosys.model.UserRole;
+import com.tsbg.ecosys.model.bag.RoleAndProJPackage;
+import com.tsbg.ecosys.service.*;
 import com.tsbg.ecosys.service.base.RedisService;
 import com.tsbg.ecosys.service.base.TokenService;
-import com.tsbg.ecosys.service.TokenBlacklistService;
 import com.tsbg.ecosys.util.CommonUtil;
 import com.tsbg.ecosys.util.constants.Constants;
 import org.apache.shiro.SecurityUtils;
@@ -22,6 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  *  登录service实现类
@@ -43,6 +43,10 @@ public class LoginServiceImpl implements LoginService {
 	private TokenBlacklistService tokenBlacklistService;
 	@Value("${server.servlet.session.timeout}")
 	private long sessionExpire;
+	@Autowired
+	private RoleAndProJPackageService roleAndProJPackageService;
+	@Autowired
+	private UserRoleService userRoleService;
 
 	/**
 	 * 登录表单提交
@@ -94,9 +98,14 @@ public class LoginServiceImpl implements LoginService {
 			String token2 = tokenService.getToken(userForBase);
 			//将密码存到redis
 			redisService.setCacheObject("pwd"+userId,userPwd,3600);
+			//适配统一登录 将角色和项目信息返给前台
+			//List<RoleAndProJPackage> roleAndProJPackages = roleAndProJPackageService.selectRoleAndProj();
+			//当前用户的项目编号返给前端
+			List<UserRole> userRoles = userRoleService.selectProJMsgByUid(userId);
 			info.put("token",token2);
 			info.put("userCode",userCode);
-			info.put("result", "成功登录并且获取了权限");
+			info.put("result", "成功登录");
+			info.put("RoleAndProject",userRoles);
 		} catch (AuthenticationException e) {
 			info.put("result", "用户名或密码错误登录失败");
 		}
@@ -160,6 +169,17 @@ public class LoginServiceImpl implements LoginService {
 		}
 		info.put("result","该用户权限尚待分配");
 		return CommonUtil.failJson(info);
+	}
+
+	@Override
+	public JSONObject getMyInfo2(Integer projId) {
+		JSONObject userInfo2 = redisService.getCacheObject(Constants.SESSION_USER_INFO);
+		String userCode2 = userInfo2.getString("userCode");
+		JSONObject info = new JSONObject();
+		JSONObject userPermission2 = permService.getMyUserPermission(userCode2,projId);
+		redisService.setCacheObject(Constants.SESSION_USER_PERMISSION, userPermission2);
+		info.put("userPermission",userPermission2);
+		return CommonUtil.successJson(info);
 	}
 
 	/**

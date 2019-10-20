@@ -15,7 +15,7 @@ public interface PermMapper {
 	/**
 	 * 查询用户的角色 菜单 权限
 	 */
-	JSONObject getMyUserPermission(String userCode);
+	JSONObject getMyUserPermission(String userCode,Integer projId);
 	/**
 	 * 查询用户个人的角色 菜单 权限
 	 */

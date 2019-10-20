@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.tsbg.ecosys.annotation.PassToken;
 import com.tsbg.ecosys.annotation.UserLoginToken;
+import com.tsbg.ecosys.model.UserRole;
 import com.tsbg.ecosys.service.LoginService;
 import com.tsbg.ecosys.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,24 @@ public class ShiroLoginController {
 
     /**
      * 查询当前登录用户的信息
+     * 生态系统调用该方法返回
      */
     @RequestMapping(value = "/getMyInfo", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
     @ResponseBody
     public JSONObject getMyInfo() {
         return loginService.getMyInfo();
+    }
+
+    /**
+     * 查询当前登录用户的信息
+     * 其他系统调用该方法返回
+     */
+    @RequestMapping(value = "/getMyInfo2", method = { RequestMethod.GET, RequestMethod.POST })
+    @UserLoginToken
+    @ResponseBody
+    public JSONObject getMyInfo2(@RequestBody UserRole userRole) {
+        return loginService.getMyInfo2(userRole.getProjId());
     }
 
     /**

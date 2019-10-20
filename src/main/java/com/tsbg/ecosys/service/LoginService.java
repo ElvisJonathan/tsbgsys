@@ -40,6 +40,11 @@ public interface LoginService {
 	JSONObject getMyInfo();
 
 	/**
+	 * 根据项目编号来返回权限信息
+	 */
+	JSONObject getMyInfo2(Integer projId);
+
+	/**
 	 * 退出登录
 	 */
 	JSONObject logout(HttpServletRequest req);

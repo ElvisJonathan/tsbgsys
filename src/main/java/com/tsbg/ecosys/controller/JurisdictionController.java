@@ -1,6 +1,9 @@
 package com.tsbg.ecosys.controller;
 
+import com.tsbg.ecosys.annotation.PassToken;
 import com.tsbg.ecosys.annotation.UserLoginToken;
+import com.tsbg.ecosys.model.bag.PermRolePackage;
+import com.tsbg.ecosys.model.bag.RoleProJNoPackage;
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.ResultUtils;
 import com.tsbg.ecosys.model.bag.PowerPackage;
@@ -51,6 +54,7 @@ public class JurisdictionController {
             if (uid!=null){
                 //通过uid查询用户对应的角色rid
                 Integer rid = userRoleService.selectRidByUid(uid);
+                System.out.println("角色编号："+rid);
                 if (rid!=null){
                     //通过角色rid查询对应的权限id
                     List<Integer> pid = permRoleService.selectPidByRid(rid);
@@ -203,6 +207,7 @@ public class JurisdictionController {
 
     /**
      * 查询用户个人权限
+     * 适配生态系统
      */
     @RequestMapping(value = "/powerdetail", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
@@ -231,6 +236,7 @@ public class JurisdictionController {
 
     /**
      * 修改用户权限
+     * 适配生态系统
      */
     @RequestMapping(value = "/powerModify", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
@@ -339,5 +345,50 @@ public class JurisdictionController {
             return new ResultUtils(0,"修改权限成功",arr3);
         }
         return new ResultUtils(509, "提示信息：无此权限！");
+    }
+
+    /**
+     * 统一 权限查询
+     * 根据项目编号或角色编号查询权限
+     * 生态系统不要用这个了，本身就已经细化到个人了
+     */
+    @RequestMapping(value = "/unifiedPower", method = { RequestMethod.GET, RequestMethod.POST })
+    //@UserLoginToken
+    @PassToken
+    @ResponseBody
+    public ResultUtils getUnifiedPower(@RequestBody RoleProJNoPackage roleProJNoPackage) {
+        Integer projId = roleProJNoPackage.getProjId();
+        Integer roleId = roleProJNoPackage.getRoleId();
+        System.out.println("项目编号："+projId);
+        System.out.println("角色编号："+roleId);
+        List<PermRolePackage> permissions = permissionService.selectRolePermMsg(projId, roleId);
+        return new ResultUtils(100,"成功",permissions);
+    }
+
+    /**
+     * 统一 权限修改
+     * 修改用户的角色
+     * 生态系统不要用这个了，本身就已经细化到个人了
+     */
+    @RequestMapping(value = "/modifyUnifiedPower", method = { RequestMethod.GET, RequestMethod.POST })
+    //@UserLoginToken
+    @PassToken
+    @ResponseBody
+    public ResultUtils modifyUnifiedPower(@RequestBody RoleProJNoPackage roleProJNoPackage) {
+        //需要获取参数userCode/projId/想要修改成的角色编号
+        String userCode = roleProJNoPackage.getUserCode();
+        System.out.println("工号："+userCode);
+        Integer uid = userInfoService.selectuidbyuserCode(userCode);
+        System.out.println("用户编号："+uid);
+        Integer projId = roleProJNoPackage.getProjId();
+        System.out.println("项目编号："+projId);
+        Integer roleId = roleProJNoPackage.getRoleId();
+        System.out.println("角色编号："+roleId);
+        //通过角色的变更可以控制该用户角色对应的权限，而不是去修改perm_role（会导致一批人权限的变更）
+        int i = userRoleService.updateUserRoleByProAndRoleId(roleId, uid, projId);
+        if (i>0){
+            return new ResultUtils(100,"修改角色成功");
+        }
+        return new ResultUtils(500,"修改角色失败,请确认该用户角色后修改");
     }
 }

@@ -88,7 +88,7 @@ public class FindPwdController {
                     int num = userInfoService.updateByUserCodeSelective(u);
                     if(num>0){//修改成功
                         JSONObject jsonObject=new JSONObject();
-                        try {
+                        /*try {
                             // Message.put("Toekn",token);
                             String subject = "系統密碼重置";
                             //   String url="http://localhost:8080/testToken?token="+token;
@@ -105,7 +105,9 @@ public class FindPwdController {
                             }
                         }catch (Exception e){
                             System.out.println("發送郵件失敗");
-                        }
+                        }*/
+                        resultUtils = new ResultUtils(100, "提示信息：初始密碼為：" + initPwd+"請及時修改密碼！");
+                        return resultUtils;
                     }else{
                         //Message.put("Token","Token生成成功，重置初始密碼失敗！");
                         resultUtils = new ResultUtils(505, "提示信息：重置密碼失敗，請稍後重試！");

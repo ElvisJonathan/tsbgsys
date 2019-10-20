@@ -28,4 +28,19 @@ public class UserRoleServiceImpl implements UserRoleService {
     public List<Integer> getRole(Integer uid) {
         return userRoleMapper.getRole(uid);
     }
+
+    @Override
+    public int insertData(Integer userId, Integer roleId, Integer projId) {
+        return userRoleMapper.insertData(userId,roleId,projId);
+    }
+
+    @Override
+    public List<UserRole> selectProJMsgByUid(Integer uid) {
+        return userRoleMapper.selectProJMsgByUid(uid);
+    }
+
+    @Override
+    public int updateUserRoleByProAndRoleId(Integer roleId, Integer userId, Integer projId) {
+        return userRoleMapper.updateUserRoleByProAndRoleId(roleId,userId,projId);
+    }
 }

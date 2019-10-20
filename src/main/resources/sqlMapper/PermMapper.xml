@@ -51,7 +51,7 @@
             LEFT JOIN role AS c ON c.`roleid` = b.`role_id`
             LEFT JOIN perm_role AS d ON c.`roleid` = d.`role_id`
             LEFT JOIN permission AS e ON d.`perm_id` = e.`perm_id`
-            WHERE a.`user_code`=#{userCode} AND a.`status` = 0 AND e.`perm_id`!=6
+            WHERE a.`user_code`=#{userCode} AND a.`status` = 0 AND e.`perm_id`!=6 AND b.`proj_id`=#{projId}
             ORDER BY a.`user_id` DESC;
     </select>
 

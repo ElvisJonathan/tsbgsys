@@ -31,8 +31,8 @@ public class PermServiceImpl implements PermService {
 	 * 角色 权限
 	 */
 	@Override
-	public JSONObject getMyUserPermission(String userCode) {
-		JSONObject userPermission = permMapper.getMyUserPermission(userCode);
+	public JSONObject getMyUserPermission(String userCode,Integer projId) {
+		JSONObject userPermission = permMapper.getMyUserPermission(userCode,projId);
 		return userPermission;
 	}
 
