@@ -1,6 +1,7 @@
 package com.tsbg.ecosys.service;
 
 import com.tsbg.ecosys.model.Permission;
+import com.tsbg.ecosys.model.bag.PermRolePackage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,4 +22,7 @@ public interface PermissionService {
 
     //根据permission查询对应权限ID
     List<Integer> selectPermIdByPerm(String[] perm);
+
+    //查询当前系统角色-权限对应信息
+    List<PermRolePackage> selectRolePermMsg(@Param("projId")Integer projId, @Param("roleId")Integer roleId);
 }

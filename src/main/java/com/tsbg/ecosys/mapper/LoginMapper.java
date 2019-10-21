@@ -1,11 +1,13 @@
 package com.tsbg.ecosys.mapper;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * 登录相关dao
  */
+@Mapper
 public interface LoginMapper {
 	/**
 	 * 根据用户名和密码查询对应的用户

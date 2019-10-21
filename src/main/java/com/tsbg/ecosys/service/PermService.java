@@ -14,7 +14,7 @@ public interface PermService {
 	/**
 	 * 查询某角色  菜单列表   权限列表
 	 */
-	JSONObject getMyUserPermission(String userCode);
+	JSONObject getMyUserPermission(String userCode,Integer projId);
 
 	/**
 	 * 查询用户个人的角色 菜单 权限

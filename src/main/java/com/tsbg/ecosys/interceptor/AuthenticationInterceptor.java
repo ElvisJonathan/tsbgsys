@@ -78,7 +78,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 }  catch (JWTVerificationException e) {
                     throw new RuntimeException("token验证失效请重新登录");
                 }  catch(Exception e){
-                    throw new RuntimeException("密码失效请重新登录");
+                    throw new RuntimeException("密码和token失效请重新登录");
                 }
                 return true;
             }

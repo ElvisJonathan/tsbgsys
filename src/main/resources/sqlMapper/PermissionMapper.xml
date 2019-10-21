@@ -180,4 +180,18 @@
   <select id="selectPermission" resultType="String" parameterType="String">
         SELECT p.`permission` FROM permission AS p WHERE p.`name`=#{name,jdbcType=VARCHAR}
     </select>
+
+  <select id="selectRolePermMsg" resultType="com.tsbg.ecosys.model.bag.PermRolePackage" parameterType="java.lang.Integer" >
+        SELECT p.role_id as roleId,pe.`name` as name,pe.`permission` as permission
+        FROM perm_role AS p
+        LEFT JOIN permission AS pe
+        ON p.`perm_id`=pe.`perm_id`
+        WHERE p.`perm_id`!=6
+        <if test="projId != null" >
+         AND pe.`proj_id`=#{projId,jdbcType=INTEGER}
+        </if>
+        <if test="roleId != null" >
+         AND p.`role_id` = #{roleId,jdbcType=INTEGER};
+        </if>
+  </select>
 </mapper>

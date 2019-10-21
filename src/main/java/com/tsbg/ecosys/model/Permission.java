@@ -19,6 +19,9 @@ public class Permission {
 
     private Integer projId;
 
+    //额外字段
+    private Integer roleId;
+
     public Integer getPermId() {
         return permId;
     }
@@ -89,5 +92,13 @@ public class Permission {
 
     public void setProjId(Integer projId) {
         this.projId = projId;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }
