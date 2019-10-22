@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.ecoMapper.PermRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.PermRole" >
+    <id column="permrole_id" property="permroleId" jdbcType="INTEGER" />
+    <result column="perm_id" property="permId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    permrole_id, perm_id, role_id, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from perm_role
+    where permrole_id = #{permroleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from perm_role
+    where permrole_id = #{permroleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.PermRole" >
+    insert into perm_role (permrole_id, perm_id, role_id,
+      remark)
+    values (#{permroleId,jdbcType=INTEGER}, #{permId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.PermRole" >
+    insert into perm_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="permroleId != null" >
+        permrole_id,
+      </if>
+      <if test="permId != null" >
+        perm_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="permroleId != null" >
+        #{permroleId,jdbcType=INTEGER},
+      </if>
+      <if test="permId != null" >
+        #{permId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.PermRole" >
+    update perm_role
+    <set >
+      <if test="permId != null" >
+        perm_id = #{permId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where permrole_id = #{permroleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.PermRole" >
+    update perm_role
+    set perm_id = #{permId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where permrole_id = #{permroleId,jdbcType=INTEGER}
+  </update>
+  <select id="selectPidByRid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+   SELECT e.`perm_id` FROM perm_role AS e WHERE e.`role_id`=#{rid,jdbcType=INTEGER};
+  </select>
+  <select id="selectPridByRid" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+   SELECT e.`permrole_id` FROM perm_role AS e WHERE e.`role_id`=#{rid,jdbcType=INTEGER};
+  </select>
+  <update id="updatePowerByPrid" parameterType="java.lang.Object" >
+    UPDATE perm_role AS r SET r.`perm_id`= #{pid} WHERE r.`permrole_id`=#{prid}
+  </update>
+</mapper>

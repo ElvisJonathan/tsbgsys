@@ -1,8 +1,8 @@
 package com.tsbg.ecosys.filter;
 
 import com.google.common.base.Strings;
-import com.tsbg.ecosys.controller.BaseController;
-import com.tsbg.ecosys.service.base.RedisService;
+import com.tsbg.ecosys.ecoController.BaseController;
+import com.tsbg.ecosys.ecoService.base.RedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

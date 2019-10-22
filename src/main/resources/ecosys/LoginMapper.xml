@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.ecoMapper.LoginMapper">
+
+    <select id="getUser" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+            u.id       userId,
+            u.username username,
+            u.password password,
+            u.nickname nickName
+        FROM
+            sys_user u
+        WHERE u.username = #{username}
+          AND u.password = #{password}
+          AND u.delete_status = '1'
+    </select>
+
+    <select id="getMyUser" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+            u.`user_id`   userId,
+            u.`user_code` userCode,
+            u.`user_pwd`  userPwd,
+            u.`user_name` userName
+        FROM
+            user_info u
+        WHERE u.`user_code` = #{userCode}
+          AND u.`user_pwd` = #{userPwd}
+          AND u.`status` = 0
+    </select>
+</mapper>

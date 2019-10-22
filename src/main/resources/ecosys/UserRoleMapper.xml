@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.ecoMapper.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.UserRole" >
+    <id column="urole_id" property="uroleId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="proj_id" property="projId" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    urole_id, user_id, role_id, proj_id, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from user_role
+    where urole_id = #{uroleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_role
+    where urole_id = #{uroleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+    insert into user_role (urole_id, user_id, role_id, proj_id,
+      remark)
+    values (#{uroleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{projId,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uroleId != null" >
+        urole_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="projId != null" >
+        proj_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uroleId != null" >
+        #{uroleId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="projId != null" >
+        #{projId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+    update user_role
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="projId != null" >
+        proj_id = #{projId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where urole_id = #{uroleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+    update user_role
+    set user_id = #{userId,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=INTEGER},
+      proj_id = #{projId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where urole_id = #{uroleId,jdbcType=INTEGER}
+  </update>
+  <select id="selectEuserInfo"  parameterType="String" resultType="com.tsbg.ecosys.ecoModel.UserRole">
+    SELECT role_id,remark FROM user_role AS r LEFT JOIN user_info i ON r.`user_id`=i.`user_id` WHERE i.`user_code`= #{userCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectRidByUid"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT r.`role_id` FROM user_role AS r WHERE r.`user_id`=#{uid,jdbcType=INTEGER};
+  </select>
+  <select id="getRole"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT u.`role_id` FROM user_role AS u WHERE u.`user_id`=#{uid,jdbcType=INTEGER};
+  </select>
+  <insert id="insertData" parameterType="java.lang.Integer" >
+    insert into user_role (user_id, role_id, proj_id)
+    values  (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{projId,jdbcType=INTEGER});
+  </insert>
+  <select id="selectProJMsgByUid" resultType="com.tsbg.ecosys.ecoModel.UserRole" parameterType="java.lang.Integer" >
+    SELECT u.`user_id` as userId,u.`role_id` as roleId,u.`proj_id` as projId,p.`pro_name` as proName
+    FROM user_role AS u
+    LEFT JOIN project AS p ON u.`proj_id`= p.`proj_id`
+    WHERE u.`user_id`=#{uid,jdbcType=INTEGER};
+  </select>
+  <update id="updateUserRoleByProAndRoleId" parameterType="java.lang.Integer" >
+    update user_role
+    set role_id = #{rid,jdbcType=INTEGER}
+    where user_id = #{uid,jdbcType=INTEGER} AND proj_id = #{projId,jdbcType=INTEGER};
+  </update>
+</mapper>

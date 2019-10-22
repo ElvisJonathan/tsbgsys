@@ -1,6 +1,6 @@
 package com.tsbg.ecosys.common;
 
-import com.tsbg.ecosys.model.UserInfo;
+import com.tsbg.ecosys.ecoModel.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

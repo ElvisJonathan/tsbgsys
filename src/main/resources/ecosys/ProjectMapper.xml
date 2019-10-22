@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.ecosys.ecoMapper.ProjectMapper" >
+    <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.Project" >
+        <id column="proj_id" property="projId" jdbcType="INTEGER" />
+        <result column="pro_name" property="proName" jdbcType="VARCHAR" />
+        <result column="pro_start" property="proStart" jdbcType="DATE" />
+        <result column="pro_end" property="proEnd" jdbcType="DATE" />
+        <result column="pro_director" property="proDirector" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    proj_id,pro_name,pro_start,pro_end,pro_director,remark,status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from project
+        where proj_id = #{projId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByProName" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from project
+        where pro_name = #{proName,jdbcType=INTEGER}
+    </select>
+
+
+<!--    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
+<!--    delete from role-->
+<!--    where roleid = #{roleid,jdbcType=INTEGER}-->
+<!--    </delete>-->
+<!--    <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--    insert into role (roleid, available, role,-->
+<!--      parent_id, description, proj_id-->
+<!--      )-->
+<!--    values (#{roleid,jdbcType=INTEGER}, #{available,jdbcType=BIT}, #{role,jdbcType=VARCHAR},-->
+<!--      #{parentId,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{projId,jdbcType=INTEGER}-->
+<!--      )-->
+<!--  </insert>-->
+<!--    <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--        insert into role-->
+<!--        <trim prefix="(" suffix=")" suffixOverrides="," >-->
+<!--            <if test="roleid != null" >-->
+<!--                roleid,-->
+<!--            </if>-->
+<!--            <if test="available != null" >-->
+<!--                available,-->
+<!--            </if>-->
+<!--            <if test="role != null" >-->
+<!--                role,-->
+<!--            </if>-->
+<!--            <if test="parentId != null" >-->
+<!--                parent_id,-->
+<!--            </if>-->
+<!--            <if test="description != null" >-->
+<!--                description,-->
+<!--            </if>-->
+<!--            <if test="projId != null" >-->
+<!--                proj_id,-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        <trim prefix="values (" suffix=")" suffixOverrides="," >-->
+<!--            <if test="roleid != null" >-->
+<!--                #{roleid,jdbcType=INTEGER},-->
+<!--            </if>-->
+<!--            <if test="available != null" >-->
+<!--                #{available,jdbcType=BIT},-->
+<!--            </if>-->
+<!--            <if test="role != null" >-->
+<!--                #{role,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="parentId != null" >-->
+<!--                #{parentId,jdbcType=BIGINT},-->
+<!--            </if>-->
+<!--            <if test="description != null" >-->
+<!--                #{description,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="projId != null" >-->
+<!--                #{projId,jdbcType=INTEGER},-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--    </insert>-->
+<!--    <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--        update role-->
+<!--        <set >-->
+<!--            <if test="available != null" >-->
+<!--                available = #{available,jdbcType=BIT},-->
+<!--            </if>-->
+<!--            <if test="role != null" >-->
+<!--                role = #{role,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="parentId != null" >-->
+<!--                parent_id = #{parentId,jdbcType=BIGINT},-->
+<!--            </if>-->
+<!--            <if test="description != null" >-->
+<!--                description = #{description,jdbcType=VARCHAR},-->
+<!--            </if>-->
+<!--            <if test="projId != null" >-->
+<!--                proj_id = #{projId,jdbcType=INTEGER},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where roleid = #{roleid,jdbcType=INTEGER}-->
+<!--    </update>-->
+<!--    <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--    update role-->
+<!--    set available = #{available,jdbcType=BIT},-->
+<!--      role = #{role,jdbcType=VARCHAR},-->
+<!--      parent_id = #{parentId,jdbcType=BIGINT},-->
+<!--      description = #{description,jdbcType=VARCHAR},-->
+<!--      proj_id = #{projId,jdbcType=INTEGER}-->
+<!--    where roleid = #{roleid,jdbcType=INTEGER}-->
+<!--  </update>-->
+<!--    <select id="findRoleByUserCode" resultType="com.tsbg.ecosys.ecoModel.Role" parameterType="String">-->
+<!--        SELECT-->
+<!--            user_info.user_id,-->
+<!--            user_info.`user_code`,-->
+<!--            user_info.`user_pwd`,-->
+<!--            user_info.locked,-->
+<!--            user_info.user_name,-->
+<!--            role.roleid,-->
+<!--            role.available,-->
+<!--            role.description,-->
+<!--            role.role-->
+<!--        FROM-->
+<!--            user_info-->
+<!--        RIGHT JOIN user_role ON user_info.user_id = user_role.user_id-->
+<!--        LEFT JOIN role ON user_role.role_id = role.roleid-->
+<!--        WHERE user_code=#{userCode};-->
+<!--    </select>-->
+<!--    <select id="findRoleByUserCode2" resultType="java.lang.Integer" parameterType="String">-->
+<!--        SELECT role.roleid-->
+<!--        FROM user_info-->
+<!--        RIGHT JOIN user_role ON user_info.user_id = user_role.user_id-->
+<!--        LEFT JOIN role ON user_role.role_id = role.roleid-->
+<!--        WHERE user_code=#{userCode}-->
+<!--    </select>-->
+</mapper>

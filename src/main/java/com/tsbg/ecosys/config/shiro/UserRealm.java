@@ -2,9 +2,9 @@ package com.tsbg.ecosys.config.shiro;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.tsbg.ecosys.service.LoginService;
-import com.tsbg.ecosys.service.UserInfoService;
-import com.tsbg.ecosys.service.base.RedisService;
+import com.tsbg.ecosys.ecoService.LoginService;
+import com.tsbg.ecosys.ecoService.UserInfoService;
+import com.tsbg.ecosys.ecoService.base.RedisService;
 import com.tsbg.ecosys.util.MD5Util2;
 import com.tsbg.ecosys.util.constants.Constants;
 import org.apache.shiro.authc.*;

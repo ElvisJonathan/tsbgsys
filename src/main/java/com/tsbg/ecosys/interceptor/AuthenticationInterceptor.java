@@ -8,9 +8,9 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import com.tsbg.ecosys.annotation.PassToken;
 import com.tsbg.ecosys.annotation.UserLoginToken;
-import com.tsbg.ecosys.service.UserInfoService;
-import com.tsbg.ecosys.service.base.RedisService;
-import com.tsbg.ecosys.service.TokenBlacklistService;
+import com.tsbg.ecosys.ecoService.UserInfoService;
+import com.tsbg.ecosys.ecoService.base.RedisService;
+import com.tsbg.ecosys.ecoService.TokenBlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
