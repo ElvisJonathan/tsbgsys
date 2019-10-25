@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.StaffInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.StaffInfo" >
+<mapper namespace="com.tsbg.mis.ecoMapper.StaffInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.StaffInfo" >
     <id column="staff_id" property="staffId" jdbcType="INTEGER" />
     <result column="staff_code" property="staffCode" jdbcType="VARCHAR" />
     <result column="staff_name" property="staffName" jdbcType="VARCHAR" />
@@ -35,7 +35,7 @@
     delete from staff_info
     where staff_id = #{staffId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.StaffInfo" >
+  <insert id="insert" parameterType="com.tsbg.mis.ecoModel.StaffInfo" >
     insert into staff_info (staff_id, staff_code, staff_name,factory_location,
       BG, BU, department,
       depart_code, cost_code,legal_person,gender,
@@ -49,7 +49,7 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR},
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.StaffInfo" >
+  <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.StaffInfo" >
     insert into staff_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="staffId != null" >
@@ -164,7 +164,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.StaffInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.StaffInfo" >
     update staff_info
     <set >
       <if test="staffCode != null" >
@@ -221,7 +221,7 @@
     </set>
     where staff_id = #{staffId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.StaffInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.StaffInfo" >
     update staff_info
     set staff_code = #{staffCode,jdbcType=VARCHAR},
       staff_name = #{staffName,jdbcType=VARCHAR},

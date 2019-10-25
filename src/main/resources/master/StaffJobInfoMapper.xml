@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.masterMapper.StaffJobInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.masterModel.StaffJobInfo" >
+    <id column="staff_job_info_id" property="staffJobInfoId" jdbcType="INTEGER" />
+    <result column="staff_code" property="staffCode" jdbcType="VARCHAR" />
+    <result column="product_place" property="productPlace" jdbcType="VARCHAR" />
+    <result column="factory_place" property="factoryPlace" jdbcType="VARCHAR" />
+    <result column="join_bg_date" property="joinBgDate" jdbcType="TIMESTAMP" />
+    <result column="join_bu_date" property="joinBuDate" jdbcType="TIMESTAMP" />
+    <result column="seniority" property="seniority" jdbcType="VARCHAR" />
+    <result column="overtime_control_type" property="overtimeControlType" jdbcType="VARCHAR" />
+    <result column="person_type" property="personType" jdbcType="VARCHAR" />
+    <result column="is_checking_in" property="isCheckingIn" jdbcType="INTEGER" />
+    <result column="is_stay" property="isStay" jdbcType="INTEGER" />
+    <result column="job_series" property="jobSeries" jdbcType="VARCHAR" />
+    <result column="series_effective_date" property="seriesEffectiveDate" jdbcType="TIMESTAMP" />
+    <result column="series_type" property="seriesType" jdbcType="VARCHAR" />
+    <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="job_level" property="jobLevel" jdbcType="VARCHAR" />
+    <result column="level_effective_date" property="levelEffectiveDate" jdbcType="TIMESTAMP" />
+    <result column="job_manage_title" property="jobManageTitle" jdbcType="VARCHAR" />
+    <result column="manage_title_effective_date" property="manageTitleEffectiveDate" jdbcType="TIMESTAMP" />
+    <result column="engineering_tech_title" property="engineeringTechTitle" jdbcType="VARCHAR" />
+    <result column="engin_tech_title_effective_date" property="enginTechTitleEffectiveDate" jdbcType="TIMESTAMP" />
+    <result column="profession_admin" property="professionAdmin" jdbcType="VARCHAR" />
+    <result column="profession_admin_effective_date" property="professionAdminEffectiveDate" jdbcType="TIMESTAMP" />
+    <result column="function" property="function" jdbcType="VARCHAR" />
+    <result column="is_pay_other_place" property="isPayOtherPlace" jdbcType="INTEGER" />
+    <result column="pay_place" property="payPlace" jdbcType="VARCHAR" />
+    <result column="fold_date" property="foldDate" jdbcType="TIMESTAMP" />
+    <result column="original_unit" property="originalUnit" jdbcType="VARCHAR" />
+    <result column="referrer_code" property="referrerCode" jdbcType="VARCHAR" />
+    <result column="referrer_name" property="referrerName" jdbcType="VARCHAR" />
+    <result column="out_experience" property="outExperience" jdbcType="VARCHAR" />
+    <result column="out_seniority" property="outSeniority" jdbcType="VARCHAR" />
+    <result column="out_rel_seniorty" property="outRelSeniorty" jdbcType="VARCHAR" />
+    <result column="rent_house_location" property="rentHouseLocation" jdbcType="VARCHAR" />
+    <result column="is_pay_stay" property="isPayStay" jdbcType="INTEGER" />
+    <result column="pay_stay_date" property="payStayDate" jdbcType="VARCHAR" />
+    <result column="is_new_class" property="isNewClass" jdbcType="INTEGER" />
+    <result column="class_period" property="classPeriod" jdbcType="VARCHAR" />
+    <result column="is_138" property="is138" jdbcType="INTEGER" />
+    <result column="batch_138" property="batch138" jdbcType="VARCHAR" />
+    <result column="work_area" property="workArea" jdbcType="VARCHAR" />
+    <result column="now_address" property="nowAddress" jdbcType="VARCHAR" />
+    <result column="is_sign_online" property="isSignOnline" jdbcType="INTEGER" />
+    <result column="online_sign_begin" property="onlineSignBegin" jdbcType="TIMESTAMP" />
+    <result column="online_sign_end" property="onlineSignEnd" jdbcType="TIMESTAMP" />
+    <result column="is_accredit" property="isAccredit" jdbcType="INTEGER" />
+    <result column="tel_cornet" property="telCornet" jdbcType="VARCHAR" />
+    <result column="e_mail" property="eMail" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="left_date" property="leftDate" jdbcType="TIMESTAMP" />
+    <result column="left_type" property="leftType" jdbcType="VARCHAR" />
+    <result column="left_type_category" property="leftTypeCategory" jdbcType="VARCHAR" />
+    <result column="left_main_reason" property="leftMainReason" jdbcType="VARCHAR" />
+    <result column="left_second_reason" property="leftSecondReason" jdbcType="VARCHAR" />
+    <result column="left_third_reason" property="leftThirdReason" jdbcType="VARCHAR" />
+    <result column="left_reason_explain" property="leftReasonExplain" jdbcType="VARCHAR" />
+    <result column="transfer_unit" property="transferUnit" jdbcType="VARCHAR" />
+    <result column="plan_reinstatement_date" property="planReinstatementDate" jdbcType="TIMESTAMP" />
+    <result column="reinstatement_date" property="reinstatementDate" jdbcType="TIMESTAMP" />
+    <result column="left_phone_num" property="leftPhoneNum" jdbcType="VARCHAR" />
+    <result column="left_address" property="leftAddress" jdbcType="VARCHAR" />
+    <result column="where_to_go" property="whereToGo" jdbcType="VARCHAR" />
+    <result column="is_complete_left" property="isCompleteLeft" jdbcType="INTEGER" />
+    <result column="complete_left_date" property="completeLeftDate" jdbcType="TIMESTAMP" />
+    <result column="is_left_charge" property="isLeftCharge" jdbcType="INTEGER" />
+    <result column="what_for_charge" property="whatForCharge" jdbcType="VARCHAR" />
+    <result column="charge_number" property="chargeNumber" jdbcType="VARCHAR" />
+    <result column="tech_committee" property="techCommittee" jdbcType="VARCHAR" />
+    <result column="charge_system" property="chargeSystem" jdbcType="VARCHAR" />
+    <result column="contract_begin" property="contractBegin" jdbcType="VARCHAR" />
+    <result column="contract_end" property="contractEnd" jdbcType="VARCHAR" />
+    <result column="is_a_team" property="isATeam" jdbcType="INTEGER" />
+    <result column="qq_account" property="qqAccount" jdbcType="VARCHAR" />
+    <result column="wechat_account" property="wechatAccount" jdbcType="VARCHAR" />
+    <result column="fei_hu_account" property="feiHuAccount" jdbcType="VARCHAR" />
+    <result column="is_key_talents" property="isKeyTalents" jdbcType="INTEGER" />
+    <result column="is_ok_for_work" property="isOkForWork" jdbcType="INTEGER" />
+    <result column="is_sell_experience" property="isSellExperience" jdbcType="INTEGER" />
+    <result column="sell_type" property="sellType" jdbcType="VARCHAR" />
+    <result column="tech_awards_type" property="techAwardsType" jdbcType="VARCHAR" />
+    <result column="awards_name" property="awardsName" jdbcType="VARCHAR" />
+    <result column="practice_dispatch_end" property="practiceDispatchEnd" jdbcType="VARCHAR" />
+    <result column="dispatch_legal_person" property="dispatchLegalPerson" jdbcType="VARCHAR" />
+    <result column="job_function" property="jobFunction" jdbcType="VARCHAR" />
+    <result column="is_fii_staff" property="isFiiStaff" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    staff_job_info_id, staff_code, product_place, factory_place, join_bg_date, join_bu_date, 
+    seniority, overtime_control_type, person_type, is_checking_in, is_stay, job_series, 
+    series_effective_date, series_type, job_title, job_level, level_effective_date, job_manage_title, 
+    manage_title_effective_date, engineering_tech_title, engin_tech_title_effective_date, 
+    profession_admin, profession_admin_effective_date, function, is_pay_other_place, 
+    pay_place, fold_date, original_unit, referrer_code, referrer_name, out_experience, 
+    out_seniority, out_rel_seniorty, rent_house_location, is_pay_stay, pay_stay_date, 
+    is_new_class, class_period, is_138, batch_138, work_area, now_address, is_sign_online, 
+    online_sign_begin, online_sign_end, is_accredit, tel_cornet, e_mail, creater, create_time, 
+    updater, update_time, left_date, left_type, left_type_category, left_main_reason, 
+    left_second_reason, left_third_reason, left_reason_explain, transfer_unit, plan_reinstatement_date, 
+    reinstatement_date, left_phone_num, left_address, where_to_go, is_complete_left, 
+    complete_left_date, is_left_charge, what_for_charge, charge_number, tech_committee, 
+    charge_system, contract_begin, contract_end, is_a_team, qq_account, wechat_account, 
+    fei_hu_account, is_key_talents, is_ok_for_work, is_sell_experience, sell_type, tech_awards_type, 
+    awards_name, practice_dispatch_end, dispatch_legal_person, job_function, is_fii_staff
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from staff_job_info
+    where staff_job_info_id = #{staffJobInfoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from staff_job_info
+    where staff_job_info_id = #{staffJobInfoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.mis.masterModel.StaffJobInfo" >
+    insert into staff_job_info (staff_job_info_id, staff_code, product_place, 
+      factory_place, join_bg_date, join_bu_date, 
+      seniority, overtime_control_type, person_type, 
+      is_checking_in, is_stay, job_series, 
+      series_effective_date, series_type, job_title, 
+      job_level, level_effective_date, job_manage_title, 
+      manage_title_effective_date, engineering_tech_title, 
+      engin_tech_title_effective_date, profession_admin, 
+      profession_admin_effective_date, function, 
+      is_pay_other_place, pay_place, fold_date, 
+      original_unit, referrer_code, referrer_name, 
+      out_experience, out_seniority, out_rel_seniorty, 
+      rent_house_location, is_pay_stay, pay_stay_date, 
+      is_new_class, class_period, is_138, 
+      batch_138, work_area, now_address, 
+      is_sign_online, online_sign_begin, online_sign_end, 
+      is_accredit, tel_cornet, e_mail, 
+      creater, create_time, updater, 
+      update_time, left_date, left_type, 
+      left_type_category, left_main_reason, left_second_reason, 
+      left_third_reason, left_reason_explain, transfer_unit, 
+      plan_reinstatement_date, reinstatement_date, 
+      left_phone_num, left_address, where_to_go, 
+      is_complete_left, complete_left_date, is_left_charge, 
+      what_for_charge, charge_number, tech_committee, 
+      charge_system, contract_begin, contract_end, 
+      is_a_team, qq_account, wechat_account, 
+      fei_hu_account, is_key_talents, is_ok_for_work, 
+      is_sell_experience, sell_type, tech_awards_type, 
+      awards_name, practice_dispatch_end, dispatch_legal_person, 
+      job_function, is_fii_staff)
+    values (#{staffJobInfoId,jdbcType=INTEGER}, #{staffCode,jdbcType=VARCHAR}, #{productPlace,jdbcType=VARCHAR}, 
+      #{factoryPlace,jdbcType=VARCHAR}, #{joinBgDate,jdbcType=TIMESTAMP}, #{joinBuDate,jdbcType=TIMESTAMP}, 
+      #{seniority,jdbcType=VARCHAR}, #{overtimeControlType,jdbcType=VARCHAR}, #{personType,jdbcType=VARCHAR}, 
+      #{isCheckingIn,jdbcType=INTEGER}, #{isStay,jdbcType=INTEGER}, #{jobSeries,jdbcType=VARCHAR}, 
+      #{seriesEffectiveDate,jdbcType=TIMESTAMP}, #{seriesType,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR}, 
+      #{jobLevel,jdbcType=VARCHAR}, #{levelEffectiveDate,jdbcType=TIMESTAMP}, #{jobManageTitle,jdbcType=VARCHAR}, 
+      #{manageTitleEffectiveDate,jdbcType=TIMESTAMP}, #{engineeringTechTitle,jdbcType=VARCHAR}, 
+      #{enginTechTitleEffectiveDate,jdbcType=TIMESTAMP}, #{professionAdmin,jdbcType=VARCHAR}, 
+      #{professionAdminEffectiveDate,jdbcType=TIMESTAMP}, #{function,jdbcType=VARCHAR}, 
+      #{isPayOtherPlace,jdbcType=INTEGER}, #{payPlace,jdbcType=VARCHAR}, #{foldDate,jdbcType=TIMESTAMP}, 
+      #{originalUnit,jdbcType=VARCHAR}, #{referrerCode,jdbcType=VARCHAR}, #{referrerName,jdbcType=VARCHAR}, 
+      #{outExperience,jdbcType=VARCHAR}, #{outSeniority,jdbcType=VARCHAR}, #{outRelSeniorty,jdbcType=VARCHAR}, 
+      #{rentHouseLocation,jdbcType=VARCHAR}, #{isPayStay,jdbcType=INTEGER}, #{payStayDate,jdbcType=VARCHAR}, 
+      #{isNewClass,jdbcType=INTEGER}, #{classPeriod,jdbcType=VARCHAR}, #{is138,jdbcType=INTEGER}, 
+      #{batch138,jdbcType=VARCHAR}, #{workArea,jdbcType=VARCHAR}, #{nowAddress,jdbcType=VARCHAR}, 
+      #{isSignOnline,jdbcType=INTEGER}, #{onlineSignBegin,jdbcType=TIMESTAMP}, #{onlineSignEnd,jdbcType=TIMESTAMP}, 
+      #{isAccredit,jdbcType=INTEGER}, #{telCornet,jdbcType=VARCHAR}, #{eMail,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{updater,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{leftDate,jdbcType=TIMESTAMP}, #{leftType,jdbcType=VARCHAR}, 
+      #{leftTypeCategory,jdbcType=VARCHAR}, #{leftMainReason,jdbcType=VARCHAR}, #{leftSecondReason,jdbcType=VARCHAR}, 
+      #{leftThirdReason,jdbcType=VARCHAR}, #{leftReasonExplain,jdbcType=VARCHAR}, #{transferUnit,jdbcType=VARCHAR}, 
+      #{planReinstatementDate,jdbcType=TIMESTAMP}, #{reinstatementDate,jdbcType=TIMESTAMP}, 
+      #{leftPhoneNum,jdbcType=VARCHAR}, #{leftAddress,jdbcType=VARCHAR}, #{whereToGo,jdbcType=VARCHAR}, 
+      #{isCompleteLeft,jdbcType=INTEGER}, #{completeLeftDate,jdbcType=TIMESTAMP}, #{isLeftCharge,jdbcType=INTEGER}, 
+      #{whatForCharge,jdbcType=VARCHAR}, #{chargeNumber,jdbcType=VARCHAR}, #{techCommittee,jdbcType=VARCHAR}, 
+      #{chargeSystem,jdbcType=VARCHAR}, #{contractBegin,jdbcType=VARCHAR}, #{contractEnd,jdbcType=VARCHAR}, 
+      #{isATeam,jdbcType=INTEGER}, #{qqAccount,jdbcType=VARCHAR}, #{wechatAccount,jdbcType=VARCHAR}, 
+      #{feiHuAccount,jdbcType=VARCHAR}, #{isKeyTalents,jdbcType=INTEGER}, #{isOkForWork,jdbcType=INTEGER}, 
+      #{isSellExperience,jdbcType=INTEGER}, #{sellType,jdbcType=VARCHAR}, #{techAwardsType,jdbcType=VARCHAR}, 
+      #{awardsName,jdbcType=VARCHAR}, #{practiceDispatchEnd,jdbcType=VARCHAR}, #{dispatchLegalPerson,jdbcType=VARCHAR}, 
+      #{jobFunction,jdbcType=VARCHAR}, #{isFiiStaff,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.mis.masterModel.StaffJobInfo" >
+    insert into staff_job_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staffJobInfoId != null" >
+        staff_job_info_id,
+      </if>
+      <if test="staffCode != null" >
+        staff_code,
+      </if>
+      <if test="productPlace != null" >
+        product_place,
+      </if>
+      <if test="factoryPlace != null" >
+        factory_place,
+      </if>
+      <if test="joinBgDate != null" >
+        join_bg_date,
+      </if>
+      <if test="joinBuDate != null" >
+        join_bu_date,
+      </if>
+      <if test="seniority != null" >
+        seniority,
+      </if>
+      <if test="overtimeControlType != null" >
+        overtime_control_type,
+      </if>
+      <if test="personType != null" >
+        person_type,
+      </if>
+      <if test="isCheckingIn != null" >
+        is_checking_in,
+      </if>
+      <if test="isStay != null" >
+        is_stay,
+      </if>
+      <if test="jobSeries != null" >
+        job_series,
+      </if>
+      <if test="seriesEffectiveDate != null" >
+        series_effective_date,
+      </if>
+      <if test="seriesType != null" >
+        series_type,
+      </if>
+      <if test="jobTitle != null" >
+        job_title,
+      </if>
+      <if test="jobLevel != null" >
+        job_level,
+      </if>
+      <if test="levelEffectiveDate != null" >
+        level_effective_date,
+      </if>
+      <if test="jobManageTitle != null" >
+        job_manage_title,
+      </if>
+      <if test="manageTitleEffectiveDate != null" >
+        manage_title_effective_date,
+      </if>
+      <if test="engineeringTechTitle != null" >
+        engineering_tech_title,
+      </if>
+      <if test="enginTechTitleEffectiveDate != null" >
+        engin_tech_title_effective_date,
+      </if>
+      <if test="professionAdmin != null" >
+        profession_admin,
+      </if>
+      <if test="professionAdminEffectiveDate != null" >
+        profession_admin_effective_date,
+      </if>
+      <if test="function != null" >
+        function,
+      </if>
+      <if test="isPayOtherPlace != null" >
+        is_pay_other_place,
+      </if>
+      <if test="payPlace != null" >
+        pay_place,
+      </if>
+      <if test="foldDate != null" >
+        fold_date,
+      </if>
+      <if test="originalUnit != null" >
+        original_unit,
+      </if>
+      <if test="referrerCode != null" >
+        referrer_code,
+      </if>
+      <if test="referrerName != null" >
+        referrer_name,
+      </if>
+      <if test="outExperience != null" >
+        out_experience,
+      </if>
+      <if test="outSeniority != null" >
+        out_seniority,
+      </if>
+      <if test="outRelSeniorty != null" >
+        out_rel_seniorty,
+      </if>
+      <if test="rentHouseLocation != null" >
+        rent_house_location,
+      </if>
+      <if test="isPayStay != null" >
+        is_pay_stay,
+      </if>
+      <if test="payStayDate != null" >
+        pay_stay_date,
+      </if>
+      <if test="isNewClass != null" >
+        is_new_class,
+      </if>
+      <if test="classPeriod != null" >
+        class_period,
+      </if>
+      <if test="is138 != null" >
+        is_138,
+      </if>
+      <if test="batch138 != null" >
+        batch_138,
+      </if>
+      <if test="workArea != null" >
+        work_area,
+      </if>
+      <if test="nowAddress != null" >
+        now_address,
+      </if>
+      <if test="isSignOnline != null" >
+        is_sign_online,
+      </if>
+      <if test="onlineSignBegin != null" >
+        online_sign_begin,
+      </if>
+      <if test="onlineSignEnd != null" >
+        online_sign_end,
+      </if>
+      <if test="isAccredit != null" >
+        is_accredit,
+      </if>
+      <if test="telCornet != null" >
+        tel_cornet,
+      </if>
+      <if test="eMail != null" >
+        e_mail,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="leftDate != null" >
+        left_date,
+      </if>
+      <if test="leftType != null" >
+        left_type,
+      </if>
+      <if test="leftTypeCategory != null" >
+        left_type_category,
+      </if>
+      <if test="leftMainReason != null" >
+        left_main_reason,
+      </if>
+      <if test="leftSecondReason != null" >
+        left_second_reason,
+      </if>
+      <if test="leftThirdReason != null" >
+        left_third_reason,
+      </if>
+      <if test="leftReasonExplain != null" >
+        left_reason_explain,
+      </if>
+      <if test="transferUnit != null" >
+        transfer_unit,
+      </if>
+      <if test="planReinstatementDate != null" >
+        plan_reinstatement_date,
+      </if>
+      <if test="reinstatementDate != null" >
+        reinstatement_date,
+      </if>
+      <if test="leftPhoneNum != null" >
+        left_phone_num,
+      </if>
+      <if test="leftAddress != null" >
+        left_address,
+      </if>
+      <if test="whereToGo != null" >
+        where_to_go,
+      </if>
+      <if test="isCompleteLeft != null" >
+        is_complete_left,
+      </if>
+      <if test="completeLeftDate != null" >
+        complete_left_date,
+      </if>
+      <if test="isLeftCharge != null" >
+        is_left_charge,
+      </if>
+      <if test="whatForCharge != null" >
+        what_for_charge,
+      </if>
+      <if test="chargeNumber != null" >
+        charge_number,
+      </if>
+      <if test="techCommittee != null" >
+        tech_committee,
+      </if>
+      <if test="chargeSystem != null" >
+        charge_system,
+      </if>
+      <if test="contractBegin != null" >
+        contract_begin,
+      </if>
+      <if test="contractEnd != null" >
+        contract_end,
+      </if>
+      <if test="isATeam != null" >
+        is_a_team,
+      </if>
+      <if test="qqAccount != null" >
+        qq_account,
+      </if>
+      <if test="wechatAccount != null" >
+        wechat_account,
+      </if>
+      <if test="feiHuAccount != null" >
+        fei_hu_account,
+      </if>
+      <if test="isKeyTalents != null" >
+        is_key_talents,
+      </if>
+      <if test="isOkForWork != null" >
+        is_ok_for_work,
+      </if>
+      <if test="isSellExperience != null" >
+        is_sell_experience,
+      </if>
+      <if test="sellType != null" >
+        sell_type,
+      </if>
+      <if test="techAwardsType != null" >
+        tech_awards_type,
+      </if>
+      <if test="awardsName != null" >
+        awards_name,
+      </if>
+      <if test="practiceDispatchEnd != null" >
+        practice_dispatch_end,
+      </if>
+      <if test="dispatchLegalPerson != null" >
+        dispatch_legal_person,
+      </if>
+      <if test="jobFunction != null" >
+        job_function,
+      </if>
+      <if test="isFiiStaff != null" >
+        is_fii_staff,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staffJobInfoId != null" >
+        #{staffJobInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="staffCode != null" >
+        #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productPlace != null" >
+        #{productPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryPlace != null" >
+        #{factoryPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="joinBgDate != null" >
+        #{joinBgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="joinBuDate != null" >
+        #{joinBuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seniority != null" >
+        #{seniority,jdbcType=VARCHAR},
+      </if>
+      <if test="overtimeControlType != null" >
+        #{overtimeControlType,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null" >
+        #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheckingIn != null" >
+        #{isCheckingIn,jdbcType=INTEGER},
+      </if>
+      <if test="isStay != null" >
+        #{isStay,jdbcType=INTEGER},
+      </if>
+      <if test="jobSeries != null" >
+        #{jobSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesEffectiveDate != null" >
+        #{seriesEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seriesType != null" >
+        #{seriesType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="jobLevel != null" >
+        #{jobLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="levelEffectiveDate != null" >
+        #{levelEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobManageTitle != null" >
+        #{jobManageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="manageTitleEffectiveDate != null" >
+        #{manageTitleEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="engineeringTechTitle != null" >
+        #{engineeringTechTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="enginTechTitleEffectiveDate != null" >
+        #{enginTechTitleEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="professionAdmin != null" >
+        #{professionAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="professionAdminEffectiveDate != null" >
+        #{professionAdminEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="function != null" >
+        #{function,jdbcType=VARCHAR},
+      </if>
+      <if test="isPayOtherPlace != null" >
+        #{isPayOtherPlace,jdbcType=INTEGER},
+      </if>
+      <if test="payPlace != null" >
+        #{payPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="foldDate != null" >
+        #{foldDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="originalUnit != null" >
+        #{originalUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerCode != null" >
+        #{referrerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null" >
+        #{referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="outExperience != null" >
+        #{outExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="outSeniority != null" >
+        #{outSeniority,jdbcType=VARCHAR},
+      </if>
+      <if test="outRelSeniorty != null" >
+        #{outRelSeniorty,jdbcType=VARCHAR},
+      </if>
+      <if test="rentHouseLocation != null" >
+        #{rentHouseLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="isPayStay != null" >
+        #{isPayStay,jdbcType=INTEGER},
+      </if>
+      <if test="payStayDate != null" >
+        #{payStayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isNewClass != null" >
+        #{isNewClass,jdbcType=INTEGER},
+      </if>
+      <if test="classPeriod != null" >
+        #{classPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="is138 != null" >
+        #{is138,jdbcType=INTEGER},
+      </if>
+      <if test="batch138 != null" >
+        #{batch138,jdbcType=VARCHAR},
+      </if>
+      <if test="workArea != null" >
+        #{workArea,jdbcType=VARCHAR},
+      </if>
+      <if test="nowAddress != null" >
+        #{nowAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isSignOnline != null" >
+        #{isSignOnline,jdbcType=INTEGER},
+      </if>
+      <if test="onlineSignBegin != null" >
+        #{onlineSignBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onlineSignEnd != null" >
+        #{onlineSignEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAccredit != null" >
+        #{isAccredit,jdbcType=INTEGER},
+      </if>
+      <if test="telCornet != null" >
+        #{telCornet,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null" >
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leftDate != null" >
+        #{leftDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leftType != null" >
+        #{leftType,jdbcType=VARCHAR},
+      </if>
+      <if test="leftTypeCategory != null" >
+        #{leftTypeCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="leftMainReason != null" >
+        #{leftMainReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leftSecondReason != null" >
+        #{leftSecondReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leftThirdReason != null" >
+        #{leftThirdReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leftReasonExplain != null" >
+        #{leftReasonExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="transferUnit != null" >
+        #{transferUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="planReinstatementDate != null" >
+        #{planReinstatementDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reinstatementDate != null" >
+        #{reinstatementDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leftPhoneNum != null" >
+        #{leftPhoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="leftAddress != null" >
+        #{leftAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="whereToGo != null" >
+        #{whereToGo,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleteLeft != null" >
+        #{isCompleteLeft,jdbcType=INTEGER},
+      </if>
+      <if test="completeLeftDate != null" >
+        #{completeLeftDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isLeftCharge != null" >
+        #{isLeftCharge,jdbcType=INTEGER},
+      </if>
+      <if test="whatForCharge != null" >
+        #{whatForCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeNumber != null" >
+        #{chargeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="techCommittee != null" >
+        #{techCommittee,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeSystem != null" >
+        #{chargeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="contractBegin != null" >
+        #{contractBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="contractEnd != null" >
+        #{contractEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="isATeam != null" >
+        #{isATeam,jdbcType=INTEGER},
+      </if>
+      <if test="qqAccount != null" >
+        #{qqAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatAccount != null" >
+        #{wechatAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="feiHuAccount != null" >
+        #{feiHuAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isKeyTalents != null" >
+        #{isKeyTalents,jdbcType=INTEGER},
+      </if>
+      <if test="isOkForWork != null" >
+        #{isOkForWork,jdbcType=INTEGER},
+      </if>
+      <if test="isSellExperience != null" >
+        #{isSellExperience,jdbcType=INTEGER},
+      </if>
+      <if test="sellType != null" >
+        #{sellType,jdbcType=VARCHAR},
+      </if>
+      <if test="techAwardsType != null" >
+        #{techAwardsType,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsName != null" >
+        #{awardsName,jdbcType=VARCHAR},
+      </if>
+      <if test="practiceDispatchEnd != null" >
+        #{practiceDispatchEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchLegalPerson != null" >
+        #{dispatchLegalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFunction != null" >
+        #{jobFunction,jdbcType=VARCHAR},
+      </if>
+      <if test="isFiiStaff != null" >
+        #{isFiiStaff,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.masterModel.StaffJobInfo" >
+    update staff_job_info
+    <set >
+      <if test="staffCode != null" >
+        staff_code = #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productPlace != null" >
+        product_place = #{productPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="factoryPlace != null" >
+        factory_place = #{factoryPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="joinBgDate != null" >
+        join_bg_date = #{joinBgDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="joinBuDate != null" >
+        join_bu_date = #{joinBuDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seniority != null" >
+        seniority = #{seniority,jdbcType=VARCHAR},
+      </if>
+      <if test="overtimeControlType != null" >
+        overtime_control_type = #{overtimeControlType,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null" >
+        person_type = #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheckingIn != null" >
+        is_checking_in = #{isCheckingIn,jdbcType=INTEGER},
+      </if>
+      <if test="isStay != null" >
+        is_stay = #{isStay,jdbcType=INTEGER},
+      </if>
+      <if test="jobSeries != null" >
+        job_series = #{jobSeries,jdbcType=VARCHAR},
+      </if>
+      <if test="seriesEffectiveDate != null" >
+        series_effective_date = #{seriesEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seriesType != null" >
+        series_type = #{seriesType,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        job_title = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="jobLevel != null" >
+        job_level = #{jobLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="levelEffectiveDate != null" >
+        level_effective_date = #{levelEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobManageTitle != null" >
+        job_manage_title = #{jobManageTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="manageTitleEffectiveDate != null" >
+        manage_title_effective_date = #{manageTitleEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="engineeringTechTitle != null" >
+        engineering_tech_title = #{engineeringTechTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="enginTechTitleEffectiveDate != null" >
+        engin_tech_title_effective_date = #{enginTechTitleEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="professionAdmin != null" >
+        profession_admin = #{professionAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="professionAdminEffectiveDate != null" >
+        profession_admin_effective_date = #{professionAdminEffectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="function != null" >
+        function = #{function,jdbcType=VARCHAR},
+      </if>
+      <if test="isPayOtherPlace != null" >
+        is_pay_other_place = #{isPayOtherPlace,jdbcType=INTEGER},
+      </if>
+      <if test="payPlace != null" >
+        pay_place = #{payPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="foldDate != null" >
+        fold_date = #{foldDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="originalUnit != null" >
+        original_unit = #{originalUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerCode != null" >
+        referrer_code = #{referrerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="referrerName != null" >
+        referrer_name = #{referrerName,jdbcType=VARCHAR},
+      </if>
+      <if test="outExperience != null" >
+        out_experience = #{outExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="outSeniority != null" >
+        out_seniority = #{outSeniority,jdbcType=VARCHAR},
+      </if>
+      <if test="outRelSeniorty != null" >
+        out_rel_seniorty = #{outRelSeniorty,jdbcType=VARCHAR},
+      </if>
+      <if test="rentHouseLocation != null" >
+        rent_house_location = #{rentHouseLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="isPayStay != null" >
+        is_pay_stay = #{isPayStay,jdbcType=INTEGER},
+      </if>
+      <if test="payStayDate != null" >
+        pay_stay_date = #{payStayDate,jdbcType=VARCHAR},
+      </if>
+      <if test="isNewClass != null" >
+        is_new_class = #{isNewClass,jdbcType=INTEGER},
+      </if>
+      <if test="classPeriod != null" >
+        class_period = #{classPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="is138 != null" >
+        is_138 = #{is138,jdbcType=INTEGER},
+      </if>
+      <if test="batch138 != null" >
+        batch_138 = #{batch138,jdbcType=VARCHAR},
+      </if>
+      <if test="workArea != null" >
+        work_area = #{workArea,jdbcType=VARCHAR},
+      </if>
+      <if test="nowAddress != null" >
+        now_address = #{nowAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isSignOnline != null" >
+        is_sign_online = #{isSignOnline,jdbcType=INTEGER},
+      </if>
+      <if test="onlineSignBegin != null" >
+        online_sign_begin = #{onlineSignBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="onlineSignEnd != null" >
+        online_sign_end = #{onlineSignEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAccredit != null" >
+        is_accredit = #{isAccredit,jdbcType=INTEGER},
+      </if>
+      <if test="telCornet != null" >
+        tel_cornet = #{telCornet,jdbcType=VARCHAR},
+      </if>
+      <if test="eMail != null" >
+        e_mail = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leftDate != null" >
+        left_date = #{leftDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leftType != null" >
+        left_type = #{leftType,jdbcType=VARCHAR},
+      </if>
+      <if test="leftTypeCategory != null" >
+        left_type_category = #{leftTypeCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="leftMainReason != null" >
+        left_main_reason = #{leftMainReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leftSecondReason != null" >
+        left_second_reason = #{leftSecondReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leftThirdReason != null" >
+        left_third_reason = #{leftThirdReason,jdbcType=VARCHAR},
+      </if>
+      <if test="leftReasonExplain != null" >
+        left_reason_explain = #{leftReasonExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="transferUnit != null" >
+        transfer_unit = #{transferUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="planReinstatementDate != null" >
+        plan_reinstatement_date = #{planReinstatementDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reinstatementDate != null" >
+        reinstatement_date = #{reinstatementDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leftPhoneNum != null" >
+        left_phone_num = #{leftPhoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="leftAddress != null" >
+        left_address = #{leftAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="whereToGo != null" >
+        where_to_go = #{whereToGo,jdbcType=VARCHAR},
+      </if>
+      <if test="isCompleteLeft != null" >
+        is_complete_left = #{isCompleteLeft,jdbcType=INTEGER},
+      </if>
+      <if test="completeLeftDate != null" >
+        complete_left_date = #{completeLeftDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isLeftCharge != null" >
+        is_left_charge = #{isLeftCharge,jdbcType=INTEGER},
+      </if>
+      <if test="whatForCharge != null" >
+        what_for_charge = #{whatForCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeNumber != null" >
+        charge_number = #{chargeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="techCommittee != null" >
+        tech_committee = #{techCommittee,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeSystem != null" >
+        charge_system = #{chargeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="contractBegin != null" >
+        contract_begin = #{contractBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="contractEnd != null" >
+        contract_end = #{contractEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="isATeam != null" >
+        is_a_team = #{isATeam,jdbcType=INTEGER},
+      </if>
+      <if test="qqAccount != null" >
+        qq_account = #{qqAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatAccount != null" >
+        wechat_account = #{wechatAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="feiHuAccount != null" >
+        fei_hu_account = #{feiHuAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isKeyTalents != null" >
+        is_key_talents = #{isKeyTalents,jdbcType=INTEGER},
+      </if>
+      <if test="isOkForWork != null" >
+        is_ok_for_work = #{isOkForWork,jdbcType=INTEGER},
+      </if>
+      <if test="isSellExperience != null" >
+        is_sell_experience = #{isSellExperience,jdbcType=INTEGER},
+      </if>
+      <if test="sellType != null" >
+        sell_type = #{sellType,jdbcType=VARCHAR},
+      </if>
+      <if test="techAwardsType != null" >
+        tech_awards_type = #{techAwardsType,jdbcType=VARCHAR},
+      </if>
+      <if test="awardsName != null" >
+        awards_name = #{awardsName,jdbcType=VARCHAR},
+      </if>
+      <if test="practiceDispatchEnd != null" >
+        practice_dispatch_end = #{practiceDispatchEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="dispatchLegalPerson != null" >
+        dispatch_legal_person = #{dispatchLegalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFunction != null" >
+        job_function = #{jobFunction,jdbcType=VARCHAR},
+      </if>
+      <if test="isFiiStaff != null" >
+        is_fii_staff = #{isFiiStaff,jdbcType=INTEGER},
+      </if>
+    </set>
+    where staff_job_info_id = #{staffJobInfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.masterModel.StaffJobInfo" >
+    update staff_job_info
+    set staff_code = #{staffCode,jdbcType=VARCHAR},
+      product_place = #{productPlace,jdbcType=VARCHAR},
+      factory_place = #{factoryPlace,jdbcType=VARCHAR},
+      join_bg_date = #{joinBgDate,jdbcType=TIMESTAMP},
+      join_bu_date = #{joinBuDate,jdbcType=TIMESTAMP},
+      seniority = #{seniority,jdbcType=VARCHAR},
+      overtime_control_type = #{overtimeControlType,jdbcType=VARCHAR},
+      person_type = #{personType,jdbcType=VARCHAR},
+      is_checking_in = #{isCheckingIn,jdbcType=INTEGER},
+      is_stay = #{isStay,jdbcType=INTEGER},
+      job_series = #{jobSeries,jdbcType=VARCHAR},
+      series_effective_date = #{seriesEffectiveDate,jdbcType=TIMESTAMP},
+      series_type = #{seriesType,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      job_level = #{jobLevel,jdbcType=VARCHAR},
+      level_effective_date = #{levelEffectiveDate,jdbcType=TIMESTAMP},
+      job_manage_title = #{jobManageTitle,jdbcType=VARCHAR},
+      manage_title_effective_date = #{manageTitleEffectiveDate,jdbcType=TIMESTAMP},
+      engineering_tech_title = #{engineeringTechTitle,jdbcType=VARCHAR},
+      engin_tech_title_effective_date = #{enginTechTitleEffectiveDate,jdbcType=TIMESTAMP},
+      profession_admin = #{professionAdmin,jdbcType=VARCHAR},
+      profession_admin_effective_date = #{professionAdminEffectiveDate,jdbcType=TIMESTAMP},
+      function = #{function,jdbcType=VARCHAR},
+      is_pay_other_place = #{isPayOtherPlace,jdbcType=INTEGER},
+      pay_place = #{payPlace,jdbcType=VARCHAR},
+      fold_date = #{foldDate,jdbcType=TIMESTAMP},
+      original_unit = #{originalUnit,jdbcType=VARCHAR},
+      referrer_code = #{referrerCode,jdbcType=VARCHAR},
+      referrer_name = #{referrerName,jdbcType=VARCHAR},
+      out_experience = #{outExperience,jdbcType=VARCHAR},
+      out_seniority = #{outSeniority,jdbcType=VARCHAR},
+      out_rel_seniorty = #{outRelSeniorty,jdbcType=VARCHAR},
+      rent_house_location = #{rentHouseLocation,jdbcType=VARCHAR},
+      is_pay_stay = #{isPayStay,jdbcType=INTEGER},
+      pay_stay_date = #{payStayDate,jdbcType=VARCHAR},
+      is_new_class = #{isNewClass,jdbcType=INTEGER},
+      class_period = #{classPeriod,jdbcType=VARCHAR},
+      is_138 = #{is138,jdbcType=INTEGER},
+      batch_138 = #{batch138,jdbcType=VARCHAR},
+      work_area = #{workArea,jdbcType=VARCHAR},
+      now_address = #{nowAddress,jdbcType=VARCHAR},
+      is_sign_online = #{isSignOnline,jdbcType=INTEGER},
+      online_sign_begin = #{onlineSignBegin,jdbcType=TIMESTAMP},
+      online_sign_end = #{onlineSignEnd,jdbcType=TIMESTAMP},
+      is_accredit = #{isAccredit,jdbcType=INTEGER},
+      tel_cornet = #{telCornet,jdbcType=VARCHAR},
+      e_mail = #{eMail,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      updater = #{updater,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      left_date = #{leftDate,jdbcType=TIMESTAMP},
+      left_type = #{leftType,jdbcType=VARCHAR},
+      left_type_category = #{leftTypeCategory,jdbcType=VARCHAR},
+      left_main_reason = #{leftMainReason,jdbcType=VARCHAR},
+      left_second_reason = #{leftSecondReason,jdbcType=VARCHAR},
+      left_third_reason = #{leftThirdReason,jdbcType=VARCHAR},
+      left_reason_explain = #{leftReasonExplain,jdbcType=VARCHAR},
+      transfer_unit = #{transferUnit,jdbcType=VARCHAR},
+      plan_reinstatement_date = #{planReinstatementDate,jdbcType=TIMESTAMP},
+      reinstatement_date = #{reinstatementDate,jdbcType=TIMESTAMP},
+      left_phone_num = #{leftPhoneNum,jdbcType=VARCHAR},
+      left_address = #{leftAddress,jdbcType=VARCHAR},
+      where_to_go = #{whereToGo,jdbcType=VARCHAR},
+      is_complete_left = #{isCompleteLeft,jdbcType=INTEGER},
+      complete_left_date = #{completeLeftDate,jdbcType=TIMESTAMP},
+      is_left_charge = #{isLeftCharge,jdbcType=INTEGER},
+      what_for_charge = #{whatForCharge,jdbcType=VARCHAR},
+      charge_number = #{chargeNumber,jdbcType=VARCHAR},
+      tech_committee = #{techCommittee,jdbcType=VARCHAR},
+      charge_system = #{chargeSystem,jdbcType=VARCHAR},
+      contract_begin = #{contractBegin,jdbcType=VARCHAR},
+      contract_end = #{contractEnd,jdbcType=VARCHAR},
+      is_a_team = #{isATeam,jdbcType=INTEGER},
+      qq_account = #{qqAccount,jdbcType=VARCHAR},
+      wechat_account = #{wechatAccount,jdbcType=VARCHAR},
+      fei_hu_account = #{feiHuAccount,jdbcType=VARCHAR},
+      is_key_talents = #{isKeyTalents,jdbcType=INTEGER},
+      is_ok_for_work = #{isOkForWork,jdbcType=INTEGER},
+      is_sell_experience = #{isSellExperience,jdbcType=INTEGER},
+      sell_type = #{sellType,jdbcType=VARCHAR},
+      tech_awards_type = #{techAwardsType,jdbcType=VARCHAR},
+      awards_name = #{awardsName,jdbcType=VARCHAR},
+      practice_dispatch_end = #{practiceDispatchEnd,jdbcType=VARCHAR},
+      dispatch_legal_person = #{dispatchLegalPerson,jdbcType=VARCHAR},
+      job_function = #{jobFunction,jdbcType=VARCHAR},
+      is_fii_staff = #{isFiiStaff,jdbcType=INTEGER}
+    where staff_job_info_id = #{staffJobInfoId,jdbcType=INTEGER}
+  </update>
+</mapper>

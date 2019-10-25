@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.stampMapper.StampPowerMapper" >
+
+    <select id="selectNameAndDePartByUserCode" resultType="com.tsbg.mis.stampVo.StampPowerVo" parameterType="String">
+        SELECT a.user_name as userName,b.`depart_name` as departName FROM tsbg_database.`user_info` AS a
+        LEFT JOIN master_database.`depart_list` AS b ON a.`depart_id`=b.`depart_id`
+        WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
+    </select>
+
+    <select id="selectRoleByUidAndProJId"  resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT a.`role_id` FROM tsbg_database.`user_role` AS a
+        WHERE a.user_id=#{uid,jdbcType=INTEGER} AND a.`proj_id`=4;
+    </select>
+
+    <select id="selectUserIdByUserCode"  resultType="java.lang.Integer" parameterType="String">
+        SELECT a.`user_id` FROM tsbg_database.`user_info` AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
+    </select>
+
+    <update id="updateStampRoleByUidAndProjID" parameterType="java.lang.Integer" >
+        UPDATE tsbg_database.`user_role` AS a SET a.`role_id`=#{roleId,jdbcType=INTEGER}
+        WHERE a.`user_id`=#{uid,jdbcType=INTEGER} AND a.`proj_id`=4;
+  </update>
+
+    <select id="selectPowerList"  resultType="com.tsbg.mis.stampVo.StampPowerVo" >
+        SELECT a.`user_name` as userName,a.`user_code` as userCode,b.`depart_name` as departName
+        FROM tsbg_database.`user_info` AS a
+        LEFT JOIN master_database.`depart_list` AS b ON a.`depart_id`=b.`depart_id`
+        LEFT JOIN tsbg_database.`user_role` AS c ON a.`user_id`=c.`user_id`
+        WHERE c.`role_id`=8;
+    </select>
+</mapper>

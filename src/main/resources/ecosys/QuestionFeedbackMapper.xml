@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.QuestionFeedbackMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.QuestionFeedback" >
+<mapper namespace="com.tsbg.mis.ecoMapper.QuestionFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.QuestionFeedback" >
     <id column="question_feedback_id" property="questionFeedbackId" jdbcType="INTEGER" />
     <result column="question_name" property="questionName" jdbcType="VARCHAR" />
     <result column="question_describe" property="questionDescribe" jdbcType="VARCHAR" />
@@ -34,7 +34,7 @@
     delete from question_feedback
     where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" useGeneratedKeys="true" keyProperty="questionFeedbackId"  parameterType="com.tsbg.ecosys.ecoModel.QuestionFeedback" >
+  <insert id="insert" useGeneratedKeys="true" keyProperty="questionFeedbackId"  parameterType="com.tsbg.mis.ecoModel.QuestionFeedback" >
     insert into question_feedback (question_feedback_id, question_name,
       question_describe, user_code, user_name, 
       user_ext, user_email_address, user_department, 
@@ -46,7 +46,7 @@
       #{remark,jdbcType=VARCHAR}, #{applicationDate,jdbcType=TIMESTAMP}, #{applyStatusId,jdbcType=INTEGER}, 
       #{projId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="questionFeedbackId"   parameterType="com.tsbg.ecosys.ecoModel.QuestionFeedback" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="questionFeedbackId"   parameterType="com.tsbg.mis.ecoModel.QuestionFeedback" >
     insert into question_feedback
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="questionFeedbackId != null" >
@@ -125,7 +125,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.QuestionFeedback" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.QuestionFeedback" >
     update question_feedback
     <set >
       <if test="questionName != null" >
@@ -164,7 +164,7 @@
     </set>
     where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.QuestionFeedback" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.QuestionFeedback" >
     update question_feedback
     set question_name = #{questionName,jdbcType=VARCHAR},
       question_describe = #{questionDescribe,jdbcType=VARCHAR},
@@ -186,31 +186,31 @@
       apply_status_id = #{applyStatusId,jdbcType=INTEGER}
     where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
   </update>
-  <select id="selectColumnNamec" resultType="com.tsbg.ecosys.ecoDto.Comment">
+  <select id="selectColumnNamec" resultType="com.tsbg.mis.ecoDto.Comment">
     SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
     WHERE table_name='file_info'
     AND table_schema='fiitsbg';
   </select>
 
-  <select id="selectColumnNamea" resultType="com.tsbg.ecosys.ecoDto.Comment">
+  <select id="selectColumnNamea" resultType="com.tsbg.mis.ecoDto.Comment">
     SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
     WHERE table_name='project'
     AND table_schema='fiitsbg';
   </select>
 
-  <select id="selectColumnNameb" resultType="com.tsbg.ecosys.ecoDto.Comment">
+  <select id="selectColumnNameb" resultType="com.tsbg.mis.ecoDto.Comment">
     SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
     WHERE table_name='question_type'
     AND table_schema='fiitsbg';
   </select>
 
-  <select id="selectColumnNamed" resultType="com.tsbg.ecosys.ecoDto.Comment">
+  <select id="selectColumnNamed" resultType="com.tsbg.mis.ecoDto.Comment">
     SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
     WHERE table_name='question_feedback'
     AND table_schema='fiitsbg';
   </select>
 
-  <select id="selectColumnNamee" resultType="com.tsbg.ecosys.ecoDto.Comment">
+  <select id="selectColumnNamee" resultType="com.tsbg.mis.ecoDto.Comment">
     SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
     WHERE table_name='question_handle'
     AND table_schema='fiitsbg';

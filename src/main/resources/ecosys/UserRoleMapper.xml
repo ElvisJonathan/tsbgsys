@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.UserRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.UserRole" >
+<mapper namespace="com.tsbg.mis.ecoMapper.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.UserRole" >
     <id column="urole_id" property="uroleId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
@@ -21,13 +21,13 @@
     delete from user_role
     where urole_id = #{uroleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+  <insert id="insert" parameterType="com.tsbg.mis.ecoModel.UserRole" >
     insert into user_role (urole_id, user_id, role_id, proj_id,
       remark)
     values (#{uroleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{projId,jdbcType=INTEGER},
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+  <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.UserRole" >
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uroleId != null" >
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.UserRole" >
     update user_role
     <set >
       <if test="userId != null" >
@@ -82,7 +82,7 @@
     </set>
     where urole_id = #{uroleId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.UserRole" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.UserRole" >
     update user_role
     set user_id = #{userId,jdbcType=INTEGER},
       role_id = #{roleId,jdbcType=INTEGER},
@@ -90,7 +90,7 @@
       remark = #{remark,jdbcType=VARCHAR}
     where urole_id = #{uroleId,jdbcType=INTEGER}
   </update>
-  <select id="selectEuserInfo"  parameterType="String" resultType="com.tsbg.ecosys.ecoModel.UserRole">
+  <select id="selectEuserInfo"  parameterType="String" resultType="com.tsbg.mis.ecoModel.UserRole">
     SELECT role_id,remark FROM user_role AS r LEFT JOIN user_info i ON r.`user_id`=i.`user_id` WHERE i.`user_code`= #{userCode,jdbcType=VARCHAR}
   </select>
   <select id="selectRidByUid"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
@@ -103,7 +103,7 @@
     insert into user_role (user_id, role_id, proj_id)
     values  (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{projId,jdbcType=INTEGER});
   </insert>
-  <select id="selectProJMsgByUid" resultType="com.tsbg.ecosys.ecoModel.UserRole" parameterType="java.lang.Integer" >
+  <select id="selectProJMsgByUid" resultType="com.tsbg.mis.ecoModel.UserRole" parameterType="java.lang.Integer" >
     SELECT u.`user_id` as userId,u.`role_id` as roleId,u.`proj_id` as projId,p.`pro_name` as proName
     FROM user_role AS u
     LEFT JOIN project AS p ON u.`proj_id`= p.`proj_id`

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.masterMapper.DepartListMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.masterModel.DepartList" >
+    <id column="depart_id" property="departId" jdbcType="INTEGER" />
+    <result column="depart_name" property="departName" jdbcType="VARCHAR" />
+    <result column="depart_code" property="departCode" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_code" property="createCode" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    depart_id, depart_name, depart_code, status, create_code, create_date, last_update_code, 
+    last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from depart_list
+    where depart_id = #{departId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from depart_list
+    where depart_id = #{departId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.mis.masterModel.DepartList" >
+    insert into depart_list (depart_id, depart_name, depart_code, 
+      status, create_code, create_date, 
+      last_update_code, last_update_date)
+    values (#{departId,jdbcType=INTEGER}, #{departName,jdbcType=VARCHAR}, #{departCode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{lastUpdateCode,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.mis.masterModel.DepartList" >
+    insert into depart_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="departId != null" >
+        depart_id,
+      </if>
+      <if test="departName != null" >
+        depart_name,
+      </if>
+      <if test="departCode != null" >
+        depart_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createCode != null" >
+        create_code,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateCode != null" >
+        last_update_code,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="departId != null" >
+        #{departId,jdbcType=INTEGER},
+      </if>
+      <if test="departName != null" >
+        #{departName,jdbcType=VARCHAR},
+      </if>
+      <if test="departCode != null" >
+        #{departCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createCode != null" >
+        #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateCode != null" >
+        #{lastUpdateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.masterModel.DepartList" >
+    update depart_list
+    <set >
+      <if test="departName != null" >
+        depart_name = #{departName,jdbcType=VARCHAR},
+      </if>
+      <if test="departCode != null" >
+        depart_code = #{departCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createCode != null" >
+        create_code = #{createCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateCode != null" >
+        last_update_code = #{lastUpdateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where depart_id = #{departId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.masterModel.DepartList" >
+    update depart_list
+    set depart_name = #{departName,jdbcType=VARCHAR},
+      depart_code = #{departCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_code = #{createCode,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_code = #{lastUpdateCode,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where depart_id = #{departId,jdbcType=INTEGER}
+  </update>
+</mapper>

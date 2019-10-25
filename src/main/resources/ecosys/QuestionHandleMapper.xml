@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.QuestionHandleMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.QuestionHandle" >
+<mapper namespace="com.tsbg.mis.ecoMapper.QuestionHandleMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.QuestionHandle" >
     <id column="question_handle_id" property="questionHandleId" jdbcType="INTEGER" />
     <result column="question_feedback_id" property="questionFeedbackId" jdbcType="INTEGER" />
     <result column="handle_code" property="handleCode" jdbcType="VARCHAR" />
@@ -40,7 +40,7 @@
     delete from question_handle
     where question_handle_id = #{questionHandleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.QuestionHandle" >
+  <insert id="insert" parameterType="com.tsbg.mis.ecoModel.QuestionHandle" >
     insert into question_handle (question_handle_id, question_feedback_id, 
       handle_code, handle_name, question_type_id,
       is_handle, handle_time, deadline_date, 
@@ -52,7 +52,7 @@
       #{startDate,jdbcType=TIMESTAMP}, #{isComplete,jdbcType=INTEGER}, #{projId,jdbcType=INTEGER}, 
       #{remark,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.QuestionHandle" >
+  <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.QuestionHandle" >
     insert into question_handle
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="questionHandleId != null" >
@@ -131,7 +131,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.QuestionHandle" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.QuestionHandle" >
     update question_handle
     <set >
       <if test="questionFeedbackId != null" >
@@ -174,7 +174,7 @@
 
 
 
-  <update id="updateByFeedBackIdSelective" parameterType="com.tsbg.ecosys.ecoModel.QuestionHandle" >
+  <update id="updateByFeedBackIdSelective" parameterType="com.tsbg.mis.ecoModel.QuestionHandle" >
     update question_handle
     <set >
       <if test="handleCode != null" >
@@ -212,7 +212,7 @@
   </update>
 
 
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.QuestionHandle" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.QuestionHandle" >
     update question_handle
     set question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER},
       handle_code = #{handleCode,jdbcType=VARCHAR},

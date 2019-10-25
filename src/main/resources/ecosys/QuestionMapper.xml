@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.QuestionMapper" >
+<mapper namespace="com.tsbg.mis.ecoMapper.QuestionMapper" >
     <!--导出系统名称、反馈人、处理人信息，文件信息等-->
-    <select id="selectquestion" resultType="com.tsbg.ecosys.ecoModel.bag.DerivediPackage">
+    <select id="selectquestion" resultType="com.tsbg.mis.ecoModel.bag.DerivediPackage">
        SELECT c.proj_id AS projIda,c.pro_name AS proNamea,a.question_name AS questionNamed,
        a.question_describe AS questionDescribed,d.file_name AS fileNamec,a.user_code AS
        userCoded,a.user_name AS userNamed,a.user_ext AS userExtd,a.user_email_address AS
@@ -16,7 +16,7 @@
    </select>
 
     <!--分页查询系统名称、反馈人、处理人信息，文件信息等-->
-    <select id="selectbasePage" resultType="com.tsbg.ecosys.ecoModel.bag.ProjectqfPackage">
+    <select id="selectbasePage" resultType="com.tsbg.mis.ecoModel.bag.ProjectqfPackage">
       select qf.question_feedback_id AS questionFeedbackId,qf.question_name AS questionName,
       qf.question_describe AS questionDescribe,qf.user_code AS userCode,qf.user_name AS userName,
       qf.user_ext AS userExt,qf.user_email_address AS userEmailAddress,qf.user_department AS userDepartment,

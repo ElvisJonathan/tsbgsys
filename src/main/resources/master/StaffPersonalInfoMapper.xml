@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.masterMapper.StaffPersonalInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.masterModel.StaffPersonalInfo" >
+    <id column="staff_person_id" property="staffPersonId" jdbcType="INTEGER" />
+    <result column="staff_code" property="staffCode" jdbcType="VARCHAR" />
+    <result column="old_staff_code" property="oldStaffCode" jdbcType="VARCHAR" />
+    <result column="identity_code" property="identityCode" jdbcType="VARCHAR" />
+    <result column="birth_date" property="birthDate" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="marriged" property="marriged" jdbcType="INTEGER" />
+    <result column="native_place" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="education" property="education" jdbcType="VARCHAR" />
+    <result column="household_type" property="householdType" jdbcType="VARCHAR" />
+    <result column="apply_channel" property="applyChannel" jdbcType="VARCHAR" />
+    <result column="politics_status" property="politicsStatus" jdbcType="VARCHAR" />
+    <result column="ident_licence_authority" property="identLicenceAuthority" jdbcType="VARCHAR" />
+    <result column="ident_begin" property="identBegin" jdbcType="VARCHAR" />
+    <result column="ident_end" property="identEnd" jdbcType="VARCHAR" />
+    <result column="degree" property="degree" jdbcType="VARCHAR" />
+    <result column="educat_type" property="educatType" jdbcType="VARCHAR" />
+    <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
+    <result column="school_type" property="schoolType" jdbcType="VARCHAR" />
+    <result column="graduate_date" property="graduateDate" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="admission_area" property="admissionArea" jdbcType="VARCHAR" />
+    <result column="recruit_province" property="recruitProvince" jdbcType="VARCHAR" />
+    <result column="recruit_city" property="recruitCity" jdbcType="VARCHAR" />
+    <result column="recruit_counties" property="recruitCounties" jdbcType="VARCHAR" />
+    <result column="use_work_type" property="useWorkType" jdbcType="VARCHAR" />
+    <result column="post_code" property="postCode" jdbcType="VARCHAR" />
+    <result column="post_type" property="postType" jdbcType="VARCHAR" />
+    <result column="domicile_type" property="domicileType" jdbcType="VARCHAR" />
+    <result column="handedness" property="handedness" jdbcType="VARCHAR" />
+    <result column="domicile_address" property="domicileAddress" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="DOUBLE" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="blood_type" property="bloodType" jdbcType="VARCHAR" />
+    <result column="left_eye" property="leftEye" jdbcType="VARCHAR" />
+    <result column="right_eye" property="rightEye" jdbcType="VARCHAR" />
+    <result column="telephone_num" property="telephoneNum" jdbcType="VARCHAR" />
+    <result column="phone_num" property="phoneNum" jdbcType="INTEGER" />
+    <result column="emergency_contact_name" property="emergencyContactName" jdbcType="VARCHAR" />
+    <result column="emergency_contact_relation" property="emergencyContactRelation" jdbcType="VARCHAR" />
+    <result column="emergency_contact_num" property="emergencyContactNum" jdbcType="VARCHAR" />
+    <result column="emergency_contact_address" property="emergencyContactAddress" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_disabled_card" property="isDisabledCard" jdbcType="INTEGER" />
+    <result column="disabled_card_num" property="disabledCardNum" jdbcType="VARCHAR" />
+    <result column="disabled_level" property="disabledLevel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    staff_person_id, staff_code, old_staff_code, identity_code, birth_date, age, marriged, 
+    native_place, nation, education, household_type, apply_channel, politics_status, 
+    ident_licence_authority, ident_begin, ident_end, degree, educat_type, graduate_school, 
+    school_type, graduate_date, major, admission_area, recruit_province, recruit_city, 
+    recruit_counties, use_work_type, post_code, post_type, domicile_type, handedness, 
+    domicile_address, height, weight, blood_type, left_eye, right_eye, telephone_num, 
+    phone_num, emergency_contact_name, emergency_contact_relation, emergency_contact_num, 
+    emergency_contact_address, remark, creater, create_time, updater, update_time, is_disabled_card, 
+    disabled_card_num, disabled_level
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from staff_personal_info
+    where staff_person_id = #{staffPersonId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from staff_personal_info
+    where staff_person_id = #{staffPersonId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.mis.masterModel.StaffPersonalInfo" >
+    insert into staff_personal_info (staff_person_id, staff_code, old_staff_code, 
+      identity_code, birth_date, age, 
+      marriged, native_place, nation, 
+      education, household_type, apply_channel, 
+      politics_status, ident_licence_authority, 
+      ident_begin, ident_end, degree, 
+      educat_type, graduate_school, school_type, 
+      graduate_date, major, admission_area, 
+      recruit_province, recruit_city, recruit_counties, 
+      use_work_type, post_code, post_type, 
+      domicile_type, handedness, domicile_address, 
+      height, weight, blood_type, 
+      left_eye, right_eye, telephone_num, 
+      phone_num, emergency_contact_name, emergency_contact_relation, 
+      emergency_contact_num, emergency_contact_address, 
+      remark, creater, create_time, 
+      updater, update_time, is_disabled_card, 
+      disabled_card_num, disabled_level)
+    values (#{staffPersonId,jdbcType=INTEGER}, #{staffCode,jdbcType=VARCHAR}, #{oldStaffCode,jdbcType=VARCHAR}, 
+      #{identityCode,jdbcType=VARCHAR}, #{birthDate,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{marriged,jdbcType=INTEGER}, #{nativePlace,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+      #{education,jdbcType=VARCHAR}, #{householdType,jdbcType=VARCHAR}, #{applyChannel,jdbcType=VARCHAR}, 
+      #{politicsStatus,jdbcType=VARCHAR}, #{identLicenceAuthority,jdbcType=VARCHAR}, 
+      #{identBegin,jdbcType=VARCHAR}, #{identEnd,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, 
+      #{educatType,jdbcType=VARCHAR}, #{graduateSchool,jdbcType=VARCHAR}, #{schoolType,jdbcType=VARCHAR}, 
+      #{graduateDate,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{admissionArea,jdbcType=VARCHAR}, 
+      #{recruitProvince,jdbcType=VARCHAR}, #{recruitCity,jdbcType=VARCHAR}, #{recruitCounties,jdbcType=VARCHAR}, 
+      #{useWorkType,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, #{postType,jdbcType=VARCHAR}, 
+      #{domicileType,jdbcType=VARCHAR}, #{handedness,jdbcType=VARCHAR}, #{domicileAddress,jdbcType=VARCHAR}, 
+      #{height,jdbcType=DOUBLE}, #{weight,jdbcType=DOUBLE}, #{bloodType,jdbcType=VARCHAR}, 
+      #{leftEye,jdbcType=VARCHAR}, #{rightEye,jdbcType=VARCHAR}, #{telephoneNum,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=INTEGER}, #{emergencyContactName,jdbcType=VARCHAR}, #{emergencyContactRelation,jdbcType=VARCHAR}, 
+      #{emergencyContactNum,jdbcType=VARCHAR}, #{emergencyContactAddress,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{isDisabledCard,jdbcType=INTEGER}, 
+      #{disabledCardNum,jdbcType=VARCHAR}, #{disabledLevel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.mis.masterModel.StaffPersonalInfo" >
+    insert into staff_personal_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staffPersonId != null" >
+        staff_person_id,
+      </if>
+      <if test="staffCode != null" >
+        staff_code,
+      </if>
+      <if test="oldStaffCode != null" >
+        old_staff_code,
+      </if>
+      <if test="identityCode != null" >
+        identity_code,
+      </if>
+      <if test="birthDate != null" >
+        birth_date,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="marriged != null" >
+        marriged,
+      </if>
+      <if test="nativePlace != null" >
+        native_place,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="education != null" >
+        education,
+      </if>
+      <if test="householdType != null" >
+        household_type,
+      </if>
+      <if test="applyChannel != null" >
+        apply_channel,
+      </if>
+      <if test="politicsStatus != null" >
+        politics_status,
+      </if>
+      <if test="identLicenceAuthority != null" >
+        ident_licence_authority,
+      </if>
+      <if test="identBegin != null" >
+        ident_begin,
+      </if>
+      <if test="identEnd != null" >
+        ident_end,
+      </if>
+      <if test="degree != null" >
+        degree,
+      </if>
+      <if test="educatType != null" >
+        educat_type,
+      </if>
+      <if test="graduateSchool != null" >
+        graduate_school,
+      </if>
+      <if test="schoolType != null" >
+        school_type,
+      </if>
+      <if test="graduateDate != null" >
+        graduate_date,
+      </if>
+      <if test="major != null" >
+        major,
+      </if>
+      <if test="admissionArea != null" >
+        admission_area,
+      </if>
+      <if test="recruitProvince != null" >
+        recruit_province,
+      </if>
+      <if test="recruitCity != null" >
+        recruit_city,
+      </if>
+      <if test="recruitCounties != null" >
+        recruit_counties,
+      </if>
+      <if test="useWorkType != null" >
+        use_work_type,
+      </if>
+      <if test="postCode != null" >
+        post_code,
+      </if>
+      <if test="postType != null" >
+        post_type,
+      </if>
+      <if test="domicileType != null" >
+        domicile_type,
+      </if>
+      <if test="handedness != null" >
+        handedness,
+      </if>
+      <if test="domicileAddress != null" >
+        domicile_address,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="bloodType != null" >
+        blood_type,
+      </if>
+      <if test="leftEye != null" >
+        left_eye,
+      </if>
+      <if test="rightEye != null" >
+        right_eye,
+      </if>
+      <if test="telephoneNum != null" >
+        telephone_num,
+      </if>
+      <if test="phoneNum != null" >
+        phone_num,
+      </if>
+      <if test="emergencyContactName != null" >
+        emergency_contact_name,
+      </if>
+      <if test="emergencyContactRelation != null" >
+        emergency_contact_relation,
+      </if>
+      <if test="emergencyContactNum != null" >
+        emergency_contact_num,
+      </if>
+      <if test="emergencyContactAddress != null" >
+        emergency_contact_address,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDisabledCard != null" >
+        is_disabled_card,
+      </if>
+      <if test="disabledCardNum != null" >
+        disabled_card_num,
+      </if>
+      <if test="disabledLevel != null" >
+        disabled_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staffPersonId != null" >
+        #{staffPersonId,jdbcType=INTEGER},
+      </if>
+      <if test="staffCode != null" >
+        #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStaffCode != null" >
+        #{oldStaffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCode != null" >
+        #{identityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marriged != null" >
+        #{marriged,jdbcType=INTEGER},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="householdType != null" >
+        #{householdType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyChannel != null" >
+        #{applyChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatus != null" >
+        #{politicsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="identLicenceAuthority != null" >
+        #{identLicenceAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="identBegin != null" >
+        #{identBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="identEnd != null" >
+        #{identEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="educatType != null" >
+        #{educatType,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSchool != null" >
+        #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolType != null" >
+        #{schoolType,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateDate != null" >
+        #{graduateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionArea != null" >
+        #{admissionArea,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitProvince != null" >
+        #{recruitProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitCity != null" >
+        #{recruitCity,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitCounties != null" >
+        #{recruitCounties,jdbcType=VARCHAR},
+      </if>
+      <if test="useWorkType != null" >
+        #{useWorkType,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="postType != null" >
+        #{postType,jdbcType=VARCHAR},
+      </if>
+      <if test="domicileType != null" >
+        #{domicileType,jdbcType=VARCHAR},
+      </if>
+      <if test="handedness != null" >
+        #{handedness,jdbcType=VARCHAR},
+      </if>
+      <if test="domicileAddress != null" >
+        #{domicileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="bloodType != null" >
+        #{bloodType,jdbcType=VARCHAR},
+      </if>
+      <if test="leftEye != null" >
+        #{leftEye,jdbcType=VARCHAR},
+      </if>
+      <if test="rightEye != null" >
+        #{rightEye,jdbcType=VARCHAR},
+      </if>
+      <if test="telephoneNum != null" >
+        #{telephoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=INTEGER},
+      </if>
+      <if test="emergencyContactName != null" >
+        #{emergencyContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactRelation != null" >
+        #{emergencyContactRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactNum != null" >
+        #{emergencyContactNum,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactAddress != null" >
+        #{emergencyContactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDisabledCard != null" >
+        #{isDisabledCard,jdbcType=INTEGER},
+      </if>
+      <if test="disabledCardNum != null" >
+        #{disabledCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="disabledLevel != null" >
+        #{disabledLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.masterModel.StaffPersonalInfo" >
+    update staff_personal_info
+    <set >
+      <if test="staffCode != null" >
+        staff_code = #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStaffCode != null" >
+        old_staff_code = #{oldStaffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCode != null" >
+        identity_code = #{identityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        birth_date = #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="marriged != null" >
+        marriged = #{marriged,jdbcType=INTEGER},
+      </if>
+      <if test="nativePlace != null" >
+        native_place = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="householdType != null" >
+        household_type = #{householdType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyChannel != null" >
+        apply_channel = #{applyChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="politicsStatus != null" >
+        politics_status = #{politicsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="identLicenceAuthority != null" >
+        ident_licence_authority = #{identLicenceAuthority,jdbcType=VARCHAR},
+      </if>
+      <if test="identBegin != null" >
+        ident_begin = #{identBegin,jdbcType=VARCHAR},
+      </if>
+      <if test="identEnd != null" >
+        ident_end = #{identEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null" >
+        degree = #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="educatType != null" >
+        educat_type = #{educatType,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateSchool != null" >
+        graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolType != null" >
+        school_type = #{schoolType,jdbcType=VARCHAR},
+      </if>
+      <if test="graduateDate != null" >
+        graduate_date = #{graduateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionArea != null" >
+        admission_area = #{admissionArea,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitProvince != null" >
+        recruit_province = #{recruitProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitCity != null" >
+        recruit_city = #{recruitCity,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitCounties != null" >
+        recruit_counties = #{recruitCounties,jdbcType=VARCHAR},
+      </if>
+      <if test="useWorkType != null" >
+        use_work_type = #{useWorkType,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="postType != null" >
+        post_type = #{postType,jdbcType=VARCHAR},
+      </if>
+      <if test="domicileType != null" >
+        domicile_type = #{domicileType,jdbcType=VARCHAR},
+      </if>
+      <if test="handedness != null" >
+        handedness = #{handedness,jdbcType=VARCHAR},
+      </if>
+      <if test="domicileAddress != null" >
+        domicile_address = #{domicileAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="bloodType != null" >
+        blood_type = #{bloodType,jdbcType=VARCHAR},
+      </if>
+      <if test="leftEye != null" >
+        left_eye = #{leftEye,jdbcType=VARCHAR},
+      </if>
+      <if test="rightEye != null" >
+        right_eye = #{rightEye,jdbcType=VARCHAR},
+      </if>
+      <if test="telephoneNum != null" >
+        telephone_num = #{telephoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        phone_num = #{phoneNum,jdbcType=INTEGER},
+      </if>
+      <if test="emergencyContactName != null" >
+        emergency_contact_name = #{emergencyContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactRelation != null" >
+        emergency_contact_relation = #{emergencyContactRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactNum != null" >
+        emergency_contact_num = #{emergencyContactNum,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactAddress != null" >
+        emergency_contact_address = #{emergencyContactAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDisabledCard != null" >
+        is_disabled_card = #{isDisabledCard,jdbcType=INTEGER},
+      </if>
+      <if test="disabledCardNum != null" >
+        disabled_card_num = #{disabledCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="disabledLevel != null" >
+        disabled_level = #{disabledLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where staff_person_id = #{staffPersonId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.masterModel.StaffPersonalInfo" >
+    update staff_personal_info
+    set staff_code = #{staffCode,jdbcType=VARCHAR},
+      old_staff_code = #{oldStaffCode,jdbcType=VARCHAR},
+      identity_code = #{identityCode,jdbcType=VARCHAR},
+      birth_date = #{birthDate,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      marriged = #{marriged,jdbcType=INTEGER},
+      native_place = #{nativePlace,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      household_type = #{householdType,jdbcType=VARCHAR},
+      apply_channel = #{applyChannel,jdbcType=VARCHAR},
+      politics_status = #{politicsStatus,jdbcType=VARCHAR},
+      ident_licence_authority = #{identLicenceAuthority,jdbcType=VARCHAR},
+      ident_begin = #{identBegin,jdbcType=VARCHAR},
+      ident_end = #{identEnd,jdbcType=VARCHAR},
+      degree = #{degree,jdbcType=VARCHAR},
+      educat_type = #{educatType,jdbcType=VARCHAR},
+      graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+      school_type = #{schoolType,jdbcType=VARCHAR},
+      graduate_date = #{graduateDate,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      admission_area = #{admissionArea,jdbcType=VARCHAR},
+      recruit_province = #{recruitProvince,jdbcType=VARCHAR},
+      recruit_city = #{recruitCity,jdbcType=VARCHAR},
+      recruit_counties = #{recruitCounties,jdbcType=VARCHAR},
+      use_work_type = #{useWorkType,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      post_type = #{postType,jdbcType=VARCHAR},
+      domicile_type = #{domicileType,jdbcType=VARCHAR},
+      handedness = #{handedness,jdbcType=VARCHAR},
+      domicile_address = #{domicileAddress,jdbcType=VARCHAR},
+      height = #{height,jdbcType=DOUBLE},
+      weight = #{weight,jdbcType=DOUBLE},
+      blood_type = #{bloodType,jdbcType=VARCHAR},
+      left_eye = #{leftEye,jdbcType=VARCHAR},
+      right_eye = #{rightEye,jdbcType=VARCHAR},
+      telephone_num = #{telephoneNum,jdbcType=VARCHAR},
+      phone_num = #{phoneNum,jdbcType=INTEGER},
+      emergency_contact_name = #{emergencyContactName,jdbcType=VARCHAR},
+      emergency_contact_relation = #{emergencyContactRelation,jdbcType=VARCHAR},
+      emergency_contact_num = #{emergencyContactNum,jdbcType=VARCHAR},
+      emergency_contact_address = #{emergencyContactAddress,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      updater = #{updater,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_disabled_card = #{isDisabledCard,jdbcType=INTEGER},
+      disabled_card_num = #{disabledCardNum,jdbcType=VARCHAR},
+      disabled_level = #{disabledLevel,jdbcType=VARCHAR}
+    where staff_person_id = #{staffPersonId,jdbcType=INTEGER}
+  </update>
+</mapper>

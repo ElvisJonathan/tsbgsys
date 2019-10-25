@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.EccontactsMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.Eccontacts" >
+<mapper namespace="com.tsbg.mis.ecoMapper.EccontactsMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.Eccontacts" >
     <id column="contact_id" property="contactId" jdbcType="INTEGER" />
     <result column="partner_no" property="partnerNo" jdbcType="INTEGER" />
     <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
@@ -82,7 +82,7 @@
   </sql>
 
 <!--  通过"公司名称"带出联系人 -->
-  <select id="selectContacts" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.ecoModel.Eccontacts">
+  <select id="selectContacts" resultMap="BaseResultMap" parameterType="com.tsbg.mis.ecoModel.Eccontacts">
     select * from eccontacts where partner_no = #{partnerNo}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -93,7 +93,7 @@
     delete from eccontacts
     WHERE partner_no = #{partnerNo,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.Eccontacts" >
+  <insert id="insert" parameterType="com.tsbg.mis.ecoModel.Eccontacts" >
     insert into eccontacts (contact_id, partner_no, partner_name,
       name, title, gender,
       phone_number, email_address, create_time,
@@ -107,7 +107,7 @@
       #{status,jdbcType=INTEGER}, #{delStatus,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.Eccontacts" >
+  <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.Eccontacts" >
     insert into eccontacts
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="contactId != null" >
@@ -204,7 +204,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.Eccontacts" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.Eccontacts" >
     update eccontacts
     <set >
       <if test="partnerNo != null" >
@@ -252,7 +252,7 @@
     </set>
     where contact_id = #{contactId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPartnerNoSelective" parameterType="com.tsbg.ecosys.ecoModel.Eccontacts" >
+  <update id="updateByPartnerNoSelective" parameterType="com.tsbg.mis.ecoModel.Eccontacts" >
     update eccontacts
     <set >
       <if test="partnerNo != null" >
@@ -300,7 +300,7 @@
     </set>
     where partner_no = #{partnerNo,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.Eccontacts" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.Eccontacts" >
     update eccontacts
     set partner_no = #{partnerNo,jdbcType=INTEGER},
       partner_name = #{partnerName,jdbcType=VARCHAR},
@@ -318,7 +318,7 @@
       remark = #{remark,jdbcType=VARCHAR}
     where contact_id = #{contactId,jdbcType=INTEGER}
   </update>
-  <select id="selectByExample" parameterType="com.tsbg.ecosys.ecoModel.example.EccontactsExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tsbg.mis.ecoModel.example.EccontactsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -332,7 +332,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="countByExample" parameterType="com.tsbg.ecosys.ecoModel.example.EccontactsExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tsbg.mis.ecoModel.example.EccontactsExample" resultType="java.lang.Long">
     select count(*) from eccontacts
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -412,7 +412,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <delete id="deleteByExample" parameterType="com.tsbg.ecosys.ecoModel.example.EccontactsExample">
+  <delete id="deleteByExample" parameterType="com.tsbg.mis.ecoModel.example.EccontactsExample">
     delete from eccontacts
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

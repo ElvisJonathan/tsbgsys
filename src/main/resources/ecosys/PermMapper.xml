@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.PermMapper">
+<mapper namespace="com.tsbg.mis.ecoMapper.PermMapper">
 
-    <resultMap id="permissionMap" type="com.tsbg.ecosys.util.One2Many">
+    <resultMap id="permissionMap" type="com.tsbg.mis.util.One2Many">
         <id column="userId" property="userId"/>
         <result column="userName" property="userName"/>
         <result column="roleId" property="roleId"/>
@@ -15,7 +15,7 @@
             <id column="permissionCode" property="permissionCode"/>
         </collection>
     </resultMap>
-    <resultMap id="permissionMap2" type="com.tsbg.ecosys.util.One2Many">
+    <resultMap id="permissionMap2" type="com.tsbg.mis.util.One2Many">
         <id column="userId" property="userId"/>
         <result column="userName" property="userName"/>
         <result column="roleId" property="roleId"/>

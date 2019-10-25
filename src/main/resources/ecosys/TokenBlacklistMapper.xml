@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.TokenBlacklistMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.TokenBlacklist" >
+<mapper namespace="com.tsbg.mis.ecoMapper.TokenBlacklistMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.TokenBlacklist" >
     <id column="token_id" property="tokenId" jdbcType="BIGINT" />
     <result column="token_code" property="tokenCode" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -20,13 +20,13 @@
     delete from token_blacklist
     where token_id = #{tokenId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.TokenBlacklist" >
+  <insert id="insert" parameterType="com.tsbg.mis.ecoModel.TokenBlacklist" >
     insert into token_blacklist (token_id, token_code, status, 
       create_time)
     values (#{tokenId,jdbcType=BIGINT}, #{tokenCode,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.TokenBlacklist" >
+  <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.TokenBlacklist" >
     insert into token_blacklist
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="tokenId != null" >
@@ -57,7 +57,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.TokenBlacklist" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.TokenBlacklist" >
     update token_blacklist
     <set >
       <if test="tokenCode != null" >
@@ -72,7 +72,7 @@
     </set>
     where token_id = #{tokenId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.TokenBlacklist" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.TokenBlacklist" >
     update token_blacklist
     set token_code = #{tokenCode,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},

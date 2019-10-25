@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.UserInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.UserInfo" >
+<mapper namespace="com.tsbg.mis.ecoMapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.UserInfo" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_code" property="userCode" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -35,7 +35,7 @@
     delete from user_info
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.UserInfo" >
+  <insert id="insert" parameterType="com.tsbg.mis.ecoModel.UserInfo" >
     insert into user_info (user_id, user_code, user_name,
       user_pwd, salt, is_manager,
       locked, gender, phone_number,
@@ -49,7 +49,7 @@
       #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR},
       #{updater,jdbcType=VARCHAR}, #{projId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.UserInfo" >
+  <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.UserInfo" >
     insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -164,7 +164,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.UserInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.UserInfo" >
     update user_info
     <set >
       <if test="userCode != null" >
@@ -221,7 +221,7 @@
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.UserInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.UserInfo" >
     update user_info
     set user_code = #{userCode,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
   <insert id="insertDatatoEuserRole"  >
     INSERT INTO user_role (user_id,role_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{rid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
   </insert>
-  <select id="selectUidAndName"  parameterType="String" resultType="com.tsbg.ecosys.ecoModel.UserInfo">
+  <select id="selectUidAndName"  parameterType="String" resultType="com.tsbg.mis.ecoModel.UserInfo">
     SELECT e.`user_id`,e.`user_name` FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
   </select>
   <select id="selectEuserList" resultMap="BaseResultMap">
@@ -273,7 +273,7 @@
     SELECT e.`user_code`,e.`email_address`,e.`user_name`,e.`status`,e.`phone_number`,e.`gender` FROM user_info AS e
      WHERE e.`user_code` = #{userCode,jdbcType=VARCHAR};
   </select>
-  <update id="updateByUserCodeSelective" parameterType="com.tsbg.ecosys.ecoModel.UserInfo" >
+  <update id="updateByUserCodeSelective" parameterType="com.tsbg.mis.ecoModel.UserInfo" >
     update user_info
     <set >
       <if test="userCode != null" >
@@ -331,7 +331,7 @@
     where user_code = #{userCode,jdbcType=VARCHAR};
   </update>
 
-  <update id="modifyPasswordByUsername" parameterType="com.tsbg.ecosys.ecoModel.UserInfo">
+  <update id="modifyPasswordByUsername" parameterType="com.tsbg.mis.ecoModel.UserInfo">
     update user_info
     <set>
       <if test="userPwd != null" >

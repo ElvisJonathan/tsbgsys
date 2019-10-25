@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.powerMapper.RoleAndProJPackageMapper2" >
+
+    <select id="selectRoleAndProj" resultType="com.tsbg.mis.powerModel.powerBag.RoleAndProJPackage">
+        SELECT r.`roleid` AS roleid,r.`role` AS role,r.`description` AS description,r.`proj_id` AS projId,p.`pro_name` AS proName
+        FROM role AS r
+        LEFT JOIN project AS p ON r.`proj_id`=p.`proj_id`;
+    </select>
+
+    <select id="selectRoleAndProj2" resultType="com.tsbg.mis.powerModel.powerBag.RoleAndProJPackage">
+        SELECT r.`roleid` AS roleid,r.`role` AS role,r.`description` AS description,r.`proj_id` AS projId,p.`pro_name` AS proName
+        FROM role AS r
+        LEFT JOIN project AS p ON r.`proj_id`=p.`proj_id`
+        WHERE r.`role` LIKE CONCAT('%', 'user', '%');
+    </select>
+</mapper>

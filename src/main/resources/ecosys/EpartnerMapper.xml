@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.EpartnerMapper" >
-  <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.Epartner" >
+<mapper namespace="com.tsbg.mis.ecoMapper.EpartnerMapper" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.Epartner" >
     <id column="partner_no" property="partnerNo" jdbcType="INTEGER" />
     <result column="partner_name" property="partnerName" jdbcType="VARCHAR" />
     <result column="partner_date" property="partnerDate" jdbcType="VARCHAR" />
@@ -90,7 +90,7 @@
     partner_region, partner_industry, status, del_status, create_time, update_time, creater,creater_identity,
     updater, remark,proj_id
   </sql>
-  <select id="selectCinfo" resultMap="BaseResultMap" parameterType="com.tsbg.ecosys.ecoModel.Epartner">
+  <select id="selectCinfo" resultMap="BaseResultMap" parameterType="com.tsbg.mis.ecoModel.Epartner">
     select * from epartner
     <where>
       <if test = "partnerName != null and partnerName != ''">
@@ -109,7 +109,7 @@
   </select>
 
   <!-- 分页查询公司信息+搜索：如果不用搜索则不需要加动态sql -->
-  <select id="selectPage"  resultType="com.tsbg.ecosys.ecoModel.Epartner">
+  <select id="selectPage"  resultType="com.tsbg.mis.ecoModel.Epartner">
     select
     e.partner_no as partnerNo, e.partner_name as partnerName, e.partner_date as partnerDate, e.partner_registcapital
     as partnerRegistcapital, e.partner_list as partnerList, e.partner_scale as partnerScale,
@@ -170,7 +170,7 @@
     delete from epartner
     where partner_no = #{partnerNo,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.Epartner" >
+  <insert id="insert" parameterType="com.tsbg.mis.ecoModel.Epartner" >
     insert into epartner (partner_no, partner_name, partner_date,
       partner_registcapital, partner_list, partner_scale,
       partner_addr, partner_webddr, partner_tech,
@@ -188,7 +188,7 @@
       #{creater,jdbcType=VARCHAR},#{createrIdentity,jdbcType=INTEGER} ,#{updater,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},#{projId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.Epartner" >
+  <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.Epartner" >
     insert into epartner
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="partnerNo != null" >
@@ -333,7 +333,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.Epartner" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.Epartner" >
     update epartner
     <set >
       <if test="partnerName != null" >
@@ -405,7 +405,7 @@
     </set>
     where partner_no = #{partnerNo,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.Epartner" >
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.Epartner" >
     update epartner
     set partner_name = #{partnerName,jdbcType=VARCHAR},
       partner_date = #{partnerDate,jdbcType=VARCHAR},
@@ -437,7 +437,7 @@
     <update id="updateStatusByCid" parameterType="int" >
     UPDATE epartner AS e SET e.`del_status`=1 WHERE e.`partner_no`=#{cid,jdbcType=INTEGER};
   </update>
-  <select id="selectByExample" parameterType="com.tsbg.ecosys.ecoModel.example.EcInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.tsbg.mis.ecoModel.example.EcInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -451,13 +451,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="countByExample" parameterType="com.tsbg.ecosys.ecoModel.example.EcInfoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.tsbg.mis.ecoModel.example.EcInfoExample" resultType="java.lang.Long">
     select count(*) from epartner
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.tsbg.ecosys.ecoModel.example.EcInfoExample">
+  <delete id="deleteByExample" parameterType="com.tsbg.mis.ecoModel.example.EcInfoExample">
     delete from epartner
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

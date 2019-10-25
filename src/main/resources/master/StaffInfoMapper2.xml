@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.masterMapper.StaffInfoMapper2" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.masterModel.StaffInfo" >
+    <id column="staff_id" property="staffId" jdbcType="INTEGER" />
+    <result column="staff_code" property="staffCode" jdbcType="VARCHAR" />
+    <result column="staff_name" property="staffName" jdbcType="VARCHAR" />
+    <result column="sstaff_simple_name" property="sstaffSimpleName" jdbcType="VARCHAR" />
+    <result column="staff_type_id" property="staffTypeId" jdbcType="INTEGER" />
+    <result column="nation_id" property="nationId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="factory_id" property="factoryId" jdbcType="VARCHAR" />
+    <result column="first_BG_id" property="firstBgId" jdbcType="INTEGER" />
+    <result column="second_BG_id" property="secondBgId" jdbcType="INTEGER" />
+    <result column="BG_id" property="bgId" jdbcType="INTEGER" />
+    <result column="cost_code" property="costCode" jdbcType="VARCHAR" />
+    <result column="organization_name" property="organizationName" jdbcType="VARCHAR" />
+    <result column="organization_code" property="organizationCode" jdbcType="VARCHAR" />
+    <result column="BU_id" property="buId" jdbcType="INTEGER" />
+    <result column="depart_id" property="departId" jdbcType="VARCHAR" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="legal_person_id" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="work_status_name" property="workStatusName" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    staff_id, staff_code, staff_name, sstaff_simple_name, staff_type_id, nation_id, area_id, 
+    factory_id, first_BG_id, second_BG_id, BG_id, cost_code, organization_name, organization_code, 
+    BU_id, depart_id, class_id, group_id, legal_person_id, gender, creater, create_time, 
+    updater, update_time, work_status_name, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from staff_info
+    where staff_id = #{staffId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from staff_info
+    where staff_id = #{staffId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.mis.masterModel.StaffInfo" >
+    insert into staff_info (staff_id, staff_code, staff_name, 
+      sstaff_simple_name, staff_type_id, nation_id, 
+      area_id, factory_id, first_BG_id, 
+      second_BG_id, BG_id, cost_code, 
+      organization_name, organization_code, BU_id, 
+      depart_id, class_id, group_id, 
+      legal_person_id, gender, creater, 
+      create_time, updater, update_time, 
+      work_status_name, status)
+    values (#{staffId,jdbcType=INTEGER}, #{staffCode,jdbcType=VARCHAR}, #{staffName,jdbcType=VARCHAR}, 
+      #{sstaffSimpleName,jdbcType=VARCHAR}, #{staffTypeId,jdbcType=INTEGER}, #{nationId,jdbcType=INTEGER}, 
+      #{areaId,jdbcType=INTEGER}, #{factoryId,jdbcType=VARCHAR}, #{firstBgId,jdbcType=INTEGER}, 
+      #{secondBgId,jdbcType=INTEGER}, #{bgId,jdbcType=INTEGER}, #{costCode,jdbcType=VARCHAR}, 
+      #{organizationName,jdbcType=VARCHAR}, #{organizationCode,jdbcType=VARCHAR}, #{buId,jdbcType=INTEGER}, 
+      #{departId,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, 
+      #{legalPersonId,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, #{creater,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{workStatusName,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.mis.masterModel.StaffInfo" >
+    insert into staff_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staffId != null" >
+        staff_id,
+      </if>
+      <if test="staffCode != null" >
+        staff_code,
+      </if>
+      <if test="staffName != null" >
+        staff_name,
+      </if>
+      <if test="sstaffSimpleName != null" >
+        sstaff_simple_name,
+      </if>
+      <if test="staffTypeId != null" >
+        staff_type_id,
+      </if>
+      <if test="nationId != null" >
+        nation_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
+      </if>
+      <if test="firstBgId != null" >
+        first_BG_id,
+      </if>
+      <if test="secondBgId != null" >
+        second_BG_id,
+      </if>
+      <if test="bgId != null" >
+        BG_id,
+      </if>
+      <if test="costCode != null" >
+        cost_code,
+      </if>
+      <if test="organizationName != null" >
+        organization_name,
+      </if>
+      <if test="organizationCode != null" >
+        organization_code,
+      </if>
+      <if test="buId != null" >
+        BU_id,
+      </if>
+      <if test="departId != null" >
+        depart_id,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="legalPersonId != null" >
+        legal_person_id,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="workStatusName != null" >
+        work_status_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staffId != null" >
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="staffCode != null" >
+        #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null" >
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="sstaffSimpleName != null" >
+        #{sstaffSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffTypeId != null" >
+        #{staffTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstBgId != null" >
+        #{firstBgId,jdbcType=INTEGER},
+      </if>
+      <if test="secondBgId != null" >
+        #{secondBgId,jdbcType=INTEGER},
+      </if>
+      <if test="bgId != null" >
+        #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="costCode != null" >
+        #{costCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null" >
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationCode != null" >
+        #{organizationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buId != null" >
+        #{buId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null" >
+        #{departId,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonId != null" >
+        #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workStatusName != null" >
+        #{workStatusName,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.masterModel.StaffInfo" >
+    update staff_info
+    <set >
+      <if test="staffCode != null" >
+        staff_code = #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null" >
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="sstaffSimpleName != null" >
+        sstaff_simple_name = #{sstaffSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffTypeId != null" >
+        staff_type_id = #{staffTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        nation_id = #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstBgId != null" >
+        first_BG_id = #{firstBgId,jdbcType=INTEGER},
+      </if>
+      <if test="secondBgId != null" >
+        second_BG_id = #{secondBgId,jdbcType=INTEGER},
+      </if>
+      <if test="bgId != null" >
+        BG_id = #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="costCode != null" >
+        cost_code = #{costCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null" >
+        organization_name = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationCode != null" >
+        organization_code = #{organizationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buId != null" >
+        BU_id = #{buId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null" >
+        depart_id = #{departId,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonId != null" >
+        legal_person_id = #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="workStatusName != null" >
+        work_status_name = #{workStatusName,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where staff_id = #{staffId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.masterModel.StaffInfo" >
+    update staff_info
+    set staff_code = #{staffCode,jdbcType=VARCHAR},
+      staff_name = #{staffName,jdbcType=VARCHAR},
+      sstaff_simple_name = #{sstaffSimpleName,jdbcType=VARCHAR},
+      staff_type_id = #{staffTypeId,jdbcType=INTEGER},
+      nation_id = #{nationId,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=INTEGER},
+      factory_id = #{factoryId,jdbcType=VARCHAR},
+      first_BG_id = #{firstBgId,jdbcType=INTEGER},
+      second_BG_id = #{secondBgId,jdbcType=INTEGER},
+      BG_id = #{bgId,jdbcType=INTEGER},
+      cost_code = #{costCode,jdbcType=VARCHAR},
+      organization_name = #{organizationName,jdbcType=VARCHAR},
+      organization_code = #{organizationCode,jdbcType=VARCHAR},
+      BU_id = #{buId,jdbcType=INTEGER},
+      depart_id = #{departId,jdbcType=VARCHAR},
+      class_id = #{classId,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=INTEGER},
+      legal_person_id = #{legalPersonId,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      creater = #{creater,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      updater = #{updater,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      work_status_name = #{workStatusName,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where staff_id = #{staffId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectisExistStaffCodeByuserCode"  parameterType="String" resultType="int">
+    SELECT COUNT(0) FROM staff_info AS s WHERE s.`staff_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+
+  <select id="selectStaffMsg" resultMap="BaseResultMap" parameterType="String" >
+   SELECT staff_type_id,nation_id,area_id,factory_id,first_BG_id,second_BG_id,BG_id,cost_code,
+            organization_name,organization_code,BU_id,depart_id,class_id,group_id,legal_person_id
+            FROM staff_info WHERE staff_code=#{userCode,jdbcType=VARCHAR};
+  </select>
+</mapper>

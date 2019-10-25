@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.assetsMapper.AssetsTypeMapper" >
+<mapper namespace="com.tsbg.mis.assetsMapper.AssetsTypeMapper" >
 
     <select id="selectAssetsType"  resultType="String">
        SELECT type_name FROM assets_type;

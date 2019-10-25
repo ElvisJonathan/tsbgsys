@@ -64,11 +64,11 @@
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.apache" level="WARN"/>
     <!--如果需要打印SQL,可以把下面的级别设置为DEBUG -->
-    <logger name="com.tsbg.ecosys.ecoMapper" level="DEBUG"/>
-    <logger name="com.tsbg.ecosys.masterMapper" level="DEBUG"/>
-    <logger name="com.tsbg.ecosys.assetsMapper" level="DEBUG"/>
-    <logger name="com.tsbg.ecosys.doorMapper" level="DEBUG"/>
-    <logger name="com.tsbg.ecosys.questionMapper" level="DEBUG"/>
-    <logger name="com.tsbg.ecosys.stampMapper" level="DEBUG"/>
-    <logger name="com.tsbg.ecosys.powerMapper" level="DEBUG"/>
+    <logger name="com.tsbg.mis.ecoMapper" level="DEBUG"/>
+    <logger name="com.tsbg.mis.masterMapper" level="DEBUG"/>
+    <logger name="com.tsbg.mis.assetsMapper" level="DEBUG"/>
+    <logger name="com.tsbg.mis.doorMapper" level="DEBUG"/>
+    <logger name="com.tsbg.mis.questionMapper" level="DEBUG"/>
+    <logger name="com.tsbg.mis.stampMapper" level="DEBUG"/>
+    <logger name="com.tsbg.mis.powerMapper" level="DEBUG"/>
 </configuration>

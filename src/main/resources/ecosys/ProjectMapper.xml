@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsbg.ecosys.ecoMapper.ProjectMapper" >
-    <resultMap id="BaseResultMap" type="com.tsbg.ecosys.ecoModel.Project" >
+<mapper namespace="com.tsbg.mis.ecoMapper.ProjectMapper" >
+    <resultMap id="BaseResultMap" type="com.tsbg.mis.ecoModel.Project" >
         <id column="proj_id" property="projId" jdbcType="INTEGER" />
         <result column="pro_name" property="proName" jdbcType="VARCHAR" />
         <result column="pro_start" property="proStart" jdbcType="DATE" />
@@ -32,7 +32,7 @@
 <!--    delete from role-->
 <!--    where roleid = #{roleid,jdbcType=INTEGER}-->
 <!--    </delete>-->
-<!--    <insert id="insert" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--    <insert id="insert" parameterType="com.tsbg.mis.ecoModel.Role" >-->
 <!--    insert into role (roleid, available, role,-->
 <!--      parent_id, description, proj_id-->
 <!--      )-->
@@ -40,7 +40,7 @@
 <!--      #{parentId,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{projId,jdbcType=INTEGER}-->
 <!--      )-->
 <!--  </insert>-->
-<!--    <insert id="insertSelective" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--    <insert id="insertSelective" parameterType="com.tsbg.mis.ecoModel.Role" >-->
 <!--        insert into role-->
 <!--        <trim prefix="(" suffix=")" suffixOverrides="," >-->
 <!--            <if test="roleid != null" >-->
@@ -83,7 +83,7 @@
 <!--            </if>-->
 <!--        </trim>-->
 <!--    </insert>-->
-<!--    <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--    <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.ecoModel.Role" >-->
 <!--        update role-->
 <!--        <set >-->
 <!--            <if test="available != null" >-->
@@ -104,7 +104,7 @@
 <!--        </set>-->
 <!--        where roleid = #{roleid,jdbcType=INTEGER}-->
 <!--    </update>-->
-<!--    <update id="updateByPrimaryKey" parameterType="com.tsbg.ecosys.ecoModel.Role" >-->
+<!--    <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.ecoModel.Role" >-->
 <!--    update role-->
 <!--    set available = #{available,jdbcType=BIT},-->
 <!--      role = #{role,jdbcType=VARCHAR},-->
@@ -113,7 +113,7 @@
 <!--      proj_id = #{projId,jdbcType=INTEGER}-->
 <!--    where roleid = #{roleid,jdbcType=INTEGER}-->
 <!--  </update>-->
-<!--    <select id="findRoleByUserCode" resultType="com.tsbg.ecosys.ecoModel.Role" parameterType="String">-->
+<!--    <select id="findRoleByUserCode" resultType="com.tsbg.mis.ecoModel.Role" parameterType="String">-->
 <!--        SELECT-->
 <!--            user_info.user_id,-->
 <!--            user_info.`user_code`,-->
