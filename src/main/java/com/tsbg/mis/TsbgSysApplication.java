@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Bean;
 import javax.servlet.MultipartConfigElement;
 
 @SpringBootApplication
-public class EcosysApplication extends SpringBootServletInitializer {
+public class TsbgSysApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication application = new SpringApplication(EcosysApplication.class);
+        SpringApplication application = new SpringApplication(TsbgSysApplication.class);
         application.setBannerMode(Banner.Mode.OFF);
         application.run(args);
     }
@@ -22,7 +22,7 @@ public class EcosysApplication extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         // 注意这里要指向原先用main方法执行的Application启动类
-        return builder.sources(EcosysApplication.class);
+        return builder.sources(TsbgSysApplication.class);
     }
 
     /**
