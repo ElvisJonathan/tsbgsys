@@ -7,6 +7,7 @@ import com.tsbg.mis.powerMapper.UserRoleMapper2;
 import com.tsbg.mis.powerModel.UserInfo;
 import com.tsbg.mis.powerModel.UserRole;
 import com.tsbg.mis.powerModel.powerBag.RoleAndProJPackage;
+import com.tsbg.mis.powerVo.LoginVo;
 import com.tsbg.mis.util.ResultUtils;
 import com.tsbg.mis.util.constants.Constants;
 import org.apache.shiro.SecurityUtils;
@@ -91,7 +92,8 @@ public class LoginServiceImpl2 implements LoginService2 {
 			//List<RoleAndProJPackage> roleAndProJPackages = roleAndProJPackageService.selectRoleAndProj();
 			//当前用户的项目编号返给前端
 			List<UserRole> userRoles = userRoleService.selectProJMsgByUid(userId);
-			return new ResultUtils(100,"成功登录",userCode,token2,userRoles);
+			///return new ResultUtils(100,"成功登录",userCode,token2,userRoles);
+			return new ResultUtils(100,"成功登录",new LoginVo(userCode,token2,userRoles));
 		} catch (AuthenticationException e) {
 			return new ResultUtils(504,"用户名或密码错误登录失败");
 		}

@@ -11,6 +11,8 @@ public class FriendlyLink {
 
     private Integer status;
 
+    private Integer projId;
+
     //额外字段大类名字
     private String typeName;
 
@@ -54,6 +56,13 @@ public class FriendlyLink {
         this.status = status;
     }
 
+    public Integer getProjId() {
+        return projId;
+    }
+
+    public void setProjId(Integer projId) {
+        this.projId = projId;
+    }
 
     public String getTypeName() {
         return typeName;
