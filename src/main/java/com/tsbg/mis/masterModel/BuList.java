@@ -5,11 +5,15 @@ import java.util.Date;
 public class BuList {
     private Integer buId;
 
+    private Integer bgId;
+
+    private Integer unitId;
+
     private String buName;
 
     private String buCode;
 
-    private String legalPersonId;
+    private Integer legalPersonId;
 
     private String buCostCode;
 
@@ -33,6 +37,22 @@ public class BuList {
         this.buId = buId;
     }
 
+    public Integer getBgId() {
+        return bgId;
+    }
+
+    public void setBgId(Integer bgId) {
+        this.bgId = bgId;
+    }
+
+    public Integer getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Integer unitId) {
+        this.unitId = unitId;
+    }
+
     public String getBuName() {
         return buName;
     }
@@ -49,12 +69,12 @@ public class BuList {
         this.buCode = buCode == null ? null : buCode.trim();
     }
 
-    public String getLegalPersonId() {
+    public Integer getLegalPersonId() {
         return legalPersonId;
     }
 
-    public void setLegalPersonId(String legalPersonId) {
-        this.legalPersonId = legalPersonId == null ? null : legalPersonId.trim();
+    public void setLegalPersonId(Integer legalPersonId) {
+        this.legalPersonId = legalPersonId;
     }
 
     public String getBuCostCode() {

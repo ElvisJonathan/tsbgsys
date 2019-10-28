@@ -154,11 +154,16 @@
     insert into user_role (user_id, role_id, create_code, create_date, proj_id)
     values  (#{uid,jdbcType=INTEGER}, #{rid,jdbcType=INTEGER}, #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{projId,jdbcType=INTEGER});
   </insert>
-  <select id="selectProJMsgByUid" resultType="com.tsbg.mis.ecoModel.UserRole" parameterType="java.lang.Integer" >
-    SELECT u.`user_id` as userId,u.`role_id` as roleId,u.`proj_id` as projId,p.`pro_name` as proName
+  <!--SELECT u.`user_id` as userId,u.`role_id` as roleId,u.`proj_id` as projId,p.`pro_name` as proName
+  FROM user_role AS u
+  LEFT JOIN project AS p ON u.`proj_id`= p.`proj_id`
+  WHERE u.`user_id`=#{uid,jdbcType=INTEGER};-->
+  <select id="selectProJMsgByUid" resultType="com.tsbg.mis.powerModel.powerBag.RoleAndProJPackage" parameterType="java.lang.Integer" >
+    SELECT u.`user_id` AS userId,u.`role_id` AS roleId,r.`role` AS role,u.`proj_id` AS projId,p.`pro_name` AS proName
     FROM user_role AS u
     LEFT JOIN project AS p ON u.`proj_id`= p.`proj_id`
-    WHERE u.`user_id`=#{uid,jdbcType=INTEGER};
+    LEFT JOIN role AS r ON u.`role_id`=r.`roleid`
+    WHERE u.`user_id`= #{uid,jdbcType=INTEGER};
   </select>
   <select id="selectRoleCountByCondition" resultType="int" parameterType="java.lang.Integer" >
    SELECT COUNT(0) FROM user_role AS a WHERE a.`user_id`=#{uid,jdbcType=INTEGER}
@@ -167,4 +172,18 @@
   <select id="selectProJIdByUserId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
     SELECT b.`proj_id` FROM user_role AS b WHERE b.`user_id`=#{uid,jdbcType=INTEGER};
   </select>
+  <select id="selectEuserInfo"  parameterType="String" resultType="com.tsbg.mis.powerModel.UserRole">
+    SELECT role_id,remark FROM user_role AS r LEFT JOIN user_info i ON r.`user_id`=i.`user_id` WHERE i.`user_code`= #{userCode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectRidByUid"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT r.`role_id` FROM user_role AS r WHERE r.`user_id`=#{uid,jdbcType=INTEGER} AND r.`proj_id`=1;
+  </select>
+  <select id="getRole"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT u.`role_id` FROM user_role AS u WHERE u.`user_id`=#{uid,jdbcType=INTEGER};
+  </select>
+  <update id="updateUserRoleByProAndRoleId" parameterType="java.lang.Integer" >
+    update user_role
+    set role_id = #{rid,jdbcType=INTEGER}
+    where user_id = #{uid,jdbcType=INTEGER} AND proj_id = #{projId,jdbcType=INTEGER};
+  </update>
 </mapper>

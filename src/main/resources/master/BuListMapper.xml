@@ -3,9 +3,11 @@
 <mapper namespace="com.tsbg.mis.masterMapper.BuListMapper" >
   <resultMap id="BaseResultMap" type="com.tsbg.mis.masterModel.BuList" >
     <id column="BU_id" property="buId" jdbcType="INTEGER" />
+    <result column="BG_id" property="bgId" jdbcType="INTEGER" />
+    <result column="unit_id" property="unitId" jdbcType="INTEGER" />
     <result column="BU_name" property="buName" jdbcType="VARCHAR" />
     <result column="BU_code" property="buCode" jdbcType="VARCHAR" />
-    <result column="legal_person_id" property="legalPersonId" jdbcType="VARCHAR" />
+    <result column="legal_person_id" property="legalPersonId" jdbcType="INTEGER" />
     <result column="bu_cost_code" property="buCostCode" jdbcType="VARCHAR" />
     <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -15,8 +17,8 @@
     <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    BU_id, BU_name, BU_code, legal_person_id, bu_cost_code, factory_id, status, create_code, 
-    create_date, last_update_code, last_update_date
+    BU_id, BG_id, unit_id, BU_name, BU_code, legal_person_id, bu_cost_code, factory_id, 
+    status, create_code, create_date, last_update_code, last_update_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,20 +31,28 @@
     where BU_id = #{buId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tsbg.mis.masterModel.BuList" >
-    insert into bu_list (BU_id, BU_name, BU_code, 
-      legal_person_id, bu_cost_code, factory_id, 
-      status, create_code, create_date, 
-      last_update_code, last_update_date)
-    values (#{buId,jdbcType=INTEGER}, #{buName,jdbcType=VARCHAR}, #{buCode,jdbcType=VARCHAR}, 
-      #{legalPersonId,jdbcType=VARCHAR}, #{buCostCode,jdbcType=VARCHAR}, #{factoryId,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{lastUpdateCode,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
+    insert into bu_list (BU_id, BG_id, unit_id, 
+      BU_name, BU_code, legal_person_id, 
+      bu_cost_code, factory_id, status, 
+      create_code, create_date, last_update_code, 
+      last_update_date)
+    values (#{buId,jdbcType=INTEGER}, #{bgId,jdbcType=INTEGER}, #{unitId,jdbcType=INTEGER}, 
+      #{buName,jdbcType=VARCHAR}, #{buCode,jdbcType=VARCHAR}, #{legalPersonId,jdbcType=INTEGER}, 
+      #{buCostCode,jdbcType=VARCHAR}, #{factoryId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateCode,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.mis.masterModel.BuList" >
     insert into bu_list
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="buId != null" >
         BU_id,
+      </if>
+      <if test="bgId != null" >
+        BG_id,
+      </if>
+      <if test="unitId != null" >
+        unit_id,
       </if>
       <if test="buName != null" >
         BU_name,
@@ -79,6 +89,12 @@
       <if test="buId != null" >
         #{buId,jdbcType=INTEGER},
       </if>
+      <if test="bgId != null" >
+        #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=INTEGER},
+      </if>
       <if test="buName != null" >
         #{buName,jdbcType=VARCHAR},
       </if>
@@ -86,7 +102,7 @@
         #{buCode,jdbcType=VARCHAR},
       </if>
       <if test="legalPersonId != null" >
-        #{legalPersonId,jdbcType=VARCHAR},
+        #{legalPersonId,jdbcType=INTEGER},
       </if>
       <if test="buCostCode != null" >
         #{buCostCode,jdbcType=VARCHAR},
@@ -114,6 +130,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.masterModel.BuList" >
     update bu_list
     <set >
+      <if test="bgId != null" >
+        BG_id = #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
       <if test="buName != null" >
         BU_name = #{buName,jdbcType=VARCHAR},
       </if>
@@ -121,7 +143,7 @@
         BU_code = #{buCode,jdbcType=VARCHAR},
       </if>
       <if test="legalPersonId != null" >
-        legal_person_id = #{legalPersonId,jdbcType=VARCHAR},
+        legal_person_id = #{legalPersonId,jdbcType=INTEGER},
       </if>
       <if test="buCostCode != null" >
         bu_cost_code = #{buCostCode,jdbcType=VARCHAR},
@@ -149,9 +171,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.masterModel.BuList" >
     update bu_list
-    set BU_name = #{buName,jdbcType=VARCHAR},
+    set BG_id = #{bgId,jdbcType=INTEGER},
+      unit_id = #{unitId,jdbcType=INTEGER},
+      BU_name = #{buName,jdbcType=VARCHAR},
       BU_code = #{buCode,jdbcType=VARCHAR},
-      legal_person_id = #{legalPersonId,jdbcType=VARCHAR},
+      legal_person_id = #{legalPersonId,jdbcType=INTEGER},
       bu_cost_code = #{buCostCode,jdbcType=VARCHAR},
       factory_id = #{factoryId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},

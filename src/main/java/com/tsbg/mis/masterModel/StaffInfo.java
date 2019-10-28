@@ -9,7 +9,7 @@ public class StaffInfo {
 
     private String staffName;
 
-    private String sstaffSimpleName;
+    private String staffSimpleName;
 
     private Integer staffTypeId;
 
@@ -79,12 +79,12 @@ public class StaffInfo {
         this.staffName = staffName == null ? null : staffName.trim();
     }
 
-    public String getSstaffSimpleName() {
-        return sstaffSimpleName;
+    public String getStaffSimpleName() {
+        return staffSimpleName;
     }
 
-    public void setSstaffSimpleName(String sstaffSimpleName) {
-        this.sstaffSimpleName = sstaffSimpleName == null ? null : sstaffSimpleName.trim();
+    public void setStaffSimpleName(String staffSimpleName) {
+        this.staffSimpleName = staffSimpleName == null ? null : staffSimpleName.trim();
     }
 
     public Integer getStaffTypeId() {

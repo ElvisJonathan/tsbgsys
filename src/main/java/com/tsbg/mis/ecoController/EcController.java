@@ -2,18 +2,19 @@ package com.tsbg.mis.ecoController;
 
 import com.tsbg.mis.annotation.UserLoginToken;
 import com.tsbg.mis.ecoDto.Comment;
-import com.tsbg.mis.ecoModel.bag.DerivediPackage;
-import com.tsbg.mis.ecoService.QuestionFeedBackService;
-import com.tsbg.mis.ecoService.QuestionService;
-import com.tsbg.mis.util.ResultUtils;
 import com.tsbg.mis.ecoDto.EcTotalDto;
 import com.tsbg.mis.ecoDto.EcTotal_Excel;
 import com.tsbg.mis.ecoModel.Eccontacts;
 import com.tsbg.mis.ecoModel.Ecooperation;
 import com.tsbg.mis.ecoModel.Epartner;
+
 import com.tsbg.mis.ecoService.EpartnerService;
 import com.tsbg.mis.ecoServiceImpl.EcooperationService;
+import com.tsbg.mis.questionModel.bag.DerivediPackage2;
+import com.tsbg.mis.questionService.QuestionFeedBackService2;
+import com.tsbg.mis.questionService.QuestionService2;
 import com.tsbg.mis.util.ExcelTimeUtils;
+import com.tsbg.mis.util.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -46,9 +47,9 @@ public class EcController {
     @Autowired
     private EpartnerService epartnerService;
     @Autowired
-    private QuestionFeedBackService questionFeedBackService;
+    private QuestionFeedBackService2 questionFeedBackService;
     @Autowired
-    private QuestionService questionService;
+    private QuestionService2 questionService;
 
     @ApiOperation(value = "查询合作伙伴信息", notes = "查询合作伙伴信息")
     @RequestMapping(value = "/total", method = {RequestMethod.GET, RequestMethod.POST})
@@ -407,7 +408,7 @@ public class EcController {
     @RequestMapping(value = "/excelAll", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
     public void exportAll(HttpServletRequest req, HttpServletResponse response) throws Exception {
-        List<DerivediPackage> derivediPackages = questionService.selectquestion();
+        List<DerivediPackage2> derivediPackages = questionService.selectquestion();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Workbook wb = new XSSFWorkbook();
         Font titleFont = wb.createFont();

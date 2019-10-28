@@ -5,7 +5,6 @@ import com.tsbg.mis.ecoService.base.RedisService;
 import com.tsbg.mis.powerMapper.LoginMapper2;
 import com.tsbg.mis.powerMapper.UserRoleMapper2;
 import com.tsbg.mis.powerModel.UserInfo;
-import com.tsbg.mis.powerModel.UserRole;
 import com.tsbg.mis.powerModel.powerBag.RoleAndProJPackage;
 import com.tsbg.mis.powerVo.LoginVo;
 import com.tsbg.mis.util.ResultUtils;
@@ -53,6 +52,8 @@ public class LoginServiceImpl2 implements LoginService2 {
 	public ResultUtils authLogin(JSONObject jsonObject) {
 		String userCode = jsonObject.getString("userCode");
 		String userPwd = jsonObject.getString("userPwd");
+		//根据用户工号查询用户名
+		String userName = userInfoService.selectUserNameByUserCode(userCode);
 		//根据UserCode查询对应的userId
 		Integer userId = userInfoService.selectuidbyuserCode(userCode);
 		if (userId==null){
@@ -91,9 +92,9 @@ public class LoginServiceImpl2 implements LoginService2 {
 			//适配统一登录 将角色和项目信息返给前台
 			//List<RoleAndProJPackage> roleAndProJPackages = roleAndProJPackageService.selectRoleAndProj();
 			//当前用户的项目编号返给前端
-			List<UserRole> userRoles = userRoleService.selectProJMsgByUid(userId);
+			List<RoleAndProJPackage> roleAndProJPackages = userRoleService.selectProJMsgByUid(userId);
 			///return new ResultUtils(100,"成功登录",userCode,token2,userRoles);
-			return new ResultUtils(100,"成功登录",new LoginVo(userCode,token2,userRoles));
+			return new ResultUtils(100,"成功登录",new LoginVo(userCode,userName,token2,roleAndProJPackages));
 		} catch (AuthenticationException e) {
 			return new ResultUtils(504,"用户名或密码错误登录失败");
 		}

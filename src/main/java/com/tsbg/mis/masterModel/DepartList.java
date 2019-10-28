@@ -5,11 +5,23 @@ import java.util.Date;
 public class DepartList {
     private Integer departId;
 
+    private Integer bgId;
+
+    private Integer unitId;
+
+    private Integer buId;
+
     private String departName;
 
     private String departCode;
 
+    private String departCostCode;
+
+    private Integer legalPersonId;
+
     private Integer status;
+
+    private Integer factoryId;
 
     private String createCode;
 
@@ -25,6 +37,30 @@ public class DepartList {
 
     public void setDepartId(Integer departId) {
         this.departId = departId;
+    }
+
+    public Integer getBgId() {
+        return bgId;
+    }
+
+    public void setBgId(Integer bgId) {
+        this.bgId = bgId;
+    }
+
+    public Integer getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Integer unitId) {
+        this.unitId = unitId;
+    }
+
+    public Integer getBuId() {
+        return buId;
+    }
+
+    public void setBuId(Integer buId) {
+        this.buId = buId;
     }
 
     public String getDepartName() {
@@ -43,12 +79,36 @@ public class DepartList {
         this.departCode = departCode == null ? null : departCode.trim();
     }
 
+    public String getDepartCostCode() {
+        return departCostCode;
+    }
+
+    public void setDepartCostCode(String departCostCode) {
+        this.departCostCode = departCostCode == null ? null : departCostCode.trim();
+    }
+
+    public Integer getLegalPersonId() {
+        return legalPersonId;
+    }
+
+    public void setLegalPersonId(Integer legalPersonId) {
+        this.legalPersonId = legalPersonId;
+    }
+
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getFactoryId() {
+        return factoryId;
+    }
+
+    public void setFactoryId(Integer factoryId) {
+        this.factoryId = factoryId;
     }
 
     public String getCreateCode() {

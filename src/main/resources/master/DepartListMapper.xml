@@ -3,17 +3,23 @@
 <mapper namespace="com.tsbg.mis.masterMapper.DepartListMapper" >
   <resultMap id="BaseResultMap" type="com.tsbg.mis.masterModel.DepartList" >
     <id column="depart_id" property="departId" jdbcType="INTEGER" />
+    <result column="BG_id" property="bgId" jdbcType="INTEGER" />
+    <result column="unit_id" property="unitId" jdbcType="INTEGER" />
+    <result column="BU_id" property="buId" jdbcType="INTEGER" />
     <result column="depart_name" property="departName" jdbcType="VARCHAR" />
     <result column="depart_code" property="departCode" jdbcType="VARCHAR" />
+    <result column="depart_cost_code" property="departCostCode" jdbcType="VARCHAR" />
+    <result column="legal_person_id" property="legalPersonId" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="factory_id" property="factoryId" jdbcType="INTEGER" />
     <result column="create_code" property="createCode" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
     <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR" />
     <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    depart_id, depart_name, depart_code, status, create_code, create_date, last_update_code, 
-    last_update_date
+    depart_id, BG_id, unit_id, BU_id, depart_name, depart_code, depart_cost_code, legal_person_id, 
+    status, factory_id, create_code, create_date, last_update_code, last_update_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,11 +32,15 @@
     where depart_id = #{departId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tsbg.mis.masterModel.DepartList" >
-    insert into depart_list (depart_id, depart_name, depart_code, 
-      status, create_code, create_date, 
+    insert into depart_list (depart_id, BG_id, unit_id, 
+      BU_id, depart_name, depart_code, 
+      depart_cost_code, legal_person_id, status, 
+      factory_id, create_code, create_date, 
       last_update_code, last_update_date)
-    values (#{departId,jdbcType=INTEGER}, #{departName,jdbcType=VARCHAR}, #{departCode,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+    values (#{departId,jdbcType=INTEGER}, #{bgId,jdbcType=INTEGER}, #{unitId,jdbcType=INTEGER}, 
+      #{buId,jdbcType=INTEGER}, #{departName,jdbcType=VARCHAR}, #{departCode,jdbcType=VARCHAR}, 
+      #{departCostCode,jdbcType=VARCHAR}, #{legalPersonId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{factoryId,jdbcType=INTEGER}, #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
       #{lastUpdateCode,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.mis.masterModel.DepartList" >
@@ -39,14 +49,32 @@
       <if test="departId != null" >
         depart_id,
       </if>
+      <if test="bgId != null" >
+        BG_id,
+      </if>
+      <if test="unitId != null" >
+        unit_id,
+      </if>
+      <if test="buId != null" >
+        BU_id,
+      </if>
       <if test="departName != null" >
         depart_name,
       </if>
       <if test="departCode != null" >
         depart_code,
       </if>
+      <if test="departCostCode != null" >
+        depart_cost_code,
+      </if>
+      <if test="legalPersonId != null" >
+        legal_person_id,
+      </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="factoryId != null" >
+        factory_id,
       </if>
       <if test="createCode != null" >
         create_code,
@@ -65,14 +93,32 @@
       <if test="departId != null" >
         #{departId,jdbcType=INTEGER},
       </if>
+      <if test="bgId != null" >
+        #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="buId != null" >
+        #{buId,jdbcType=INTEGER},
+      </if>
       <if test="departName != null" >
         #{departName,jdbcType=VARCHAR},
       </if>
       <if test="departCode != null" >
         #{departCode,jdbcType=VARCHAR},
       </if>
+      <if test="departCostCode != null" >
+        #{departCostCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        #{legalPersonId,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="factoryId != null" >
+        #{factoryId,jdbcType=INTEGER},
       </if>
       <if test="createCode != null" >
         #{createCode,jdbcType=VARCHAR},
@@ -91,14 +137,32 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.masterModel.DepartList" >
     update depart_list
     <set >
+      <if test="bgId != null" >
+        BG_id = #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="buId != null" >
+        BU_id = #{buId,jdbcType=INTEGER},
+      </if>
       <if test="departName != null" >
         depart_name = #{departName,jdbcType=VARCHAR},
       </if>
       <if test="departCode != null" >
         depart_code = #{departCode,jdbcType=VARCHAR},
       </if>
+      <if test="departCostCode != null" >
+        depart_cost_code = #{departCostCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        legal_person_id = #{legalPersonId,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=INTEGER},
       </if>
       <if test="createCode != null" >
         create_code = #{createCode,jdbcType=VARCHAR},
@@ -117,9 +181,15 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.masterModel.DepartList" >
     update depart_list
-    set depart_name = #{departName,jdbcType=VARCHAR},
+    set BG_id = #{bgId,jdbcType=INTEGER},
+      unit_id = #{unitId,jdbcType=INTEGER},
+      BU_id = #{buId,jdbcType=INTEGER},
+      depart_name = #{departName,jdbcType=VARCHAR},
       depart_code = #{departCode,jdbcType=VARCHAR},
+      depart_cost_code = #{departCostCode,jdbcType=VARCHAR},
+      legal_person_id = #{legalPersonId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
+      factory_id = #{factoryId,jdbcType=INTEGER},
       create_code = #{createCode,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},
       last_update_code = #{lastUpdateCode,jdbcType=VARCHAR},

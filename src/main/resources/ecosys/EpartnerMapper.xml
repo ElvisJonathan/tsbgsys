@@ -564,21 +564,13 @@
   <select id="selectID" resultType="int" >
     SELECT LAST_INSERT_ID();
   </select>
-  <select id="selectFileByParNo" resultType="String" parameterType="java.lang.Integer" >
-    SELECT
-    f.`file_path`
-    FROM epartner AS e
-    LEFT JOIN file_info AS f
-    ON e.`partner_no`=f.`rel_doc_id`
-    WHERE e.partner_no = #{partnerNo,jdbcType=INTEGER} AND e.`status`=0 AND f.`status`=0;
+  <select id="selectFileByParNo" resultType="String" >
+    SELECT f.`file_path` FROM epartner AS e LEFT JOIN tsbg_database.`file_info` AS f ON e.`partner_no`=f.`rel_doc_id`
+    WHERE e.partner_no = #{partnerNo,jdbcType=INTEGER} AND e.`status`=0 AND f.`status`=0 AND f.`rel_table_name`='epartner';
   </select>
-  <select id="selectFileByParNo2" resultType="String" parameterType="java.lang.Integer" >
-    SELECT
-    f.`file_name`
-    FROM epartner AS e
-    LEFT JOIN file_info AS f
-    ON e.`partner_no`=f.`rel_doc_id`
-    WHERE e.partner_no = #{partnerNo,jdbcType=INTEGER} AND e.`status`=0 AND f.`status`=0;
+  <select id="selectFileByParNo2" resultType="String" >
+    SELECT f.`file_name` FROM epartner AS e LEFT JOIN tsbg_database.`file_info` AS f ON e.`partner_no`=f.`rel_doc_id`
+    WHERE e.partner_no = #{partnerNo,jdbcType=INTEGER} AND e.`status`=0 AND f.`status`=0 AND f.`rel_table_name`='epartner';
   </select>
   <update id="deleteFileByParNo" parameterType="java.lang.Integer">
     UPDATE file_info AS f SET f.`status`=1 WHERE f.`rel_doc_id`=#{partnerNo,jdbcType=INTEGER};

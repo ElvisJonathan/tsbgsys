@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.questionMapper.QuestionFeedbackMapper2" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.questionModel.QuestionFeedback2" >
+    <id column="question_feedback_id" property="questionFeedbackId" jdbcType="INTEGER" />
+    <result column="question_name" property="questionName" jdbcType="VARCHAR" />
+    <result column="question_describe" property="questionDescribe" jdbcType="VARCHAR" />
+    <result column="user_code" property="userCode" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_ext" property="userExt" jdbcType="VARCHAR" />
+    <result column="user_email_address" property="userEmailAddress" jdbcType="VARCHAR" />
+    <result column="user_department" property="userDepartment" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="application_date" property="applicationDate" jdbcType="TIMESTAMP" />
+    <result column="apply_status_id" property="applyStatusId" jdbcType="INTEGER" />
+    <result column="proj_id" property="projId" jdbcType="INTEGER" />
+    <result column="last_update_code" property="lastUpdateCode" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    question_feedback_id, question_name, question_describe, user_code, user_name, user_ext, 
+    user_email_address, user_department, remark, application_date, apply_status_id, proj_id, 
+    last_update_code, last_update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from question_feedback
+    where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question_feedback
+    where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.mis.questionModel.QuestionFeedback2" >
+    insert into question_feedback (question_feedback_id, question_name, 
+      question_describe, user_code, user_name, 
+      user_ext, user_email_address, user_department, 
+      remark, application_date, apply_status_id, 
+      proj_id, last_update_code, last_update_date
+      )
+    values (#{questionFeedbackId,jdbcType=INTEGER}, #{questionName,jdbcType=VARCHAR}, 
+      #{questionDescribe,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userExt,jdbcType=VARCHAR}, #{userEmailAddress,jdbcType=VARCHAR}, #{userDepartment,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{applicationDate,jdbcType=TIMESTAMP}, #{applyStatusId,jdbcType=INTEGER}, 
+      #{projId,jdbcType=INTEGER}, #{lastUpdateCode,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.mis.questionModel.QuestionFeedback2" >
+    insert into question_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionFeedbackId != null" >
+        question_feedback_id,
+      </if>
+      <if test="questionName != null" >
+        question_name,
+      </if>
+      <if test="questionDescribe != null" >
+        question_describe,
+      </if>
+      <if test="userCode != null" >
+        user_code,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userExt != null" >
+        user_ext,
+      </if>
+      <if test="userEmailAddress != null" >
+        user_email_address,
+      </if>
+      <if test="userDepartment != null" >
+        user_department,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="applicationDate != null" >
+        application_date,
+      </if>
+      <if test="applyStatusId != null" >
+        apply_status_id,
+      </if>
+      <if test="projId != null" >
+        proj_id,
+      </if>
+      <if test="lastUpdateCode != null" >
+        last_update_code,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionFeedbackId != null" >
+        #{questionFeedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="questionName != null" >
+        #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionDescribe != null" >
+        #{questionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt != null" >
+        #{userExt,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailAddress != null" >
+        #{userEmailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userDepartment != null" >
+        #{userDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null" >
+        #{applicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyStatusId != null" >
+        #{applyStatusId,jdbcType=INTEGER},
+      </if>
+      <if test="projId != null" >
+        #{projId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateCode != null" >
+        #{lastUpdateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.questionModel.QuestionFeedback2" >
+    update question_feedback
+    <set >
+      <if test="questionName != null" >
+        question_name = #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionDescribe != null" >
+        question_describe = #{questionDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt != null" >
+        user_ext = #{userExt,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmailAddress != null" >
+        user_email_address = #{userEmailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userDepartment != null" >
+        user_department = #{userDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDate != null" >
+        application_date = #{applicationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyStatusId != null" >
+        apply_status_id = #{applyStatusId,jdbcType=INTEGER},
+      </if>
+      <if test="projId != null" >
+        proj_id = #{projId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateCode != null" >
+        last_update_code = #{lastUpdateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.questionModel.QuestionFeedback2" >
+    update question_feedback
+    set question_name = #{questionName,jdbcType=VARCHAR},
+      question_describe = #{questionDescribe,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_ext = #{userExt,jdbcType=VARCHAR},
+      user_email_address = #{userEmailAddress,jdbcType=VARCHAR},
+      user_department = #{userDepartment,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      application_date = #{applicationDate,jdbcType=TIMESTAMP},
+      apply_status_id = #{applyStatusId,jdbcType=INTEGER},
+      proj_id = #{projId,jdbcType=INTEGER},
+      last_update_code = #{lastUpdateCode,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP}
+    where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from question_feedback
+  </select>
+  <!-- 更新問題反饋的狀態：1：待接單、2：待作業、3：作業完成、4：申請單關閉、5：被駁回-->
+  <update id="updateApplyStatusIdByPrimaryKey" parameterType="java.lang.Integer" >
+    update question_feedback
+    set
+      apply_status_id = #{applyStatusId,jdbcType=INTEGER}
+    where question_feedback_id = #{questionFeedbackId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectColumnNamec" resultType="com.tsbg.mis.ecoDto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='file_info'
+    AND table_schema='tsbg_database';
+  </select>
+  <select id="selectColumnNamea" resultType="com.tsbg.mis.ecoDto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='project'
+    AND table_schema='tsbg_database';
+  </select>
+  <select id="selectColumnNameb" resultType="com.tsbg.mis.ecoDto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='question_type'
+    AND table_schema='question_feedback';
+  </select>
+  <select id="selectColumnNamed" resultType="com.tsbg.mis.ecoDto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='question_feedback'
+    AND table_schema='question_feedback';
+  </select>
+  <select id="selectColumnNamee" resultType="com.tsbg.mis.ecoDto.Comment">
+    SELECT COLUMN_NAME ,column_comment FROM INFORMATION_SCHEMA.Columns
+    WHERE table_name='question_handle'
+    AND table_schema='question_feedback';
+  </select>
+</mapper>

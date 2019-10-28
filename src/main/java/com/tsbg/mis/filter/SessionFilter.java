@@ -1,7 +1,7 @@
 package com.tsbg.mis.filter;
 
 import com.google.common.base.Strings;
-import com.tsbg.mis.ecoController.BaseController;
+import com.tsbg.mis.masterController.BaseController;
 import com.tsbg.mis.ecoService.base.RedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

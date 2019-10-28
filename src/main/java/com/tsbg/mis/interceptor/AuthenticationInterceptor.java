@@ -8,9 +8,11 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 
 import com.tsbg.mis.annotation.PassToken;
 import com.tsbg.mis.annotation.UserLoginToken;
+import com.tsbg.mis.ecoService.TokenBlacklistService;
 import com.tsbg.mis.ecoService.UserInfoService;
 import com.tsbg.mis.ecoService.base.RedisService;
 import com.tsbg.mis.powerService.TokenBlacklistService2;
+import com.tsbg.mis.powerService.UserInfoService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,7 +27,7 @@ import java.lang.reflect.Method;
  */
 public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoService2 userInfoService;//UserInfoService2是转为挪出的
     @Autowired
     private RedisService redisService;
     @Autowired

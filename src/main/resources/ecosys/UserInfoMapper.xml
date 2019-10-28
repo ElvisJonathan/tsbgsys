@@ -400,7 +400,7 @@
   </select>
 
   <select id="selectIfExistThisUser"  parameterType="java.lang.Integer" resultType="int">
-   SELECT COUNT(0) FROM user_info
+   SELECT COUNT(0) FROM tsbg_database.user_info
       WHERE
       user_id=#{userId,jdbcType=INTEGER};
   </select>

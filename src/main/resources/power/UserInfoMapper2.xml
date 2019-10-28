@@ -441,4 +441,198 @@
   <select id="selectSaltByUserCode"  parameterType="String" resultType="String">
    SELECT salt FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
   </select>
+  <select id="selectUserByPwd" resultType="int" parameterType="String" >
+    SELECT COUNT(0)FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR} AND e.`user_pwd`=#{userPwd,jdbcType=VARCHAR};
+  </select>
+  <select id="selectUserNameByUserCode" resultType="String" parameterType="String" >
+    SELECT e.user_name FROM user_info AS e WHERE e.user_code = #{userCode,jdbcType=VARCHAR};
+  </select>
+  <insert id="insertDatatoEuserArea"  >
+   INSERT INTO ecosystem.`euser_area` (user_id,area_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{aid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
+  </insert>
+  <insert id="insertDatatoEuserRole"  >
+    INSERT INTO user_role (user_id,role_id,remark) VALUES (#{uid,jdbcType=INTEGER},#{rid,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR});
+  </insert>
+  <select id="selectUidAndName"  parameterType="String" resultType="com.tsbg.mis.powerModel.UserInfo">
+    SELECT e.`user_id`,e.`user_name` FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+  <update id="setEcoUserByUserCode"  >
+    UPDATE user_info AS e SET e.`status`=#{status,jdbcType=INTEGER} WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR};
+  </update>
+  <select id="selectUserMsgbyUserCode" resultMap="BaseResultMap" parameterType="String">
+    SELECT e.`user_code`,e.`email_address`,e.`user_name`,e.`status`,e.`phone_number`,e.`gender` FROM user_info AS e
+     WHERE e.`user_code` = #{userCode,jdbcType=VARCHAR};
+  </select>
+  <update id="updateByUserCodeSelective" parameterType="com.tsbg.mis.powerModel.UserInfo" >
+    update user_info
+    <set >
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="isManager != null" >
+        is_manager = #{isManager,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null" >
+        locked = #{locked,jdbcType=BIT},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="userExt != null" >
+        user_ext = #{userExt,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="roleList != null" >
+        role_list = #{roleList,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="projId != null" >
+        proj_id = #{projId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffTypeId != null" >
+        staff_type_id = #{staffTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="nationId != null" >
+        nation_id = #{nationId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="factoryId != null" >
+        factory_id = #{factoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstBgId != null" >
+        first_BG_id = #{firstBgId,jdbcType=INTEGER},
+      </if>
+      <if test="secondBgId != null" >
+        second_BG_id = #{secondBgId,jdbcType=INTEGER},
+      </if>
+      <if test="bgId != null" >
+        BG_id = #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="costCode != null" >
+        cost_code = #{costCode,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null" >
+        organization_name = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationCode != null" >
+        organization_code = #{organizationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="buId != null" >
+        BU_id = #{buId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null" >
+        depart_id = #{departId,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="legalPersonId != null" >
+        legal_person_id = #{legalPersonId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_code = #{userCode,jdbcType=VARCHAR};
+  </update>
+  <update id="modifyPasswordByUsername" parameterType="com.tsbg.mis.powerModel.UserInfo">
+    update user_info
+    <set>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null" >
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_code=#{userCode,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByUserCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_info
+    where user_code = #{userCode,jdbcType=VARCHAR}
+  </select>
+  <select id="judgeIfExistUserByUserPwd"  parameterType="String" resultType="int">
+    SELECT COUNT(0) FROM user_info AS e WHERE e.`user_code`= #{userCode,jdbcType=VARCHAR}
+    AND e.`user_pwd`= #{userPwd,jdbcType=VARCHAR};
+  </select>
+  <update id="reSetPwdByUserCode" parameterType="String">
+    UPDATE user_info AS e SET e.`user_pwd`=#{userPwd,jdbcType=VARCHAR} WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </update>
+  <!--/*SELECT a.`is_manager` FROM user_info AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};*/-->
+  <!--SELECT a.`is_manager` FROM fiitsbg.`user_info` AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};-->
+  <select id="selectIdentityByUserCode"  parameterType="String" resultType="int">
+    SELECT a.`is_manager` FROM user_info AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+  <update id="resetUserSalt" parameterType="String">
+    UPDATE user_info AS u SET u.`salt`=#{salt,jdbcType=VARCHAR} WHERE u.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </update>
+  <update id="modifyRoleListByuserId" >
+    UPDATE user_info AS u SET u.`role_list`=#{rolelist,jdbcType=VARCHAR} WHERE u.`user_id`= #{uid,jdbcType=INTEGER}
+  </update>
+  <!--<select id="selectPowerByUserCode"  parameterType="String" resultType="String">
+   SELECT u.`perm_list` FROM user_info AS u WHERE u.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>-->
+  <select id="selectEmailByUserCode"  parameterType="String" resultType="String">
+    SELECT e.email_address FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+  <!-- 根據Locked字段查詢是否重置過密碼-->
+  <select id="selectLockedByUserCode"  parameterType="String" resultType="byte">
+    SELECT e.`locked` FROM user_info AS e
+     WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+  <select id="selectIfExistThisUser"  parameterType="java.lang.Integer" resultType="int">
+   SELECT COUNT(0) FROM user_info
+      WHERE
+      user_id=#{userId,jdbcType=INTEGER};
+  </select>
+  <select id="selectPwdByUserCode"  parameterType="String" resultType="String">
+    SELECT user_pwd FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
+  </select>
+  <select id="selectFeedbackUserByUserCode"  resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT e.user_name,e.phone_number,e.email_address,e.role_list FROM user_info AS e WHERE e.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+  <select id="selectHandleUserByUserCode"  parameterType="String" resultMap="BaseResultMap">
+    SELECT user_code,user_name FROM user_info WHERE user_code=#{userCode,jdbcType=VARCHAR};
+  </select>
+  <update id="updateFeedbackUserByUserCode" >
+    UPDATE user_info AS u SET u.`user_name`=#{userName,jdbcType=VARCHAR},u.`phone_number`=#{phoneNumber,jdbcType=VARCHAR},
+    u.`email_address`=#{emailAddress,jdbcType=VARCHAR},u.`update_time`=#{updateTime,jdbcType=TIMESTAMP}
+    WHERE u.`user_code`= #{userCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateHandleUserByUserCode" >
+    UPDATE user_info AS u SET u.`user_name`=#{userName,jdbcType=VARCHAR},u.`update_time`=#{updateTime,jdbcType=TIMESTAMP}
+    WHERE u.`user_code`= #{userCode,jdbcType=VARCHAR}
+  </update>
 </mapper>

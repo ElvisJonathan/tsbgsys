@@ -5,9 +5,19 @@ import java.util.Date;
 public class ClassList {
     private Integer classId;
 
+    private Integer bgId;
+
+    private Integer buId;
+
+    private Integer departId;
+
     private String className;
 
     private String classCode;
+
+    private Integer legalPersonId;
+
+    private String classCostCode;
 
     private Integer status;
 
@@ -27,6 +37,30 @@ public class ClassList {
         this.classId = classId;
     }
 
+    public Integer getBgId() {
+        return bgId;
+    }
+
+    public void setBgId(Integer bgId) {
+        this.bgId = bgId;
+    }
+
+    public Integer getBuId() {
+        return buId;
+    }
+
+    public void setBuId(Integer buId) {
+        this.buId = buId;
+    }
+
+    public Integer getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
+    }
+
     public String getClassName() {
         return className;
     }
@@ -41,6 +75,22 @@ public class ClassList {
 
     public void setClassCode(String classCode) {
         this.classCode = classCode == null ? null : classCode.trim();
+    }
+
+    public Integer getLegalPersonId() {
+        return legalPersonId;
+    }
+
+    public void setLegalPersonId(Integer legalPersonId) {
+        this.legalPersonId = legalPersonId;
+    }
+
+    public String getClassCostCode() {
+        return classCostCode;
+    }
+
+    public void setClassCostCode(String classCostCode) {
+        this.classCostCode = classCostCode == null ? null : classCostCode.trim();
     }
 
     public Integer getStatus() {

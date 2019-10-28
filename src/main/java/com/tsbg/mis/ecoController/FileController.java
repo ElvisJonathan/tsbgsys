@@ -2,17 +2,20 @@ package com.tsbg.mis.ecoController;
 
 import com.tsbg.mis.annotation.PassToken;
 import com.tsbg.mis.annotation.UserLoginToken;
+import com.tsbg.mis.ecoService.EpartnerService;
+import com.tsbg.mis.powerModel.FileInfo;
+import com.tsbg.mis.powerService.FileInfoService2;
 import com.tsbg.mis.util.GetBrowserNameUtils;
 import com.tsbg.mis.util.ResultUtils;
-import com.tsbg.mis.ecoModel.FileInfo;
-import com.tsbg.mis.ecoService.EpartnerService;
-import com.tsbg.mis.ecoService.FileInfoService;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.WebUtils;
@@ -32,7 +35,7 @@ import java.util.Date;
 public class FileController {
 
     @Autowired
-    private FileInfoService fileInfoService;
+    private FileInfoService2 fileInfoService;
     @Autowired
     private EpartnerService epartnerService;
 
@@ -364,7 +367,7 @@ public class FileController {
             return "文件名為空！";
         }
         System.out.println("文件名："+fileName);
-        Integer questionFeedbackId=fileInfo.getQuestionFeedbackId();
+        Integer questionFeedbackId=fileInfo.getRelDocId();
         int i = fileInfoService.UpdateFileByFileNameAndQuestionFeedBackId(fileName, questionFeedbackId);
         System.out.println("i:"+i);
         if(i>0){
@@ -391,7 +394,7 @@ public class FileController {
             return "文件名為空！";
         }
         System.out.println("文件名："+fileName);
-        Integer questionHandleId=fileInfo.getQuestionHandleId();
+        Integer questionHandleId=fileInfo.getRelDocId();
         System.out.println("test:"+fileInfoService.UpdateFileByFileNameAndQuestionHandleId(fileName,questionHandleId));
         if(fileInfoService.UpdateFileByFileNameAndQuestionHandleId(fileName,questionHandleId)>0){
             message="文件刪除成功！";

@@ -11,7 +11,6 @@ public class TokenBlacklistServiceImpl2 implements TokenBlacklistService2 {
     @Autowired
     private TokenBlacklistMapper2 tokenBlacklistMapper;
 
-
     @Override
     public int insertSelective(TokenBlacklist2 record) {
         return tokenBlacklistMapper.insertSelective(record);

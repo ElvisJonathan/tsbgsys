@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.stampMapper.AddProjectMapper" >
+
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.stampVo.AddProjectVo" />
+
+  <select id="selectUserInfoByUserCode" resultMap="BaseResultMap">
+    SELECT td.user_code userCode,td.user_name userName,td.user_ext userExt,td.email_address emailAddress,td.factory_id factoryId,td.BG_id BGId,td.BU_id BUId,td.depart_id departId,
+            factory_Name factoryName,BG_name BGName,BU_name BUName,depart_name departName
+    FROM tsbg_database.user_info td
+    LEFT JOIN master_database.factory_list f ON f.factory_id = td.factory_id
+    LEFT JOIN master_database.bg_list bg ON bg.BG_id = td.BG_id
+    LEFT JOIN master_database.bu_list bu ON bu.BU_id = td.BU_id
+    LEFT JOIN master_database.depart_list dep ON dep.depart_id = td.depart_id
+    WHERE td.user_code = #{user_code}
+  </select>
+
+  <select id="selectFactory" resultMap="BaseResultMap">
+    SELECT factory_id factoryId,factory_name factoryName,status FROM master_database.factory_list
+  </select>
+
+  <select id="selectBg" resultMap="BaseResultMap">
+    SELECT bg_id BGId,bg_name BGName,status FROM master_database.bg_list
+  </select>
+
+  <select id="selectBu" resultMap="BaseResultMap">
+    SELECT BU_id BUId,BU_Name BUName,status FROM master_database.bu_list GROUP BY BU_name
+  </select>
+
+  <select id="selectTypeName" resultMap="BaseResultMap">
+    SELECT stamp_type_id stampTypeId,type_name typeName,status FROM stamp_management.stamp_type
+  </select>
+
+  <insert id="insert">
+    INSERT INTO stamp_management.stamp_use_management
+    (user_code,user_name,stamp_use_file_name,stamp_type_id,use_stamp_num,submit_date,STATUS,remark,last_update_date,last_update_code,proj_id,apply_num,factory_id,BG_id,BU_id,
+    depart_id,user_ext,email_address)
+    values
+    (#{userCode},#{userName},#{stampUseFileName},#{stampTypeId},#{useStampNum},#{submitDate},#{status},#{remark},#{lastUpdateDate},#{lastUpdateCode},#{projId},#{applyNum},
+    #{factoryId},#{BGId},#{BUId},#{departId},#{userExt},#{emailAddress})
+  </insert>
+
+  <select id="selectCountApplyNum" resultType="int">
+    SELECT COUNT(1) FROM stamp_management.stamp_use_management
+  </select>
+
+  <select id="selectLastApplyNum" resultType="String">
+    SELECT apply_num applyNum FROM stamp_management.stamp_use_management ORDER BY apply_num DESC LIMIT 1
+  </select>
+
+  <select id="selectLastStampUseId" resultType="int">
+    SELECT stamp_use_id stampUseId FROM stamp_management.stamp_use_management ORDER BY stamp_use_id DESC LIMIT 1
+  </select>
+
+  <insert id="insertFileInfo">
+    insert into tsbg_database.file_info (file_id, disp_name, file_name,
+      file_path, proj_id, rel_table_name, rel_doc_id,
+      last_update_user, last_download_user, updated_time,
+      keyword, status, remark
+      )
+    values (#{fileId,jdbcType=INTEGER}, #{dispName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
+      #{filePath,jdbcType=VARCHAR}, #{projId,jdbcType=INTEGER}, #{relTableName,jdbcType=VARCHAR}, #{relDocId,jdbcType=INTEGER},
+      #{lastUpdateUser,jdbcType=VARCHAR}, #{lastDownloadUser,jdbcType=VARCHAR}, #{updatedTime,jdbcType=TIMESTAMP},
+      #{keyword,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <select id="selectUserCode" resultType="int">
+    SELECT COUNT(1) FROM tsbg_database.user_info a WHERE a.user_code = #{userCode}
+  </select>
+</mapper>

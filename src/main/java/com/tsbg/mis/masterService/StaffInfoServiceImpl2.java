@@ -21,4 +21,19 @@ public class StaffInfoServiceImpl2 implements StaffInfoService2 {
     public StaffInfo selectStaffMsg(String userCode) {
         return staffInfoMapper2.selectStaffMsg(userCode);
     }
+
+    @Override
+    public String selectDepartCodeByuserCode(String userCode) {
+        return staffInfoMapper2.selectDepartCodeByuserCode(userCode);
+    }
+
+    @Override
+    public String selectlocationByUserCode(String userCode) {
+        return staffInfoMapper2.selectlocationByUserCode(userCode);
+    }
+
+    @Override
+    public String selectDepartmentByUserCode(String userCode) {
+        return staffInfoMapper2.selectDepartmentByUserCode(userCode);
+    }
 }

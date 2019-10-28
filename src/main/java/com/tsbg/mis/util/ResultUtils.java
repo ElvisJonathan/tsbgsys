@@ -15,6 +15,9 @@ public class ResultUtils {
     private Object dataSecond;//返回的第二个对象
     private Object dataThird;//返回的第三个对象
 
+    public ResultUtils() {
+    }
+
     /**
      * 构造注入（无需返回对象时使用）
      */

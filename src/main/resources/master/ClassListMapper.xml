@@ -3,8 +3,13 @@
 <mapper namespace="com.tsbg.mis.masterMapper.ClassListMapper" >
   <resultMap id="BaseResultMap" type="com.tsbg.mis.masterModel.ClassList" >
     <id column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="BG_id" property="bgId" jdbcType="INTEGER" />
+    <result column="BU_id" property="buId" jdbcType="INTEGER" />
+    <result column="depart_id" property="departId" jdbcType="INTEGER" />
     <result column="class_name" property="className" jdbcType="VARCHAR" />
     <result column="class_code" property="classCode" jdbcType="VARCHAR" />
+    <result column="legal_person_id" property="legalPersonId" jdbcType="INTEGER" />
+    <result column="class_cost_code" property="classCostCode" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_code" property="createCode" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -12,8 +17,8 @@
     <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    class_id, class_name, class_code, status, create_code, create_date, last_update_code, 
-    last_update_date
+    class_id, BG_id, BU_id, depart_id, class_name, class_code, legal_person_id, class_cost_code, 
+    status, create_code, create_date, last_update_code, last_update_date
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,12 +31,16 @@
     where class_id = #{classId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.tsbg.mis.masterModel.ClassList" >
-    insert into class_list (class_id, class_name, class_code, 
-      status, create_code, create_date, 
-      last_update_code, last_update_date)
-    values (#{classId,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, #{classCode,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{lastUpdateCode,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP})
+    insert into class_list (class_id, BG_id, BU_id, 
+      depart_id, class_name, class_code, 
+      legal_person_id, class_cost_code, status, 
+      create_code, create_date, last_update_code, 
+      last_update_date)
+    values (#{classId,jdbcType=INTEGER}, #{bgId,jdbcType=INTEGER}, #{buId,jdbcType=INTEGER}, 
+      #{departId,jdbcType=INTEGER}, #{className,jdbcType=VARCHAR}, #{classCode,jdbcType=VARCHAR}, 
+      #{legalPersonId,jdbcType=INTEGER}, #{classCostCode,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createCode,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateCode,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.tsbg.mis.masterModel.ClassList" >
     insert into class_list
@@ -39,11 +48,26 @@
       <if test="classId != null" >
         class_id,
       </if>
+      <if test="bgId != null" >
+        BG_id,
+      </if>
+      <if test="buId != null" >
+        BU_id,
+      </if>
+      <if test="departId != null" >
+        depart_id,
+      </if>
       <if test="className != null" >
         class_name,
       </if>
       <if test="classCode != null" >
         class_code,
+      </if>
+      <if test="legalPersonId != null" >
+        legal_person_id,
+      </if>
+      <if test="classCostCode != null" >
+        class_cost_code,
       </if>
       <if test="status != null" >
         status,
@@ -65,11 +89,26 @@
       <if test="classId != null" >
         #{classId,jdbcType=INTEGER},
       </if>
+      <if test="bgId != null" >
+        #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="buId != null" >
+        #{buId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null" >
+        #{departId,jdbcType=INTEGER},
+      </if>
       <if test="className != null" >
         #{className,jdbcType=VARCHAR},
       </if>
       <if test="classCode != null" >
         #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        #{legalPersonId,jdbcType=INTEGER},
+      </if>
+      <if test="classCostCode != null" >
+        #{classCostCode,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -91,11 +130,26 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.masterModel.ClassList" >
     update class_list
     <set >
+      <if test="bgId != null" >
+        BG_id = #{bgId,jdbcType=INTEGER},
+      </if>
+      <if test="buId != null" >
+        BU_id = #{buId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null" >
+        depart_id = #{departId,jdbcType=INTEGER},
+      </if>
       <if test="className != null" >
         class_name = #{className,jdbcType=VARCHAR},
       </if>
       <if test="classCode != null" >
         class_code = #{classCode,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonId != null" >
+        legal_person_id = #{legalPersonId,jdbcType=INTEGER},
+      </if>
+      <if test="classCostCode != null" >
+        class_cost_code = #{classCostCode,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
@@ -117,8 +171,13 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.masterModel.ClassList" >
     update class_list
-    set class_name = #{className,jdbcType=VARCHAR},
+    set BG_id = #{bgId,jdbcType=INTEGER},
+      BU_id = #{buId,jdbcType=INTEGER},
+      depart_id = #{departId,jdbcType=INTEGER},
+      class_name = #{className,jdbcType=VARCHAR},
       class_code = #{classCode,jdbcType=VARCHAR},
+      legal_person_id = #{legalPersonId,jdbcType=INTEGER},
+      class_cost_code = #{classCostCode,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       create_code = #{createCode,jdbcType=VARCHAR},
       create_date = #{createDate,jdbcType=TIMESTAMP},

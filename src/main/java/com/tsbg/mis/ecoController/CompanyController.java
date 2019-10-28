@@ -1,19 +1,30 @@
 package com.tsbg.mis.ecoController;
 
 import com.alibaba.fastjson.JSONObject;
-
 import com.tsbg.mis.annotation.UserLoginToken;
-import com.tsbg.mis.ecoModel.bag.SearchPackage;
-import com.tsbg.mis.util.ResultUtils;
-import com.tsbg.mis.ecoModel.*;
+import com.tsbg.mis.ecoModel.Eccontacts;
+import com.tsbg.mis.ecoModel.Ecooperation;
+import com.tsbg.mis.ecoModel.Epartner;
 import com.tsbg.mis.ecoModel.bag.CompanyPackage;
 import com.tsbg.mis.ecoModel.bag.HidePackage;
-
-import com.tsbg.mis.ecoService.*;
+import com.tsbg.mis.ecoModel.bag.SearchPackage;
+import com.tsbg.mis.ecoService.EccontactsService;
+import com.tsbg.mis.ecoService.EcooperationService;
+import com.tsbg.mis.ecoService.EpartnerService;
+import com.tsbg.mis.powerModel.FileInfo;
+import com.tsbg.mis.powerModel.UserInfo;
+import com.tsbg.mis.powerService.FileInfoService2;
+import com.tsbg.mis.powerService.PermService2;
+import com.tsbg.mis.powerService.RoleService2;
+import com.tsbg.mis.powerService.UserInfoService2;
 import com.tsbg.mis.util.PageRequest;
 import com.tsbg.mis.util.PageResult;
+import com.tsbg.mis.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,13 +47,13 @@ public class CompanyController {
     @Autowired
     private EccontactsService eccontactsService;
     @Autowired
-    private FileInfoService fileInfoService;
+    private FileInfoService2 fileInfoService;
     @Autowired
-    private UserInfoService userInfoService;
+    private UserInfoService2 userInfoService;
     @Autowired
-    private RoleService roleService;
+    private RoleService2 roleService;
     @Autowired
-    private PermissionService permissionService;
+    private PermService2 permissionService;
 
     /**
      * 管理员隐藏/取消隐藏公司
@@ -251,9 +262,11 @@ public class CompanyController {
                     fileInfo.setFilePath(URL2);
                     fileInfo.setRelDocId(no);
                     fileInfo.setUpdatedTime(new Date());
+                    fileInfo.setRelTableName("epartner");
                     fileInfo.setLastUpdateUser(userCode);
                     fileInfo.setKeyword(multipartFile.getOriginalFilename());
                     fileInfo.setProjId(1);
+                    fileInfo.setStatus(0);
                     fileInfoService.insertSelective(fileInfo);
                 } else {
                     //如果文件存在则将之前新增的记录删除
@@ -334,84 +347,6 @@ public class CompanyController {
         return resultUtils;*/
     }
 
-    //查询公司信息
-   /* @RequestMapping("/selectCinfo")
-    @ResponseBody
-    public ResultUtils searchCinfo(@RequestBody Epartner epartner) {
-        ResultUtils resultUtils = null;
-        //通过前端传来的信息查询对应的公司信息
-        String partnerCname = epartner.getPartnerName();
-        String partnerCregion = epartner.getPartnerRegion();
-        String partnerCproduct = epartner.getPartnerProduct();
-        String partnerCindustry = epartner.getPartnerIndustry();
-        if (partnerCname != null || partnerCregion != null || partnerCproduct != null || partnerCindustry != null) {
-            List<Epartner> infod1 = epartnerService.selectCinfo(epartner);
-            List<Epartner> infod2 = epartnerService.selectCinfo(epartner);
-            List<Epartner> infod3 = epartnerService.selectCinfo(epartner);
-            List<Epartner> infod4 = epartnerService.selectCinfo(epartner);
-            if (infod1 != null) {
-                resultUtils = new ResultUtils(0, "提示信息：成功查询到公司信息",infod1);
-                return resultUtils;
-            }
-            else if(infod2 != null){
-                resultUtils = new ResultUtils(0, "提示信息：成功查询到公司信息",infod2);
-                return resultUtils;
-            }
-            else if (infod3 != null){
-                resultUtils = new ResultUtils(0, "提示信息：成功查询到公司信息",infod3);
-                return resultUtils;
-            }
-            else if (infod4 != null){
-                resultUtils = new ResultUtils(0, "提示信息：成功查询到公司信息",infod4);
-                return resultUtils;
-            }
-            resultUtils = new ResultUtils(501, "提示信息：未查询到公司信息");
-            return resultUtils;
-        }
-        resultUtils = new ResultUtils(502, "提示信息：未收到id信息");
-        return resultUtils;
-    }
-
-    //查询合作关系
-    @RequestMapping("/selectCooinfo")
-    @ResponseBody
-    public ResultUtils searchCooinfo(@RequestBody Ecooperation ecooperation)
-    {
-        ResultUtils resultUtils = null;
-        //通过前端传来的公司id查询对应的合作关系
-        Integer partnerNo = ecooperation.getPartnerNo();
-        if(partnerNo != null) {
-            List<Ecooperation> info = ecooperationService.selectCooinfo(partnerNo);
-            if (info != null) {
-                resultUtils = new ResultUtils(0, "提示信息：成功查询到合作关系信息", info);
-                return resultUtils;
-            }
-            resultUtils = new ResultUtils(501, "提示信息：未查询到合作关系信息");
-            return resultUtils;
-        }
-        resultUtils = new ResultUtils(502,"提示信息：未收到id信息");
-        return resultUtils;
-    }
-    //查询联系人信息
-    @RequestMapping("/selectContacts")
-    @ResponseBody
-    public ResultUtils searchContacts(@RequestBody Eccontacts eccontacts){
-        ResultUtils resultUtils = null;
-        //通过前端传来的公司id查询对应的联系人信息
-        Integer partnerNo = eccontacts.getPartnerNo();
-        if (partnerNo != null) {
-            List<Eccontacts> info3 = eccontactsService.selectContacts(partnerNo);
-            if (info3 != null) {
-                resultUtils = new ResultUtils(0, "提示信息：成功查询到联系人信息", info3);
-                return resultUtils;
-            }
-            resultUtils = new ResultUtils(501, "提示信息：未查询到联系人信息");
-            return resultUtils;
-        }
-        resultUtils = new ResultUtils(502,"提示信息：未收到id信息");
-        return resultUtils;
-    }*/
-
     /**
      * 合作伙伴信息、合作情况信息、公司联系人信息修改
      * 集成文件上传和删除(当文件数量等于或多于当前文件数量时调用)
@@ -419,7 +354,7 @@ public class CompanyController {
     @RequestMapping(value = "/updateCompany", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
     //@RequiresPermissions("update")
-    public ResultUtils modifyCom(MultipartFile[] file, HttpServletRequest req)throws IOException{
+    public ResultUtils modifyCom(MultipartFile[] file, HttpServletRequest req)throws IOException {
         ResultUtils resultUtils = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
         //成功获取的对象数据
@@ -564,14 +499,13 @@ public class CompanyController {
                         //服务器存储   打包上去前需要置换
                         fileInfo.setFilePath(URL2);
                         fileInfo.setRelDocId(cid);
+                        fileInfo.setRelTableName("epartner");
                         fileInfo.setUpdatedTime(new Date());
                         fileInfo.setLastUpdateUser(userCode);
                         fileInfo.setKeyword(multipartFile.getOriginalFilename());
+                        fileInfo.setStatus(0);
                         fileInfo.setProjId(1);
                         fileInfoService.insertSelective(fileInfo);
-                        //查询出当前成功文件的编号
-                        int count3 = epartnerService.selectID();
-                        System.out.println("刚刚增加成功的记录的编号为：" + count3);
                     } else {
                         return new ResultUtils(506, "上传文件格式不符合需求");
                     }
@@ -598,7 +532,7 @@ public class CompanyController {
     @RequestMapping(value = "/updateCompany2", method = { RequestMethod.GET, RequestMethod.POST })
     @UserLoginToken
     //@RequiresPermissions("update")
-    public ResultUtils modifyCom2(@RequestBody CompanyPackage filePackage, HttpServletRequest req){
+    public ResultUtils modifyCom2(@RequestBody CompanyPackage filePackage){
         ResultUtils resultUtils = null;
         //通过接受三个对象来进行修改 包含公司的partnerNo
         Object[] fileName = filePackage.getFileName();
@@ -765,7 +699,7 @@ public class CompanyController {
                 return resultUtils;
             }
         }
-        resultUtils = new ResultUtils(501,"提示信息：删除失败！");
+        resultUtils = new ResultUtils(501,"提示信息：未能全部删除！");
         return resultUtils;
     }
 }

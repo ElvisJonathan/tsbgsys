@@ -20,11 +20,11 @@
         where proj_id = #{projId,jdbcType=INTEGER}
     </select>
 
-    <select id="selectByProName" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <select id="selectByProName" resultMap="BaseResultMap" parameterType="String" >
         select
         <include refid="Base_Column_List" />
         from project
-        where pro_name = #{proName,jdbcType=INTEGER}
+        where pro_name = #{proName,jdbcType=VARCHAR}
     </select>
 
 

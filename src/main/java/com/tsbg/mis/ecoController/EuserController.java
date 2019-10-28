@@ -1,13 +1,11 @@
 package com.tsbg.mis.ecoController;
 
 import com.tsbg.mis.annotation.UserLoginToken;
+import com.tsbg.mis.powerModel.UserInfo;
+import com.tsbg.mis.powerService.UserInfoService2;
 import com.tsbg.mis.util.ResultUtils;
-import com.tsbg.mis.ecoModel.UserInfo;
-import com.tsbg.mis.ecoService.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 用户相关
@@ -17,26 +15,7 @@ import java.util.List;
 public class EuserController {
 
     @Autowired
-    private UserInfoService userInfoService;
-    /**
-     * 查询用户列表
-     */
-    @RequestMapping(value = "/ecoUser", method = { RequestMethod.GET, RequestMethod.POST })
-    @ResponseBody
-    public ResultUtils searchUser(){
-        //初始化构造器
-        ResultUtils resultUtils = null;
-        //查询出用户列表给前端进行渲染
-        List<UserInfo> elist = userInfoService.selectEuserList();
-        if (elist != null){
-            //如果查询出的用户列表不为空则返回给前端进行数据渲染
-            resultUtils = new ResultUtils(0,"提示信息：成功返回用户列表信息",elist);
-            return resultUtils;
-        }
-        //若未查询到用户信息则返回提示
-        resultUtils = new ResultUtils(501,"提示信息：未查询到用户列表信息");
-        return resultUtils;
-    }
+    private UserInfoService2 userInfoService;
 
     /**
      * 停用/启用用户

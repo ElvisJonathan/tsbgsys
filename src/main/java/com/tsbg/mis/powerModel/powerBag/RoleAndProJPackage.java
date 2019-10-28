@@ -6,7 +6,7 @@ public class RoleAndProJPackage {
 
     private String role;
 
-    private String description;
+    //private String description;
 
     private Integer projId;
 
@@ -28,13 +28,13 @@ public class RoleAndProJPackage {
         this.role = role;
     }
 
-    public String getDescription() {
+    /*public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
+    }*/
 
     public Integer getProjId() {
         return projId;

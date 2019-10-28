@@ -1,6 +1,6 @@
 package com.tsbg.mis.powerVo;
 
-import com.tsbg.mis.powerModel.UserRole;
+import com.tsbg.mis.powerModel.powerBag.RoleAndProJPackage;
 
 import java.util.List;
 
@@ -8,15 +8,18 @@ public class LoginVo {
 
     private String userCode;
 
+    private String userName;
+
     private String token;
 
-    List<UserRole> userRoles;
+    List<RoleAndProJPackage> userRoles;
 
     public LoginVo() {
     }
 
-    public LoginVo(String userCode, String token, List<UserRole> userRoles) {
+    public LoginVo(String userCode, String userName, String token, List<RoleAndProJPackage> userRoles) {
         this.userCode = userCode;
+        this.userName = userName;
         this.token = token;
         this.userRoles = userRoles;
     }
@@ -29,6 +32,14 @@ public class LoginVo {
         this.userCode = userCode;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getToken() {
         return token;
     }
@@ -37,11 +48,11 @@ public class LoginVo {
         this.token = token;
     }
 
-    public List<UserRole> getUserRoles() {
+    public List<RoleAndProJPackage> getUserRoles() {
         return userRoles;
     }
 
-    public void setUserRoles(List<UserRole> userRoles) {
+    public void setUserRoles(List<RoleAndProJPackage> userRoles) {
         this.userRoles = userRoles;
     }
 }

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.doorMapper.FriendlyLinkMapper2" >
+  <resultMap id="BaseResultMap" type="com.tsbg.mis.doorModel.FriendlyLink" >
+    <id column="link_id" property="linkId" jdbcType="INTEGER" />
+    <result column="link_name" property="linkName" jdbcType="VARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="link_type_id" property="linkTypeId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="proj_id" property="projId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    link_id, link_name, link_url, link_type_id, status, proj_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from friendly_link
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from friendly_link
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tsbg.mis.doorModel.FriendlyLink" >
+    insert into friendly_link (link_id, link_name, link_url, 
+      link_type_id, status, proj_id
+      )
+    values (#{linkId,jdbcType=INTEGER}, #{linkName,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, 
+      #{linkTypeId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{projId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tsbg.mis.doorModel.FriendlyLink" >
+    insert into friendly_link
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="linkId != null" >
+        link_id,
+      </if>
+      <if test="linkName != null" >
+        link_name,
+      </if>
+      <if test="linkUrl != null" >
+        link_url,
+      </if>
+      <if test="linkTypeId != null" >
+        link_type_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="projId != null" >
+        proj_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="linkId != null" >
+        #{linkId,jdbcType=INTEGER},
+      </if>
+      <if test="linkName != null" >
+        #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTypeId != null" >
+        #{linkTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="projId != null" >
+        #{projId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tsbg.mis.doorModel.FriendlyLink" >
+    update friendly_link
+    <set >
+      <if test="linkName != null" >
+        link_name = #{linkName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTypeId != null" >
+        link_type_id = #{linkTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="projId != null" >
+        proj_id = #{projId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tsbg.mis.doorModel.FriendlyLink" >
+    update friendly_link
+    set link_name = #{linkName,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      link_type_id = #{linkTypeId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      proj_id = #{projId,jdbcType=INTEGER}
+    where link_id = #{linkId,jdbcType=INTEGER}
+  </update>
+  <select id="selectPortalsiteUrl" resultType="com.tsbg.mis.doorModel.FriendlyLink" >
+         SELECT f.`link_id` AS linkId,f.`link_name` AS linkName,f.`link_url` AS linkUrl,f.`link_type_id` AS linkTypeId,
+         t.`type_name` AS typeName,f.`status` AS STATUS,f.`proj_id` AS projId
+         FROM friendly_link AS f
+         LEFT JOIN friend_link_type AS t
+         ON f.`link_type_id`=t.`type_id`
+         WHERE f.`status`=1 AND t.`status`=1;
+  </select>
+</mapper>

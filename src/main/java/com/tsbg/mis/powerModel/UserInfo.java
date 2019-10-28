@@ -15,7 +15,7 @@ public class UserInfo {
 
     private Integer isManager;
 
-    private Boolean locked;
+    private Byte locked;
 
     private Integer gender;
 
@@ -117,11 +117,11 @@ public class UserInfo {
         this.isManager = isManager;
     }
 
-    public Boolean getLocked() {
+    public Byte getLocked() {
         return locked;
     }
 
-    public void setLocked(Boolean locked) {
+    public void setLocked(Byte locked) {
         this.locked = locked;
     }
 

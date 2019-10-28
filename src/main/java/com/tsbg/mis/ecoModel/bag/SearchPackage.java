@@ -2,7 +2,7 @@ package com.tsbg.mis.ecoModel.bag;
 
 import com.tsbg.mis.ecoModel.Eccontacts;
 import com.tsbg.mis.ecoModel.Epartner;
-import com.tsbg.mis.ecoModel.UserInfo;
+import com.tsbg.mis.powerModel.UserInfo;
 import com.tsbg.mis.util.PageRequest;
 
 /**

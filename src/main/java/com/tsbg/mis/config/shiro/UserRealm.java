@@ -2,6 +2,8 @@ package com.tsbg.mis.config.shiro;
 
 import com.alibaba.fastjson.JSONObject;
 
+import com.tsbg.mis.ecoService.LoginService;
+import com.tsbg.mis.ecoService.UserInfoService;
 import com.tsbg.mis.ecoService.base.RedisService;
 import com.tsbg.mis.powerService.LoginService2;
 import com.tsbg.mis.powerService.UserInfoService2;
@@ -26,10 +28,10 @@ public class UserRealm extends AuthorizingRealm {
 	private Logger logger = LoggerFactory.getLogger(UserRealm.class);
 
 	@Autowired
-	//private LoginService loginService;
+	/*private LoginService loginService;*/
 	private LoginService2 loginService;//loginService2是挪出来之后用的登录
 	@Autowired
-	//private UserInfoService userInfoService;
+	/*private UserInfoService userInfoService;*/
 	private UserInfoService2 userInfoService;//UserInfoService2是挪出来之后用的登录
 	@Autowired
 	private RedisService redisService;
@@ -71,7 +73,6 @@ public class UserRealm extends AuthorizingRealm {
 		//根据用户工号查询对应密码盐
 		String salt = userInfoService.selectSaltByUserCode(loginName);
 		String newPwd = MD5Util2.encode(password+salt);
-		System.out.println("newPwd:"+newPwd);
 		JSONObject user = loginService.getMyUser(loginName, newPwd);
 		if (user == null) {
 			//没找到帐号

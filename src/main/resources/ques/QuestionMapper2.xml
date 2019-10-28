@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.questionMapper.QuestionMapper2" >
+    <!--导出系统名称、反馈人、处理人信息，文件信息等-->
+    <!--SELECT c.proj_id AS projIda,c.pro_name AS proNamea,a.question_name AS questionNamed,
+    a.question_describe AS questionDescribed,d.file_name AS fileNamec,a.user_code AS
+    userCoded,a.user_name AS userNamed,a.user_ext AS userExtd,a.user_email_address AS
+    userEmailAddressd,a.application_date AS applicationDated,e.type_name AS typeName,
+    b.handle_code AS handleCodee,b.handle_name AS handleNamee,b.start_date AS startDatee,
+    b.is_handle AS isHandlee,b.handle_time AS handleTimee,d.file_name AS fileNamec,b.remark AS remarke,
+    d.file_path AS filePathc FROM question_feedback AS a LEFT JOIN project AS c ON a.proj_id=c.proj_id
+    LEFT JOIN file_info AS d ON a.question_feedback_id = d.question_feedbackid LEFT JOIN question_handle AS b
+    ON d.question_handleid=b.question_handle_id LEFT JOIN question_type AS e
+    ON b.question_type_id=e.type_id-->
+    <select id="selectquestion" resultType="com.tsbg.mis.questionModel.bag.DerivediPackage2">
+       SELECT c.proj_id AS projIda,c.pro_name AS proNamea,a.question_name
+         AS questionNamed, a.question_describe AS questionDescribed,d.file_name
+         AS fileNamec,a.user_code AS userCoded,a.user_name AS userNamed,a.user_ext
+         AS userExtd,a.user_email_address AS userEmailAddressd,a.application_date
+         AS applicationDated,e.type_name AS typeName, b.handle_code AS handleCodee,b.handle_name
+         AS handleNamee,b.start_date AS startDatee, b.is_handle AS isHandlee,b.handle_time
+         AS handleTimee,d.file_name AS fileNamec,b.remark AS remarke, d.file_path
+         AS filePathc FROM question_feedback.`question_feedback` AS a
+         LEFT JOIN tsbg_database.`project` AS c ON a.proj_id=c.proj_id
+         LEFT JOIN tsbg_database.`file_info` AS d ON a.`question_feedback_id` = d.`rel_doc_id`
+         LEFT JOIN question_feedback.`question_handle` AS b ON d.`rel_doc_id`=b.`question_handle_id`
+         LEFT JOIN question_feedback.`question_type` AS e ON b.question_type_id=e.type_id
+   </select>
+
+    <!--分页查询系统名称、反馈人、处理人信息，文件信息等-->
+    <select id="selectbasePage" resultType="com.tsbg.mis.questionModel.bag.ProjectqfPackage2">
+      SELECT qf.question_feedback_id AS questionFeedbackId,qf.question_name AS questionName,
+      qf.question_describe AS questionDescribe,qf.user_code AS userCode,qf.user_name AS userName,
+      qf.user_ext AS userExt,qf.user_email_address AS userEmailAddress,qf.user_department AS userDepartment,
+      qf.remark AS remarka,qf.application_date AS applicationDate,qf.apply_status_id AS applyStatusId,
+      qf.proj_id AS projIda,pt.pro_name AS proName FROM question_feedback AS qf
+      LEFT JOIN tsbg_database.`project` AS pt ON qf.proj_id=pt.proj_id ORDER BY applicationDate DESC
+    </select>
+</mapper>
