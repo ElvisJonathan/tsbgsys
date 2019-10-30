@@ -27,6 +27,8 @@ public class UserInfo {
 
     private String roleList;
 
+    private String permList;
+
     private Integer status;
 
     private Date createTime;
@@ -163,6 +165,14 @@ public class UserInfo {
 
     public void setRoleList(String roleList) {
         this.roleList = roleList == null ? null : roleList.trim();
+    }
+
+    public String getPermList() {
+        return permList;
+    }
+
+    public void setPermList(String permList) {
+        this.permList = permList;
     }
 
     public Integer getStatus() {

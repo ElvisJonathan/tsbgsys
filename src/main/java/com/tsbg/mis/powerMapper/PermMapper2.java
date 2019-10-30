@@ -48,4 +48,7 @@ public interface PermMapper2 {
 
     //查询当前系统角色-权限对应信息
     List<PermRolePackage> selectRolePermMsg(@Param("projId")Integer projId, @Param("roleId")Integer roleId);
+
+    //生态系统权限列表查询
+    String selectPermListByUserCode(String userCode);
 }

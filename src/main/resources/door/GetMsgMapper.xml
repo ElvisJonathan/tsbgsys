@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsbg.mis.doorMapper.GetMsgMapper" >
+
+    <select id="selectMsgByUserCode" resultType="com.tsbg.mis.doorVo.GetMsgVo" parameterType="String">
+         SELECT a.`user_code` as userCode,a.`user_name` as userName,a.`gender` as gender,
+            a.`user_ext` as userExt,a.`phone_number` as phoneNumber,a.`email_address` as emailAddress,
+            b.`staff_type_name` as staffTypeName,c.`nation_name` as NationName,d.`city_name` as CityName,
+            e.`factory_name` as FactoryName,f.`first_BG_name` as FirstBGName,g.`second_BG_name` as SecondBGName,
+            h.`BG_name` as BGName,a.`cost_code` as CostCode,a.`organization_code` as OrganizationCode,
+            a.`organization_name` as OrganizationName,j.`BU_name` as BUName,k.`depart_name` as DepartName,
+            k.`depart_code` as DepartCode,l.`class_code` as ClassCode,l.`class_name` as ClassName,
+            n.`group_name` as GroupName,n.`group_code` as GroupCode,p.`legal_person_name` as LegalPersonCode,
+            p.`legal_person_code` as LegalPersonName
+             FROM tsbg_database.`user_info` AS a
+             LEFT JOIN master_database.`staff_type` AS b
+             ON a.`staff_type_id`=b.`leader_type_id`
+             LEFT JOIN master_database.`nation_list` AS c
+             ON a.`nation_id`=c.`nation_id`
+             LEFT JOIN master_database.`area_list` AS d
+             ON a.`area_id`=d.`area_id`
+             LEFT JOIN master_database.`factory_list` AS e
+             ON a.`factory_id`=e.`factory_id`
+             LEFT JOIN master_database.`first_bg_list` AS f
+             ON a.`first_BG_id`=f.`first_BG_id`
+             LEFT JOIN master_database.`second_bg_list` AS g
+             ON a.`second_BG_id`=g.`second_BG_id`
+             LEFT JOIN master_database.`bg_list` AS h
+             ON a.`BG_id`=h.`BG_id`
+             LEFT JOIN master_database.`bu_list` AS j
+             ON a.`BU_id`=j.`BU_id`
+             LEFT JOIN master_database.`depart_list` AS k
+             ON a.`depart_id`=k.`depart_id`
+             LEFT JOIN master_database.`class_list` AS l
+             ON a.`class_id`=l.`class_id`
+             LEFT JOIN master_database.`group_list` AS n
+             ON a.`group_id` = n.`group_id`
+             LEFT JOIN master_database.`legal_person` AS p
+             ON a.`legal_person_id`= p.`legal_person_id`
+             WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
+</mapper>

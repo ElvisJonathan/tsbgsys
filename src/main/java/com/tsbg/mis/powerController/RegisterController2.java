@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -131,15 +132,15 @@ public class RegisterController2 {
                     //在user_role插入数据  最初注册都是普通用户的角色
                     userRoleService.insertData(uid,roleAndProJPackages.get(i).getRoleid(),userCode,new Date(),roleAndProJPackages.get(i).getProjId());
                 }
-                //设置用户权限
-                /*List<String> pList = new ArrayList<>();
-                if (permissionService.findPermissionByRoleId2(2).toString()!=null
-                            && !permissionService.findPermissionByRoleId2(2).toString().equals("[]")){
-                    pList.add(permissionService.findPermissionByRoleId2(2).toString());
+                //设置生态用户权限
+                List<String> pList = new ArrayList<>();
+                if (permissionService.findPermissionByRoleId2(3).toString()!=null
+                            && !permissionService.findPermissionByRoleId2(3).toString().equals("[]")){
+                    pList.add(permissionService.findPermissionByRoleId2(3).toString());
                 }else{
                         pList.add("[null]");
                 }
-                userInfoService.modifyPermListByuserId(pList.get(0),uid);*/
+                userInfoService.modifyPermListByuserId(pList.get(0),uid);
                 //返回成功码0并且提示成功注册
                 return new ResultUtils(100,"提示信息：成功注册！");
             }

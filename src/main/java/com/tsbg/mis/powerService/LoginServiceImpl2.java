@@ -144,8 +144,19 @@ public class LoginServiceImpl2 implements LoginService2 {
 			}
 		}
 		JSONObject userPermission2 = permService.getMyUserPermission(userCode2,projId);
-		if (userPermission2!=null){
-			System.out.println("权限："+userPermission2.toJSONString());
+		//假如是生态系统会具体到个人权限
+		String ecoPermList = permService.selectPermListByUserCode(userCode2);
+		if (projId==1 && ecoPermList!=null){
+			//做转化
+			String newStr = ecoPermList.substring(1,ecoPermList.length()-1);
+			String Str = newStr.replaceAll(", ",",").trim();
+			String[]arr = Str.split(",");
+			userPermission2.put("permissionList",arr);
+			System.out.println("生态权限："+userPermission2.toJSONString());
+			return new ResultUtils(100,"成功",userPermission2);
+		}
+		if (userPermission2!=null && projId!=1){
+			System.out.println("其他系统权限："+userPermission2.toJSONString());
 			redisService.setCacheObject(Constants.SESSION_USER_PERMISSION, userPermission2);
 			return new ResultUtils(100,"成功",userPermission2);
 		}

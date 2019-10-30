@@ -251,4 +251,7 @@
     </if>
   </select>
 
+  <select id="selectPermListByUserCode" resultType="String" parameterType="String" >
+    SELECT a.`perm_list` FROM tsbg_database.`user_info` AS a WHERE a.`user_code`=#{userCode,jdbcType=VARCHAR};
+  </select>
 </mapper>

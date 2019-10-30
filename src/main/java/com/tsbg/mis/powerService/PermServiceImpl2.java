@@ -54,4 +54,9 @@ public class PermServiceImpl2 implements PermService2 {
     public List<PermRolePackage> selectRolePermMsg(Integer projId, Integer roleId) {
         return permMapper2.selectRolePermMsg(projId,roleId);
     }
+
+    @Override
+    public String selectPermListByUserCode(String userCode) {
+        return permMapper2.selectPermListByUserCode(userCode);
+    }
 }

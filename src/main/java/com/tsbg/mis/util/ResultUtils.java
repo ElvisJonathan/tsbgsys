@@ -61,6 +61,14 @@ public class ResultUtils {
     /**
      * 设值注入
      */
+    public static int getSUCCESS() {
+        return SUCCESS;
+    }
+
+    public static int getFAILED() {
+        return FAILED;
+    }
+
     public int getCode() {
         return code;
     }
